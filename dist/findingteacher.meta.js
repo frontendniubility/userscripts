@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.4.15001
+// @version     2021.5.11-621
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -10,9 +10,6 @@
 // @match       *://www.51talk.com/user/*
 // @namespace   https://github.com/niubilityfrontend
 // @license     OSL-3.0
-// @updateURL   https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
-// @installURL  https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
-// @downloadURL https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getValue
 // @grant       GM_setValue

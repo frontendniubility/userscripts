@@ -6,9 +6,6 @@
 // @author jimbo
 // @license OSL-3.0
 // @supportURL https://github.com/niubilityfrontend/hunttingteacheron51talk
-// @updateURL https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
-// @installURL https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
-// @downloadURL https://github.com/niubilityfrontend/userscripts/raw/master/hunttingteacheron51talk/hunttingteacher.user.js
 // @match *://www.51talk.com/ReserveNew/index*
 // @match *://www.51talk.com/TeacherNew/*
 // @match *://www.51talk.com/user/*
@@ -26,7 +23,6 @@
 // @require https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
 // @require https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/libs/gm_config.js
 // ==/UserScript==
-
 import {
     conf,
     config

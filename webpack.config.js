@@ -8,8 +8,7 @@ const version = require('extra-version');
 const WebpackUserscript = require('webpack-userscript')
 
 
-const p = (...args) => (console.log(...args), args[0])
-
+const p = (...args) => args.forEach((arg, index, all) => console.log(arg))
 let stringIncludesAny = function (s, ...arr) {
 
   return new RegExp(arr.join('|')).test(s);
@@ -17,7 +16,7 @@ let stringIncludesAny = function (s, ...arr) {
 
 let entry = glob
   .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
-  //.filter((current, index, all) => stringIncludesAny(current, 'findteacher', 'test'))
+  //  .filter((current, index, all) => stringIncludesAny(current, 'findteacher', 'test'))
   .reduce((entries, current) => {
     const item = path.parse(current);
     let entryName = item.name;
@@ -43,7 +42,7 @@ let parseMeta = script =>
     }
     return result
   }, {})
-const isDev = false //env.NODE_ENV === 'development';
+const isDev = true; //env.NODE_ENV === 'development';
 module.exports = (env, argv) => {
   return {
     mode: isDev ? 'development' : 'production',
@@ -59,7 +58,7 @@ module.exports = (env, argv) => {
 
     entry,
 
-    watch: true,
+    //watch: true,
     stats: 'normal',
     //  'errors-only'	none	Only output when errors happen
     // 'errors-warnings'	none	Only output errors and warnings happen
@@ -187,7 +186,8 @@ module.exports = (env, argv) => {
     plugins: [
       new WebpackUserscript({
         headers: function (data) {
-          let origionpath = entry[data.chunkName]
+          let origionpath = entry[data.chunkName];
+
           if (!fs.existsSync(origionpath)) {
             console.log(data)
             console.log(`--${data.chunkName}  --  ${entry[data.chunkName]}            
@@ -195,27 +195,42 @@ module.exports = (env, argv) => {
           `)
             return {};
           } else {
+            var md5path = path.resolve(path.parse(origionpath).dir, data.chunkName + '.md5');
+
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
-            return extend(true, {}, header, {
-              version: isDev ? `[version]-build.[buildNo]` : `${header.version}`
-            });
+
+            if (!fs.existsSync(md5path)) {
+              fs.writeFileSync(md5path, data.chunkHash, 'utf8');
+            } else {
+              if (fs.readFileSync(md5path, 'utf8') == data.chunkHash) {
+                //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                return header;
+              } else {
+                //change
+                fs.writeFileSync(md5path, data.chunkHash);
+                var buildtime = new Date(data.buildTime);
+                let vstring= `${buildtime.getFullYear()}.${buildtime.getMonth()+1}.${buildtime.getDate()}.${data.buildTime}`
+                p(buildtime,vstring)
+                // return header;
+                return extend(true, {}, header, {
+                  version: vstring
+                });
+              }
+            }
           }
         },
         pretty: true,
         metajs: true,
-
-        downloadBaseUrl: '',
-        updateBaseUrl: '',
-
         proxyScript: {
-          baseUrl: 'http://127.0.0.1:12345',
-          filename: '[basename].user.js',
-          enable: () => process.env.LOCAL_DEV === '1'
+          baseUrl: 'https://github.com/niubilityfrontend/userscripts/blob/master/dist/',
+          filename: '[chunkName].js',
+          enable: false
         },
 
       })
     ],
     devServer: {
+      publicPath: '/',
       contentBase: path.join(__dirname, 'dist')
     },
   }
