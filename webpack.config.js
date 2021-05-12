@@ -3,12 +3,12 @@ const glob = require('glob')
 const fs = require('fs')
 const extend = require("extend");
 const TerserPlugin = require('terser-webpack-plugin');
-const version = require('extra-version');
-
 const WebpackUserscript = require('webpack-userscript')
-
-
+const {
+  parseMeta
+} = require('./webpack.comom')
 const p = (...args) => args.forEach((arg, index, all) => console.log(arg))
+
 let stringIncludesAny = function (s, ...arr) {
 
   return new RegExp(arr.join('|')).test(s);
@@ -22,26 +22,8 @@ let entry = glob
     let entryName = item.name;
     entries[entryName] = current;
     return entries;
-  }, {})
+  }, {});
 
-let parseMeta = script =>
-  script
-  .slice(script.indexOf('==UserScript=='), script.indexOf('==/UserScript=='))
-  .split('\n')
-  .map(line => line.match(/^\s*[\/]{2,}\s*@(\S+)\s+(.+)/i))
-  .filter(match => !!match)
-  .reduce((result, [, key, value]) => {
-    if (Object.keys(result).includes(key)) {
-      if (Array.isArray(result[key])) {
-        result[key].push(value)
-      } else {
-        result[key] = [result[key], value]
-      }
-    } else {
-      result[key] = value
-    }
-    return result
-  }, {})
 const isDev = true; //env.NODE_ENV === 'development';
 module.exports = (env, argv) => {
   return {
@@ -195,34 +177,47 @@ module.exports = (env, argv) => {
           `)
             return {};
           } else {
-            var md5path = path.resolve(path.parse(origionpath).dir, data.chunkName + '.md5');
 
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
 
-            if (!fs.existsSync(md5path)) {
-              fs.writeFileSync(md5path, data.chunkHash, 'utf8');
-            } else {
-              if (fs.readFileSync(md5path, 'utf8') == data.chunkHash) {
+            var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
+            let buildtime = new Date(data.buildTime);
+            let vstring = `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
+
+            if (fs.existsSync(versionpath)) {
+              let savedVersions = {};
+              try {
+                savedVersions = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+              } catch (e) {
+                p(`JSON parse error, file path :${versionpath} `)
+              }
+              var val = Object.entries(savedVersions).find(([k, v], idx) => k == data.chunkHash);
+              if (!!val && val.key == data.chunkHash) {
                 //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-                return header;
-              } else {
-                //change
-                fs.writeFileSync(md5path, data.chunkHash);
-                var buildtime = new Date(data.buildTime);
-                let vstring= `${buildtime.getFullYear()}.${buildtime.getMonth()+1}.${buildtime.getDate()}.${data.buildTime}`
-                p(buildtime,vstring)
-                // return header;
                 return extend(true, {}, header, {
-                  version: vstring
+                  version: val.value
                 });
+              } else {
+
               }
             }
+            //change
+            fs.writeFileSync(versionpath, JSON.stringify({
+              [data.chunkHash]: vstring
+            }), 'utf8');
+
+            // return header;
+            return extend(true, {}, header, {
+              version: vstring
+            });
           }
         },
         pretty: true,
         metajs: true,
+        updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
+        updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
         proxyScript: {
-          baseUrl: 'https://github.com/niubilityfrontend/userscripts/blob/master/dist/',
+          baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
           filename: '[chunkName].js',
           enable: false
         },
