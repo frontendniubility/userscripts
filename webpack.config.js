@@ -166,6 +166,8 @@ module.exports = (env, argv) => {
     plugins: [
       new WebpackUserscript({
         headers: function (data) {
+          const isDevServer = !!process.env.WEBPACK_DEV_SERVER;
+          console.log(isDevServer)
           let origionpath = entry[data.chunkName];
 
           if (!fs.existsSync(origionpath)) {
@@ -183,7 +185,7 @@ module.exports = (env, argv) => {
               [data.chunkHash]: vstring
             };
 
-            if (!fs.existsSync(versionpath)) {
+            if (!isDevServer && !fs.existsSync(versionpath)) {
               fs.writeFileSync(versionpath, curVersionJson);
             }
 
@@ -201,7 +203,8 @@ module.exports = (env, argv) => {
               });
             } else {
               //hash不同
-              fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
+              if (!isDevServer)
+                fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
               return extend(true, {}, header, {
                 version: curVersionJson[data.chunkHash]
               });
@@ -222,7 +225,7 @@ module.exports = (env, argv) => {
       })
     ],
     devServer: {
-      writeToDisk: true,
+
       publicPath: '/',
       contentBase: path.join(__dirname, 'dist')
     },
