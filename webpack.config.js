@@ -213,11 +213,11 @@ module.exports = (env, argv) => {
         metajs: true,
         updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
         updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
-        proxyScript: {
-          baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
-          filename: '[chunkName].js',
-          enable: false
-        },
+        // proxyScript: {
+        //   baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
+        //   filename: '[chunkName].js',
+        //   enable: false
+        // },
 
       })
     ],
