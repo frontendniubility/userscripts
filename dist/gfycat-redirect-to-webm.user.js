@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gfycat Redirect to Webm
-// @version     2021.5.12103902
+// @version     2021.5.12030033
 // @author      fuzetsu
 // @description Automatically redirects you to the webm source of a gif when you load a gfycat page
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -9,6 +9,8 @@
 // @namespace   http://fuzetsu/gfycat-redirect-webm
 // @grant       none
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/gfycat-redirect-to-webm.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/gfycat-redirect-to-webm.meta.js
 // ==/UserScript==
 
 /*

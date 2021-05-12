@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2021.5.12103902
+// @version     2021.5.12030033
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -10,4 +10,6 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/kijiji-middle-click.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/kijiji-middle-click.meta.js
 // ==/UserScript==

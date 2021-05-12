@@ -7,7 +7,8 @@ const WebpackUserscript = require('webpack-userscript')
 const {
   parseMeta,
   p,
-  stringIncludesAny
+  stringIncludesAny,
+  getVersionString
 } = require('./webpack.comom')
 
 
@@ -177,8 +178,7 @@ module.exports = (env, argv) => {
 
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
-            let buildtime = new Date(data.buildTime);
-            let vstring = `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
+            let vstring = getVersionString(data.buildTime);
             let curVersionJson = {
               [data.chunkHash]: vstring
             };

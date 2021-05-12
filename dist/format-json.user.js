@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2021.5.12103902
+// @version     2021.5.12030033
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -8,6 +8,8 @@
 // @match       *://*/*.json
 // @namespace   format-json
 // @grant       GM_setClipboard
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/format-json.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/format-json.meta.js
 // ==/UserScript==
 
 /*

@@ -75,7 +75,13 @@ let stringIncludesAny = function (s, ...arr) {
   return new RegExp(arr.join('|')).test(s);
 }
 
+function a(buildtime) {
+  if (typeof buildtime != 'Date')
+    buildtime = new Date(buildtime)
+  return `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
+}
 module.exports = {
+  getVersionString: a,
   parseMeta,
   p,
   stringIncludesAny

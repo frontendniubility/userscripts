@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube History Management
-// @version     2021.5.12103903
+// @version     2021.5.12030033
 // @author      fuzetsu
 // @description Select and remove YouTube history items quickly
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -10,4 +10,6 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=141779
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/youtube-history-management.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/youtube-history-management.meta.js
 // ==/UserScript==
