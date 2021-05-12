@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
 
     entry,
 
-   // watch: true,
+    // watch: true,
     stats: 'normal',
     //  'errors-only'	none	Only output when errors happen
     // 'errors-warnings'	none	Only output errors and warnings happen
@@ -213,15 +213,16 @@ module.exports = (env, argv) => {
         metajs: true,
         updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
         updateBaseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
-        proxyScript: {
-          baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
-          filename: '[chunkName].js',
-          enable: false
-        },
+        // proxyScript: {
+        //   baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
+        //   filename: '[chunkName].js',
+        //   enable: false
+        // },
 
       })
     ],
     devServer: {
+      writeToDisk: true,
       publicPath: '/',
       contentBase: path.join(__dirname, 'dist')
     },
