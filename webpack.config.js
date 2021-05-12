@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
 
     entry,
 
-   // watch: true,
+    // watch: true,
     stats: 'normal',
     //  'errors-only'	none	Only output when errors happen
     // 'errors-warnings'	none	Only output errors and warnings happen
@@ -222,6 +222,7 @@ module.exports = (env, argv) => {
       })
     ],
     devServer: {
+      hot: false,
       publicPath: '/',
       contentBase: path.join(__dirname, 'dist')
     },
