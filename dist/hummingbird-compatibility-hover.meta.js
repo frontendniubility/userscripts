@@ -11,4 +11,6 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?1
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hummingbird-compatibility-hover.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hummingbird-compatibility-hover.meta.js
 // ==/UserScript==

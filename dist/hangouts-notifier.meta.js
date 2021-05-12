@@ -9,4 +9,6 @@
 // @namespace   fuzetsu.com/HangoutsNotifier
 // @grant       none
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hangouts-notifier.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hangouts-notifier.meta.js
 // ==/UserScript==

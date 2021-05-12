@@ -29,6 +29,7 @@ let getPaddedComp = (comp, len = 2) => {
     };
 $.extend(Date.prototype, {
     toString: function (format) {
+        if(!format)return this.toLocaleDateString();
         let formattedDate = format;
         for (let k in o) {
             if (new RegExp("(" + k + ")").test(format)) {

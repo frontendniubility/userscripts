@@ -10,6 +10,8 @@
 // @grant       none
 // @require     https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=141779
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/youtube-history-management.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/youtube-history-management.meta.js
 // ==/UserScript==
 
 /*

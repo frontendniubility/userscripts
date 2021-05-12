@@ -9,4 +9,6 @@
 // @namespace   http://fuzetsu/gfycat-redirect-webm
 // @grant       none
 // @deprecated  true
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/gfycat-redirect-to-webm.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/gfycat-redirect-to-webm.meta.js
 // ==/UserScript==

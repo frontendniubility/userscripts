@@ -25,7 +25,7 @@
 // ==/UserScript==
 import {
     conf,
-    config
+    config 
 } from './bestteacher_gm_toolbar.es6'
 
 import {

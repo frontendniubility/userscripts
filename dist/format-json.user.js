@@ -8,6 +8,8 @@
 // @match       *://*/*.json
 // @namespace   format-json
 // @grant       GM_setClipboard
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/format-json.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/format-json.meta.js
 // ==/UserScript==
 
 /*

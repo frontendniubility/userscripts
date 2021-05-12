@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.5.11-621
+// @version     2021.4.15001
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -23,4 +23,6 @@
 // @require     https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // @require     https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
 // @require     https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/libs/gm_config.js
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/findingteacher.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/findingteacher.meta.js
 // ==/UserScript==

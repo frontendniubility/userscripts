@@ -9,4 +9,6 @@
 // @namespace   http://fuzetsu.com/kitsu-mal-rating
 // @require     https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
 // @grant       GM_xmlhttpRequest
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/kitsu-mal-rating.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/kitsu-mal-rating.meta.js
 // ==/UserScript==

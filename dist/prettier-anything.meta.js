@@ -14,4 +14,6 @@
 // @grant       GM_setValue
 // @grant       GM_registerMenuCommand
 // @require     https://cdn.jsdelivr.net/gh/kufii/My-UserScripts@00302ac8bd875599ed97df07b379b58f9b4932bd/libs/gm_config.js
+// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/prettier-anything.user.js
+// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/prettier-anything.meta.js
 // ==/UserScript==
