@@ -222,7 +222,7 @@ module.exports = (env, argv) => {
       })
     ],
     devServer: {
-      hot: false,
+      writeToDisk: true,
       publicPath: '/',
       contentBase: path.join(__dirname, 'dist')
     },
