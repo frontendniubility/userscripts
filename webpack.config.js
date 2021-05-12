@@ -179,34 +179,34 @@ module.exports = (env, argv) => {
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
             let buildtime = new Date(data.buildTime);
             let vstring = `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
-
-            if (fs.existsSync(versionpath)) {
-              let savedVersions = {};
-              try {
-                savedVersions = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
-              } catch (e) {
-                p(`JSON parse error, file path :${versionpath} `)
-              }
-              var val = Object.entries(savedVersions).find(([k, v], idx) => k == data.chunkHash);
-              if (!!val) {// hash相同
-                //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-                return extend(true, {}, header, {
-                  version: val.value
-                });
-              } else {
-                //hash不同
-
-              }
-            }
-            //change
-            fs.writeFileSync(versionpath, JSON.stringify({
+            let curVersionJson = {
               [data.chunkHash]: vstring
-            }), 'utf8');
+            };
 
-            // return header;
-            return extend(true, {}, header, {
-              version: vstring
-            });
+            if (!fs.existsSync(versionpath)) {
+              fs.writeFileSync(versionpath, curVersionJson);
+            }
+
+            let savedVersionJson = {};
+            try {
+              savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+            } catch (e) {
+              p(`JSON parse error, file path :${versionpath} `)
+            }
+            var val = Object.entries(savedVersionJson).find(([k, v], idx) => k == data.chunkHash);
+            if (!!val) { // hash相同
+              //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+              return extend(true, {}, header, {
+                version: val.value
+              });
+            } else {
+              //hash不同
+              fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
+              return extend(true, {}, header, {
+                version: curVersionJson[data.chunkHash]
+              });
+            }
+
           }
         },
         pretty: true,
