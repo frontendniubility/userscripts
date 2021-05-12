@@ -22,7 +22,8 @@ let entry = glob
     return entries;
   }, {});
 
-const isDev = true; //env.NODE_ENV === 'development';
+const isDev = false; //env.NODE_ENV === 'development';
+const isDevServer = !!process.env.WEBPACK_DEV_SERVER;
 module.exports = (env, argv) => {
   return {
     mode: isDev ? 'development' : 'production',
@@ -166,7 +167,7 @@ module.exports = (env, argv) => {
     plugins: [
       new WebpackUserscript({
         headers: function (data) {
-          const isDevServer = !!process.env.WEBPACK_DEV_SERVER;
+          
           console.log(isDevServer)
           let origionpath = entry[data.chunkName];
 
