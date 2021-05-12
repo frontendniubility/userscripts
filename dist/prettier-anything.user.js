@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2021.5.12051916
+// @version     2021.5.12053155
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -18,36 +18,189 @@
 // @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/prettier-anything.meta.js
 // ==/UserScript==
 
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+var __webpack_exports__ = {};
+// ==UserScript==
+// @name         Prettier Anything
+// @namespace    prettier-anything
+// @author       fuzetsu
+// @version      0.1.4
+// @description  Apply prettier formatting to any text input
+// @match        *://*/*
+// @inject-into  content
+// @grant        GM_setClipboard
+// @grant        GM_xmlhttpRequest
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_registerMenuCommand
+// @require      https://cdn.jsdelivr.net/gh/kufii/My-UserScripts@00302ac8bd875599ed97df07b379b58f9b4932bd/libs/gm_config.js
+// ==/UserScript==
 
-/***/ "./src/prettier-anything/prettier-anything.user.js":
-/*!*********************************************************!*\
-  !*** ./src/prettier-anything/prettier-anything.user.js ***!
-  \*********************************************************/
-/***/ (() => {
+/* global prettier prettierPlugins GM_setClipboard GM_xmlhttpRequest GM_registerMenuCommand GM_config */
 
-eval("// ==UserScript==\n// @name         Prettier Anything\n// @namespace    prettier-anything\n// @author       fuzetsu\n// @version      0.1.4\n// @description  Apply prettier formatting to any text input\n// @match        *://*/*\n// @inject-into  content\n// @grant        GM_setClipboard\n// @grant        GM_xmlhttpRequest\n// @grant        GM_getValue\n// @grant        GM_setValue\n// @grant        GM_registerMenuCommand\n// @require      https://cdn.jsdelivr.net/gh/kufii/My-UserScripts@00302ac8bd875599ed97df07b379b58f9b4932bd/libs/gm_config.js\n// ==/UserScript==\n\n/* global prettier prettierPlugins GM_setClipboard GM_xmlhttpRequest GM_registerMenuCommand GM_config */\n\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1, source; i < arguments.length; i++) { source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nfunction asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg), value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }\n\nfunction _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err); } _next(undefined); }); }; }\n\nvar deps = ['https://unpkg.com/prettier@2/standalone.js', 'https://unpkg.com/prettier@2/parser-babel.js'],\n    loadDep = function loadDep(url) {\n  return new Promise(function (resolve, reject) {\n    GM_xmlhttpRequest({\n      method: 'GET',\n      url: url,\n      onload: function onload(res) {\n        return resolve(res.responseText);\n      },\n      onerror: function onerror() {\n        return reject(new Error(\"Failed to load \".concat(url)));\n      }\n    });\n  });\n},\n    Config = GM_config([{\n  key: 'prettierrc',\n  label: 'Prettier Config',\n  \"default\": '{}',\n  type: 'text',\n  multiline: true,\n  resizable: true\n}, {\n  key: 'binding',\n  label: 'Key Binding',\n  type: 'keybinding',\n  \"default\": {\n    altKey: true,\n    shiftKey: true,\n    key: 'I'\n  },\n  requireModifier: true,\n  requireKey: true\n}, {\n  key: 'copyBinding',\n  label: 'Copy Key Binding',\n  type: 'keybinding',\n  \"default\": {\n    ctrlKey: true,\n    altKey: true,\n    shiftKey: true,\n    key: 'I'\n  },\n  requireModifier: true,\n  requireKey: true\n}]);\n\nGM_registerMenuCommand('Prettier Anywhere Settings', function () {\n  if (window.top === window.self) Config.setup();\n});\nvar config = Config.load();\n\nConfig.onsave = function (cfg) {\n  return config = cfg;\n};\n\nvar p = function p() {\n  var _console;\n\n  return (_console = console).log.apply(_console, arguments), arguments.length <= 0 ? undefined : arguments[0];\n},\n    loaded = false,\n    load = function load() {\n  if (loaded) return;\n  loaded = true;\n  return Promise.all(deps.map(loadDep)).then(function (scripts) {\n    return scripts.map(eval);\n  }); // eslint-disable-line no-eval\n},\n    getSelection = function getSelection() {\n  var elem = document.activeElement;\n\n  if (['INPUT', 'TEXTAREA'].includes(elem.nodeName)) {\n    return elem.value.slice(elem.selectionStart, elem.selectionEnd);\n  } else if (elem.contentEditable) {\n    if (!document.getSelection().toString()) return;\n    document.execCommand('copy');\n    return navigator.clipboard.readText();\n  } else return document.getSelection().toString();\n},\n    insertText = function insertText(text) {\n  var elem = document.activeElement;\n\n  if (typeof InstallTrigger !== 'undefined' && ['INPUT', 'TEXTAREA'].includes(elem.nodeName)) {\n    elem.value = elem.value.slice(0, elem.selectionStart) + text + elem.value.slice(elem.selectionEnd);\n  } else {\n    document.execCommand('insertText', false, text);\n  }\n},\n    prettify = /*#__PURE__*/function () {\n  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(clip) {\n    var code, loadStart, conf, formatted;\n    return regeneratorRuntime.wrap(function _callee$(_context) {\n      while (1) {\n        switch (_context.prev = _context.next) {\n          case 0:\n            code = getSelection();\n            p('key combo HIT, selection = ', code, '; clip = ', clip);\n\n            if (code) {\n              _context.next = 4;\n              break;\n            }\n\n            return _context.abrupt(\"return\", p('no selection, so nothing to do'));\n\n          case 4:\n            p('--- PRETTIER START ---');\n            p('Loading Prettier');\n            loadStart = Date.now();\n            _context.next = 9;\n            return load();\n\n          case 9:\n            p('Loaded, delta = ', Date.now() - loadStart);\n            conf = _objectSpread(_objectSpread({}, JSON.parse(config.prettierrc || '{}')), {}, {\n              parser: 'babel',\n              plugins: prettierPlugins\n            });\n            p('formatting using conf:', conf);\n            formatted = prettier.format(code, conf);\n            if (clip) GM_setClipboard(formatted);else insertText(formatted);\n            document.getSelection().empty();\n            p('BEFORE:\\n', code);\n            p('AFTER:\\n', formatted);\n            p('--- PRETTIER END ---');\n\n          case 18:\n          case \"end\":\n            return _context.stop();\n        }\n      }\n    }, _callee);\n  }));\n\n  return function prettify(_x) {\n    return _ref.apply(this, arguments);\n  };\n}(),\n    keyBindingsMatch = function keyBindingsMatch(a, b) {\n  return !a.ctrlKey === !b.ctrlKey && !a.altKey === !b.altKey && !a.shiftKey === !b.shiftKey && !a.metaKey === !b.metaKey && a.key.toUpperCase() === b.key.toUpperCase();\n};\n\nwindow.addEventListener('keydown', function (e) {\n  if (keyBindingsMatch(e, config.binding)) {\n    e.preventDefault();\n    prettify();\n  } else if (keyBindingsMatch(e, config.copyBinding)) {\n    e.preventDefault();\n    prettify(true);\n  }\n});\n\n//# sourceURL=webpack://userscripts/./src/prettier-anything/prettier-anything.user.js?");
 
-/***/ })
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/prettier-anything/prettier-anything.user.js"]();
-/******/ 	
+function _objectSpread(target) { for (var i = 1, source; i < arguments.length; i++) { source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg), value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var deps = ['https://unpkg.com/prettier@2/standalone.js', 'https://unpkg.com/prettier@2/parser-babel.js'],
+    loadDep = function loadDep(url) {
+  return new Promise(function (resolve, reject) {
+    GM_xmlhttpRequest({
+      method: 'GET',
+      url: url,
+      onload: function onload(res) {
+        return resolve(res.responseText);
+      },
+      onerror: function onerror() {
+        return reject(new Error("Failed to load ".concat(url)));
+      }
+    });
+  });
+},
+    Config = GM_config([{
+  key: 'prettierrc',
+  label: 'Prettier Config',
+  "default": '{}',
+  type: 'text',
+  multiline: true,
+  resizable: true
+}, {
+  key: 'binding',
+  label: 'Key Binding',
+  type: 'keybinding',
+  "default": {
+    altKey: true,
+    shiftKey: true,
+    key: 'I'
+  },
+  requireModifier: true,
+  requireKey: true
+}, {
+  key: 'copyBinding',
+  label: 'Copy Key Binding',
+  type: 'keybinding',
+  "default": {
+    ctrlKey: true,
+    altKey: true,
+    shiftKey: true,
+    key: 'I'
+  },
+  requireModifier: true,
+  requireKey: true
+}]);
+
+GM_registerMenuCommand('Prettier Anywhere Settings', function () {
+  if (window.top === window.self) Config.setup();
+});
+var config = Config.load();
+
+Config.onsave = function (cfg) {
+  return config = cfg;
+};
+
+var p = function p() {
+  var _console;
+
+  return (_console = console).log.apply(_console, arguments), arguments.length <= 0 ? undefined : arguments[0];
+},
+    loaded = false,
+    load = function load() {
+  if (loaded) return;
+  loaded = true;
+  return Promise.all(deps.map(loadDep)).then(function (scripts) {
+    return scripts.map(eval);
+  }); // eslint-disable-line no-eval
+},
+    getSelection = function getSelection() {
+  var elem = document.activeElement;
+
+  if (['INPUT', 'TEXTAREA'].includes(elem.nodeName)) {
+    return elem.value.slice(elem.selectionStart, elem.selectionEnd);
+  } else if (elem.contentEditable) {
+    if (!document.getSelection().toString()) return;
+    document.execCommand('copy');
+    return navigator.clipboard.readText();
+  } else return document.getSelection().toString();
+},
+    insertText = function insertText(text) {
+  var elem = document.activeElement;
+
+  if (typeof InstallTrigger !== 'undefined' && ['INPUT', 'TEXTAREA'].includes(elem.nodeName)) {
+    elem.value = elem.value.slice(0, elem.selectionStart) + text + elem.value.slice(elem.selectionEnd);
+  } else {
+    document.execCommand('insertText', false, text);
+  }
+},
+    prettify = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(clip) {
+    var code, loadStart, conf, formatted;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            code = getSelection();
+            p('key combo HIT, selection = ', code, '; clip = ', clip);
+
+            if (code) {
+              _context.next = 4;
+              break;
+            }
+
+            return _context.abrupt("return", p('no selection, so nothing to do'));
+
+          case 4:
+            p('--- PRETTIER START ---');
+            p('Loading Prettier');
+            loadStart = Date.now();
+            _context.next = 9;
+            return load();
+
+          case 9:
+            p('Loaded, delta = ', Date.now() - loadStart);
+            conf = _objectSpread(_objectSpread({}, JSON.parse(config.prettierrc || '{}')), {}, {
+              parser: 'babel',
+              plugins: prettierPlugins
+            });
+            p('formatting using conf:', conf);
+            formatted = prettier.format(code, conf);
+            if (clip) GM_setClipboard(formatted);else insertText(formatted);
+            document.getSelection().empty();
+            p('BEFORE:\n', code);
+            p('AFTER:\n', formatted);
+            p('--- PRETTIER END ---');
+
+          case 18:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function prettify(_x) {
+    return _ref.apply(this, arguments);
+  };
+}(),
+    keyBindingsMatch = function keyBindingsMatch(a, b) {
+  return !a.ctrlKey === !b.ctrlKey && !a.altKey === !b.altKey && !a.shiftKey === !b.shiftKey && !a.metaKey === !b.metaKey && a.key.toUpperCase() === b.key.toUpperCase();
+};
+
+window.addEventListener('keydown', function (e) {
+  if (keyBindingsMatch(e, config.binding)) {
+    e.preventDefault();
+    prettify();
+  } else if (keyBindingsMatch(e, config.copyBinding)) {
+    e.preventDefault();
+    prettify(true);
+  }
+});
 /******/ })()
 ;
