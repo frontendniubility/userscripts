@@ -67,7 +67,16 @@ extend(Date.prototype, {
     return formattedDate;
   },
 });
+
+const p = (...args) => args.forEach((arg, index, all) => console.log(arg))
+
+let stringIncludesAny = function (s, ...arr) {
+
+  return new RegExp(arr.join('|')).test(s);
+}
+
 module.exports = {
   parseMeta,
-
+  p,
+  stringIncludesAny
 }

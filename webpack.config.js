@@ -5,14 +5,11 @@ const extend = require("extend");
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackUserscript = require('webpack-userscript')
 const {
-  parseMeta
+  parseMeta,
+  p,
+  stringIncludesAny
 } = require('./webpack.comom')
-const p = (...args) => args.forEach((arg, index, all) => console.log(arg))
 
-let stringIncludesAny = function (s, ...arr) {
-
-  return new RegExp(arr.join('|')).test(s);
-}
 
 let entry = glob
   .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
@@ -179,7 +176,6 @@ module.exports = (env, argv) => {
           } else {
 
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
-
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
             let buildtime = new Date(data.buildTime);
             let vstring = `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
@@ -192,12 +188,13 @@ module.exports = (env, argv) => {
                 p(`JSON parse error, file path :${versionpath} `)
               }
               var val = Object.entries(savedVersions).find(([k, v], idx) => k == data.chunkHash);
-              if (!!val && val.key == data.chunkHash) {
+              if (!!val) {// hash相同
                 //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
                 return extend(true, {}, header, {
                   version: val.value
                 });
               } else {
+                //hash不同
 
               }
             }
