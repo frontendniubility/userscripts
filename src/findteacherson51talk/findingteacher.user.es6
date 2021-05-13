@@ -39,7 +39,7 @@ import {
     asc,
     desc,
     sortByIndicator,
-    getBatchNumber,
+    // getBatchNumber,
     getLeftPageCount,
     getAutoNextPagesCount,
     getinfokey,

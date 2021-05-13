@@ -46,10 +46,10 @@ let getPaddedComp = (comp, len = 2) => {
     "f{1}": (date) => getPaddedComp(date.getMilliseconds(), 0), //millisecond,
     "b+": (date) => (date.getHours() >= 12 ? "PM" : "AM"),
   };
-
+Date.prototype._oldtostr = Date.prototype.toString;
 extend(Date.prototype, {
   toString: function (format) {
-    if (!format) return this.toLocaleDateString();
+    if (!format) return this._oldtostr();
     let formattedDate = format;
     for (let k in o) {
       if (new RegExp("(" + k + ")").test(format)) {
@@ -74,11 +74,21 @@ let stringIncludesAny = function (s, ...arr) {
 
   return new RegExp(arr.join('|')).test(s);
 }
+const typmap = {
+  dev: 1,
+  alpha: 2,
+  beta: 3,
+  pro: 5,
+  u1: 6,
+  u2: 7
+}
 
-function a(buildtime) {
+function a(buildtime, buildtypes) {
+  if (!typmap[buildtypes])
+    throw new Error(`build version type err:${buildtypes}`)
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.${buildtime.toString('Dhhmmss')}`;
+  return `${buildtime.toString('yyyy.M')}.${typmap[buildtypes]}${buildtime.toString('DDhhmmss')}`;
 }
 module.exports = {
   getVersionString: a,
