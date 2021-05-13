@@ -167,10 +167,7 @@ module.exports = (env, argv) => {
     plugins: [
       new WebpackUserscript({
         headers: function (data) {
-          
-          console.log(isDevServer)
           let origionpath = entry[data.chunkName];
-
           if (!fs.existsSync(origionpath)) {
             console.log(data)
             console.log(`--${data.chunkName}  --  ${entry[data.chunkName]}            

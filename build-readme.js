@@ -9,9 +9,12 @@ const parseMeta = script =>
   .split('\n')
   .map(line => line.match(/@([a-z]+)\s*([^\n]+)/i))
   .filter(match => match)
-  .reduce((meta, [, key, value]) => Object.assign(meta, {
-    [key]: value.trim()
-  }), {})
+  .reduce(
+    (meta, [, key, value]) =>
+    Object.assign(meta, {
+      [key]: value.trim()
+    }), {}
+  )
 
 const scriptData = (files, folder, file) => ({
   file,
@@ -20,71 +23,59 @@ const scriptData = (files, folder, file) => ({
   hasReadme: files.some(file => file.includes('README'))
 })
 
+const sourcepath = path.resolve(__dirname, 'src');
+
 const getScripts = () =>
   fs
-  .readdir(path.resolve(__dirname, 'dist')
-    .then(files => files.filter(file => !file.startsWith('.')))
-    .then(files =>
-      Promise.all(
-        files.map(maybeDir =>
-          fs.stat(maybeDir).then(handle =>
-            handle.isDirectory() ?
-            fs
-            .readdir(maybeDir)
-            .then(files => [files, files.find(file => file.endsWith('.user.js'))])
-            .then(([files, file]) => file && scriptData(files, maybeDir, file)) :
-            void 0
-          )
-        )
-      )
-    )
-    .then(scripts => scripts.filter(Boolean))
-    .then(scripts =>
-      Promise.all(
-        scripts.map(script =>
-          fs.readFile(script.path).then(buf => ({
-            ...script,
-            ...parseMeta(buf.toString())
-          }))
-        )
-      )
-    )
+  .readdir(sourcepath)
+  .then(filenames => filenames.filter(file => !file.startsWith('.')))
+   .then(filenames => filenames.map(file => path.resolve(sourcepath, file)))
+  .then(files =>
+    Promise.all(
+      files.map((maybeDir) => {
 
-    const baseUrl = 'https://github.com/niubilityfrontend/userscripts'
-    const tableHeader = '|Name|Links||\n|-|:-:|:-:|\n'
+        return fs.stat(maybeDir).then(handle =>
+          handle.isDirectory() ?
+          fs.readdir(maybeDir)
+          .then(files => [files, files.find(file => file.endsWith('.user.es6') || file.endsWith('.user.js'))])
+          .then(([files, file]) => file && scriptData(files, maybeDir, file)) : void 0
+        )
+      })
+    )
+  )
+  .then(scripts => scripts.filter(Boolean))
+  .then(scripts =>
+    Promise.all(
+      scripts.map(script =>
+        fs.readFile(script.path).then(buf => ({
+          ...script,
+          ...parseMeta(buf.toString())
+        }))))
+  )
 
-    const formatScriptLine = script => {
-      const installLink = `${baseUrl}/raw/master/${script.folder}/${script.file}`
-      const infoLink = script.hasReadme && `${baseUrl}/tree/master/${script.folder}`
-      return `|${script.name}|${
+const baseUrl = 'https://github.com/niubilityfrontend/userscripts'
+const tableHeader = '|Name|Links||\n|-|:-:|:-:|\n'
+
+const formatScriptLine = script => {
+  const installLink = `${baseUrl}/raw/master/dist/${path.parse(script.file).name}.js`
+  const infoLink = script.hasReadme && `${baseUrl}/tree/master/src/${path.parse(script.folder).name}`
+  return `|${script.name}|${
     infoLink ? `[Info](${infoLink})` : '_no readme_'
   }|[Install](${installLink})|`
-    }
+}
 
-    const buildReadme = () =>
-      getScripts()
-      .then(scripts =>
-        fs.readFile('README.template.md').then(buf =>
-          buf
-          .toString()
-          .replace(
-            '<SCRIPTS>',
-            tableHeader +
-            scripts
-            .filter(script => script.deprecated !== 'true')
-            .map(formatScriptLine)
-            .join('\n')
-          )
-          .replace(
-            '<UNMAINTAINED>',
-            tableHeader +
-            scripts
-            .filter(script => script.deprecated === 'true')
-            .map(formatScriptLine)
-            .join('\n')
-          )
-        )
-      )
-      .then(readme => fs.writeFile('./README.md', readme))
+const buildReadme = () =>
+  getScripts()
+  .then(scripts =>
+    fs.readFile('README.template.md').then(buf =>
+      buf
+      .toString()
+      .replace(
+        '<SCRIPTS>', tableHeader + scripts.filter(script => script.deprecated !== 'true').map(formatScriptLine).join('\n'))
+      .replace('<UNMAINTAINED>', tableHeader + scripts.filter(script => script.deprecated === 'true').map(formatScriptLine)
+        .join('\n'))
+    )
+  )
+  .then(readme => fs.writeFile('./README.md', readme))
 
-    buildReadme()
+buildReadme()
