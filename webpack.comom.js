@@ -74,12 +74,21 @@ let stringIncludesAny = function (s, ...arr) {
 
   return new RegExp(arr.join('|')).test(s);
 }
+const typmap = {
+  dev: 1,
+  alpha: 2,
+  beta: 3,
+  pro: 5,
+  u1: 6,
+  u2: 7
+}
 
-function a(buildtime) {
-  p(buildtime)
+function a(buildtime, buildtypes) {
+  if (!typmap[buildtypes])
+    throw new Error(`build version type err:${buildtypes}`)
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.${buildtime.toString('1DDhhmmss')}`;
+  return `${buildtime.toString('yyyy.M')}.${typmap[buildtypes]}${buildtime.toString('DDhhmmss')}`;
 }
 module.exports = {
   getVersionString: a,

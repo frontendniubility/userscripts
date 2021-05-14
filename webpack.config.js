@@ -3,7 +3,8 @@ const glob = require('glob')
 const fs = require('fs')
 const extend = require("extend");
 const TerserPlugin = require('terser-webpack-plugin');
-const WebpackUserscript = require('webpack-userscript')
+const WebpackUserscript = require('webpack-userscript');
+
 const {
   parseMeta,
   p,
@@ -31,8 +32,14 @@ module.exports = (env, argv) => {
       minimize: false,
       minimizer: [
         new TerserPlugin({
+          terserOptions: {
+            compress: false,
+            format: {
+              comments: true,
+            },
+          },
           extractComments: false,
-        }),
+        })
       ],
       //removeEmptyChunks: true
     },
@@ -172,42 +179,41 @@ module.exports = (env, argv) => {
 
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
-            let vstring = getVersionString(data.buildTime);
-            let curVersionJson = {
-              [data.chunkHash]: vstring
-            };
-            var newheader = {
-              version: vstring
-            };
+
             if (isDevServer) {
               //开发状态下
-              return extend(true, {}, header, newheader);
+              return extend(true, {}, header, {
+                version: getVersionString(data.buildTime, 'dev')
+              });
             } else { // 编译状态下（开发模式或者生产模式）
-
+              let vstring = getVersionString(data.buildTime, 'pro');
+              let curVersionJson = {
+                [data.chunkHash]: vstring
+              };
               if (!fs.existsSync(versionpath)) {
                 fs.writeFileSync(versionpath, curVersionJson);
               }
-
-              let savedVersionJson = {};
               try {
-                savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+
+                var newheader = {
+                  version: vstring
+                };
+                let savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+                if (!!savedVersionJson[data.chunkHash]) { // 存在此hash
+                  //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                  return extend(true, {}, header, {
+                    version: savedVersionJson[data.chunkHash]
+                  });
+                } else {
+                  //hash不同
+                  fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
+                  return extend(true, {}, header, newheader);
+                }
               } catch (e) {
                 p(`JSON parse error, file path :${versionpath} `)
-              }
-
-              if (!!savedVersionJson[data.chunkHash]) { // 存在此hash
-                //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-                return extend(true, {}, header, {
-                  version: savedVersionJson[data.chunkHash]
-                });
-              } else {
-                //hash不同
-                fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
                 return extend(true, {}, header, newheader);
               }
-
             }
-
           }
         },
         pretty: true,

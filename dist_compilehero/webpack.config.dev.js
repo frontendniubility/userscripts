@@ -35,8 +35,14 @@ module.exports = function (env, argv) {
   return {
     mode: isDev ? 'development' : 'production',
     optimization: {
-      minimize: false,
+      minimize: true,
       minimizer: [new TerserPlugin({
+        terserOptions: {
+          compress: false,
+          format: {
+            comments: false
+          }
+        },
         extractComments: false
       })] //removeEmptyChunks: true
 
