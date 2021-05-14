@@ -23,7 +23,7 @@ let entry = glob
     return entries;
   }, {});
 
- 
+
 module.exports = (env, argv) => {
   return {
     mode: env.NODE_ENV === 'development' ? 'development' : 'production',
@@ -200,8 +200,17 @@ module.exports = (env, argv) => {
                 let savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
                 if (!!savedVersionJson[data.chunkHash]) { // 存在此hash
                   //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                  console.log(savedVersions);
+                  var newsavedvers = extend({}, savedVersions.keys().reduce((pre, cur, i) => {
+                    if (i < 5) pre[cur] = savedVersions[cur];
+                    return pre
+                  }, {}), {
+                    [data.chunkHash]: savedVer
+                  });
+                  console.log(newsavedvers);
+                  fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), 'utf8');
                   return extend(true, {}, header, {
-                    version: savedVersionJson[data.chunkHash]
+                    version: savedVer
                   });
                 } else {
                   //hash不同
