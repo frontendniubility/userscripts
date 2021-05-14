@@ -197,17 +197,18 @@ module.exports = (env, argv) => {
                 var newheader = {
                   version: vstring
                 };
-                let savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
-                if (!!savedVersionJson[data.chunkHash]) { // 存在此hash
+                let savedVersions = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+                let savedVer = savedVersions[data.chunkHash];
+                if (!!savedVer) { // 存在此hash
                   //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-                  console.log(savedVersions);
-                  var newsavedvers = extend({}, savedVersions.keys().reduce((pre, cur, i) => {
-                    if (i < 5) pre[cur] = savedVersions[cur];
+
+                  var newsavedvers = extend({}, Object.entries(savedVersions).reduce((pre, [key, val], i) => {
+                    if (i < 5) pre[key] = val;
                     return pre
                   }, {}), {
                     [data.chunkHash]: savedVer
                   });
-                  console.log(newsavedvers);
+                  
                   fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), 'utf8');
                   return extend(true, {}, header, {
                     version: savedVer
@@ -218,7 +219,7 @@ module.exports = (env, argv) => {
                   return extend(true, {}, header, newheader);
                 }
               } catch (e) {
-                p(`JSON parse error, file path :${versionpath} `)
+                p(`JSON parse error, file path :${versionpath},Errors:${e} `)
                 return extend(true, {}, header, newheader);
               }
             }
