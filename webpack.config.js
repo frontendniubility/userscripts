@@ -23,11 +23,10 @@ let entry = glob
     return entries;
   }, {});
 
-const isDev = false; //env.NODE_ENV === 'development';
-
+ 
 module.exports = (env, argv) => {
   return {
-    mode: isDev ? 'development' : 'production',
+    mode: env.NODE_ENV === 'development' ? 'development' : 'production',
     optimization: {
       minimize: false,
       minimizer: [
@@ -60,7 +59,7 @@ module.exports = (env, argv) => {
       path: path.join(__dirname, 'dist'),
       publicPath: '/dist/',
       filename: '[name].js',
-      clean: true,
+      clean: false,
       chunkFilename: '[name].js'
     },
     module: {
