@@ -179,11 +179,11 @@ module.exports = (env, argv) => {
             var newheader = {
               version: vstring
             };
-            if (!isDevServer) {
+            if (isDevServer) {
               //开发状态下
               return extend(true, {}, header, newheader);
-            } else {
-              // 编译状态下（开发模式或者生产模式）
+            } else { // 编译状态下（开发模式或者生产模式）
+
               if (!fs.existsSync(versionpath)) {
                 fs.writeFileSync(versionpath, curVersionJson);
               }
@@ -195,7 +195,7 @@ module.exports = (env, argv) => {
                 p(`JSON parse error, file path :${versionpath} `)
               }
 
-              if (savedVersionJson.keys().include(data.chunkHash)) { // hash相同
+              if (!!savedVersionJson[data.chunkHash]) { // 存在此hash
                 //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
                 return extend(true, {}, header, {
                   version: savedVersionJson[data.chunkHash]

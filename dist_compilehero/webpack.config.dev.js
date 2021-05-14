@@ -171,7 +171,7 @@ module.exports = function (env, argv) {
             version: vstring
           };
 
-          if (!isDevServer) {
+          if (isDevServer) {
             //开发状态下
             return extend(true, {}, header, newheader);
           } else {
@@ -188,8 +188,8 @@ module.exports = function (env, argv) {
               p("JSON parse error, file path :".concat(versionpath, " "));
             }
 
-            if (savedVersionJson.keys().include(data.chunkHash)) {
-              // hash相同
+            if (!!savedVersionJson[data.chunkHash]) {
+              // 存在此hash
               //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
               return extend(true, {}, header, {
                 version: savedVersionJson[data.chunkHash]
