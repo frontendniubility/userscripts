@@ -24,7 +24,7 @@ let entry = glob
   }, {});
 
 const isDev = false; //env.NODE_ENV === 'development';
-const isDevServer = !!process.env.WEBPACK_DEV_SERVER;
+
 module.exports = (env, argv) => {
   return {
     mode: isDev ? 'development' : 'production',
@@ -180,7 +180,7 @@ module.exports = (env, argv) => {
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
 
-            if (isDevServer) {
+            if (process.env.WEBPACK_DEV_SERVER) {
               //开发状态下
               return extend(true, {}, header, {
                 version: getVersionString(data.buildTime, 'dev')
