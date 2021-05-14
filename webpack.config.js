@@ -31,10 +31,10 @@ module.exports = (env, argv) => {
       minimize: false,
       minimizer: [
         new TerserPlugin({
-          extractComments: true,
+          extractComments: false,
         }),
       ],
-      removeEmptyChunks: true
+      //removeEmptyChunks: true
     },
 
     entry,
@@ -108,11 +108,6 @@ module.exports = (env, argv) => {
           //use数组中loader执行顺序：从右到左，从下到上，依次执行
           test: /\.(sa|sc|le|c)ss$/, // 针对 .scss 或者 .css 后缀的文件设置 loader
           use:
-            // [
-            //   'style-loader',
-            //   'css-loader',
-            //   'less-loader'
-            // ]
             [{
                 loader: 'style-loader' // 用style标签将样式插入到head中
               },
