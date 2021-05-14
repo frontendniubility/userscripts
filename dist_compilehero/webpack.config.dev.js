@@ -1,13 +1,5 @@
 "use strict";
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var path = require('path');
@@ -175,38 +167,38 @@ module.exports = function (env, argv) {
 
           var curVersionJson = _defineProperty({}, data.chunkHash, vstring);
 
-          if (!isDevServer && !fs.existsSync(versionpath)) {
-            fs.writeFileSync(versionpath, curVersionJson);
-          }
+          var newheader = {
+            version: vstring
+          };
 
-          var savedVersionJson = {};
-
-          try {
-            savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
-          } catch (e) {
-            p("JSON parse error, file path :".concat(versionpath, " "));
-          }
-
-          var val = Object.entries(savedVersionJson).find(function (_ref, idx) {
-            var _ref2 = _slicedToArray(_ref, 2),
-                k = _ref2[0],
-                v = _ref2[1];
-
-            return k == data.chunkHash;
-          });
-
-          if (!!val) {
-            // hash相同
-            //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-            return extend(true, {}, header, {
-              version: val.value
-            });
+          if (!isDevServer) {
+            //开发状态下
+            return extend(true, {}, header, newheader);
           } else {
-            //hash不同
-            if (!isDevServer) fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
-            return extend(true, {}, header, {
-              version: curVersionJson[data.chunkHash]
-            });
+            // 编译状态下（开发模式或者生产模式）
+            if (!fs.existsSync(versionpath)) {
+              fs.writeFileSync(versionpath, curVersionJson);
+            }
+
+            var savedVersionJson = {};
+
+            try {
+              savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+            } catch (e) {
+              p("JSON parse error, file path :".concat(versionpath, " "));
+            }
+
+            if (savedVersionJson.keys().include(data.chunkHash)) {
+              // hash相同
+              //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+              return extend(true, {}, header, {
+                version: savedVersionJson[data.chunkHash]
+              });
+            } else {
+              //hash不同
+              fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
+              return extend(true, {}, header, newheader);
+            }
           }
         }
       },

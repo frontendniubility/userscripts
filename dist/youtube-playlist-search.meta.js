@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Search
-// @version     1.1.3
+// @version     2021.5.114030049
 // @description Allows you to quickly search through youtube playlists
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues

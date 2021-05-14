@@ -107,17 +107,16 @@ module.exports = (env, argv) => {
         {
           //use数组中loader执行顺序：从右到左，从下到上，依次执行
           test: /\.(sa|sc|le|c)ss$/, // 针对 .scss 或者 .css 后缀的文件设置 loader
-          use:
-            [{
-                loader: 'style-loader' // 用style标签将样式插入到head中
-              },
-              {
-                loader: 'css-loader',
-                options: {
-                  importLoaders: 1 // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
-                }
+          use: [{
+              loader: 'style-loader' // 用style标签将样式插入到head中
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1 // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
               }
-            ]
+            }
+          ]
         },
         {
           test: /\.(jpg|JPG|png)$/,
@@ -177,30 +176,36 @@ module.exports = (env, argv) => {
             let curVersionJson = {
               [data.chunkHash]: vstring
             };
-
-            if (!isDevServer && !fs.existsSync(versionpath)) {
-              fs.writeFileSync(versionpath, curVersionJson);
-            }
-
-            let savedVersionJson = {};
-            try {
-              savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
-            } catch (e) {
-              p(`JSON parse error, file path :${versionpath} `)
-            }
-            var val = Object.entries(savedVersionJson).find(([k, v], idx) => k == data.chunkHash);
-            if (!!val) { // hash相同
-              //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
-              return extend(true, {}, header, {
-                version: val.value
-              });
+            var newheader = {
+              version: vstring
+            };
+            if (!isDevServer) {
+              //开发状态下
+              return extend(true, {}, header, newheader);
             } else {
-              //hash不同
-              if (!isDevServer)
+              // 编译状态下（开发模式或者生产模式）
+              if (!fs.existsSync(versionpath)) {
+                fs.writeFileSync(versionpath, curVersionJson);
+              }
+
+              let savedVersionJson = {};
+              try {
+                savedVersionJson = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
+              } catch (e) {
+                p(`JSON parse error, file path :${versionpath} `)
+              }
+
+              if (savedVersionJson.keys().include(data.chunkHash)) { // hash相同
+                //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                return extend(true, {}, header, {
+                  version: savedVersionJson[data.chunkHash]
+                });
+              } else {
+                //hash不同
                 fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
-              return extend(true, {}, header, {
-                version: curVersionJson[data.chunkHash]
-              });
+                return extend(true, {}, header, newheader);
+              }
+
             }
 
           }
