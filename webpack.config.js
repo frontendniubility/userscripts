@@ -1,9 +1,11 @@
 const path = require('path')
 const glob = require('glob')
 const fs = require('fs')
-const extend = require("extend");
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackUserscript = require('webpack-userscript');
+const extend = require("extend")
+const TerserPlugin = require('terser-webpack-plugin')
+const WebpackUserscript = require('./webpackuserscript/index')
+
+// const WebpackUserscript = require('webpack-userscript')
 
 const {
   parseMeta,
@@ -153,7 +155,8 @@ module.exports = (env, argv) => {
             {
               loader: 'css-loader',
               options: {
-                importLoaders: 1 // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
+                importLoaders: 1, // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
+                sourceMap: false //如果改为true，会导致不通机器上chunkhash不同
               }
             }
           ]
@@ -212,7 +215,7 @@ module.exports = (env, argv) => {
 
             let header = parseMeta(fs.readFileSync(origionpath, 'utf8'));
             var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + '.version.json');
-
+            var hash = data.chunkHash;
             if (process.env.WEBPACK_DEV_SERVER) {
               //开发状态下
               log.debug('开发状态下' + versionpath);
@@ -228,7 +231,7 @@ module.exports = (env, argv) => {
 
               try {
                 let savedVersions = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
-                let savedVer = savedVersions[data.chunkHash];
+                let savedVer = savedVersions[hash];
                 if (savedVer) { // 存在此hash
 
                   return extend(true, {}, header, {
@@ -241,7 +244,7 @@ module.exports = (env, argv) => {
                     if (i < 5) pre[key] = val;
                     return pre
                   }, {
-                    [data.chunkHash]: newverstring
+                    [hash]: newverstring
                   });
                   log.debug('hash不存在 newsavedvers：' + JSON.stringify(newsavedvers));
                   fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), 'utf8');
@@ -252,7 +255,7 @@ module.exports = (env, argv) => {
                 p(`JSON parse error, file path :${versionpath},Errors:${e} `)
                 if (!fs.existsSync(versionpath)) {
                   let curVersionJson = {
-                    [data.chunkHash]: newverstring
+                    [hash]: newverstring
                   };
                   log.debug('文件不存在' + versionpath);
                   fs.writeFileSync(versionpath, JSON.stringify(curVersionJson));
