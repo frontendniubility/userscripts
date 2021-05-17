@@ -11,7 +11,42 @@ const {
   stringIncludesAny,
   getVersionString
 } = require('./webpack.comom')
+const {
+  createLogger,
+  format,
+  transports
+} = require('winston');
+const {
+  combine,
+  timestamp,
+  label,
+  prettyPrint
+} = format;
 
+
+
+const log = createLogger({
+  level: 'silly',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYYMMDD HHmmss.SSS'
+    }),
+    // utilFormatter(), // <-- this is what changed
+    format.colorize(),
+    format.printf(({
+      level,
+      message,
+      label,
+      timestamp
+    }) => `${timestamp} ${label || '-'} ${level}: ${message}`),
+  ),
+  transports: [
+    new transports.Stream({
+      stream: process.stderr,
+
+    })
+  ],
+});
 
 let entry = glob
   .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
@@ -22,7 +57,6 @@ let entry = glob
     entries[entryName] = current;
     return entries;
   }, {});
-
 
 module.exports = (env, argv) => {
   return {
@@ -181,45 +215,48 @@ module.exports = (env, argv) => {
 
             if (process.env.WEBPACK_DEV_SERVER) {
               //开发状态下
+              log.debug('开发状态下' + versionpath);
               return extend(true, {}, header, {
                 version: getVersionString(data.buildTime, 'dev')
               });
             } else { // 编译状态下（开发模式或者生产模式）
-              let vstring = getVersionString(data.buildTime, 'pro');
-              let curVersionJson = {
-                [data.chunkHash]: vstring
-              };
-              if (!fs.existsSync(versionpath)) {
-                fs.writeFileSync(versionpath, curVersionJson);
-              }
-              try {
+              let newverstring = getVersionString(data.buildTime, 'pro');
 
-                var newheader = {
-                  version: vstring
-                };
+              var newheader = {
+                version: newverstring
+              };
+
+              try {
                 let savedVersions = JSON.parse(fs.readFileSync(versionpath, 'utf8'));
                 let savedVer = savedVersions[data.chunkHash];
-                if (!!savedVer) { // 存在此hash
-                  //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                if (savedVer) { // 存在此hash
 
-                  var newsavedvers = extend({}, Object.entries(savedVersions).reduce((pre, [key, val], i) => {
-                    if (i < 5) pre[key] = val;
-                    return pre
-                  }, {}), {
-                    [data.chunkHash]: savedVer
-                  });
-                  
-                  fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), 'utf8');
                   return extend(true, {}, header, {
                     version: savedVer
                   });
                 } else {
-                  //hash不同
-                  fs.writeFileSync(versionpath, JSON.stringify(curVersionJson), 'utf8');
+                  //hash不存在
+                  //keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+                  var newsavedvers = Object.entries(savedVersions).reduce((pre, [key, val], i) => {
+                    if (i < 5) pre[key] = val;
+                    return pre
+                  }, {
+                    [data.chunkHash]: newverstring
+                  });
+                  log.debug('hash不存在 newsavedvers：' + JSON.stringify(newsavedvers));
+                  fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), 'utf8');
                   return extend(true, {}, header, newheader);
                 }
+
               } catch (e) {
                 p(`JSON parse error, file path :${versionpath},Errors:${e} `)
+                if (!fs.existsSync(versionpath)) {
+                  let curVersionJson = {
+                    [data.chunkHash]: newverstring
+                  };
+                  log.debug('文件不存在' + versionpath);
+                  fs.writeFileSync(versionpath, JSON.stringify(curVersionJson));
+                }
                 return extend(true, {}, header, newheader);
               }
             }
