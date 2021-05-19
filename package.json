@@ -41,6 +41,7 @@
     "@types/jquery": "^3.5.5",
     "@types/jqueryui": "^1.12.15",
     "@types/tampermonkey": "^4.0.0",
+    "@types/webpack": "^5.28.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-minify-numeric-literals": "^0.4.3",

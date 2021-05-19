@@ -1,8 +1,16 @@
+/// <reference types="./../node_modules/@types/webpack" />
+
+
 const fs = require('fs')
 const path = require('path')
-const { URL } = require('url')
+const {
+  URL
+} = require('url')
 const validateOptions = require('schema-utils')
-const { ConcatSource, RawSource } = require('webpack-sources')
+const {
+  ConcatSource,
+  RawSource
+} = require('webpack-sources')
 const userscriptMeta = require('@tkausl/userscript-meta')
 const _pick = require('lodash.pick')
 const pkgUp = require('pkg-up')
@@ -11,8 +19,10 @@ const loadHeaderFile = require('./loadHeaderFile')
 const createHeaderProvider = require('./createHeaderProvider')
 const interpolate = require('./interpolate')
 const optionsSchema = require('./schemas/options.json')
-const { computeSSRI } = require('./ssri')
-
+const {
+  computeSSRI
+} = require('./ssri')
+var webpack = require('webpack');
 const PLUGIN_NAME = 'WebpackUserscript'
 /**
  * @type {WebpackUserscriptOptions}
@@ -31,13 +41,17 @@ const DEFAULT_SSRI_CONFIG = {
 }
 const fileDependencies = new Set()
 
+/**
+ * @extends  {webpack} 
+ */
 module.exports = class WebpackUserscript {
   /**
    * @typedef ProxyScriptOptions
    * @property {boolean|(()=>boolean)} enable
    * @property {string} filename The filename of the proxy script
    * @property {string} baseUrl The base URL of the dev server
-   *//**
+   */
+  /**
    * @typedef WebpackUserscriptOptions
    * @property {object|string|((data: object) => object)} headers the header object
    * @property {boolean} metajs to generate *.meta.js
@@ -47,10 +61,11 @@ module.exports = class WebpackUserscript {
    * @property {string} updateBaseUrl base URL for update URL
    * @property {boolean|object} ssri enable subresource integrity support
    * @property {ProxyScriptOptions} proxyScript Containing a \"@require\" header in the meta block to include the main script
-   *//**
+   */
+  /**
    * @param {WebpackUserscriptOptions|string|((data: object) => object)} [options]
    */
-  constructor (options = {}) {
+  constructor(options = {}) {
     validateOptions.validate(optionsSchema, options, PLUGIN_NAME)
 
     options.proxyScript = Object.assign({
@@ -58,8 +73,8 @@ module.exports = class WebpackUserscript {
       filename: '[basename].proxy.user.js',
       enable: process.env.WEBPACK_DEV_SERVER === 'true'
     }, options.proxyScript)
-    options.proxyScript.enable = typeof options.proxyScript.enable === 'function'
-      ? options.proxyScript.enable() : options.proxyScript.enable
+    options.proxyScript.enable = typeof options.proxyScript.enable === 'function' ?
+      options.proxyScript.enable() : options.proxyScript.enable
 
     if (options.downloadBaseUrl && !options.updateBaseUrl) {
       options.updateBaseUrl = options.downloadBaseUrl
@@ -67,41 +82,42 @@ module.exports = class WebpackUserscript {
       options.downloadBaseUrl = options.updateBaseUrl
     }
 
-    this.options = Object.assign(
-      {},
+    this.options = Object.assign({},
       DEFAULT_CONFIG,
-      typeof options === 'string'
-        ? {
-          headers: loadHeaderFile(options, fileDependencies)
-        }
-        : typeof options === 'function' ? {
-          headers: options
-        }
-          : typeof options.headers === 'string' ? {
-            ...options,
-            headers: loadHeaderFile(options.headers, fileDependencies)
-          } : options
+      typeof options === 'string' ? {
+        headers: loadHeaderFile(options, fileDependencies)
+      } :
+      typeof options === 'function' ? {
+        headers: options
+      } :
+      typeof options.headers === 'string' ? {
+        ...options,
+        headers: loadHeaderFile(options.headers, fileDependencies)
+      } : options
     )
 
     this.buildNo = 0
     this.ssriCache = {}
   }
 
-  apply (compiler) {
-    const packageJsonFile = pkgUp.sync({ cwd: compiler.options.context })
-    const packageJson = typeof packageJsonFile === 'string'
-      ? JSON.parse(fs.readFileSync(packageJsonFile, 'utf8'))
-      : {}
+  /**
+   *  
+   * @param  { webpack.Compiler} compiler 
+   */
+  apply(compiler) {
+    const packageJsonFile = pkgUp.sync({
+      cwd: compiler.options.context
+    })
+    const packageJson = typeof packageJsonFile === 'string' ?
+      JSON.parse(fs.readFileSync(packageJsonFile, 'utf8')) : {}
     const packageInfoObj = {
       name: packageJson.name || '',
       version: packageJson.version || '',
       description: packageJson.description || '',
       author: packageJson.author || '',
       homepage: packageJson.homepage || '',
-      bugs: typeof packageJson.bugs === 'string' ? packageJson.bugs
-        : typeof packageJson.bugs === 'object' &&
-          typeof packageJson.bugs.url === 'string' ? packageJson.bugs.url
-          : ''
+      bugs: typeof packageJson.bugs === 'string' ? packageJson.bugs : typeof packageJson.bugs === 'object' &&
+        typeof packageJson.bugs.url === 'string' ? packageJson.bugs.url : ''
     }
     const headerProvider = createHeaderProvider(packageInfoObj, this.options.headers)
     fileDependencies.add(packageJsonFile)
@@ -113,22 +129,24 @@ module.exports = class WebpackUserscript {
         }
 
         for (const file of chunk.files) {
-          
+
           const hash = compilation.hash
           const querySplit = file.indexOf('?')
           const query = querySplit >= 0 ? file.substr(querySplit) : ''
 
           const filename = querySplit >= 0 ? file.substr(0, querySplit) : file
-          if (path.extname(filename) !== '.js') { continue }
+          if (path.extname(filename) !== '.js') {
+            continue
+          }
 
-          const basename = filename.endsWith('.user.js') ? path.basename(filename, '.user.js')
-            : filename.endsWith('.js') ? path.basename(filename, '.js')
-              : filename
-          const outputFile = this.options.renameExt && !filename.endsWith('.user.js')
-            ? filename.replace(/\.js$/, '') + '.user.js'
-            : filename
+          const basename = filename.endsWith('.user.js') ? path.basename(filename, '.user.js') :
+            filename.endsWith('.js') ? path.basename(filename, '.js') :
+            filename
+          const outputFile = this.options.renameExt && !filename.endsWith('.user.js') ?
+            filename.replace(/\.js$/, '') + '.user.js' :
+            filename
           const metaFile = basename + '.meta.js'
-// console.log(chunk)
+          
           const data = {
             hash,
             chunkHash: chunk.hash,
@@ -140,6 +158,7 @@ module.exports = class WebpackUserscript {
             query,
             buildNo: ++this.buildNo,
             buildTime: Date.now(),
+            chunk,
             ...packageInfoObj
           }
 
@@ -148,53 +167,52 @@ module.exports = class WebpackUserscript {
             tplHeaderObj.downloadURL = new URL(outputFile, this.options.downloadBaseUrl).toString()
           }
           if (!tplHeaderObj.updateURL && this.options.updateBaseUrl) {
-            tplHeaderObj.updateURL = !this.options.metajs ? tplHeaderObj.downloadURL
-              : new URL(metaFile, this.options.updateBaseUrl).toString()
+            tplHeaderObj.updateURL = !this.options.metajs ? tplHeaderObj.downloadURL :
+              new URL(metaFile, this.options.updateBaseUrl).toString()
           }
 
           if (this.options.ssri) { // sri support
-            const ssriOptions = Object.assign(
-              {},
+            const ssriOptions = Object.assign({},
               DEFAULT_SSRI_CONFIG,
-              typeof this.options.ssri === 'boolean' ? {}
-                : this.options.ssri
+              typeof this.options.ssri === 'boolean' ? {} :
+              this.options.ssri
             )
             const urlFilters = _pick(ssriOptions, ['include', 'exclude'])
             const integrityOptions = _pick(ssriOptions, ['algorithms', 'integrity', 'size'])
 
-            tplHeaderObj.require = !tplHeaderObj.require ? []
-              : !Array.isArray(tplHeaderObj.require) ? [tplHeaderObj.require]
-                : tplHeaderObj.require
-            tplHeaderObj.resource = !tplHeaderObj.resource ? []
-              : !Array.isArray(tplHeaderObj.resource) ? [tplHeaderObj.resource]
-                : tplHeaderObj.resource
+            tplHeaderObj.require = !tplHeaderObj.require ? [] :
+              !Array.isArray(tplHeaderObj.require) ? [tplHeaderObj.require] :
+              tplHeaderObj.require
+            tplHeaderObj.resource = !tplHeaderObj.resource ? [] :
+              !Array.isArray(tplHeaderObj.resource) ? [tplHeaderObj.resource] :
+              tplHeaderObj.resource
 
             const effectiveUrls = new Set()
             tplHeaderObj.require = await Promise.all(
               tplHeaderObj.require
-                .map(url => {
-                  effectiveUrls.add(url)
-                  if (!(url in this.ssriCache)) {
-                    this.ssriCache[url] = computeSSRI(url, 'require', urlFilters, integrityOptions)
-                  }
-                  return this.ssriCache[url]
-                })
+              .map(url => {
+                effectiveUrls.add(url)
+                if (!(url in this.ssriCache)) {
+                  this.ssriCache[url] = computeSSRI(url, 'require', urlFilters, integrityOptions)
+                }
+                return this.ssriCache[url]
+              })
             )
 
             tplHeaderObj.resource = await Promise.all(
               tplHeaderObj.resource
-                .map(url => {
-                  let name
-                  if (url.match(/^\w+\s+https?:\/\/.*/)) {
-                    [name, url] = url.split(/\s+/)
-                  }
+              .map(url => {
+                let name
+                if (url.match(/^\w+\s+https?:\/\/.*/)) {
+                  [name, url] = url.split(/\s+/)
+                }
 
-                  effectiveUrls.add(url)
-                  if (!(url in this.ssriCache)) {
-                    this.ssriCache[url] = computeSSRI(url, 'resource', urlFilters, integrityOptions).then((urlSSRI) => [name, urlSSRI].join(' '))
-                  }
-                  return this.ssriCache[url]
-                })
+                effectiveUrls.add(url)
+                if (!(url in this.ssriCache)) {
+                  this.ssriCache[url] = computeSSRI(url, 'resource', urlFilters, integrityOptions).then((urlSSRI) => [name, urlSSRI].join(' '))
+                }
+                return this.ssriCache[url]
+              })
             )
 
             for (const url in this.ssriCache) {
@@ -223,9 +241,8 @@ module.exports = class WebpackUserscript {
           if (this.options.proxyScript.enable) {
             const hotDevBaseUrl = interpolate(this.options.proxyScript.baseUrl, data)
             const hotDevFilename = interpolate(this.options.proxyScript.filename, data)
-            const requires = Array.isArray(headerObj.require) ? headerObj.require
-              : typeof headerObj.require === 'string' ? [headerObj.require]
-                : []
+            const requires = Array.isArray(headerObj.require) ? headerObj.require :
+              typeof headerObj.require === 'string' ? [headerObj.require] : []
             hotDevHeaderString = userscriptMeta.stringify({
               ...headerObj,
               require: [
