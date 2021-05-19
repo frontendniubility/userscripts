@@ -108,12 +108,11 @@
     "webpack-sources": "^2.2.0"
   },
   "main": "build-readme.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
+  "scripts": { 
+    "watch": "webpack --config webpack.config.js --watch",
     "build": "webpack --config webpack.config.js",
     "start": "webpack serve --config webpack.config.js --progress --open --color",
-    "server": "node server.js"
+    "buildreadme": "node build-readme.js"
   },
   "repository": {
     "type": "git",
