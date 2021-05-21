@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2021.5.520022700
+// @version     2021.5.526021259
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -14,32 +14,18 @@
 // @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/kijiji-middle-click.meta.js
 // ==/UserScript==
 
-/******/ (() => { // webpackBootstrap
-var __webpack_exports__ = {};
-// ==UserScript==
-// @name         Kijiji Middle Click
-// @namespace    kijiji-middle-click
-// @version      1.1
-// @description  make link middle clicking work on kijiji
-// @author       fuzetsu
-// @match        *://www.kijiji.ca/*
-// @grant        none
-// @require      https://greasyfork.org/scripts/5679-wait-for-elements/code/Wait%20For%20Elements.js?version=147465
-// @deprecated   true
-// ==/UserScript==
-(function () {
-  'use strict';
-
-  var allowMiddleClick = function allowMiddleClick(evt) {
-    if (evt.button === 1) evt.stopPropagation();
-  };
-
-  waitForElems({
-    sel: 'a',
-    onmatch: function onmatch(a) {
-      a.onclick = allowMiddleClick;
-    }
-  });
+(() => {
+    var __webpack_exports__ = {};
+    (function() {
+        "use strict";
+        var allowMiddleClick = function allowMiddleClick(evt) {
+            if (evt.button === 1) evt.stopPropagation();
+        };
+        waitForElems({
+            sel: "a",
+            onmatch: function onmatch(a) {
+                a.onclick = allowMiddleClick;
+            }
+        });
+    })();
 })();
-/******/ })()
-;

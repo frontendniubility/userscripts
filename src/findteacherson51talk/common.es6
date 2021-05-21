@@ -126,3 +126,4 @@
      calcThumbRate,
      submit
  }
+ 

@@ -7,12 +7,31 @@ const WebpackUserscript = require('./webpackuserscript/index')
 
 
 const {
-  parseMeta,
   p,
   stringIncludesAny,
   entries,
   log
 } = require('./webpack.comom')
+
+
+let parseMeta = script =>
+  script
+  .slice(script.indexOf('==UserScript=='), script.indexOf('==/UserScript=='))
+  .split('\n')
+  .map(line => line.match(/^\s*[\/]{2,}\s*@(\S+)\s+(.+)/i))
+  .filter(match => !!match)
+  .reduce((result, [, key, value]) => {
+    if (Object.keys(result).includes(key)) {
+      if (Array.isArray(result[key])) {
+        result[key].push(value)
+      } else {
+        result[key] = [result[key], value]
+      }
+    } else {
+      result[key] = value
+    }
+    return result
+  }, {})
 
 const typmap = {
   dev: 1,
@@ -23,18 +42,16 @@ const typmap = {
   u2: 7
 }
 
-function getVersionString(buildtime, buildtypes) {
-  if (!typmap[buildtypes])
-    throw new Error(`build version type err:${buildtypes}`)
+function getVersionString(buildtime) {
+
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.${typmap[buildtypes]}${buildtime.toString('DDhhmmss')}`;
+  return `${buildtime.toString('yyyy.M')}.5${buildtime.toString('DDhhmmss')}`;
 }
 
 let wpus = new WebpackUserscript({
   headers: function (data) {
     let origionpath = entries[data.chunkName];
-    p(origionpath)
     if (!fs.existsSync(origionpath)) {
       console.log(data)
       console.log(`--${data.chunkName}  --  ${entry[data.chunkName]}            
@@ -109,6 +126,7 @@ let wpus = new WebpackUserscript({
 
 
 module.exports = {
-
-  webpackUserscript: wpus
+  plugins: [
+    wpus,
+  ],
 }

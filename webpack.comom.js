@@ -14,24 +14,6 @@ const {
   prettyPrint
 } = format;
 
-let parseMeta = script =>
-  script
-  .slice(script.indexOf('==UserScript=='), script.indexOf('==/UserScript=='))
-  .split('\n')
-  .map(line => line.match(/^\s*[\/]{2,}\s*@(\S+)\s+(.+)/i))
-  .filter(match => !!match)
-  .reduce((result, [, key, value]) => {
-    if (Object.keys(result).includes(key)) {
-      if (Array.isArray(result[key])) {
-        result[key].push(value)
-      } else {
-        result[key] = [result[key], value]
-      }
-    } else {
-      result[key] = value
-    }
-    return result
-  }, {})
 
 let getPaddedComp = (comp, len = 2) => {
     if (len < 1) len = 1;
@@ -89,7 +71,7 @@ let stringIncludesAny = function (s, ...arr) {
 }
 
 let entries = glob
-  .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
+  .sync('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)')
   //  .filter((current, index, all) => stringIncludesAny(current, 'findteacher', 'test'))
   .reduce((entries, fullpath) => {
     entries[path.parse(fullpath).name] = fullpath;
@@ -122,7 +104,6 @@ const log = createLogger({
 
 module.exports = {
   entries,
-  parseMeta,
   p,
   stringIncludesAny,
   log

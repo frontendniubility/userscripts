@@ -1,4 +1,10 @@
 
+@import './../../libs/jquery-ui-1.12.1/jquery-ui.css';
+@import './../../libs/jqGrid-4.15.5/dist/css/ui.jqgrid.css';
+@import './../../libs/pace-1.2.4/themes/red/pace-theme-big-counter.css';
+
+
+
 .search-teachers .s-t-list .item-time-list {margin-top:315px;}
 .search-teachers .s-t-list .item { height: 679px; }
 .search-teachers .s-t-list .s-t-content { margin-right: 0px;}

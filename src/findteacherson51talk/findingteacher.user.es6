@@ -15,24 +15,19 @@
 // @grant GM_listValues
 // @grant GM_deleteValue
 // @grant GM_registerMenuCommand
-// @grant GM_getResourceText
-// @grant GM_addStyle
 // @require https://code.jquery.com/jquery-3.6.0.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
 // @require https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
-// @require https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/libs/gm_config.js
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/i18n/grid.locale-cn.js
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // ==/UserScript==
 
-import './../../libs/jquery-ui-1.12.1/jquery-ui.css';
-import './../../libs/jqGrid-4.15.5/dist/css/ui.jqgrid.css';
-import PaceCss from './../../libs/pace-1.2.4/themes/red/pace-theme-big-counter.css'
+
+import './findingteacher.user.css';
 
 import {
-    conf,
-    config
+    conf
 } from './bestteacher_gm_toolbar.es6'
 
 import {
@@ -78,7 +73,6 @@ import {
 import './detailpage'
 
 
-import './findingteacher.user.css';
 
 (function () {
     'use strict'
@@ -716,5 +710,5 @@ import './findingteacher.user.css';
             next()
         })
     }
-    x => x
+
 })()
