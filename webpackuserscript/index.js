@@ -1,6 +1,3 @@
-/// <reference types="./../node_modules/@types/webpack" />
-
-
 const fs = require('fs')
 const path = require('path')
 const {
@@ -22,7 +19,7 @@ const optionsSchema = require('./schemas/options.json')
 const {
   computeSSRI
 } = require('./ssri')
-var webpack = require('webpack');
+const webpack = require('webpack');
 const PLUGIN_NAME = 'WebpackUserscript'
 /**
  * @type {WebpackUserscriptOptions}
@@ -42,7 +39,8 @@ const DEFAULT_SSRI_CONFIG = {
 const fileDependencies = new Set()
 
 /**
- * @extends  {webpack} 
+ * 
+ * @extends webpack
  */
 module.exports = class WebpackUserscript {
   /**
@@ -101,8 +99,8 @@ module.exports = class WebpackUserscript {
   }
 
   /**
-   *  
-   * @param  { webpack.Compiler} compiler 
+   * 
+   * @param {webpack.Compiler} compiler 
    */
   apply(compiler) {
     const packageJsonFile = pkgUp.sync({
@@ -123,13 +121,14 @@ module.exports = class WebpackUserscript {
     fileDependencies.add(packageJsonFile)
 
     compiler.hooks.emit.tapPromise(PLUGIN_NAME, async compilation => {
+      
+      // compilation.logger.info(compilation.entries)
       for (const chunk of compilation.chunks) {
         if (!chunk.canBeInitial()) { // non-entry
           continue
         }
 
         for (const file of chunk.files) {
-
           const hash = compilation.hash
           const querySplit = file.indexOf('?')
           const query = querySplit >= 0 ? file.substr(querySplit) : ''
@@ -146,19 +145,17 @@ module.exports = class WebpackUserscript {
             filename.replace(/\.js$/, '') + '.user.js' :
             filename
           const metaFile = basename + '.meta.js'
-          
+
           const data = {
             hash,
             chunkHash: chunk.hash,
             chunkName: chunk.name,
-            //chunkContentHash:chunk.contentHash,
             file,
             filename,
             basename,
             query,
             buildNo: ++this.buildNo,
             buildTime: Date.now(),
-            chunk,
             ...packageInfoObj
           }
 

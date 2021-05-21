@@ -1,6 +1,6 @@
  
 // xxxxxxxxxxxxxx
-import PaceCss from './../../libs/pace-1.2.4/themes/red/pace-theme-big-counter.css'
+
 
 Pace.Options = {
   ajax: false, // disabled
@@ -10,7 +10,4 @@ Pace.Options = {
     selectors: ["#filterdialog"],
   },
 };
- 
-export { 
-  PaceCss
-};
+  

@@ -1,6 +1,18 @@
 const extend = require("extend");
 const fs = require('fs')
-
+const path = require('path')
+const glob = require('glob')
+const {
+  createLogger,
+  format,
+  transports
+} = require('winston');
+const {
+  combine,
+  timestamp,
+  label,
+  prettyPrint
+} = format;
 
 let parseMeta = script =>
   script
@@ -20,6 +32,7 @@ let parseMeta = script =>
     }
     return result
   }, {})
+
 let getPaddedComp = (comp, len = 2) => {
     if (len < 1) len = 1;
     comp = "" + comp;
@@ -74,25 +87,43 @@ let stringIncludesAny = function (s, ...arr) {
 
   return new RegExp(arr.join('|')).test(s);
 }
-const typmap = {
-  dev: 1,
-  alpha: 2,
-  beta: 3,
-  pro: 5,
-  u1: 6,
-  u2: 7
-}
 
-function a(buildtime, buildtypes) {
-  if (!typmap[buildtypes])
-    throw new Error(`build version type err:${buildtypes}`)
-  if (typeof buildtime != 'Date')
-    buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.${typmap[buildtypes]}${buildtime.toString('DDhhmmss')}`;
-}
+let entries = glob
+  .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
+  //  .filter((current, index, all) => stringIncludesAny(current, 'findteacher', 'test'))
+  .reduce((entries, fullpath) => {
+    entries[path.parse(fullpath).name] = fullpath;
+    return entries;
+  }, {});
+
+const log = createLogger({
+  level: 'silly',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYYMMDD HHmmss.SSS'
+    }),
+    // utilFormatter(), // <-- this is what changed
+    format.colorize(),
+    format.printf(({
+      level,
+      message,
+      label,
+      timestamp
+    }) => `${timestamp} ${label || '-'} ${level}: ${message}`),
+  ),
+  transports: [
+    new transports.Stream({
+      stream: process.stderr,
+
+    })
+  ],
+});
+
+
 module.exports = {
-  getVersionString: a,
+  entries,
   parseMeta,
   p,
-  stringIncludesAny
+  stringIncludesAny,
+  log
 }
