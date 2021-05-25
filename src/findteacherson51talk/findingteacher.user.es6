@@ -19,7 +19,6 @@
 // @require https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
 // @require https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
-// @require https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/libs/gm_config.js
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/i18n/grid.locale-cn.js
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // ==/UserScript==
@@ -28,8 +27,7 @@
 import './findingteacher.user.css';
 
 import {
-    conf,
-    config
+    conf
 } from './bestteacher_gm_toolbar.es6'
 
 import {

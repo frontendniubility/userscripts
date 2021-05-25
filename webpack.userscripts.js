@@ -23,12 +23,11 @@ const typmap = {
   u2: 7
 }
 
-function getVersionString(buildtime, buildtypes) {
-  if (!typmap[buildtypes])
-    throw new Error(`build version type err:${buildtypes}`)
+function getVersionString(buildtime) {
+
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.${typmap[buildtypes]}${buildtime.toString('DDhhmmss')}`;
+  return `${buildtime.toString('yyyy.M')}.5${buildtime.toString('DDhhmmss')}`;
 }
 
 let wpus = new WebpackUserscript({

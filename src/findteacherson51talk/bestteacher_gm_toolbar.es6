@@ -1,4 +1,6 @@
-import './gm_config.js'
+import {
+    GM_config
+} from './gm_config.js'
 
 const config = GM_config([{
         key: "pagecount",
@@ -35,6 +37,5 @@ config.onsave = (cfg) => {
 GM_registerMenuCommand("设置", config.setup);
 
 export {
-    conf,
-    config
+    conf
 }
