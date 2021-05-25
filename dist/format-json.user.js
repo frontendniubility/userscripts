@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2021.5.520022700
+// @version     2021.5.525025020
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -12,20 +12,9 @@
 // @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/format-json.meta.js
 // ==/UserScript==
 
-/******/ (() => { // webpackBootstrap
-var __webpack_exports__ = {};
-// ==UserScript==
-// @name         Format JSON
-// @namespace    format-json
-// @author       fuzetsu
-// @version      0.0.2
-// @description  Automatically prettify JSON responses
-// @match        *://*/*.json
-// @grant        GM_setClipboard
-// ==/UserScript==
-var json = JSON.parse(document.body.textContent),
-    formatted = JSON.stringify(json, null, 2);
-document.body.innerHTML = '<code><pre style="white-space:pre-wrap;word-break:break-word" id="jsonArea"></pre></code>';
-document.getElementById('jsonArea').textContent = formatted;
-/******/ })()
-;
+(() => {
+    var __webpack_exports__ = {};
+    var json = JSON.parse(document.body.textContent), formatted = JSON.stringify(json, null, 2);
+    document.body.innerHTML = '<code><pre style="white-space:pre-wrap;word-break:break-word" id="jsonArea"></pre></code>';
+    document.getElementById("jsonArea").textContent = formatted;
+})();

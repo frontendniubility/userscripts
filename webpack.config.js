@@ -1,8 +1,6 @@
 const path = require('path')
 const glob = require('glob')
 
-
-
 const TerserPlugin = require('terser-webpack-plugin')
 
 var rules = require('./webpack.rules');
@@ -28,13 +26,25 @@ module.exports = (env, argv) => {
       minimize: true,
       minimizer: [
         new TerserPlugin({
-          terserOptions: {
-            compress: false,
-            format: {
-              comments: true,
-            },
-          },
+          test: /\.(js|es6|cjs|mjs)(\?.*)?$/i,
           extractComments: false,
+          terserOptions: {
+            warnings: false,
+            parse: {},
+            compress: false,
+            // compress: {},
+            mangle: false, // Note `mangle.properties` is `false` by default.
+            output: {
+              comments: false,
+              beautify: true,
+              inline_script: false,
+            },
+            toplevel: false,
+            nameCache: null,
+            ie8: false,
+            keep_fnames: true,
+            keep_classnames: true,
+          },
         })
       ],
       //removeEmptyChunks: true

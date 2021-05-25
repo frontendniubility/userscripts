@@ -712,5 +712,5 @@ import './detailpage'
             next()
         })
     }
-    x => x
+
 })()
