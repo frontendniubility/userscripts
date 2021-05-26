@@ -7,8 +7,12 @@ const TerserPlugin = require('terser-webpack-plugin')
 var rulesconfig = require('./webpack.common.rules');
 var webpackUserscript = require('./webpack.userscripts').webpackUserscript;
 
+const {
+  VueLoaderPlugin
+} = require('vue-loader')
 
 const {
+  parseMeta,
   p,
   stringIncludesAny,
   entries,
@@ -81,6 +85,7 @@ module.exports = (env, argv) => {
     target: 'web',
     plugins: [
       webpackUserscript,
+      new VueLoaderPlugin()
     ],
     devServer: {
       publicPath: '/',
