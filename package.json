@@ -114,6 +114,9 @@
     "watch": "webpack --config webpack.config.js --watch",
     "build": "webpack --config webpack.config.js",
     "start": "webpack serve --config webpack.config.js --progress --open --color",
+    "watchvue": "webpack --config webpack.config.vue.js --watch",
+    "buildvue": "webpack --config webpack.config.vue.js",
+    "startvue": "webpack serve --config webpack.config.vue.js --progress --open --color",
     "buildreadme": "node build-readme.js"
   },
   "repository": {

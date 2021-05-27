@@ -7,7 +7,6 @@ const WebpackUserscript = require('./webpackuserscript/index')
 
 
 const {
-
   p,
   stringIncludesAny,
   entries,
@@ -128,6 +127,7 @@ let wpus = new WebpackUserscript({
 
 
 module.exports = {
-
-  webpackUserscript: wpus
+  plugins: [
+    wpus,
+  ],
 }

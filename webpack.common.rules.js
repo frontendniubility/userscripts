@@ -3,7 +3,9 @@ var path = require('path');
 module.exports = {
 
   module: {
-    rules: [{
+    rules: [
+
+      {
         test: /\.m?js$|\.es6$|\.js$/, //不能对js文件进行babel,有文件有问题
         include: [path.resolve('./src')],
         exclude: /node_modules/, //不需要对第三方模块进行转换，耗费性能
@@ -53,7 +55,9 @@ module.exports = {
       {
         //use数组中loader执行顺序：从右到左，从下到上，依次执行
         test: /\.(sa|sc|le|c)ss$/, // 针对 .scss 或者 .css 后缀的文件设置 loader
-        use: [{
+        use: [
+
+          {
             loader: 'style-loader' // 用style标签将样式插入到head中
           },
           {

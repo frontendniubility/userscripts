@@ -71,7 +71,7 @@ let stringIncludesAny = function (s, ...arr) {
 }
 
 let entries = glob
-  .sync(path.resolve('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)'))
+  .sync('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)')
   //  .filter((current, index, all) => stringIncludesAny(current, 'findteacher', 'test'))
   .reduce((entries, fullpath) => {
     entries[path.parse(fullpath).name] = fullpath;
