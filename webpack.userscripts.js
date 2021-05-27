@@ -52,7 +52,6 @@ function getVersionString(buildtime) {
 let wpus = new WebpackUserscript({
   headers: function (data) {
     let origionpath = entries[data.chunkName];
-    p(origionpath)
     if (!fs.existsSync(origionpath)) {
       console.log(data)
       console.log(`--${data.chunkName}  --  ${entry[data.chunkName]}            
