@@ -63,7 +63,13 @@ extend(Date.prototype, {
   },
 });
 
-const p = (...args) => args.forEach((arg, index, all) => console.log(arg))
+const p = (...args) => args.forEach((item, index, all) => {
+  if (typeof item == 'object') {
+    log.debug(JSON.stringify(item))
+  } else {
+    log.debug(item)
+  }
+})
 
 let stringIncludesAny = function (s, ...arr) {
 
