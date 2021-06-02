@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.5.526021259
+// @version     2021.6.502033611
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -1104,7 +1104,7 @@
                                 var jqr = $(r);
                                 if (jqr.find(".teacher-name-tit").length > 0) {
                                     var tempitem = jqr.find(".teacher-name-tit")[0];
-                                    tempitem.innerHTML = tempitem.innerHTML.replace("<!--", "").replace("-->", "");
+                                    tempitem.innerHTML = tempitem.innerHTML.replaceAll("<!--", "").replaceAll("-->", "");
                                 }
                                 if (jqr.find(".evaluate-content-left span").length >= 3) {
                                     var thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]), thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]), favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]), isfavorite = jqr.find(".go-search.cancel-collection").length > 0, agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean(""), tage = Number(agesstr[1]), age = Number(agesstr[0]), slevel = jqr.find(".sui-students").text();

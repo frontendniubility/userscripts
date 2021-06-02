@@ -18,7 +18,7 @@ import {
   submit
 } from './common.es6';
 
-import './jqueryextend'
+import './jqueryextend.es6'
 
 let maxrate = 0,
   minrate = 99999,
@@ -240,7 +240,7 @@ if (settings.isListPage) {
             let jqr = $(r);
             if (jqr.find(".teacher-name-tit").length > 0) {
               let tempitem = jqr.find(".teacher-name-tit")[0];
-              tempitem.innerHTML = tempitem.innerHTML.replace("<!--", "").replace("-->", "");
+              tempitem.innerHTML = tempitem.innerHTML.replaceAll("<!--", "").replaceAll("-->", "");
             }
             if (jqr.find(".evaluate-content-left span").length >= 3) {
               let thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
