@@ -65,9 +65,9 @@ extend(Date.prototype, {
 
 const p = (...args) => args.forEach((item, index, all) => {
   if (typeof item == 'object') {
-    log.debug(JSON.stringify(item))
+    logger.debug(JSON.stringify(item))
   } else {
-    log.debug(item)
+    logger.debug(item)
   }
 })
 
@@ -84,7 +84,7 @@ let entries = glob
     return entries;
   }, {});
 
-const log = createLogger({
+const logger = createLogger({
   level: 'silly',
   format: format.combine(
     format.timestamp({
@@ -112,5 +112,5 @@ module.exports = {
   entries,
   p,
   stringIncludesAny,
-  log
+  logger
 }
