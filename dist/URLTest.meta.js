@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2021.5.526021259
+// @version     2021.9.501150256
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/hunttingteacheron51talk
+// @supportURL  https://github.com/niubilityfrontend/findteacherson51talk
 // @match       *:*/*
 // @match       *127.0.0.1*:*/*
 // @match       *localhost*:*/*

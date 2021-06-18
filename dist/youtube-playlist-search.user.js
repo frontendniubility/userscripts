@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Search
-// @version     2021.5.526021259
+// @version     2021.8.524094107
 // @description Allows you to quickly search through youtube playlists
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -49,7 +49,7 @@
         return arr2;
     }
     function _iterableToArrayLimit(arr, i) {
-        var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
         if (_i == null) return;
         var _arr = [], _n = true, _d = false, _s, _e;
         try {

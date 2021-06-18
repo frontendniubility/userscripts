@@ -1,0 +1,29 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"removeComments": true,
+		"outDir": "./dist",
+		"watch": true,
+		"allowJs": true,
+		"checkJs": true,
+		"rootDir": "./",
+		"strict": true,
+		"module": "commonjs",
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"esModuleInterop": true,
+		"declaration": true,
+		"sourceMap": true
+	},
+	"include": [
+		"src/**/*.ts",
+		"libs/**/*.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"**/__tests__/*",
+		"**/tests/*",
+		"**/dist/*",
+		"libs/jqGrid-4.15.5/",
+	]
+}

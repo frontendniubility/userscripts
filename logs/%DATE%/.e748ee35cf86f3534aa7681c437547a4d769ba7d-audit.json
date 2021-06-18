@@ -1,0 +1,54 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "logs\\%DATE%\\.e748ee35cf86f3534aa7681c437547a4d769ba7d-audit.json",
+    "files": [
+        {
+            "date": 1629684529594,
+            "name": "logs\\2021-Aug-23\\webpacktest-2021-Aug-23.log",
+            "hash": "cbc8d5fd14341c41b2c036ea94c0e404"
+        },
+        {
+            "date": 1629769134123,
+            "name": "logs\\2021-Aug-24\\webpacktest-2021-Aug-24.log",
+            "hash": "be4a4b05527b146ac64edcc2530beac2"
+        },
+        {
+            "date": 1629858714688,
+            "name": "logs\\2021-Aug-25\\webpacktest-2021-Aug-25.log",
+            "hash": "6a2d368b3b15f50ca7bba7aa0105e46b"
+        },
+        {
+            "date": 1629943139950,
+            "name": "logs\\2021-Aug-26\\webpacktest-2021-Aug-26.log",
+            "hash": "57f69ef72fcd8c3d5914362ccc4e163e"
+        },
+        {
+            "date": 1630028078518,
+            "name": "logs\\2021-Aug-27\\webpacktest-2021-Aug-27.log",
+            "hash": "1ce3a71265042d8ad23bf4428133b402"
+        },
+        {
+            "date": 1630312005474,
+            "name": "logs\\2021-Aug-30\\webpacktest-2021-Aug-30.log",
+            "hash": "a428ee732e4cd968ef1fc3fbb6a123dd"
+        },
+        {
+            "date": 1630479770792,
+            "name": "logs\\2021-Sep-01\\webpacktest-2021-Sep-01.log",
+            "hash": "6f0eae8bfd880254ae48c84a7fafc6ad"
+        },
+        {
+            "date": 1630548765585,
+            "name": "logs\\2021-Sep-02\\webpacktest-2021-Sep-02.log",
+            "hash": "6370b92abc17f0c2070cf11c2ae0e957"
+        },
+        {
+            "date": 1630632557100,
+            "name": "logs\\2021-Sep-03\\webpacktest-2021-Sep-03.log",
+            "hash": "fa5f470a76da67a1a5df0f77e0ea5626"
+        }
+    ]
+}

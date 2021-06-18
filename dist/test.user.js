@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2021.5.526021259
+// @version     2021.8.530162733
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -11,15 +11,10 @@
 
 (() => {
     var __webpack_exports__ = {};
-    var p = function p() {
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-        return args.forEach((function(arg, index, all) {
-            return console.log(arg);
-        }));
-    }, buildtime = new Date;
-    p(buildtime);
-    p("dwws223");
-    p(3);
+    var a = function a(_a) {
+        return _a;
+    }, c = function c(_c) {
+        return _c;
+    }, r = a(c(1));
+    c(r);
 })();

@@ -13,7 +13,7 @@
 // @grant        GM_registerMenuCommand
 // @require      https://cdn.jsdelivr.net/gh/kufii/My-UserScripts@00302ac8bd875599ed97df07b379b58f9b4932bd/libs/gm_config.js
 // ==/UserScript==
-/* global prettier prettierPlugins GM_setClipboard GM_xmlhttpRequest GM_registerMenuCommand GM_config */
+
 
 'use strict'
 

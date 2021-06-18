@@ -3,9 +3,7 @@
 Various userscripts maintained by webpack, and also hosted on this repository.
 if you want to add a new script, just need 2 steps, first, fork this repository then secondly add folder in the `src`,  then edit your userscipt(the extension should be `.user.js` or `.user.es6` or `.user.mjs` ) , if you debug or release your scripts, you need run command -  `npm run start` or `npm run build` .
 
-This repository is inspired by,
-[userscript](https://github.com/fuzetsu/userscripts)
-[webpack-userscript](https://github.com/momocow/webpack-userscript)
+This repository is inspired by [userscript](https://github.com/fuzetsu/userscripts) and [webpack-userscript](https://github.com/momocow/webpack-userscript).
 
 You can install the script here on github to always have the latest development version (links below).
 
@@ -17,7 +15,7 @@ View more information about a particular script by clicking on its name.
 |-|:-:|:-:|
 |Auto Close YouTube Ads|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/auto-close-youtube-ads)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/auto-close-youtube-ads.user.js)|
 |Crunchyroll Video Utilities|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/crunchyroll-video-utilities)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/crunchyroll-video-utilties.user.js)|
-|BestTeacher|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/findteacherson51talk)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/findingteacher.user.js)|
+|Who's the Best Teacher|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/findteacherson51talk)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/findingteacher.user.js)|
 |Format JSON|_no readme_|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/format-json.user.js)|
 |URLTest|_no readme_|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/URLTest.user.js)|
 |Kitsu MAL Rating|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/kitsu-mal-rating)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/kitsu-mal-rating.user.js)|

@@ -3,6 +3,11 @@ const path = require('path')
 
 const p = (...args) => (console.log(...args), args[0])
 
+/**
+ * 
+ * @param {string} script 
+ * @returns 
+ */
 const parseMeta = script =>
   script
   .slice(script.indexOf('==UserScript=='), script.indexOf('==/UserScript=='))

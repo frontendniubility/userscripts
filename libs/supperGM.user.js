@@ -127,8 +127,8 @@
         }
       }
       var expiredkey = expiredkeybasic + varName;
-      var expire = GM_getValue(expiredkey);
-      if (new Date().getTime() - expire > expiredMilliseconds) {
+      var updateTime = GM_getValue(expiredkey);
+      if (new Date().getTime() - updateTime > expiredMilliseconds) {
         if (typeof GM_deleteValue != "function") {
           GM_deleteValue(varName);
           GM_deleteValue(expiredkey);
