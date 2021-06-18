@@ -253,6 +253,7 @@ import './detailpage'
                         width: '45px'
                     })
                     .val(GM_getValue('tinfoexprhours', configExprMilliseconds / 3600000))
+                    .hide()
                     .end()
                     //清空缓存
                     .eq(3)

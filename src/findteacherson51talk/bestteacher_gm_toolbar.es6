@@ -11,10 +11,17 @@ const config = GM_config([{
     },
     {
         key: "newBatcherKeyHours",
-        label: "批次更新间隔（小时），0为每次更新",
+        label: "批次号缓存（小时）,0为每次更新",
         default: 24,
         type: "dropdown",
         values: [0, 1, 2, 3, 5, 10, 24, 168, 168000],
+    },
+    {
+        key: "tinfoexprhours",
+        label: "教师数据缓存过期时间（小时）",
+        default: 139,
+        type: "dropdown",
+        values: [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 179, 181, 191, 193, 197, 199],
     },
     {
         key: "markRankRed",
