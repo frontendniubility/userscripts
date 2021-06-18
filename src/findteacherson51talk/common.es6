@@ -20,7 +20,7 @@
      isListPage: url.includes("reservenew"),
      isCoursePage: url.includes("study_center"),
  };
- 
+
  let configExprMilliseconds = 3600000 * conf.tinfoexprhours; //缓存7天小时
  let num = /[0-9]*/g;
 
@@ -63,8 +63,14 @@
  };
 
  function getBatchNumber() {
-     if (conf.newBatcherKeyHours <= 0) return Date.now();
-     return parseInt(Date.now() / conf.newBatcherKeyHours / 3600000) * conf.newBatcherKeyHours * 3600000;
+     var cur = Date.now();
+     if (conf.newBatcherKeyHours <= 0) cur;
+     let saved = parseInt(GM_getValue('_getBatchNumber'));
+     if (!saved || (Date.now() - saved) > conf.newBatcherKeyHours * 3600000) {
+         GM_setValue('_getBatchNumber', cur)
+         return cur;
+     }
+     return saved;
  }
 
  function getLeftPageCount() {
@@ -126,4 +132,3 @@
      calcThumbRate,
      submit
  }
- 

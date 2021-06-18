@@ -444,7 +444,7 @@ import './detailpage'
                                         formatter: function formatter(value, options, rData) {
                                             let date = new Date(Number(value))
                                             if (date instanceof Date && !isNaN(date.valueOf())) {
-                                                return date.toString('MMddHHmm')
+                                                return date.toString('HHmmss')
                                             }
                                             return value
                                         }

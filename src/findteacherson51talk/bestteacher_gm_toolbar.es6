@@ -11,7 +11,7 @@ const config = GM_config([{
     },
     {
         key: "newBatcherKeyHours",
-        label: "批次号缓存（小时）,0为每次更新",
+        label: "排名缓存（小时）,0为每次更新",
         default: 24,
         type: "dropdown",
         values: [0, 1, 2, 3, 5, 10, 24, 168, 168000],
