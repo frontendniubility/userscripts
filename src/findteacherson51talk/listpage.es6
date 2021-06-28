@@ -133,20 +133,20 @@ function getTeacherInfoFromListPageUI(jqel) {
   })();
   let name = jqel.find(".teacher-name").text();
   let type = $(".s-t-top-list .li-active").text();
-  let effectivetime = getBatchNumber();
+  let batchNumber = getBatchNumber();
   if (type == "收藏外教") {
     let isfavorite = true;
     return {
       label,
       name,
-      effectivetime,
+      batchNumber,
       isfavorite,
     };
   } else
     return {
       label,
       name,
-      effectivetime,
+      batchNumber,
       type,
     };
 }
@@ -183,20 +183,20 @@ if (settings.isListPage) {
             GM_setValue("autonextpagecount", 0);
             $(this).dialog("close");
           },
-          [`取后${(remainPages*0.25).toFixed(0)}页`]: function() {
-          sessionStorage.setItem('selectedTimeSlots', '');
-          GM_setValue('autonextpagecount', (remainPages * 0.25).toFixed(0));
-          $(this).dialog("close");
+          [`取后${(remainPages*0.25).toFixed(0)}页`]: function () {
+            sessionStorage.setItem('selectedTimeSlots', '');
+            GM_setValue('autonextpagecount', (remainPages * 0.25).toFixed(0));
+            $(this).dialog("close");
           },
-          [`取后${(remainPages*0.5).toFixed(0)}页`]: function() {
-          sessionStorage.setItem('selectedTimeSlots', '');
-          GM_setValue('autonextpagecount', (remainPages * 0.5).toFixed(0));
-          $(this).dialog("close");
+          [`取后${(remainPages*0.5).toFixed(0)}页`]: function () {
+            sessionStorage.setItem('selectedTimeSlots', '');
+            GM_setValue('autonextpagecount', (remainPages * 0.5).toFixed(0));
+            $(this).dialog("close");
           },
-          [`取后${(remainPages*0.75).toFixed(0)}页`]: function() {
-          sessionStorage.setItem('selectedTimeSlots', '');
-          GM_setValue('autonextpagecount', (remainPages * 0.75).toFixed(0));
-          $(this).dialog("close");
+          [`取后${(remainPages*0.75).toFixed(0)}页`]: function () {
+            sessionStorage.setItem('selectedTimeSlots', '');
+            GM_setValue('autonextpagecount', (remainPages * 0.75).toFixed(0));
+            $(this).dialog("close");
           },
         },
       });
@@ -216,12 +216,12 @@ if (settings.isListPage) {
         let tinfo_cached = GM_getValue(tinfokey);
         if (tinfo_cached) {
           let now = Date.now();
-          if (!tinfo_cached.expire) {
-            tinfo_cached.expire = new Date(1970, 1, 1).getTime();
+          if (!tinfo_cached.updateTime) {
+            tinfo_cached.updateTime = new Date(1970, 1, 1).getTime();
           }
           tinfo_cached = $.extend(tinfo_cached, tInfoFromListPageUI);
           GM_setValue(tinfokey, tinfo_cached);
-          if (now - tinfo_cached.expire < configExprMilliseconds) {
+          if (now - tinfo_cached.updateTime < configExprMilliseconds) {
             updateTeacherinfoToUI(jqel, tinfo_cached);
             next();
             return true;
@@ -233,7 +233,7 @@ if (settings.isListPage) {
           url: window.location.protocol + "//www.51talk.com/TeacherNew/teacherComment?tid=" + tid + "&type=bad&has_msg=1",
           type: "GET",
           dateType: "html",
-          success: function (r) {
+          success: /** @param {document} r */ function (r) {
             let jqr = $(r);
             if (jqr.find(".teacher-name-tit").length > 0) {
               let tempitem = jqr.find(".teacher-name-tit")[0];
@@ -245,7 +245,7 @@ if (settings.isListPage) {
               let favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
               let isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
               var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
-               
+
               let tage = Number(agesstr[1]);
               let age = Number(agesstr[0]);
               let slevel = jqr.find(".sui-students").text();
@@ -259,7 +259,7 @@ if (settings.isListPage) {
                 thumbupRate: 100,
                 favoritesCount: favoritesCount,
                 isfavorite: isfavorite,
-                expire: Date.now(),
+                updateTime: Date.now(),
               };
               tinfo = $.extend(tinfo, tInfoFromListPageUI);
               tinfo.thumbupRate = calcThumbRate(tinfo);

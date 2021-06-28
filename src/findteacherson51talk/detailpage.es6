@@ -20,10 +20,12 @@ import {
 
 if (settings.isDetailPage) {
     function processTeacherDetailPage(jqr) {
+      
+        let tinfo = GM_getValue(getinfokey(), {});
+        
         jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
             return val.replaceAll("<!--", "").replaceAll("-->", "");
         });
-        let tinfo = GM_getValue(getinfokey(), {});
         tinfo.label = (function () {
             let l = 0;
             $.each(jqr.find(".t-d-label").text().match(num).clean(""), function (i, val) {
@@ -32,15 +34,15 @@ if (settings.isDetailPage) {
             return l;
         })();
 
-        //if never set expire then
-        if (!tinfo.expire) tinfo.expire = Date.now();
+        //if never set updateTime then
+        if (!tinfo.updateTime) tinfo.updateTime = Date.now();
 
         if (window.location.href.toLocaleLowerCase().includes("teachercomment")) {
             tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
             tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
             tinfo.thumbupRate = calcThumbRate(tinfo);
             tinfo.slevel = jqr.find(".sui-students").text();
-            tinfo.expire = Date.now();
+            tinfo.updateTime = Date.now();
         }
         tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
         tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
@@ -53,8 +55,9 @@ if (settings.isDetailPage) {
         tinfo.tage = Number(agesstr[1]);
         tinfo.age = Number(agesstr[0]);
 
-        tinfo.effectivetime = getBatchNumber();
+        tinfo.batchNumber = getBatchNumber();
         tinfo.indicator = calcIndicator(tinfo);
+        
         GM_setValue(getinfokey(), tinfo);
         jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
             return `${val}

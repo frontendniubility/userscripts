@@ -394,7 +394,7 @@ import './detailpage'
                                 indicator: Number(val.indicator),
                                 //'favoritesCount': val.favoritesCount,
                                 //'isfavorite': val.isfavorite,
-                                //'expire': Date.now(),
+                                //'updateTime': Date.now(),
                                 rank: indexs[val.type]
                             })
                             //GM_setValue("tinfo-"+t.tid,t);
@@ -433,8 +433,8 @@ import './detailpage'
                                 colModel: [
                                     //
                                     {
-                                        name: 'effectivetime',
-                                        index: 'effectivetime',
+                                        name: 'batchNumber',
+                                        index: 'batchNumber',
                                         width: 45,
                                         sorttype: 'float',
                                         align: 'right',
@@ -591,8 +591,8 @@ import './detailpage'
                                         }
                                     }, //
                                     {
-                                        name: 'expire',
-                                        index: 'expire',
+                                        name: 'updateTime',
+                                        index: 'updateTime',
                                         width: 35,
                                         sorttype: 'Date',
                                         align: 'right',
@@ -620,7 +620,7 @@ import './detailpage'
                                 rowNum: 10,
                                 rowList: [5, 10, 20, 30],
                                 pager: '#pager5',
-                                sortname: 'effectivetime desc,indicator desc',
+                                sortname: 'batchNumber desc,indicator desc',
                                 viewrecords: true,
                                 multiSort: true,
                                 sortorder: 'desc',

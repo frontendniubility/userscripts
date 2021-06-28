@@ -112,6 +112,49 @@
      }
      $.dequeue(document);
  }
+ /**
+  * 
+  * @param  {JQuery<document>} jqr the all html page elements
+  * @returns 
+  */
+ function getTeacherInfoFromDetailPage(jqr) {
+
+     jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
+         return val.replaceAll("<!--", "").replaceAll("-->", "");
+     });
+
+     let tinfo = {
+         label: (function () {
+             let l = 0;
+             $.each(jqr.find(".t-d-label").text().match(num).clean(""), function (i, val) {
+                 l += Number(val);
+             });
+             return l;
+         })(),
+         updateTime: Date.now(),
+     }
+     if (jqr.find(".evaluate-content-left span").length >= 3) {
+
+         tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
+         tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
+         tinfo.thumbupRate = calcThumbRate(tinfo);
+         tinfo.slevel = jqr.find(".sui-students").text();
+     }
+     tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
+     tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
+
+     tinfo.name = jqr.find(".t-name").text().trim();
+     var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
+     tinfo.tage = Number(agesstr[1]);
+     tinfo.age = Number(agesstr[0]);
+
+     tinfo.batchNumber = getBatchNumber();
+
+     tinfo.thumbupRate = calcThumbRate(tinfo);
+     tinfo.indicator = calcIndicator(tinfo);
+     
+     return tinfo;
+ }
 
  export {
      url,
