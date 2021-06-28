@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.6.528145500
+// @version     2021.6.528171552
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

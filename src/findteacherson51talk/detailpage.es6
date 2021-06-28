@@ -15,60 +15,19 @@ import {
     getinfokey,
     calcIndicator,
     calcThumbRate,
-    submit
+    submit,
+    getTeacherInfoFromDetailPage
 } from './common.es6';
 
 if (settings.isDetailPage) {
     function processTeacherDetailPage(jqr) {
+
+        let tinfo_saved = GM_getValue(getinfokey(), {});
       
-        let tinfo = GM_getValue(getinfokey(), {});
-        
-        jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
-            return val.replaceAll("<!--", "").replaceAll("-->", "");
-        });
-        tinfo.label = (function () {
-            let l = 0;
-            $.each(jqr.find(".t-d-label").text().match(num).clean(""), function (i, val) {
-                l += Number(val);
-            });
-            return l;
-        })();
+        tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
 
-        //if never set updateTime then
-        if (!tinfo.updateTime) tinfo.updateTime = Date.now();
+        GM_setValue(getinfokey(), tinfo_saved);
 
-        if (window.location.href.toLocaleLowerCase().includes("teachercomment")) {
-            tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
-            tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
-            tinfo.thumbupRate = calcThumbRate(tinfo);
-            tinfo.slevel = jqr.find(".sui-students").text();
-            tinfo.updateTime = Date.now();
-        }
-        tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
-        tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
-
-        tinfo.name = jqr.find(".t-name").text().trim();
-        //无法获取type
-        //tinfo.type = $('.s-t-top-list .li-active').text().trim();
-
-        var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
-        tinfo.tage = Number(agesstr[1]);
-        tinfo.age = Number(agesstr[0]);
-
-        tinfo.batchNumber = getBatchNumber();
-        tinfo.indicator = calcIndicator(tinfo);
-        
-        GM_setValue(getinfokey(), tinfo);
-        jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
-            return `${val}
-  <span class="age age-line"><label title='指标'>${tinfo.indicator}</label></span>
-  <span class="age age-line"><label title='好评率'>${tinfo.thumbupRate}%</label></span>
-  <span class="age age-line"><label title='被赞数量'>${tinfo.thumbup}</label></span>
-  <span class="age age-line"><label title='被踩数量'>${tinfo.thumbdown}</label></span>
-  <span class="age age-line"><label title='评论标签数量'>${tinfo.label}</label></span>
-    <span class="age age-line"><label title='在同类别教师中的排名'><span id="teacherRank"></span></label></span>
-  `;
-        });
     }
     submit(function (next) {
         processTeacherDetailPage($(document));

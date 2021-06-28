@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.6.528145500
+// @version     2021.6.528171552
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -682,11 +682,11 @@
             type: "dropdown",
             values: [ 0, 5, 10, 20, 50, 1e3 ]
         }, {
-            key: "newBatcherKeyHours",
-            label: "排名缓存（小时）,0为每次更新",
+            key: "newBatcherKeyMinutes",
+            label: "排名缓存（分钟）,0为每次更新",
             default: 24,
             type: "dropdown",
-            values: [ 0, 1, 2, 3, 5, 10, 24, 168, 168e3 ]
+            values: [ 0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 179, 181, 191, 193, 197, 199 ]
         }, {
             key: "tinfoexprhours",
             label: "教师数据缓存过期时间（小时）",
@@ -748,9 +748,9 @@
         };
         function getBatchNumber() {
             var cur = Date.now();
-            if (conf.newBatcherKeyHours <= 0) cur;
+            if (conf.newBatcherKeyMinutes <= 0) cur;
             var saved = parseInt(GM_getValue("_getBatchNumber"));
-            if (!saved || Date.now() - saved > conf.newBatcherKeyHours * 36e5) {
+            if (!saved || Date.now() - saved > conf.newBatcherKeyMinutes * 6e5) {
                 GM_setValue("_getBatchNumber", cur);
                 return cur;
             }
@@ -768,9 +768,14 @@
             return "tinfo-" + gettid();
         }
         function calcIndicator(tinfo) {
+            if (isNaN(tinfo.label)) tinfo.label = 0;
+            if (isNaN(tinfo.thumbupRate)) tinfo.thumbupRate = 0;
+            if (isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = 0;
             return Math.ceil(tinfo.label * tinfo.thumbupRate / 100) + tinfo.favoritesCount;
         }
         function calcThumbRate(tinfo) {
+            if (isNaN(tinfo.thumbdown)) tinfo.thumbdown = 0;
+            if (isNaN(tinfo.thumbup)) tinfo.thumbup = 0;
             var all = tinfo.thumbdown + tinfo.thumbup;
             if (all < 1) all = 1;
             return ((tinfo.thumbup + 1e-5) / all).toFixed(2) * 100;
@@ -781,6 +786,42 @@
                 return;
             }
             $.dequeue(document);
+        }
+        function getTeacherInfoFromDetailPage() {
+            var tinfo_saved = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}, jqr = arguments.length > 1 ? arguments[1] : undefined, tinfo_latest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+            jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
+                return val.replaceAll("<!--", "").replaceAll("-->", "");
+            }));
+            var tinfo = {
+                label: function() {
+                    var l = 0;
+                    $.each(jqr.find(".t-d-label").text().match(num).clean(""), (function(i, val) {
+                        l += Number(val);
+                    }));
+                    return l;
+                }(),
+                updateTime: Date.now()
+            };
+            if (jqr.find(".evaluate-content-left span").length >= 3) {
+                tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
+                tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
+                tinfo.thumbupRate = calcThumbRate(tinfo);
+                tinfo.thumbupRate = calcThumbRate(tinfo);
+                tinfo.indicator = calcIndicator(tinfo);
+                tinfo.slevel = jqr.find(".sui-students").text();
+            }
+            tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
+            tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
+            tinfo.name = jqr.find(".t-name").text().trim();
+            var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
+            tinfo.tage = Number(agesstr[1]);
+            tinfo.age = Number(agesstr[0]);
+            tinfo.batchNumber = getBatchNumber();
+            tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
+            jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
+                return "".concat(val, "\n  <span class=\"age age-line\"><label title='指标'>").concat(tinfo_saved.indicator, "</label></span>\n  <span class=\"age age-line\"><label title='好评率'>").concat(tinfo_saved.thumbupRate, "%</label></span>\n  <span class=\"age age-line\"><label title='被赞数量'>").concat(tinfo_saved.thumbup, "</label></span>\n  <span class=\"age age-line\"><label title='被踩数量'>").concat(tinfo_saved.thumbdown, "</label></span>\n  <span class=\"age age-line\"><label title='评论标签数量'>").concat(tinfo_saved.label, '</label></span>\n    <span class="age age-line"><label title=\'在同类别教师中的排名\'><span id="teacherRank"></span></label></span>\n  ');
+            }));
+            return tinfo;
         }
         const propertiesCaseInsensitive = class {
             has(target, prop) {
@@ -1064,19 +1105,19 @@
                     l += Number(jqel.find(".label").text().match(num).clean("")[j]);
                 }
                 return l;
-            }(), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), effectivetime = getBatchNumber();
+            }(), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), batchNumber = getBatchNumber();
             if (type == "收藏外教") {
                 var isfavorite = true;
                 return {
                     label,
                     name,
-                    effectivetime,
+                    batchNumber,
                     isfavorite
                 };
             } else return {
                 label,
                 name,
-                effectivetime,
+                batchNumber,
                 type
             };
         }
@@ -1120,16 +1161,16 @@
             $(".item").each((function(index, el) {
                 common_submit((function(next) {
                     Pace.track((function() {
-                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tInfoFromListPageUI = getTeacherInfoFromListPageUI(jqel), tinfo_cached = GM_getValue(tinfokey);
-                        if (tinfo_cached) {
+                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tinfo_all = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
+                        if (tinfo_saved) {
                             var now = Date.now();
-                            if (!tinfo_cached.expire) {
-                                tinfo_cached.expire = new Date(1970, 1, 1).getTime();
+                            if (!tinfo_saved.updateTime) {
+                                tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
                             }
-                            tinfo_cached = $.extend(tinfo_cached, tInfoFromListPageUI);
-                            GM_setValue(tinfokey, tinfo_cached);
-                            if (now - tinfo_cached.expire < configExprMilliseconds) {
-                                updateTeacherinfoToUI(jqel, tinfo_cached);
+                            tinfo_all = $.extend({}, tinfo_saved, tinfo_all);
+                            if (now - tinfo_saved.updateTime < configExprMilliseconds) {
+                                updateTeacherinfoToUI(jqel, tinfo_all);
+                                GM_setValue(tinfokey, tinfo_all);
                                 next();
                                 return true;
                             }
@@ -1140,33 +1181,10 @@
                             type: "GET",
                             dateType: "html",
                             success: function success(r) {
-                                var jqr = $(r);
-                                if (jqr.find(".teacher-name-tit").length > 0) {
-                                    var tempitem = jqr.find(".teacher-name-tit")[0];
-                                    tempitem.innerHTML = tempitem.innerHTML.replaceAll("<!--", "").replaceAll("-->", "");
-                                }
-                                if (jqr.find(".evaluate-content-left span").length >= 3) {
-                                    var thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]), thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]), favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]), isfavorite = jqr.find(".go-search.cancel-collection").length > 0, agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean(""), tage = Number(agesstr[1]), age = Number(agesstr[0]), slevel = jqr.find(".sui-students").text();
-                                    jqr.remove();
-                                    var tinfo = {
-                                        slevel,
-                                        tage,
-                                        age,
-                                        thumbup,
-                                        thumbdown,
-                                        thumbupRate: 100,
-                                        favoritesCount,
-                                        isfavorite,
-                                        expire: Date.now()
-                                    };
-                                    tinfo = $.extend(tinfo, tInfoFromListPageUI);
-                                    tinfo.thumbupRate = calcThumbRate(tinfo);
-                                    tinfo.indicator = calcIndicator(tinfo);
-                                    GM_setValue(tinfokey, tinfo);
-                                    updateTeacherinfoToUI(jqel, tinfo);
-                                } else {
-                                    console.log("Teacher s detail info getting error:" + JSON.stringify(jqel) + ",error info:" + r);
-                                }
+                                var jqr = $(r), tinfo = getTeacherInfoFromDetailPage(tinfo_all, jqr, {});
+                                jqr.remove();
+                                updateTeacherinfoToUI(jqel, tinfo);
+                                GM_setValue(tinfokey, tinfo);
                             },
                             error: function error(data) {
                                 console.log("xhr error when getting teacher " + JSON.stringify(jqel) + ",error msg:" + JSON.stringify(data));
@@ -1227,37 +1245,9 @@
         }
         if (settings.isDetailPage) {
             var processTeacherDetailPage = function processTeacherDetailPage(jqr) {
-                jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
-                    return val.replaceAll("<!--", "").replaceAll("-->", "");
-                }));
-                var tinfo = GM_getValue(getinfokey(), {});
-                tinfo.label = function() {
-                    var l = 0;
-                    $.each(jqr.find(".t-d-label").text().match(num).clean(""), (function(i, val) {
-                        l += Number(val);
-                    }));
-                    return l;
-                }();
-                if (!tinfo.expire) tinfo.expire = Date.now();
-                if (window.location.href.toLocaleLowerCase().includes("teachercomment")) {
-                    tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
-                    tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
-                    tinfo.thumbupRate = calcThumbRate(tinfo);
-                    tinfo.slevel = jqr.find(".sui-students").text();
-                    tinfo.expire = Date.now();
-                }
-                tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
-                tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
-                tinfo.name = jqr.find(".t-name").text().trim();
-                var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
-                tinfo.tage = Number(agesstr[1]);
-                tinfo.age = Number(agesstr[0]);
-                tinfo.effectivetime = getBatchNumber();
-                tinfo.indicator = calcIndicator(tinfo);
-                GM_setValue(getinfokey(), tinfo);
-                jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
-                    return "".concat(val, "\n  <span class=\"age age-line\"><label title='指标'>").concat(tinfo.indicator, "</label></span>\n  <span class=\"age age-line\"><label title='好评率'>").concat(tinfo.thumbupRate, "%</label></span>\n  <span class=\"age age-line\"><label title='被赞数量'>").concat(tinfo.thumbup, "</label></span>\n  <span class=\"age age-line\"><label title='被踩数量'>").concat(tinfo.thumbdown, "</label></span>\n  <span class=\"age age-line\"><label title='评论标签数量'>").concat(tinfo.label, '</label></span>\n    <span class="age age-line"><label title=\'在同类别教师中的排名\'><span id="teacherRank"></span></label></span>\n  ');
-                }));
+                var tinfo_saved = GM_getValue(getinfokey(), {});
+                tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
+                GM_setValue(getinfokey(), tinfo_saved);
             };
             common_submit((function(next) {
                 processTeacherDetailPage($(document));
@@ -1481,8 +1471,8 @@
                                     height: 240,
                                     colNames: [ "查", "类型", "排名", "Name", "爱", "分", "标", "率%", "收藏数", "学", "教龄", "好", "差", "龄", "更新" ],
                                     colModel: [ {
-                                        name: "effectivetime",
-                                        index: "effectivetime",
+                                        name: "batchNumber",
+                                        index: "batchNumber",
                                         width: 45,
                                         sorttype: "float",
                                         align: "right",
@@ -1616,8 +1606,8 @@
                                             sopt: [ "le", "ge", "eq" ]
                                         }
                                     }, {
-                                        name: "expire",
-                                        index: "expire",
+                                        name: "updateTime",
+                                        index: "updateTime",
                                         width: 35,
                                         sorttype: "Date",
                                         align: "right",
@@ -1644,7 +1634,7 @@
                                     rowNum: 10,
                                     rowList: [ 5, 10, 20, 30 ],
                                     pager: "#pager5",
-                                    sortname: "effectivetime desc,indicator desc",
+                                    sortname: "batchNumber desc,indicator desc",
                                     viewrecords: true,
                                     multiSort: true,
                                     sortorder: "desc",

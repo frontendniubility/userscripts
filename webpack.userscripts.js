@@ -48,7 +48,7 @@ const typmap = {
  * @returns 
  */
 function getVersionString(buildtime) {
-  debugger;
+  ;
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
   return `${buildtime.toString('yyyy.M')}.5${buildtime.toString('DDHHmmss')}`;

@@ -15,7 +15,8 @@ import {
   getinfokey,
   calcIndicator,
   calcThumbRate,
-  submit
+  submit,
+  getTeacherInfoFromDetailPage
 } from './common.es6';
 
 import './jqueryextend.es6'
@@ -212,17 +213,20 @@ if (settings.isListPage) {
         let tid = jqel.find(".teacher-details-link a").attr("href")
           .replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "");
         let tinfokey = "tinfo-" + tid;
-        let tInfoFromListPageUI = getTeacherInfoFromListPageUI(jqel);
-        let tinfo_cached = GM_getValue(tinfokey);
-        if (tinfo_cached) {
+
+        let tinfo_all = getTeacherInfoFromListPageUI(jqel);
+
+        let tinfo_saved = GM_getValue(tinfokey);
+        if (tinfo_saved) {
           let now = Date.now();
-          if (!tinfo_cached.updateTime) {
-            tinfo_cached.updateTime = new Date(1970, 1, 1).getTime();
+          if (!tinfo_saved.updateTime) {
+            tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
           }
-          tinfo_cached = $.extend(tinfo_cached, tInfoFromListPageUI);
-          GM_setValue(tinfokey, tinfo_cached);
-          if (now - tinfo_cached.updateTime < configExprMilliseconds) {
-            updateTeacherinfoToUI(jqel, tinfo_cached);
+          tinfo_all = $.extend({}, tinfo_saved, tinfo_all);
+
+          if (now - tinfo_saved.updateTime < configExprMilliseconds) {
+            updateTeacherinfoToUI(jqel, tinfo_all);
+            GM_setValue(tinfokey, tinfo_all);
             next();
             return true;
           }
@@ -235,40 +239,10 @@ if (settings.isListPage) {
           dateType: "html",
           success: /** @param {document} r */ function (r) {
             let jqr = $(r);
-            if (jqr.find(".teacher-name-tit").length > 0) {
-              let tempitem = jqr.find(".teacher-name-tit")[0];
-              tempitem.innerHTML = tempitem.innerHTML.replaceAll("<!--", "").replaceAll("-->", "");
-            }
-            if (jqr.find(".evaluate-content-left span").length >= 3) {
-              let thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
-              let thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
-              let favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
-              let isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
-              var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
-
-              let tage = Number(agesstr[1]);
-              let age = Number(agesstr[0]);
-              let slevel = jqr.find(".sui-students").text();
-              jqr.remove();
-              let tinfo = {
-                slevel: slevel,
-                tage: tage,
-                age: age,
-                thumbup: thumbup,
-                thumbdown: thumbdown,
-                thumbupRate: 100,
-                favoritesCount: favoritesCount,
-                isfavorite: isfavorite,
-                updateTime: Date.now(),
-              };
-              tinfo = $.extend(tinfo, tInfoFromListPageUI);
-              tinfo.thumbupRate = calcThumbRate(tinfo);
-              tinfo.indicator = calcIndicator(tinfo);
-              GM_setValue(tinfokey, tinfo);
-              updateTeacherinfoToUI(jqel, tinfo);
-            } else {
-              console.log("Teacher s detail info getting error:" + JSON.stringify(jqel) + ",error info:" + r);
-            }
+            let tinfo = getTeacherInfoFromDetailPage(tinfo_all, jqr, {});
+            jqr.remove();            
+            updateTeacherinfoToUI(jqel, tinfo);
+            GM_setValue(tinfokey, tinfo);
           },
           error: function (data) {
             console.log("xhr error when getting teacher " + JSON.stringify(jqel) + ",error msg:" + JSON.stringify(data));

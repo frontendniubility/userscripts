@@ -64,9 +64,9 @@
 
  function getBatchNumber() {
      var cur = Date.now();
-     if (conf.newBatcherKeyHours <= 0) cur;
+     if (conf.newBatcherKeyMinutes <= 0) cur;
      let saved = parseInt(GM_getValue('_getBatchNumber'));
-     if (!saved || (Date.now() - saved) > conf.newBatcherKeyHours * 3600000) {
+     if (!saved || (Date.now() - saved) > conf.newBatcherKeyMinutes * 600000) {
          GM_setValue('_getBatchNumber', cur)
          return cur;
      }
@@ -93,10 +93,16 @@
 
 
  function calcIndicator(tinfo) {
-     return Math.ceil((tinfo.label * tinfo.thumbupRate) / 100) + tinfo.favoritesCount;
+     if (isNaN(tinfo.label)) tinfo.label = 0;
+     if (isNaN(tinfo.thumbupRate)) tinfo.thumbupRate = 0;
+     if (isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = 0;
+     return Math.ceil((tinfo.label * tinfo.thumbupRate) / 100) + tinfo.favoritesCount
  }
 
  function calcThumbRate(tinfo) {
+     if (isNaN(tinfo.thumbdown)) tinfo.thumbdown = 0;
+     if (isNaN(tinfo.thumbup)) tinfo.thumbup = 0;
+
      let all = tinfo.thumbdown + tinfo.thumbup;
      if (all < 1) all = 1;
      return ((tinfo.thumbup + 0.00001) / all).toFixed(2) * 100;
@@ -117,7 +123,7 @@
   * @param  {JQuery<document>} jqr the all html page elements
   * @returns 
   */
- function getTeacherInfoFromDetailPage(jqr) {
+ function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest = {}) {
 
      jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
          return val.replaceAll("<!--", "").replaceAll("-->", "");
@@ -134,10 +140,14 @@
          updateTime: Date.now(),
      }
      if (jqr.find(".evaluate-content-left span").length >= 3) {
-
+         ;
          tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
          tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
          tinfo.thumbupRate = calcThumbRate(tinfo);
+
+         tinfo.thumbupRate = calcThumbRate(tinfo);
+         tinfo.indicator = calcIndicator(tinfo);
+
          tinfo.slevel = jqr.find(".sui-students").text();
      }
      tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
@@ -147,12 +157,20 @@
      var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
      tinfo.tage = Number(agesstr[1]);
      tinfo.age = Number(agesstr[0]);
-
      tinfo.batchNumber = getBatchNumber();
+     tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
 
-     tinfo.thumbupRate = calcThumbRate(tinfo);
-     tinfo.indicator = calcIndicator(tinfo);
-     
+
+     jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
+         return `${val}
+  <span class="age age-line"><label title='指标'>${tinfo_saved.indicator}</label></span>
+  <span class="age age-line"><label title='好评率'>${tinfo_saved.thumbupRate}%</label></span>
+  <span class="age age-line"><label title='被赞数量'>${tinfo_saved.thumbup}</label></span>
+  <span class="age age-line"><label title='被踩数量'>${tinfo_saved.thumbdown}</label></span>
+  <span class="age age-line"><label title='评论标签数量'>${tinfo_saved.label}</label></span>
+    <span class="age age-line"><label title='在同类别教师中的排名'><span id="teacherRank"></span></label></span>
+  `;
+     });
      return tinfo;
  }
 
@@ -173,5 +191,6 @@
      getinfokey,
      calcIndicator,
      calcThumbRate,
-     submit
+     submit,
+     getTeacherInfoFromDetailPage
  }

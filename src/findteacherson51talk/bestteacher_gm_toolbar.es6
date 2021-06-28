@@ -10,11 +10,11 @@ const config = GM_config([{
         values: [0, 5, 10, 20, 50, 1000],
     },
     {
-        key: "newBatcherKeyHours",
-        label: "排名缓存（小时）,0为每次更新",
+        key: "newBatcherKeyMinutes",
+        label: "排名缓存（分钟）,0为每次更新",
         default: 24,
         type: "dropdown",
-        values: [0, 1, 2, 3, 5, 10, 24, 168, 168000],
+        values: [0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 179, 181, 191, 193, 197, 199],
     },
     {
         key: "tinfoexprhours",
