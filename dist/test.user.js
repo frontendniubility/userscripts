@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2021.5.526021259
+// @version     2021.6.528145500
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -22,4 +22,10 @@
     p(buildtime);
     p("dwws223");
     p(3);
+    var a = Date.now(), sa = a + "";
+    p(sa);
+    var ai = Number(sa);
+    p(a);
+    p(ai == a);
+    p(new Date(a).getHours());
 })();

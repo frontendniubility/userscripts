@@ -29,7 +29,7 @@ let getPaddedComp = (comp, len = 2) => {
     };
 $.extend(Date.prototype, {
     toString: function (format) {
-        if(!format)return this.toLocaleDateString();
+        if (!format) return this.toLocaleDateString();
         let formattedDate = format;
         for (let k in o) {
             if (new RegExp("(" + k + ")").test(format)) {
@@ -69,7 +69,7 @@ $.extend(String.prototype, {
         if (!Array.isArray(arr))
             return false;
         return new RegExp(arr.join('|')).test(this);;
-    }
+    },
     // startsWith: function (str) {
     //     return this.slice(0, str.length) == str;
     // },
@@ -79,10 +79,10 @@ $.extend(String.prototype, {
     // includes: function (str) {
     //     return this.indexOf(str) > -1;
     // },
-    // replaceAll: function (search, replacement) {
-    //     let target = this;
-    //     return target.replace(new RegExp(search, "g"), replacement);
-    // },
+    replaceAll: function (search, replacement) {
+        let target = this;
+        return target.replace(new RegExp(search, "g"), replacement);
+    },
 });
 
 

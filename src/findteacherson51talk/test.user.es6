@@ -16,3 +16,5 @@
  var ai = Number(sa);
  p(a)
  p(ai == a)
+
+ p(new Date(a).getHours())

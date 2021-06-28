@@ -92,18 +92,18 @@ import './detailpage'
                 let buttons = ''
                 if (settings.isListPage) {
                     buttons = `
-            <div id='buttons' style='text-align: center'>
+          <div id='buttons' style='text-align: center'>
             <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>
-            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>&nbsp;
-            <input id='tinfoexprhours' title='缓存过期时间（小时）'>&nbsp;
-            <button title='清空缓存，并重新搜索'>清除缓存</button>&nbsp;
-            <a>报告BUG</a>&nbsp;
-            <a>帮助</a>&nbsp;
+            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>
+            <input id='tinfoexprhours' title='缓存过期时间（小时）'>
+            <button title='清空缓存，并重新搜索'>清除缓存</button> 
+            <a>报告BUG</a>
+            <a>帮助</a>
           </div>
           <div id='buttons1' style='text-align: center;'>
             <div id='timesmutipulecheck'></div>
-            <button>反选时间段</button>&nbsp;
-            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>&nbsp;
+            <button>反选时间段</button>
+            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>
           </div>`;
                 }
                 $('body').append(`<div id='filterdialog' title='Teacher Filter'>

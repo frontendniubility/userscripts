@@ -24,22 +24,22 @@ let getPaddedComp = (comp, len = 2) => {
     } else return comp;
   },
   o = {
-    "[y|Y]{4}": (date) => date.getFullYear(), // year
-    "[y|Y]{2}": (date) => date.getFullYear().toString().slice(2), // year
-    MM: (date) => getPaddedComp(date.getMonth() + 1), //month
-    M: (date) => date.getMonth() + 1, //month
-    "[d|D]{2}": (date) => getPaddedComp(date.getDate()), //day
-    "[d|D]{1}": (date) => date.getDate(), //day
-    "h{2}": (date) => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()), //hour
-    "h{1}": (date) => (date.getHours() > 12 ? date.getHours() % 12 : date.getHours()), //hour
-    "H{2}": (date) => getPaddedComp(date.getHours()), //hour
-    "H{1}": (date) => date.getHours(), //hour
-    "m{2}": (date) => getPaddedComp(date.getMinutes()), //minute
-    "m{1}": (date) => date.getMinutes(), //minute
-    "s+": (date) => getPaddedComp(date.getSeconds()), //second
-    "f+": (date) => getPaddedComp(date.getMilliseconds(), 3), //millisecond,
-    "f{1}": (date) => getPaddedComp(date.getMilliseconds(), 0), //millisecond,
-    "b+": (date) => (date.getHours() >= 12 ? "PM" : "AM"),
+    "[y|Y]{4}": /**@param{Date}date*/ (date) => date.getFullYear(), // year
+    "[y|Y]{2}": /**@param{Date}date*/ (date) => date.getFullYear().toString().slice(2), // year
+    MM: /**@param{Date}date*/ (date) => getPaddedComp(date.getMonth() + 1), //month
+    M: /**@param{Date}date*/ (date) => date.getMonth() + 1, //month
+    "[d|D]{2}": /**@param{Date}date*/ (date) => getPaddedComp(date.getDate()), //day
+    "[d|D]{1}": /**@param{Date}date*/ (date) => date.getDate(), //day
+    "h{2}": /**@param{Date}date*/ (date) => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()), //hour
+    "h{1}": /**@param{Date}date*/ (date) => (date.getHours() > 12 ? date.getHours() % 12 : date.getHours()), //hour
+    "H{2}": /**@param{Date}date*/ (date) => getPaddedComp(date.getHours()), //hour
+    "H{1}": /**@param{Date}date*/ (date) => date.getHours(), //hour
+    "m{2}": /**@param{Date}date*/ (date) => getPaddedComp(date.getMinutes()), //minute
+    "m{1}": /**@param{Date}date*/ (date) => date.getMinutes(), //minute
+    "s+": /**@param{Date}date*/ (date) => getPaddedComp(date.getSeconds()), //second
+    "f+": /**@param{Date}date*/ (date) => getPaddedComp(date.getMilliseconds(), 3), //millisecond,
+    "f{1}": /**@param{Date}date*/ (date) => getPaddedComp(date.getMilliseconds(), 0), //millisecond,
+    "b+": /**@param{Date}date*/ (date) => (date.getHours() >= 12 ? "PM" : "AM"),
   };
 Date.prototype._oldtostr = Date.prototype.toString;
 extend(Date.prototype, {

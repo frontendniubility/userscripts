@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.6.518040805
+// @version     2021.6.528145500
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -312,7 +312,7 @@
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_1__.Z);
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_2__.Z);
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_3__.Z);
-            ___CSS_LOADER_EXPORT___.push([ module.id, "\r\n.search-teachers .s-t-list .item-time-list {margin-top:315px;}\r\n.search-teachers .s-t-list .item { height: 679px; }\r\n.search-teachers .s-t-list .s-t-content { margin-right: 0px;}\r\n.search-teachers { width: 100%; }\r\n.search-teachers .s-t-list .item .item-top .teacher-name {line-height: 15px;}\r\n.search-teachers .s-t-list .item { width: 233px; height: auto; margin-right: 5px; margin-bottom: 5px; }\r\n \r\n\r\n.ui-tabs .ui-tabs-panel{padding:.5em 0.2em;}\r\n.ui-dialog .ui-dialog-content { padding: .5em 0.2em;}\r\n\r\n.search-teachers .s-t-top .s-t-days .s-t-days-list li {\r\n  float: left;\r\n  width: 118px;\r\n  height: 34px;\r\n  line-height: 34px;\r\n  margin-right: 5px;\r\n  margin-bottom: 5px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-details {\r\n  padding: 2px 0 2px 30px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-right {\r\n  height: auto;\r\n}\r\n.search-teachers .s-t-top .s-t-top-left .condition-item {\r\n  margin-bottom: 2px;\r\n}\r\n.s-t-page { padding-top: 2px;}\r\n/* \r\n.pace .pace-progress {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 100%;\r\n  width: 100%;\r\n  height: 2px;\r\n} */\r\n", "" ]);
+            ___CSS_LOADER_EXPORT___.push([ module.id, "\r\n.search-teachers .s-t-list .item-time-list {margin-top:315px;}\r\n.search-teachers .s-t-list .item { height: 679px; }\r\n.search-teachers .s-t-list .s-t-content { margin-right: 0px;}\r\n.search-teachers { width: 100%; }\r\n.search-teachers .s-t-list .item .item-top .teacher-name {line-height: 15px;}\r\n.search-teachers .s-t-list .item { width: 233px; height: auto; margin-right: 5px; margin-bottom: 5px; }\r\n \r\n\r\n.ui-tabs .ui-tabs-panel{padding:.5em 0.2em;}\r\n.ui-dialog .ui-dialog-content { padding: .5em 0.2em;}\r\n\r\n.search-teachers .s-t-top .s-t-days .s-t-days-list li {\r\n  float: left;\r\n  width: 118px;\r\n  height: 34px;\r\n  line-height: 34px;\r\n  margin-right: 5px;\r\n  margin-bottom: 5px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-details {\r\n  padding: 2px 0 2px 30px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-right {\r\n  height: auto;\r\n}\r\n.search-teachers .s-t-top .s-t-top-left .condition-item {\r\n  margin-bottom: 2px;\r\n}\r\n.s-t-page { padding-top: 2px;}\r\n\r\n#buttons input,#buttons button{\r\n  margin-right: 3px;\r\n}\r\n/* \r\n.pace .pace-progress {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 100%;\r\n  width: 100%;\r\n  height: 2px;\r\n} */\r\n", "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
         645: module => {
@@ -683,14 +683,14 @@
             values: [ 0, 5, 10, 20, 50, 1e3 ]
         }, {
             key: "newBatcherKeyHours",
-            label: "批次号缓存（小时）,0为每次更新",
+            label: "排名缓存（小时）,0为每次更新",
             default: 24,
             type: "dropdown",
             values: [ 0, 1, 2, 3, 5, 10, 24, 168, 168e3 ]
         }, {
             key: "tinfoexprhours",
             label: "教师数据缓存过期时间（小时）",
-            default: 7,
+            default: 139,
             type: "dropdown",
             values: [ 0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 179, 181, 191, 193, 197, 199 ]
         }, {
@@ -747,8 +747,14 @@
             $(".s-t-content.f-cb").empty().append(sortEle);
         };
         function getBatchNumber() {
-            if (conf.newBatcherKeyHours <= 0) return Date.now();
-            return parseInt(Date.now() / conf.newBatcherKeyHours / 36e5) * conf.newBatcherKeyHours * 36e5;
+            var cur = Date.now();
+            if (conf.newBatcherKeyHours <= 0) cur;
+            var saved = parseInt(GM_getValue("_getBatchNumber"));
+            if (!saved || Date.now() - saved > conf.newBatcherKeyHours * 36e5) {
+                GM_setValue("_getBatchNumber", cur);
+                return cur;
+            }
+            return saved;
         }
         function getLeftPageCount() {
             var pages = Number($(".s-t-page>.next-page:first").prev().text()), curr = Number($(".s-t-page>.active:first").text());
@@ -938,6 +944,10 @@
                 }
                 if (!Array.isArray(arr)) return false;
                 return new RegExp(arr.join("|")).test(this);
+            },
+            replaceAll: function replaceAll(search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, "g"), replacement);
             }
         });
         $.extend(window, {
@@ -977,6 +987,19 @@
             }
         });
         var pacesetup = __webpack_require__(99);
+        function _defineProperty(obj, key, value) {
+            if (key in obj) {
+                Object.defineProperty(obj, key, {
+                    value,
+                    enumerable: true,
+                    configurable: true,
+                    writable: true
+                });
+            } else {
+                obj[key] = value;
+            }
+            return obj;
+        }
         var maxrate = 0, minrate = 99999, maxlabel = 0, minlabel = 9999999, maxfc = 0, minfc = 999999, maxage = 0, minage = 99999;
         function updateTeacherinfoToUI(jqel, tinfo) {
             if (tinfo.label > maxlabel) maxlabel = tinfo.label;
@@ -1034,8 +1057,8 @@
                 fc2
             };
         }
-        function getTeacherInfoInList(jqel) {
-            var age = 0, label = function() {
+        function getTeacherInfoFromListPageUI(jqel) {
+            var label = function() {
                 var j_len = jqel.find(".label").text().match(num).clean("").length, l = 0;
                 for (var j = 0; j < j_len; j++) {
                     l += Number(jqel.find(".label").text().match(num).clean("")[j]);
@@ -1045,14 +1068,12 @@
             if (type == "收藏外教") {
                 var isfavorite = true;
                 return {
-                    age,
                     label,
                     name,
                     effectivetime,
                     isfavorite
                 };
             } else return {
-                age,
                 label,
                 name,
                 effectivetime,
@@ -1064,22 +1085,34 @@
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
             common_submit((function(next) {
-                var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autonextpagecount = GM_getValue("autonextpagecount", 1);
+                var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autonextpagecount = GM_getValue("autonextpagecount", 0);
                 if (autonextpagecount > 0 && $(".s-t-page>.next-page").length > 0) {
-                    var dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
+                    var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
                     dialog.appendTo("body");
                     dialog.dialog({
                         resizable: false,
                         height: "auto",
                         width: 400,
                         modal: false,
-                        buttons: {
-                            立即停止: function 立即停止() {
+                        buttons: (_buttons = {
+                            停止获取: function 停止获取() {
                                 sessionStorage.setItem("selectedTimeSlots", "");
                                 GM_setValue("autonextpagecount", 0);
                                 $(this).dialog("close");
                             }
-                        }
+                        }, _defineProperty(_buttons, "取后".concat((remainPages * .25).toFixed(0), "页"), (function 取后页() {
+                            sessionStorage.setItem("selectedTimeSlots", "");
+                            GM_setValue("autonextpagecount", (remainPages * .25).toFixed(0));
+                            $(this).dialog("close");
+                        })), _defineProperty(_buttons, "取后".concat((remainPages * .5).toFixed(0), "页"), (function 取后页() {
+                            sessionStorage.setItem("selectedTimeSlots", "");
+                            GM_setValue("autonextpagecount", (remainPages * .5).toFixed(0));
+                            $(this).dialog("close");
+                        })), _defineProperty(_buttons, "取后".concat((remainPages * .75).toFixed(0), "页"), (function 取后页() {
+                            sessionStorage.setItem("selectedTimeSlots", "");
+                            GM_setValue("autonextpagecount", (remainPages * .75).toFixed(0));
+                            $(this).dialog("close");
+                        })), _buttons)
                     });
                 }
                 next();
@@ -1087,16 +1120,16 @@
             $(".item").each((function(index, el) {
                 common_submit((function(next) {
                     Pace.track((function() {
-                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, teacherlistinfo = getTeacherInfoInList(jqel), tinfo = GM_getValue(tinfokey);
-                        if (tinfo) {
+                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tInfoFromListPageUI = getTeacherInfoFromListPageUI(jqel), tinfo_cached = GM_getValue(tinfokey);
+                        if (tinfo_cached) {
                             var now = Date.now();
-                            if (!tinfo.expire) {
-                                tinfo.expire = new Date(1970, 1, 1).getTime();
+                            if (!tinfo_cached.expire) {
+                                tinfo_cached.expire = new Date(1970, 1, 1).getTime();
                             }
-                            tinfo = $.extend(tinfo, teacherlistinfo);
-                            GM_setValue(tinfokey, tinfo);
-                            if (now - tinfo.expire < configExprMilliseconds) {
-                                updateTeacherinfoToUI(jqel, tinfo);
+                            tinfo_cached = $.extend(tinfo_cached, tInfoFromListPageUI);
+                            GM_setValue(tinfokey, tinfo_cached);
+                            if (now - tinfo_cached.expire < configExprMilliseconds) {
+                                updateTeacherinfoToUI(jqel, tinfo_cached);
                                 next();
                                 return true;
                             }
@@ -1126,7 +1159,7 @@
                                         isfavorite,
                                         expire: Date.now()
                                     };
-                                    tinfo = $.extend(tinfo, teacherlistinfo);
+                                    tinfo = $.extend(tinfo, tInfoFromListPageUI);
                                     tinfo.thumbupRate = calcThumbRate(tinfo);
                                     tinfo.indicator = calcIndicator(tinfo);
                                     GM_setValue(tinfokey, tinfo);
@@ -1285,7 +1318,7 @@
                             age2: maxage
                         }), buttons = "";
                         if (settings.isListPage) {
-                            buttons = "\n            <div id='buttons' style='text-align: center'>\n            <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>\n            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>&nbsp;\n            <input id='tinfoexprhours' title='缓存过期时间（小时）'>&nbsp;\n            <button title='清空缓存，并重新搜索'>清除缓存</button>&nbsp;\n            <a>报告BUG</a>&nbsp;\n            <a>帮助</a>&nbsp;\n          </div>\n          <div id='buttons1' style='text-align: center;'>\n            <div id='timesmutipulecheck'></div>\n            <button>反选时间段</button>&nbsp;\n            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>&nbsp;\n          </div>";
+                            buttons = "\n          <div id='buttons' style='text-align: center'>\n            <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>\n            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>\n            <input id='tinfoexprhours' title='缓存过期时间（小时）'>\n            <button title='清空缓存，并重新搜索'>清除缓存</button> \n            <a>报告BUG</a>\n            <a>帮助</a>\n          </div>\n          <div id='buttons1' style='text-align: center;'>\n            <div id='timesmutipulecheck'></div>\n            <button>反选时间段</button>\n            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>\n          </div>";
                         }
                         $("body").append("<div id='filterdialog' title='Teacher Filter'>\n      <div id='tabs'>\n        <div>\n          <ul>\n            <li><a href=\"#tabs-1\">Search Teachers</a></li>\n            <li><a href=\"#tabs-2\">Sorted Teachers</a></li>\n          </ul>\n          <br />\n            ".concat(buttons, "\n        </div>\n        <div id=\"tabs-1\">\n          当前可选<span id='tcount' ></span>位,被折叠<span id='thidecount' ></span>位。<br />\n          有效经验值 <span id='_tLabelCount' ></span><br /><div id='tlabelslider'></div>\n          收藏数 <span id='_tfc' ></span><br /><div id='fcSlider'></div>\n          好评率 <span id='_thumbupRate'></span><br /><div id='thumbupRateslider'></div>\n          年龄 <span id='_tAge' ></span><br /><div id='tAgeSlider'></div>\n        </div>\n        <div id=\"tabs-2\">\n          <table id=\"teachertab\"></table>\n          <div id=\"pager5\"></div>\n        </div>\n      </div>\n    </div>"));
                         $("body").append("<div id='teachlistdialog' style='display:none;'></div>");
@@ -1459,7 +1492,7 @@
                                         formatter: function formatter(value, options, rData) {
                                             var date = new Date(Number(value));
                                             if (date instanceof Date && !isNaN(date.valueOf())) {
-                                                return date.toString("MMddHHmm");
+                                                return date.toString("HHmmss");
                                             }
                                             return value;
                                         }

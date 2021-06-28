@@ -34,6 +34,10 @@
   margin-bottom: 2px;
 }
 .s-t-page { padding-top: 2px;}
+
+#buttons input,#buttons button{
+  margin-right: 3px;
+}
 /* 
 .pace .pace-progress {
   background: #29d;

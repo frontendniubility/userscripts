@@ -42,11 +42,16 @@ const typmap = {
   u2: 7
 }
 
+/**
+ * return a version string by date 
+ * @param  {  number | Date} buildtime 
+ * @returns 
+ */
 function getVersionString(buildtime) {
-
+  debugger;
   if (typeof buildtime != 'Date')
     buildtime = new Date(buildtime)
-  return `${buildtime.toString('yyyy.M')}.5${buildtime.toString('DDhhmmss')}`;
+  return `${buildtime.toString('yyyy.M')}.5${buildtime.toString('DDHHmmss')}`;
 }
 
 let wpus = new WebpackUserscript({
@@ -66,7 +71,7 @@ let wpus = new WebpackUserscript({
 
       // 编译状态下（开发模式或者生产模式）
       let newverstring = getVersionString(data.buildTime, 'pro');
-
+      logger.warn(newverstring)
       var newheader = {
         version: newverstring
       };

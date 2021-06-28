@@ -122,8 +122,7 @@ function getUiFilters() {
   };
 }
 
-function getTeacherInfoInList(jqel) {
-  let age = 0;
+function getTeacherInfoFromListPageUI(jqel) {
   let label = (function () {
     let j_len = jqel.find(".label").text().match(num).clean("").length;
     let l = 0;
@@ -138,7 +137,6 @@ function getTeacherInfoInList(jqel) {
   if (type == "收藏外教") {
     let isfavorite = true;
     return {
-      age,
       label,
       name,
       effectivetime,
@@ -146,7 +144,6 @@ function getTeacherInfoInList(jqel) {
     };
   } else
     return {
-      age,
       label,
       name,
       effectivetime,
@@ -164,7 +161,7 @@ if (settings.isListPage) {
     let totalPages = Number($(".s-t-page>a:eq(-2)").text()),
       curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
       remainPages = totalPages - curPageId;
-    let autonextpagecount = GM_getValue("autonextpagecount", 1);
+    let autonextpagecount = GM_getValue("autonextpagecount", 0);
     if (autonextpagecount > 0 && $(".s-t-page>.next-page").length > 0) {
       let dialog = $(`<div id="dialog-confirm" title="是否停止自动搜索老师?">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
@@ -181,26 +178,26 @@ if (settings.isListPage) {
         width: 400,
         modal: false,
         buttons: {
-          立即停止: function () {
+          停止获取: function () {
             sessionStorage.setItem("selectedTimeSlots", "");
             GM_setValue("autonextpagecount", 0);
             $(this).dialog("close");
           },
-          // [`取后${(remainPages*0.25).toFixed(0)}页`]: function() {
-          // sessionStorage.setItem('selectedTimeSlots', '');
-          // GM_setValue('autonextpagecount', (remainPages * 0.25).toFixed(0));
-          // $(this).dialog("close");
-          // },
-          // [`取后${(remainPages*0.5).toFixed(0)}页`]: function() {
-          // sessionStorage.setItem('selectedTimeSlots', '');
-          // GM_setValue('autonextpagecount', (remainPages * 0.5).toFixed(0));
-          // $(this).dialog("close");
-          // },
-          // [`取后${(remainPages*0.75).toFixed(0)}页`]: function() {
-          // sessionStorage.setItem('selectedTimeSlots', '');
-          // GM_setValue('autonextpagecount', (remainPages * 0.75).toFixed(0));
-          // $(this).dialog("close");
-          // },
+          [`取后${(remainPages*0.25).toFixed(0)}页`]: function() {
+          sessionStorage.setItem('selectedTimeSlots', '');
+          GM_setValue('autonextpagecount', (remainPages * 0.25).toFixed(0));
+          $(this).dialog("close");
+          },
+          [`取后${(remainPages*0.5).toFixed(0)}页`]: function() {
+          sessionStorage.setItem('selectedTimeSlots', '');
+          GM_setValue('autonextpagecount', (remainPages * 0.5).toFixed(0));
+          $(this).dialog("close");
+          },
+          [`取后${(remainPages*0.75).toFixed(0)}页`]: function() {
+          sessionStorage.setItem('selectedTimeSlots', '');
+          GM_setValue('autonextpagecount', (remainPages * 0.75).toFixed(0));
+          $(this).dialog("close");
+          },
         },
       });
     }
@@ -215,17 +212,17 @@ if (settings.isListPage) {
         let tid = jqel.find(".teacher-details-link a").attr("href")
           .replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "");
         let tinfokey = "tinfo-" + tid;
-        let teacherlistinfo = getTeacherInfoInList(jqel);
-        let tinfo = GM_getValue(tinfokey);
-        if (tinfo) {
+        let tInfoFromListPageUI = getTeacherInfoFromListPageUI(jqel);
+        let tinfo_cached = GM_getValue(tinfokey);
+        if (tinfo_cached) {
           let now = Date.now();
-          if (!tinfo.expire) {
-            tinfo.expire = new Date(1970, 1, 1).getTime();
+          if (!tinfo_cached.expire) {
+            tinfo_cached.expire = new Date(1970, 1, 1).getTime();
           }
-          tinfo = $.extend(tinfo, teacherlistinfo);
-          GM_setValue(tinfokey, tinfo);
-          if (now - tinfo.expire < configExprMilliseconds) {
-            updateTeacherinfoToUI(jqel, tinfo);
+          tinfo_cached = $.extend(tinfo_cached, tInfoFromListPageUI);
+          GM_setValue(tinfokey, tinfo_cached);
+          if (now - tinfo_cached.expire < configExprMilliseconds) {
+            updateTeacherinfoToUI(jqel, tinfo_cached);
             next();
             return true;
           }
@@ -248,6 +245,7 @@ if (settings.isListPage) {
               let favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0]);
               let isfavorite = jqr.find(".go-search.cancel-collection").length > 0;
               var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
+               
               let tage = Number(agesstr[1]);
               let age = Number(agesstr[0]);
               let slevel = jqr.find(".sui-students").text();
@@ -263,7 +261,7 @@ if (settings.isListPage) {
                 isfavorite: isfavorite,
                 expire: Date.now(),
               };
-              tinfo = $.extend(tinfo, teacherlistinfo);
+              tinfo = $.extend(tinfo, tInfoFromListPageUI);
               tinfo.thumbupRate = calcThumbRate(tinfo);
               tinfo.indicator = calcIndicator(tinfo);
               GM_setValue(tinfokey, tinfo);
@@ -340,7 +338,7 @@ function addCheckbox(val, lbl, group) {
 export {
   addCheckbox,
   executeFilters,
-  getTeacherInfoInList,
+  getTeacherInfoFromListPageUI as getTeacherInfoInList,
   getUiFilters,
   isStopShowboxAndAutoGetNextTimeTeachers,
   maxage,
