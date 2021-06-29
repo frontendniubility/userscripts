@@ -189,8 +189,6 @@
      getLeftPageCount,
      getAutoNextPagesCount,
      getinfokey,
-     calcIndicator,
-     calcThumbRate,
      submit,
      getTeacherInfoFromDetailPage
  }

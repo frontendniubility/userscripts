@@ -12,9 +12,7 @@ import {
     getBatchNumber,
     getLeftPageCount,
     getAutoNextPagesCount,
-    getinfokey,
-    calcIndicator,
-    calcThumbRate,
+    getinfokey, 
     submit,
     getTeacherInfoFromDetailPage
 } from './common.es6';

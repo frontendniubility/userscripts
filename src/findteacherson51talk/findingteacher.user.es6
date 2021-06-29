@@ -44,9 +44,7 @@ import {
     // getBatchNumber,
     getLeftPageCount,
     getAutoNextPagesCount,
-    getinfokey,
-    calcIndicator,
-    calcThumbRate,
+    getinfokey, 
     submit
 } from './common.es6'
 
