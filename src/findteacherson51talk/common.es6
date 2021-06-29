@@ -140,7 +140,7 @@
          updateTime: Date.now(),
      }
      if (jqr.find(".evaluate-content-left span").length >= 3) {
-         ;
+         
          tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
          tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
          tinfo.thumbupRate = calcThumbRate(tinfo);
