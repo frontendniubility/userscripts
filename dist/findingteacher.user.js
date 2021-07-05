@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.7.505105938
+// @version     2021.7.505170211
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -19,7 +19,7 @@
 // @require     https://code.jquery.com/jquery-3.6.0.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
-// @require     https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
+// @require     https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js
 // @require     https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/i18n/grid.locale-cn.js
 // @require     https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/findingteacher.user.js
@@ -710,7 +710,7 @@
             isDetailPage: url.includes("teachernew"),
             isListPage: url.includes("reservenew"),
             isCoursePage: url.includes("study_center")
-        }, configExprMilliseconds = 36e5 * conf.tInfoExprHours, num = /[0-9]*/g;
+        }, common_configExprMilliseconds = 36e5 * conf.tInfoExprHours, num = /[0-9]*/g;
         function gettid() {
             return common_settings.tid;
         }
@@ -728,7 +728,7 @@
                 continue;
             }
         }
-        function getBatchNumber() {
+        function common_getBatchNumber() {
             var cur = Date.now();
             if (conf.newBatcherKeyMinutes <= 0) cur;
             var saved = parseInt(GM_getValue("_getBatchNumber"));
@@ -752,7 +752,7 @@
             if (isNaN(tinfo.thumbup)) tinfo.thumbup = 0;
             var all = tinfo.thumbdown + tinfo.thumbup;
             if (all < 1) all = 1;
-            return ((tinfo.thumbup + 1e-5) / all).toFixed(2) * 100;
+            return ((tinfo.thumbup + Number.EPSILON) / all).toFixed(2) * 100;
         }
         function common_submit(fun) {
             var queue = $.queue(document, "fx", fun);
@@ -761,31 +761,45 @@
             }
             $.dequeue(document);
         }
-        function getTeacherInfoFromDetailPage() {
+        function common_getLabelCount(jqLabelElement) {
+            return function() {
+                var l = 0;
+                $.each(jqLabelElement.text().match(num).clean(""), (function(i, val) {
+                    l += Number(val);
+                }));
+                return l;
+            }();
+        }
+        function common_getLabelByItems(jqLabelSpanList) {
+            return jqLabelSpanList.map((function(i, v) {
+                var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
+                return {
+                    key: r[1],
+                    value: r[2]
+                };
+            })).get().reduce((function(meta, item) {
+                if (meta[item.key]) meta[item.key] += Number(item.value);
+                meta[item.key] = Number(item.value);
+                return meta;
+            }), {});
+        }
+        function common_getTeacherInfoFromDetailPage() {
             var tinfo_saved = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}, jqr = arguments.length > 1 ? arguments[1] : undefined, tinfo_latest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
             var tinfo = {
-                label: function() {
-                    var l = 0;
-                    $.each(jqr.find(".t-d-label").text().match(num).clean(""), (function(i, val) {
-                        l += Number(val);
-                    }));
-                    return l;
-                }(),
+                label: common_getLabelCount(jqr.find(".t-d-label")),
                 updateTime: Date.now(),
-                labels: jqr.find(".t-d-label>span").map((function(i, v) {
-                    var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
-                    return {
-                        key: r[1],
-                        value: r[2]
-                    };
-                })).get().reduce((function(meta, item) {
-                    if (meta[item.key]) meta[item.key] += Number(item.value);
-                    meta[item.key] = Number(item.value);
-                    return meta;
-                }), {})
+                labels: common_getLabelByItems(jqr.find(".t-d-label>span")),
+                teacherStar: Number(jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-star").text()),
+                certificaties: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-icon-tag>span:eq(0)").text(),
+                suitables: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.suitable>span:not(:first)").map((function(i, v) {
+                    return $(v).text();
+                })).get().reduce((function(pre, cur) {
+                    if (cur) pre.push(cur);
+                    return pre;
+                }), [])
             };
             if (jqr.find(".evaluate-content-left span").length >= 3) {
                 tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
@@ -801,7 +815,7 @@
             var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
             tinfo.tage = Number(agesstr[1]);
             tinfo.age = Number(agesstr[0]);
-            tinfo.batchNumber = getBatchNumber();
+            tinfo.batchNumber = common_getBatchNumber();
             tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
             console.log(tinfo);
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
@@ -1121,23 +1135,7 @@
             };
         }
         function getTeacherInfoFromListPageUI(jqel) {
-            var label = function() {
-                var j_len = jqel.find(".label").text().match(num).clean("").length, l = 0;
-                for (var j = 0; j < j_len; j++) {
-                    l += Number(jqel.find(".label").text().match(num).clean("")[j]);
-                }
-                return l;
-            }(), labels = jqr.find("label>span").map((function(i, v) {
-                var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
-                return {
-                    key: r[1],
-                    value: r[2]
-                };
-            })).get().reduce((function(meta, item) {
-                if (meta[item.key]) meta[item.key] += Number(item.value);
-                meta[item.key] = Number(item.value);
-                return meta;
-            }), {}), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), batchNumber = getBatchNumber();
+            var label = getLabelCount(jqel.find(".label")), labels = getLabelByItems(jqel.find(".label>span")), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), batchNumber = getBatchNumber();
             if (type == "收藏外教") {
                 var isfavorite = true;
                 return {
@@ -1155,11 +1153,11 @@
                 labels
             };
         }
-        if (common_settings.isListPage) {
+        if (settings.isListPage) {
             $(".item-top-cont").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
-            common_submit((function(next) {
+            submit((function(next) {
                 var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autonextpagecount = GM_getValue("autonextpagecount", 0);
                 if (autonextpagecount > 0 && $(".s-t-page>.next-page").length > 0) {
                     var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
@@ -1193,18 +1191,18 @@
                 next();
             }));
             $(".item").each((function(index, el) {
-                common_submit((function(next) {
+                submit((function(next) {
                     Pace.track((function() {
-                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tinfo_all = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
+                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
                         if (tinfo_saved) {
                             var now = Date.now();
                             if (!tinfo_saved.updateTime) {
                                 tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
                             }
-                            tinfo_all = $.extend({}, tinfo_saved, tinfo_all);
+                            tinfo = $.extend({}, tinfo_saved, tinfo);
                             if (now - tinfo_saved.updateTime < configExprMilliseconds) {
-                                updateTeacherinfoToUI(jqel, tinfo_all);
-                                GM_setValue(tinfokey, tinfo_all);
+                                updateTeacherinfoToUI(jqel, tinfo);
+                                GM_setValue(tinfokey, tinfo);
                                 next();
                                 return true;
                             }
@@ -1215,7 +1213,7 @@
                             type: "GET",
                             dateType: "html",
                             success: function success(r) {
-                                var jqr = $(r), tinfo = getTeacherInfoFromDetailPage(tinfo_all, jqr, {});
+                                var jqr = $(r), tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
                                 jqr.remove();
                                 updateTeacherinfoToUI(jqel, tinfo);
                                 GM_setValue(tinfokey, tinfo);
@@ -1232,7 +1230,7 @@
                     }));
                 }));
             }));
-            common_submit((function(next) {
+            submit((function(next) {
                 var autonextpagecount = GM_getValue("autonextpagecount", 0);
                 if (autonextpagecount > 0) {
                     GM_setValue("autonextpagecount", autonextpagecount - 1);
@@ -1280,7 +1278,7 @@
         if (common_settings.isDetailPage) {
             var processTeacherDetailPage = function processTeacherDetailPage(jqr) {
                 var tinfo_saved = GM_getValue(getinfokey(), {});
-                tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
+                tinfo_saved = common_getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
                 GM_setValue(getinfokey(), tinfo_saved);
             };
             common_submit((function(next) {
@@ -1441,7 +1439,7 @@
                             }
                         }).css({
                             width: "45px"
-                        }).val(GM_getValue("tInfoExprHours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
+                        }).val(GM_getValue("tInfoExprHours", common_configExprMilliseconds / 36e5)).hide().end().eq(3).button({
                             icon: "uiicon-trash",
                             showLabel: true
                         }).click((function() {

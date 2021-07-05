@@ -1,24 +1,34 @@
-import {
+
+
+import  {
     url,
     settings,
     configExprMilliseconds,
     num,
-    gettid, 
+    gettid,
     sleep,
-    
+
     getBatchNumber,
     getLeftPageCount,
     getAutoNextPagesCount,
-    getinfokey, 
+    getinfokey,
     submit,
     getTeacherInfoFromDetailPage
 } from './common.es6';
 
 if (settings.isDetailPage) {
+
+    /**
+     *
+     *
+     * @param {JQuery<Element>} jqr
+     */
     function processTeacherDetailPage(jqr) {
 
+       
+        /** @type {TeacherInfo} */
         let tinfo_saved = GM_getValue(getinfokey(), {});
-      
+
         tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
 
         GM_setValue(getinfokey(), tinfo_saved);

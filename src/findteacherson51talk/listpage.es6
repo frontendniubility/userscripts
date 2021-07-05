@@ -9,6 +9,8 @@ import {
   getinfokey,
   submit,
   getTeacherInfoFromDetailPage,
+  getLabelCount,
+  getLabelByItems
 
 } from './common.es6';
 
@@ -130,27 +132,14 @@ function getUiFilters() {
   };
 }
 
+/** 
+ * @param {JQuery<Element>} jqel 
+ * @returns {TeacherInfoList}
+ */
 function getTeacherInfoFromListPageUI(jqel) {
-  let label = (function () {
-      let j_len = jqel.find(".label").text().match(num).clean("").length;
-      let l = 0;
-      for (let j = 0; j < j_len; j++) {
-        l += Number(jqel.find(".label").text().match(num).clean("")[j]);
-      }
-      return l;
-    })(),
-    labels = jqr.find('label>span').map(function (i, v) {
-      var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
-      return {
-        key: r[1],
-        value: r[2]
-      };
-    }).get()
-    .reduce(function (meta, item) {
-      if (meta[item.key]) meta[item.key] += Number(item.value);
-      meta[item.key] = Number(item.value);
-      return meta;
-    }, {}),
+  let label =
+    getLabelCount(jqel.find(".label")),
+    labels = getLabelByItems(jqel.find('.label>span')),
     name = jqel.find(".teacher-name").text(),
     type = $(".s-t-top-list .li-active").text(),
     batchNumber = getBatchNumber();
@@ -235,19 +224,21 @@ if (settings.isListPage) {
           .replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "");
         let tinfokey = "tinfo-" + tid;
 
-        let tinfo_all = getTeacherInfoFromListPageUI(jqel);
+        /** @type {TeacherInfoList|TeacherInfo} */
+        let tinfo = getTeacherInfoFromListPageUI(jqel);
 
+        /** @type {TeacherInfo} */
         let tinfo_saved = GM_getValue(tinfokey);
         if (tinfo_saved) {
           let now = Date.now();
           if (!tinfo_saved.updateTime) {
             tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
           }
-          tinfo_all = $.extend({}, tinfo_saved, tinfo_all);
+          tinfo = $.extend({}, tinfo_saved, tinfo);
 
           if (now - tinfo_saved.updateTime < configExprMilliseconds) {
-            updateTeacherinfoToUI(jqel, tinfo_all);
-            GM_setValue(tinfokey, tinfo_all);
+            updateTeacherinfoToUI(jqel, tinfo);
+            GM_setValue(tinfokey, tinfo);
             next();
             return true;
           }
@@ -260,7 +251,7 @@ if (settings.isListPage) {
           dateType: "html",
           success: /** @param {document} r */ function (r) {
             let jqr = $(r);
-            let tinfo = getTeacherInfoFromDetailPage(tinfo_all, jqr, {});
+            let tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
             jqr.remove();
             updateTeacherinfoToUI(jqel, tinfo);
             GM_setValue(tinfokey, tinfo);
