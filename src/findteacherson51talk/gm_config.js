@@ -224,6 +224,6 @@ let GM_config = function (settings, storage = 'cfg') {
   return ret;
 }
 
-module.exports = {
+export {
   GM_config
 }

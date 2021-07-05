@@ -15,14 +15,16 @@
  let settings = {
      url: url,
      tid: url.match(/(t\d+)/g),
-     pagecount: conf.pagecount,
+     pageCount: conf.pageCount,
      isDetailPage: url.includes("teachernew"),
      isListPage: url.includes("reservenew"),
      isCoursePage: url.includes("study_center"),
  };
 
- let configExprMilliseconds = 3600000 * conf.tinfoexprhours; //缓存7天小时
+ let configExprMilliseconds = 3600000 * conf.tInfoExprHours; //缓存7天小时
  let num = /[0-9]*/g;
+
+
 
  function gettid() {
      return settings.tid;
@@ -45,22 +47,6 @@
  }
 
 
- let asc = function (a, b) {
-     let av = $(a).attr("indicator");
-     let bv = $(b).attr("indicator");
-     if (!av || !bv) return 0;
-     return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
- };
- let desc = function (a, b) {
-     let av = $(a).attr("indicator");
-     let bv = $(b).attr("indicator");
-     if (!av || !bv) return 0;
-     return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
- };
- let sortByIndicator = function (sortBy) {
-     let sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
-     $(".s-t-content.f-cb").empty().append(sortEle);
- };
 
  function getBatchNumber() {
      var cur = Date.now();
@@ -73,18 +59,6 @@
      return saved;
  }
 
- function getLeftPageCount() {
-     let pages = Number($(".s-t-page>.next-page:first").prev().text());
-     let curr = Number($(".s-t-page>.active:first").text());
-     if (pages) return pages - curr;
-     else return 0;
- }
-
- function getAutoNextPagesCount() {
-     let pages = getLeftPageCount();
-     if (settings.pagecount > pages) return pages;
-     else return settings.pagecount;
- }
 
 
  function getinfokey() {
@@ -118,6 +92,9 @@
      }
      $.dequeue(document);
  }
+
+ 
+
  /**
   * 
   * @param  {JQuery<document>} jqr the all html page elements
@@ -138,9 +115,22 @@
              return l;
          })(),
          updateTime: Date.now(),
+         labels: jqr.find('.t-d-label>span').map(function (i, v) {
+                 var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
+                 return {
+                     key: r[1],
+                     value: r[2]
+                 };
+             }).get()
+             .reduce(function (meta, item) {
+                 if (meta[item.key]) meta[item.key] += Number(item.value);
+                 meta[item.key] = Number(item.value);
+                 return meta;
+             }, {}),
+
      }
      if (jqr.find(".evaluate-content-left span").length >= 3) {
-         
+
          tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
          tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0]);
          tinfo.thumbupRate = calcThumbRate(tinfo);
@@ -160,15 +150,16 @@
      tinfo.batchNumber = getBatchNumber();
      tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
 
+     console.log(tinfo)
 
      jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
          return `${val}
-  <span class="age age-line"><label title='指标'>${tinfo_saved.indicator}</label></span>
-  <span class="age age-line"><label title='好评率'>${tinfo_saved.thumbupRate}%</label></span>
-  <span class="age age-line"><label title='被赞数量'>${tinfo_saved.thumbup}</label></span>
-  <span class="age age-line"><label title='被踩数量'>${tinfo_saved.thumbdown}</label></span>
-  <span class="age age-line"><label title='评论标签数量'>${tinfo_saved.label}</label></span>
-    <span class="age age-line"><label title='在同类别教师中的排名'><span id="teacherRank"></span></label></span>
+<span class="age age-line"><label title='指标'>${tinfo_saved.indicator}</label></span>
+<span class="age age-line"><label title='好评率'>${tinfo_saved.thumbupRate}%</label></span>
+<span class="age age-line"><label title='被赞数量'>${tinfo_saved.thumbup}</label></span>
+<span class="age age-line"><label title='被踩数量'>${tinfo_saved.thumbdown}</label></span>
+<span class="age age-line"><label title='评论标签数量'>${tinfo_saved.label}</label></span>
+<span class="age age-line"><label title='在同类别教师中的排名'><span id="teacherRank"></span></label></span>
   `;
      });
      return tinfo;
@@ -180,14 +171,9 @@
      configExprMilliseconds,
      num,
      gettid,
-     getorAddSession,
      sleep,
-     asc,
-     desc,
-     sortByIndicator,
      getBatchNumber,
-     getLeftPageCount,
-     getAutoNextPagesCount,
+
      getinfokey,
      submit,
      getTeacherInfoFromDetailPage

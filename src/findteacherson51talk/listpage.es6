@@ -4,17 +4,12 @@ import {
   configExprMilliseconds,
   num,
   gettid,
-  getorAddSession,
   sleep,
-  asc,
-  desc,
-  sortByIndicator,
   getBatchNumber,
-  getLeftPageCount,
-  getAutoNextPagesCount,
-  getinfokey, 
+  getinfokey,
   submit,
-  getTeacherInfoFromDetailPage
+  getTeacherInfoFromDetailPage,
+
 } from './common.es6';
 
 import './jqueryextend.es6'
@@ -28,6 +23,20 @@ let maxrate = 0,
   maxage = 0,
   minage = 99999;
 
+
+
+function getLeftPageCount() {
+  let pages = Number($(".s-t-page>.next-page:first").prev().text());
+  let curr = Number($(".s-t-page>.active:first").text());
+  if (pages) return pages - curr;
+  else return 0;
+}
+
+function getAutoNextPagesCount() {
+  let pages = getLeftPageCount();
+  if (settings.pageCount > pages) return pages;
+  else return settings.pageCount;
+}
 
 function updateTeacherinfoToUI(jqel, tinfo) {
   if (tinfo.label > maxlabel) maxlabel = tinfo.label;
@@ -123,16 +132,28 @@ function getUiFilters() {
 
 function getTeacherInfoFromListPageUI(jqel) {
   let label = (function () {
-    let j_len = jqel.find(".label").text().match(num).clean("").length;
-    let l = 0;
-    for (let j = 0; j < j_len; j++) {
-      l += Number(jqel.find(".label").text().match(num).clean("")[j]);
-    }
-    return l;
-  })();
-  let name = jqel.find(".teacher-name").text();
-  let type = $(".s-t-top-list .li-active").text();
-  let batchNumber = getBatchNumber();
+      let j_len = jqel.find(".label").text().match(num).clean("").length;
+      let l = 0;
+      for (let j = 0; j < j_len; j++) {
+        l += Number(jqel.find(".label").text().match(num).clean("")[j]);
+      }
+      return l;
+    })(),
+    labels = jqr.find('label>span').map(function (i, v) {
+      var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
+      return {
+        key: r[1],
+        value: r[2]
+      };
+    }).get()
+    .reduce(function (meta, item) {
+      if (meta[item.key]) meta[item.key] += Number(item.value);
+      meta[item.key] = Number(item.value);
+      return meta;
+    }, {}),
+    name = jqel.find(".teacher-name").text(),
+    type = $(".s-t-top-list .li-active").text(),
+    batchNumber = getBatchNumber();
   if (type == "收藏外教") {
     let isfavorite = true;
     return {
@@ -140,6 +161,7 @@ function getTeacherInfoFromListPageUI(jqel) {
       name,
       batchNumber,
       isfavorite,
+      labels,
     };
   } else
     return {
@@ -147,6 +169,7 @@ function getTeacherInfoFromListPageUI(jqel) {
       name,
       batchNumber,
       type,
+      labels,
     };
 }
 
@@ -238,7 +261,7 @@ if (settings.isListPage) {
           success: /** @param {document} r */ function (r) {
             let jqr = $(r);
             let tinfo = getTeacherInfoFromDetailPage(tinfo_all, jqr, {});
-            jqr.remove();            
+            jqr.remove();
             updateTeacherinfoToUI(jqel, tinfo);
             GM_setValue(tinfokey, tinfo);
           },

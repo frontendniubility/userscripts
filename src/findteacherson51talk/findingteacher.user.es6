@@ -36,15 +36,11 @@ import {
     configExprMilliseconds,
     num,
     gettid,
-    getorAddSession,
     sleep,
-    asc,
-    desc,
-    sortByIndicator,
-    // getBatchNumber,
+
     getLeftPageCount,
     getAutoNextPagesCount,
-    getinfokey, 
+    getinfokey,
     submit
 } from './common.es6'
 
@@ -71,9 +67,25 @@ import {
 import './detailpage'
 
 
-
 (function () {
     'use strict'
+
+    let asc = function (a, b) {
+        let av = $(a).attr("indicator");
+        let bv = $(b).attr("indicator");
+        if (!av || !bv) return 0;
+        return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
+    };
+    let desc = function (a, b) {
+        let av = $(a).attr("indicator");
+        let bv = $(b).attr("indicator");
+        if (!av || !bv) return 0;
+        return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
+    };
+    let sortByIndicator = function (sortBy) {
+        let sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
+        $(".s-t-content.f-cb").empty().append(sortEle);
+    };
 
     if (settings.isListPage || settings.isDetailPage) {
         //构建插件信息
@@ -93,7 +105,7 @@ import './detailpage'
           <div id='buttons' style='text-align: center'>
             <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>
             <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>
-            <input id='tinfoexprhours' title='缓存过期时间（小时）'>
+            <input id='tInfoExprHours' title='缓存过期时间（小时）'>
             <button title='清空缓存，并重新搜索'>清除缓存</button> 
             <a>报告BUG</a>
             <a>帮助</a>
@@ -244,13 +256,13 @@ import './detailpage'
                     .spinner({
                         min: 0,
                         spin: function (event, ui) {
-                            GM_setValue('tinfoexprhours', ui.value)
+                            GM_setValue('tInfoExprHours', ui.value)
                         }
                     })
                     .css({
                         width: '45px'
                     })
-                    .val(GM_getValue('tinfoexprhours', configExprMilliseconds / 3600000))
+                    .val(GM_getValue('tInfoExprHours', configExprMilliseconds / 3600000))
                     .hide()
                     .end()
                     //清空缓存

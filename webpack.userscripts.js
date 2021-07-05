@@ -71,7 +71,7 @@ let wpus = new WebpackUserscript({
 
       // 编译状态下（开发模式或者生产模式）
       let newverstring = getVersionString(data.buildTime, 'pro');
-      logger.warn(newverstring)
+
       var newheader = {
         version: newverstring
       };
@@ -97,14 +97,15 @@ let wpus = new WebpackUserscript({
           return extend(true, {}, header, newheader);
         }
       } catch (e) {
-        logger.error(`JSON parse error, file path :${versionpath},Errors:${e} `)
         if (!fs.existsSync(versionpath)) {
-          let curVersionJson = {
-            [hash]: newverstring
-          };
           logger.debug('文件不存在' + versionpath);
-          fs.writeFileSync(versionpath, JSON.stringify(curVersionJson));
         }
+        logger.error(`JSON parse error, file path :${versionpath},Errors:${e} `)
+        let curVersionJson = {
+          [hash]: newverstring
+        };
+        logger.debug('文件不存在' + versionpath);
+        fs.writeFileSync(versionpath, JSON.stringify(curVersionJson));
         return extend(true, {}, header, newheader);
       }
     }

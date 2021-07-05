@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.6.528171552
+// @version     2021.7.505105938
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -28,211 +28,6 @@
 
 (() => {
     var __webpack_modules__ = {
-        826: module => {
-            function _slicedToArray(arr, i) {
-                return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-            }
-            function _nonIterableRest() {
-                throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-            }
-            function _unsupportedIterableToArray(o, minLen) {
-                if (!o) return;
-                if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-                var n = Object.prototype.toString.call(o).slice(8, -1);
-                if (n === "Object" && o.constructor) n = o.constructor.name;
-                if (n === "Map" || n === "Set") return Array.from(o);
-                if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-            }
-            function _arrayLikeToArray(arr, len) {
-                if (len == null || len > arr.length) len = arr.length;
-                for (var i = 0, arr2 = new Array(len); i < len; i++) {
-                    arr2[i] = arr[i];
-                }
-                return arr2;
-            }
-            function _iterableToArrayLimit(arr, i) {
-                var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
-                if (_i == null) return;
-                var _arr = [], _n = true, _d = false, _s, _e;
-                try {
-                    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-                        _arr.push(_s.value);
-                        if (i && _arr.length === i) break;
-                    }
-                } catch (err) {
-                    _d = true;
-                    _e = err;
-                } finally {
-                    try {
-                        if (!_n && _i["return"] != null) _i["return"]();
-                    } finally {
-                        if (_d) throw _e;
-                    }
-                }
-                return _arr;
-            }
-            function _arrayWithHoles(arr) {
-                if (Array.isArray(arr)) return arr;
-            }
-            var GM_config = function GM_config(settings) {
-                var storage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "cfg", ret = null, prefix = "gm-config", addStyle = function addStyle() {
-                    var css = "\n\t\t\t\t.".concat(prefix, " {\n\t\t\t\t\tdisplay: grid;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\tgrid-row-gap: 5px;\n\t\t\t\t\tgrid-column-gap: 10px;\n\t\t\t\t\tbackground-color: white;\n\t\t\t\t\tborder: 1px solid black;\n\t\t\t\t\tpadding: 5px;\n\t\t\t\t\tposition: fixed;\n\t\t\t\t\ttop: 0;\n\t\t\t\t\tright: 0;\n\t\t\t\t\tz-index: 2147483647;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " label {\n\t\t\t\t\tgrid-column: 1 / 2;\n\t\t\t\t\tcolor: black;\n\t\t\t\t\ttext-align: right;\n\t\t\t\t\tfont-size: small;\n\t\t\t\t\tfont-weight: bold;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " input,\n\t\t\t\t.").concat(prefix, " textarea,\n\t\t\t\t.").concat(prefix, " select {\n\t\t\t\t\tgrid-column: 2 / 4;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " .").concat(prefix, "-save {\n\t\t\t\t\tgrid-column: 2 / 3;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " .").concat(prefix, "-cancel {\n\t\t\t\t\tgrid-column: 3 / 4;\n\t\t\t\t}\n\t\t\t");
-                    if (typeof GM_addStyle === "undefined") {
-                        var style = document.createElement("style");
-                        style.textContent = css;
-                        document.head.appendChild(style);
-                    } else {
-                        GM_addStyle(css);
-                    }
-                }, load = function load() {
-                    var defaults = {};
-                    settings.forEach((function(_ref) {
-                        var key = _ref.key, def = _ref["default"];
-                        return defaults[key] = def;
-                    }));
-                    var cfg = typeof GM_getValue !== "undefined" ? GM_getValue(storage) : localStorage.getItem(storage);
-                    if (!cfg) return defaults;
-                    cfg = JSON.parse(cfg);
-                    Object.entries(defaults).forEach((function(_ref2) {
-                        var _ref3 = _slicedToArray(_ref2, 2), key = _ref3[0], value = _ref3[1];
-                        if (typeof cfg[key] === "undefined") {
-                            cfg[key] = value;
-                        }
-                    }));
-                    return cfg;
-                }, save = function save(cfg) {
-                    var data = JSON.stringify(cfg);
-                    typeof GM_setValue !== "undefined" ? GM_setValue(storage, data) : localStorage.setItem(storage, data);
-                }, setup = function setup() {
-                    var createContainer = function createContainer() {
-                        var form = document.createElement("form");
-                        form.classList.add(prefix);
-                        return form;
-                    }, createTextbox = function createTextbox(name, value, placeholder, maxLength, multiline, resize) {
-                        var input = document.createElement(multiline ? "textarea" : "input");
-                        if (multiline) {
-                            input.style.resize = resize ? "vertical" : "none";
-                        } else {
-                            input.type = "text";
-                        }
-                        input.name = name;
-                        if (typeof value !== "undefined") input.value = value;
-                        if (placeholder) input.placeholder = placeholder;
-                        if (maxLength) input.maxLength = maxLength;
-                        return input;
-                    }, createNumber = function createNumber(name, value, placeholder, min, max, step) {
-                        var input = createTextbox(name, value, placeholder);
-                        input.type = "number";
-                        if (typeof min !== "undefined") input.min = min;
-                        if (typeof max !== "undefined") input.max = max;
-                        if (typeof step !== "undefined") input.step = step;
-                        return input;
-                    }, createSelect = function createSelect(name, options, value, showBlank) {
-                        var select = document.createElement("select");
-                        select.name = name;
-                        var createOption = function createOption(val) {
-                            var _val$value = val.value, value = _val$value === void 0 ? val : _val$value, _val$text = val.text, text = _val$text === void 0 ? val : _val$text, option = document.createElement("option");
-                            option.value = value;
-                            option.textContent = text;
-                            return option;
-                        };
-                        if (showBlank) {
-                            select.appendChild(createOption(""));
-                        }
-                        options.forEach((function(opt) {
-                            if (typeof opt.optgroup !== "undefined") {
-                                var optgroup = document.createElement("optgroup");
-                                optgroup.label = opt.optgroup;
-                                select.appendChild(optgroup);
-                                opt.values.forEach((function(value) {
-                                    return optgroup.appendChild(createOption(value));
-                                }));
-                            } else {
-                                select.appendChild(createOption(opt));
-                            }
-                        }));
-                        select.value = value;
-                        return select;
-                    }, createCheckbox = function createCheckbox(name, checked) {
-                        var checkbox = document.createElement("input");
-                        checkbox.id = "".concat(prefix, "-").concat(name);
-                        checkbox.type = "checkbox";
-                        checkbox.name = name;
-                        checkbox.checked = checked;
-                        return checkbox;
-                    }, createButton = function createButton(text, onclick, classname) {
-                        var button = document.createElement("button");
-                        button.classList.add("".concat(prefix, "-").concat(classname));
-                        button.textContent = text;
-                        button.onclick = onclick;
-                        return button;
-                    }, createLabel = function createLabel(label, htmlFor) {
-                        var lbl = document.createElement("label");
-                        if (htmlFor) lbl.htmlFor = htmlFor;
-                        lbl.textContent = label;
-                        return lbl;
-                    }, init = function init(cfg) {
-                        var controls = {}, div = createContainer();
-                        settings.filter((function(_ref4) {
-                            var type = _ref4.type;
-                            return type !== "hidden";
-                        })).forEach((function(setting) {
-                            var value = cfg[setting.key], control;
-                            if (setting.type === "text") {
-                                control = createTextbox(setting.key, value, setting.placeholder, setting.maxLength, setting.multiline, setting.resizable);
-                            } else if (setting.type === "number") {
-                                control = createNumber(setting.key, value, setting.placeholder, setting.min, setting.max, setting.step);
-                            } else if (setting.type === "dropdown") {
-                                control = createSelect(setting.key, setting.values, value, setting.showBlank);
-                            } else if (setting.type === "bool") {
-                                control = createCheckbox(setting.key, value);
-                            }
-                            div.appendChild(createLabel(setting.label, control.id));
-                            div.appendChild(control);
-                            controls[setting.key] = control;
-                            control.addEventListener(setting.type === "dropdown" ? "change" : "input", (function() {
-                                if (ret.onchange) {
-                                    var control = controls[setting.key], _value = setting.type === "bool" ? control.checked : control.value;
-                                    ret.onchange(setting.key, _value);
-                                }
-                            }));
-                        }));
-                        div.appendChild(createButton("Save", (function() {
-                            settings.filter((function(_ref5) {
-                                var type = _ref5.type;
-                                return type !== "hidden";
-                            })).forEach((function(_ref6) {
-                                var key = _ref6.key, type = _ref6.type, control = controls[key];
-                                cfg[key] = type === "bool" ? control.checked : control.value;
-                            }));
-                            save(cfg);
-                            if (ret.onsave) {
-                                ret.onsave(cfg);
-                            }
-                            div.remove();
-                        }), "save"));
-                        div.appendChild(createButton("Cancel", (function() {
-                            if (ret.oncancel) {
-                                ret.oncancel(cfg);
-                            }
-                            div.remove();
-                        }), "cancel"));
-                        document.body.appendChild(div);
-                    };
-                    init(load());
-                };
-                addStyle();
-                ret = {
-                    load,
-                    save,
-                    setup
-                };
-                return ret;
-            };
-            module.exports = {
-                GM_config
-            };
-        },
         99: () => {
             Pace.Options = {
                 ajax: false,
@@ -674,9 +469,208 @@
         options.singleton = false;
         var update = injectStylesIntoStyleTag_default()(findingteacher_user.Z, options);
         const findteacherson51talk_findingteacher_user = findingteacher_user.Z.locals || {};
-        var gm_config = __webpack_require__(826);
-        var config = (0, gm_config.GM_config)([ {
-            key: "pagecount",
+        function _slicedToArray(arr, i) {
+            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+        }
+        function _nonIterableRest() {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+        }
+        function _unsupportedIterableToArray(o, minLen) {
+            if (!o) return;
+            if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+            var n = Object.prototype.toString.call(o).slice(8, -1);
+            if (n === "Object" && o.constructor) n = o.constructor.name;
+            if (n === "Map" || n === "Set") return Array.from(o);
+            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+        }
+        function _arrayLikeToArray(arr, len) {
+            if (len == null || len > arr.length) len = arr.length;
+            for (var i = 0, arr2 = new Array(len); i < len; i++) {
+                arr2[i] = arr[i];
+            }
+            return arr2;
+        }
+        function _iterableToArrayLimit(arr, i) {
+            var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+            if (_i == null) return;
+            var _arr = [], _n = true, _d = false, _s, _e;
+            try {
+                for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+                    _arr.push(_s.value);
+                    if (i && _arr.length === i) break;
+                }
+            } catch (err) {
+                _d = true;
+                _e = err;
+            } finally {
+                try {
+                    if (!_n && _i["return"] != null) _i["return"]();
+                } finally {
+                    if (_d) throw _e;
+                }
+            }
+            return _arr;
+        }
+        function _arrayWithHoles(arr) {
+            if (Array.isArray(arr)) return arr;
+        }
+        var GM_config = function GM_config(settings) {
+            var storage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "cfg", ret = null, prefix = "gm-config", addStyle = function addStyle() {
+                var css = "\n\t\t\t\t.".concat(prefix, " {\n\t\t\t\t\tdisplay: grid;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\tgrid-row-gap: 5px;\n\t\t\t\t\tgrid-column-gap: 10px;\n\t\t\t\t\tbackground-color: white;\n\t\t\t\t\tborder: 1px solid black;\n\t\t\t\t\tpadding: 5px;\n\t\t\t\t\tposition: fixed;\n\t\t\t\t\ttop: 0;\n\t\t\t\t\tright: 0;\n\t\t\t\t\tz-index: 2147483647;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " label {\n\t\t\t\t\tgrid-column: 1 / 2;\n\t\t\t\t\tcolor: black;\n\t\t\t\t\ttext-align: right;\n\t\t\t\t\tfont-size: small;\n\t\t\t\t\tfont-weight: bold;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " input,\n\t\t\t\t.").concat(prefix, " textarea,\n\t\t\t\t.").concat(prefix, " select {\n\t\t\t\t\tgrid-column: 2 / 4;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " .").concat(prefix, "-save {\n\t\t\t\t\tgrid-column: 2 / 3;\n\t\t\t\t}\n\n\t\t\t\t.").concat(prefix, " .").concat(prefix, "-cancel {\n\t\t\t\t\tgrid-column: 3 / 4;\n\t\t\t\t}\n\t\t\t");
+                if (typeof GM_addStyle === "undefined") {
+                    var style = document.createElement("style");
+                    style.textContent = css;
+                    document.head.appendChild(style);
+                } else {
+                    GM_addStyle(css);
+                }
+            }, load = function load() {
+                var defaults = {};
+                settings.forEach((function(_ref) {
+                    var key = _ref.key, def = _ref["default"];
+                    return defaults[key] = def;
+                }));
+                var cfg = typeof GM_getValue !== "undefined" ? GM_getValue(storage) : localStorage.getItem(storage);
+                if (!cfg) return defaults;
+                cfg = JSON.parse(cfg);
+                Object.entries(defaults).forEach((function(_ref2) {
+                    var _ref3 = _slicedToArray(_ref2, 2), key = _ref3[0], value = _ref3[1];
+                    if (typeof cfg[key] === "undefined") {
+                        cfg[key] = value;
+                    }
+                }));
+                return cfg;
+            }, save = function save(cfg) {
+                var data = JSON.stringify(cfg);
+                typeof GM_setValue !== "undefined" ? GM_setValue(storage, data) : localStorage.setItem(storage, data);
+            }, setup = function setup() {
+                var createContainer = function createContainer() {
+                    var form = document.createElement("form");
+                    form.classList.add(prefix);
+                    return form;
+                }, createTextbox = function createTextbox(name, value, placeholder, maxLength, multiline, resize) {
+                    var input = document.createElement(multiline ? "textarea" : "input");
+                    if (multiline) {
+                        input.style.resize = resize ? "vertical" : "none";
+                    } else {
+                        input.type = "text";
+                    }
+                    input.name = name;
+                    if (typeof value !== "undefined") input.value = value;
+                    if (placeholder) input.placeholder = placeholder;
+                    if (maxLength) input.maxLength = maxLength;
+                    return input;
+                }, createNumber = function createNumber(name, value, placeholder, min, max, step) {
+                    var input = createTextbox(name, value, placeholder);
+                    input.type = "number";
+                    if (typeof min !== "undefined") input.min = min;
+                    if (typeof max !== "undefined") input.max = max;
+                    if (typeof step !== "undefined") input.step = step;
+                    return input;
+                }, createSelect = function createSelect(name, options, value, showBlank) {
+                    var select = document.createElement("select");
+                    select.name = name;
+                    var createOption = function createOption(val) {
+                        var _val$value = val.value, value = _val$value === void 0 ? val : _val$value, _val$text = val.text, text = _val$text === void 0 ? val : _val$text, option = document.createElement("option");
+                        option.value = value;
+                        option.textContent = text;
+                        return option;
+                    };
+                    if (showBlank) {
+                        select.appendChild(createOption(""));
+                    }
+                    options.forEach((function(opt) {
+                        if (typeof opt.optgroup !== "undefined") {
+                            var optgroup = document.createElement("optgroup");
+                            optgroup.label = opt.optgroup;
+                            select.appendChild(optgroup);
+                            opt.values.forEach((function(value) {
+                                return optgroup.appendChild(createOption(value));
+                            }));
+                        } else {
+                            select.appendChild(createOption(opt));
+                        }
+                    }));
+                    select.value = value;
+                    return select;
+                }, createCheckbox = function createCheckbox(name, checked) {
+                    var checkbox = document.createElement("input");
+                    checkbox.id = "".concat(prefix, "-").concat(name);
+                    checkbox.type = "checkbox";
+                    checkbox.name = name;
+                    checkbox.checked = checked;
+                    return checkbox;
+                }, createButton = function createButton(text, onclick, classname) {
+                    var button = document.createElement("button");
+                    button.classList.add("".concat(prefix, "-").concat(classname));
+                    button.textContent = text;
+                    button.onclick = onclick;
+                    return button;
+                }, createLabel = function createLabel(label, htmlFor) {
+                    var lbl = document.createElement("label");
+                    if (htmlFor) lbl.htmlFor = htmlFor;
+                    lbl.textContent = label;
+                    return lbl;
+                }, init = function init(cfg) {
+                    var controls = {}, div = createContainer();
+                    settings.filter((function(_ref4) {
+                        var type = _ref4.type;
+                        return type !== "hidden";
+                    })).forEach((function(setting) {
+                        var value = cfg[setting.key], control;
+                        if (setting.type === "text") {
+                            control = createTextbox(setting.key, value, setting.placeholder, setting.maxLength, setting.multiline, setting.resizable);
+                        } else if (setting.type === "number") {
+                            control = createNumber(setting.key, value, setting.placeholder, setting.min, setting.max, setting.step);
+                        } else if (setting.type === "dropdown") {
+                            control = createSelect(setting.key, setting.values, value, setting.showBlank);
+                        } else if (setting.type === "bool") {
+                            control = createCheckbox(setting.key, value);
+                        }
+                        div.appendChild(createLabel(setting.label, control.id));
+                        div.appendChild(control);
+                        controls[setting.key] = control;
+                        control.addEventListener(setting.type === "dropdown" ? "change" : "input", (function() {
+                            if (ret.onchange) {
+                                var control = controls[setting.key], _value = setting.type === "bool" ? control.checked : control.value;
+                                ret.onchange(setting.key, _value);
+                            }
+                        }));
+                    }));
+                    div.appendChild(createButton("Save", (function() {
+                        settings.filter((function(_ref5) {
+                            var type = _ref5.type;
+                            return type !== "hidden";
+                        })).forEach((function(_ref6) {
+                            var key = _ref6.key, type = _ref6.type, control = controls[key];
+                            cfg[key] = type === "bool" ? control.checked : control.value;
+                        }));
+                        save(cfg);
+                        if (ret.onsave) {
+                            ret.onsave(cfg);
+                        }
+                        div.remove();
+                    }), "save"));
+                    div.appendChild(createButton("Cancel", (function() {
+                        if (ret.oncancel) {
+                            ret.oncancel(cfg);
+                        }
+                        div.remove();
+                    }), "cancel"));
+                    document.body.appendChild(div);
+                };
+                init(load());
+            };
+            addStyle();
+            ret = {
+                load,
+                save,
+                setup
+            };
+            return ret;
+        };
+        var config = GM_config([ {
+            key: "pageCount",
             label: "最大页数 (自动获取时)",
             default: 20,
             type: "dropdown",
@@ -688,7 +682,7 @@
             type: "dropdown",
             values: [ 0, 1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 179, 181, 191, 193, 197, 199 ]
         }, {
-            key: "tinfoexprhours",
+            key: "tInfoExprHours",
             label: "教师数据缓存过期时间（小时）",
             default: 139,
             type: "dropdown",
@@ -709,16 +703,16 @@
             $("#autogetnextpage").text("自动获取" + getAutoNextPagesCount() + "页");
         };
         GM_registerMenuCommand("设置", config.setup);
-        var url = window.location.href.toLocaleLowerCase(), settings = {
+        var url = window.location.href.toLocaleLowerCase(), common_settings = {
             url,
             tid: url.match(/(t\d+)/g),
-            pagecount: conf.pagecount,
+            pageCount: conf.pageCount,
             isDetailPage: url.includes("teachernew"),
             isListPage: url.includes("reservenew"),
             isCoursePage: url.includes("study_center")
-        }, configExprMilliseconds = 36e5 * conf.tinfoexprhours, num = /[0-9]*/g;
+        }, configExprMilliseconds = 36e5 * conf.tInfoExprHours, num = /[0-9]*/g;
         function gettid() {
-            return settings.tid;
+            return common_settings.tid;
         }
         function getorAddSession(key, func) {
             if (!(key in sessionStorage)) {
@@ -734,18 +728,6 @@
                 continue;
             }
         }
-        var asc = function asc(a, b) {
-            var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
-            if (!av || !bv) return 0;
-            return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
-        }, desc = function desc(a, b) {
-            var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
-            if (!av || !bv) return 0;
-            return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
-        }, sortByIndicator = function sortByIndicator(sortBy) {
-            var sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
-            $(".s-t-content.f-cb").empty().append(sortEle);
-        };
         function getBatchNumber() {
             var cur = Date.now();
             if (conf.newBatcherKeyMinutes <= 0) cur;
@@ -755,14 +737,6 @@
                 return cur;
             }
             return saved;
-        }
-        function getLeftPageCount() {
-            var pages = Number($(".s-t-page>.next-page:first").prev().text()), curr = Number($(".s-t-page>.active:first").text());
-            if (pages) return pages - curr; else return 0;
-        }
-        function common_getAutoNextPagesCount() {
-            var pages = getLeftPageCount();
-            if (settings.pagecount > pages) return pages; else return settings.pagecount;
         }
         function getinfokey() {
             return "tinfo-" + gettid();
@@ -800,7 +774,18 @@
                     }));
                     return l;
                 }(),
-                updateTime: Date.now()
+                updateTime: Date.now(),
+                labels: jqr.find(".t-d-label>span").map((function(i, v) {
+                    var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
+                    return {
+                        key: r[1],
+                        value: r[2]
+                    };
+                })).get().reduce((function(meta, item) {
+                    if (meta[item.key]) meta[item.key] += Number(item.value);
+                    meta[item.key] = Number(item.value);
+                    return meta;
+                }), {})
             };
             if (jqr.find(".evaluate-content-left span").length >= 3) {
                 tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0]);
@@ -818,8 +803,9 @@
             tinfo.age = Number(agesstr[0]);
             tinfo.batchNumber = getBatchNumber();
             tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
+            console.log(tinfo);
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
-                return "".concat(val, "\n  <span class=\"age age-line\"><label title='指标'>").concat(tinfo_saved.indicator, "</label></span>\n  <span class=\"age age-line\"><label title='好评率'>").concat(tinfo_saved.thumbupRate, "%</label></span>\n  <span class=\"age age-line\"><label title='被赞数量'>").concat(tinfo_saved.thumbup, "</label></span>\n  <span class=\"age age-line\"><label title='被踩数量'>").concat(tinfo_saved.thumbdown, "</label></span>\n  <span class=\"age age-line\"><label title='评论标签数量'>").concat(tinfo_saved.label, '</label></span>\n    <span class="age age-line"><label title=\'在同类别教师中的排名\'><span id="teacherRank"></span></label></span>\n  ');
+                return "".concat(val, "\n<span class=\"age age-line\"><label title='指标'>").concat(tinfo_saved.indicator, "</label></span>\n<span class=\"age age-line\"><label title='好评率'>").concat(tinfo_saved.thumbupRate, "%</label></span>\n<span class=\"age age-line\"><label title='被赞数量'>").concat(tinfo_saved.thumbup, "</label></span>\n<span class=\"age age-line\"><label title='被踩数量'>").concat(tinfo_saved.thumbdown, "</label></span>\n<span class=\"age age-line\"><label title='评论标签数量'>").concat(tinfo_saved.label, '</label></span>\n<span class="age age-line"><label title=\'在同类别教师中的排名\'><span id="teacherRank"></span></label></span>\n  ');
             }));
             return tinfo;
         }
@@ -859,26 +845,26 @@
             }
         };
         function _toConsumableArray(arr) {
-            return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+            return _arrayWithoutHoles(arr) || _iterableToArray(arr) || jqueryextend_unsupportedIterableToArray(arr) || _nonIterableSpread();
         }
         function _nonIterableSpread() {
             throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
         }
-        function _unsupportedIterableToArray(o, minLen) {
+        function jqueryextend_unsupportedIterableToArray(o, minLen) {
             if (!o) return;
-            if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+            if (typeof o === "string") return jqueryextend_arrayLikeToArray(o, minLen);
             var n = Object.prototype.toString.call(o).slice(8, -1);
             if (n === "Object" && o.constructor) n = o.constructor.name;
             if (n === "Map" || n === "Set") return Array.from(o);
-            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return jqueryextend_arrayLikeToArray(o, minLen);
         }
         function _iterableToArray(iter) {
             if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
         }
         function _arrayWithoutHoles(arr) {
-            if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+            if (Array.isArray(arr)) return jqueryextend_arrayLikeToArray(arr);
         }
-        function _arrayLikeToArray(arr, len) {
+        function jqueryextend_arrayLikeToArray(arr, len) {
             if (len == null || len > arr.length) len = arr.length;
             for (var i = 0, arr2 = new Array(len); i < len; i++) {
                 arr2[i] = arr[i];
@@ -991,6 +977,34 @@
                 return target.replace(new RegExp(search, "g"), replacement);
             }
         });
+        if (!String.prototype.startsWith) {
+            Object.defineProperty(String.prototype, "startsWith", {
+                value: function value(search, rawPos) {
+                    var pos = rawPos > 0 ? rawPos | 0 : 0;
+                    return this.substring(pos, pos + search.length) === search;
+                }
+            });
+        }
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function(search, this_len) {
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
+        if (!String.prototype.includes) {
+            String.prototype.includes = function(search, start) {
+                "use strict";
+                if (search instanceof RegExp) {
+                    throw TypeError("first argument must not be a RegExp");
+                }
+                if (start === undefined) {
+                    start = 0;
+                }
+                return this.indexOf(search, start) !== -1;
+            };
+        }
         $.extend(window, {
             parameters: function parameters(url) {
                 var queryString = url ? url.split("?")[1] : window.location.search.slice(1), cachedkey = "urlparameters" + queryString, obj = $(window).data(cachedkey);
@@ -1042,6 +1056,14 @@
             return obj;
         }
         var maxrate = 0, minrate = 99999, maxlabel = 0, minlabel = 9999999, maxfc = 0, minfc = 999999, maxage = 0, minage = 99999;
+        function getLeftPageCount() {
+            var pages = Number($(".s-t-page>.next-page:first").prev().text()), curr = Number($(".s-t-page>.active:first").text());
+            if (pages) return pages - curr; else return 0;
+        }
+        function listpage_getAutoNextPagesCount() {
+            var pages = getLeftPageCount();
+            if (settings.pageCount > pages) return pages; else return settings.pageCount;
+        }
         function updateTeacherinfoToUI(jqel, tinfo) {
             if (tinfo.label > maxlabel) maxlabel = tinfo.label;
             if (tinfo.label < minlabel) minlabel = tinfo.label;
@@ -1105,23 +1127,35 @@
                     l += Number(jqel.find(".label").text().match(num).clean("")[j]);
                 }
                 return l;
-            }(), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), batchNumber = getBatchNumber();
+            }(), labels = jqr.find("label>span").map((function(i, v) {
+                var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
+                return {
+                    key: r[1],
+                    value: r[2]
+                };
+            })).get().reduce((function(meta, item) {
+                if (meta[item.key]) meta[item.key] += Number(item.value);
+                meta[item.key] = Number(item.value);
+                return meta;
+            }), {}), name = jqel.find(".teacher-name").text(), type = $(".s-t-top-list .li-active").text(), batchNumber = getBatchNumber();
             if (type == "收藏外教") {
                 var isfavorite = true;
                 return {
                     label,
                     name,
                     batchNumber,
-                    isfavorite
+                    isfavorite,
+                    labels
                 };
             } else return {
                 label,
                 name,
                 batchNumber,
-                type
+                type,
+                labels
             };
         }
-        if (settings.isListPage) {
+        if (common_settings.isListPage) {
             $(".item-top-cont").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
@@ -1243,7 +1277,7 @@
                 text: lbl ? lbl : val
             }).appendTo(container);
         }
-        if (settings.isDetailPage) {
+        if (common_settings.isDetailPage) {
             var processTeacherDetailPage = function processTeacherDetailPage(jqr) {
                 var tinfo_saved = GM_getValue(getinfokey(), {});
                 tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
@@ -1256,7 +1290,19 @@
         }
         (function() {
             "use strict";
-            if (settings.isListPage || settings.isDetailPage) {
+            var asc = function asc(a, b) {
+                var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
+                if (!av || !bv) return 0;
+                return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
+            }, desc = function desc(a, b) {
+                var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
+                if (!av || !bv) return 0;
+                return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
+            }, sortByIndicator = function sortByIndicator(sortBy) {
+                var sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
+                $(".s-t-content.f-cb").empty().append(sortEle);
+            };
+            if (common_settings.isListPage || common_settings.isDetailPage) {
                 var getRankHtml = function getRankHtml(t) {
                     if (t) {
                         var colorif = "";
@@ -1307,8 +1353,8 @@
                             age1: minage,
                             age2: maxage
                         }), buttons = "";
-                        if (settings.isListPage) {
-                            buttons = "\n          <div id='buttons' style='text-align: center'>\n            <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>\n            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>\n            <input id='tinfoexprhours' title='缓存过期时间（小时）'>\n            <button title='清空缓存，并重新搜索'>清除缓存</button> \n            <a>报告BUG</a>\n            <a>帮助</a>\n          </div>\n          <div id='buttons1' style='text-align: center;'>\n            <div id='timesmutipulecheck'></div>\n            <button>反选时间段</button>\n            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>\n          </div>";
+                        if (common_settings.isListPage) {
+                            buttons = "\n          <div id='buttons' style='text-align: center'>\n            <button id='asc' title='当前为降序，点击后按升序排列'>升序</button>\n            <button id='desc' title='当前为升序，点击进行降序排列' style='display:none;'>降序</button>\n            <input id='tInfoExprHours' title='缓存过期时间（小时）'>\n            <button title='清空缓存，并重新搜索'>清除缓存</button> \n            <a>报告BUG</a>\n            <a>帮助</a>\n          </div>\n          <div id='buttons1' style='text-align: center;'>\n            <div id='timesmutipulecheck'></div>\n            <button>反选时间段</button>\n            <button id='autogettodaysteachers' title='自动获取上述选择时段的全部教师并缓存'>获取选定时段老师</button>\n          </div>";
                         }
                         $("body").append("<div id='filterdialog' title='Teacher Filter'>\n      <div id='tabs'>\n        <div>\n          <ul>\n            <li><a href=\"#tabs-1\">Search Teachers</a></li>\n            <li><a href=\"#tabs-2\">Sorted Teachers</a></li>\n          </ul>\n          <br />\n            ".concat(buttons, "\n        </div>\n        <div id=\"tabs-1\">\n          当前可选<span id='tcount' ></span>位,被折叠<span id='thidecount' ></span>位。<br />\n          有效经验值 <span id='_tLabelCount' ></span><br /><div id='tlabelslider'></div>\n          收藏数 <span id='_tfc' ></span><br /><div id='fcSlider'></div>\n          好评率 <span id='_thumbupRate'></span><br /><div id='thumbupRateslider'></div>\n          年龄 <span id='_tAge' ></span><br /><div id='tAgeSlider'></div>\n        </div>\n        <div id=\"tabs-2\">\n          <table id=\"teachertab\"></table>\n          <div id=\"pager5\"></div>\n        </div>\n      </div>\n    </div>"));
                         $("body").append("<div id='teachlistdialog' style='display:none;'></div>");
@@ -1391,11 +1437,11 @@
                         })).end().eq(2).spinner({
                             min: 0,
                             spin: function spin(event, ui) {
-                                GM_setValue("tinfoexprhours", ui.value);
+                                GM_setValue("tInfoExprHours", ui.value);
                             }
                         }).css({
                             width: "45px"
-                        }).val(GM_getValue("tinfoexprhours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
+                        }).val(GM_getValue("tInfoExprHours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
                             icon: "uiicon-trash",
                             showLabel: true
                         }).click((function() {
@@ -1645,7 +1691,7 @@
                                 }).jqGrid("filterToolbar", {
                                     searchOperators: true
                                 })[0].triggerToolbar();
-                                if (settings.isListPage) {
+                                if (common_settings.isListPage) {
                                     $.each($(".item"), (function(i, item) {
                                         var jqel = $(item), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), t = teachers.find((function(currentValue, index, arr) {
                                             return currentValue.tid == tid;
@@ -1653,7 +1699,7 @@
                                         if (lb.length == 0) jqel.find(".teacher-name").html("".concat(jqel.find(".teacher-name").html(), "| ").concat(getRankHtml(t))); else lb.replaceWith(getRankHtml(t));
                                     }));
                                 }
-                                if (settings.isDetailPage) {
+                                if (common_settings.isDetailPage) {
                                     var t = teachers.find((function(currentValue, index, arr) {
                                         return currentValue.tid == gettid();
                                     }));
@@ -1679,7 +1725,7 @@
                     $("#tabs>div:first").append($(".s-t-page").prop("outerHTML"));
                     sortByIndicator(desc);
                     $("#tabs").tabs("option", "active", 1);
-                    if (settings.isDetailPage) {
+                    if (common_settings.isDetailPage) {
                         $("#tabs").tabs("option", "disabled", [ 0 ]);
                     }
                     $("#filterdialog").dialog({
@@ -1690,7 +1736,7 @@
                     next();
                 }));
             }
-            if (settings.isCoursePage) {
+            if (common_settings.isCoursePage) {
                 common_submit((function(next) {
                     $(".course_lock").removeClass("course_lock").addClass("course_unlock");
                     $("img.course_mask").removeClass("course_mask").attr("src", "");
