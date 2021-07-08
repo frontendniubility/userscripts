@@ -12,9 +12,9 @@ import {
   getLabelCount,
   getLabelByItems
 
-} from './common.es6';
+} from './common';
 
-import './jqueryextend.es6'
+import './jqueryextend'
 
 let maxrate = 0,
   minrate = 99999,
@@ -249,7 +249,7 @@ if (settings.isListPage) {
           url: window.location.protocol + "//www.51talk.com/TeacherNew/teacherComment?tid=" + tid + "&type=bad&has_msg=1",
           type: "GET",
           dateType: "html",
-          success: /** @param {document} r */ function (r) {
+          success: function (r) {
             let jqr = $(r);
             let tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
             jqr.remove();

@@ -1,6 +1,6 @@
 import {
     GM_config
-} from './gm_config.js'
+} from './gm_config'
 
 const config = GM_config([{
         key: "pageCount",

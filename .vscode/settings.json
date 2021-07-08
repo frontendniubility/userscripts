@@ -11,5 +11,6 @@
   "javascript.validate.enable": false,
   "editor.tabSize": 2,
   "compile-hero.disable-compile-files-on-did-save-code": true,
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

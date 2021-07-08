@@ -69,8 +69,8 @@ $.extend(String.prototype, {
         if (!Array.isArray(arr))
             return false;
         return new RegExp(arr.join('|')).test(this);;
-    },  
-    
+    },
+
 
     replaceAll: function (search, replacement) {
         let target = this;
@@ -80,20 +80,20 @@ $.extend(String.prototype, {
 
 if (!String.prototype.startsWith) {
     Object.defineProperty(String.prototype, 'startsWith', {
-        value: function(search, rawPos) {
-            var pos = rawPos > 0 ? rawPos|0 : 0;
+        value: function (search, rawPos) {
+            var pos = rawPos > 0 ? rawPos | 0 : 0;
             return this.substring(pos, pos + search.length) === search;
         }
     });
 }
 if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function(search, this_len) {
-      if (this_len === undefined || this_len > this.length) {
-        this_len = this.length;
-      }
-      return this.substring(this_len - search.length, this_len) === search;
+    String.prototype.endsWith = function (search, this_len) {
+        if (this_len === undefined || this_len > this.length) {
+            this_len = this.length;
+        }
+        return this.substring(this_len - search.length, this_len) === search;
     };
-  }
+}
 if (!String.prototype.includes) {
     String.prototype.includes = function (search, start) {
         'use strict';
@@ -114,6 +114,7 @@ $.extend(window, {
         // get query string from url (optional) or window
         let queryString = url ? url.split("?")[1] : window.location.search.slice(1);
         let cachedkey = "urlparameters" + queryString;
+
         let obj = $(window).data(cachedkey);
         if (obj == undefined) {
             obj = new Proxy({}, PropertiesCaseInsensitive);

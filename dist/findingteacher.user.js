@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.7.505170211
+// @version     2021.7.508164909
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -469,11 +469,46 @@
         options.singleton = false;
         var update = injectStylesIntoStyleTag_default()(findingteacher_user.Z, options);
         const findteacherson51talk_findingteacher_user = findingteacher_user.Z.locals || {};
-        function _slicedToArray(arr, i) {
-            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+        const propertiesCaseInsensitive = class {
+            has(target, prop) {
+                if (typeof prop === "symbol") {
+                    return prop in target;
+                }
+                prop = prop.toLowerCase();
+                if (prop in target) return true;
+                let keys = Object.keys(target);
+                let i = keys.length;
+                while (i--) {
+                    if (keys[i] && keys[i].toLowerCase() == prop) return true;
+                }
+                return false;
+            }
+            get(target, prop, receiver) {
+                if (typeof prop === "symbol") {
+                    return target[prop];
+                }
+                prop = prop.toLowerCase();
+                if (prop in target) return target[prop];
+                let keys = Object.keys(target);
+                let i = keys.length;
+                while (i--) {
+                    if (keys[i] && keys[i].toLowerCase() == prop) return target[keys[i]];
+                }
+                return undefined;
+            }
+            set(target, prop, value) {
+                if (typeof prop === "symbol") {
+                    target[prop] = value;
+                }
+                target[prop.toLowerCase()] = value;
+                return true;
+            }
+        };
+        function _toConsumableArray(arr) {
+            return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
         }
-        function _nonIterableRest() {
-            throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+        function _nonIterableSpread() {
+            throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
         }
         function _unsupportedIterableToArray(o, minLen) {
             if (!o) return;
@@ -483,7 +518,205 @@
             if (n === "Map" || n === "Set") return Array.from(o);
             if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
         }
+        function _iterableToArray(iter) {
+            if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+        }
+        function _arrayWithoutHoles(arr) {
+            if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+        }
         function _arrayLikeToArray(arr, len) {
+            if (len == null || len > arr.length) len = arr.length;
+            for (var i = 0, arr2 = new Array(len); i < len; i++) {
+                arr2[i] = arr[i];
+            }
+            return arr2;
+        }
+        var getPaddedComp = function getPaddedComp(comp) {
+            var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+            if (len < 1) len = 1;
+            comp = "" + comp;
+            var paddedLen = len - ("" + comp).length;
+            if (paddedLen > 0) {
+                return [].concat(_toConsumableArray(Array(paddedLen).fill("0")), _toConsumableArray(comp)).join("");
+            } else return comp;
+        }, o = {
+            "[y|Y]{4}": function yY4(date) {
+                return date.getFullYear();
+            },
+            "[y|Y]{2}": function yY2(date) {
+                return date.getFullYear().toString().slice(2);
+            },
+            MM: function MM(date) {
+                return getPaddedComp(date.getMonth() + 1);
+            },
+            M: function M(date) {
+                return date.getMonth() + 1;
+            },
+            "[d|D]{2}": function dD2(date) {
+                return getPaddedComp(date.getDate());
+            },
+            "[d|D]{1}": function dD1(date) {
+                return date.getDate();
+            },
+            "h{2}": function h2(date) {
+                return getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours());
+            },
+            "h{1}": function h1(date) {
+                return date.getHours() > 12 ? date.getHours() % 12 : date.getHours();
+            },
+            "H{2}": function H2(date) {
+                return getPaddedComp(date.getHours());
+            },
+            "H{1}": function H1(date) {
+                return date.getHours();
+            },
+            "m{2}": function m2(date) {
+                return getPaddedComp(date.getMinutes());
+            },
+            "m{1}": function m1(date) {
+                return date.getMinutes();
+            },
+            "s+": function s(date) {
+                return getPaddedComp(date.getSeconds());
+            },
+            "f+": function f(date) {
+                return getPaddedComp(date.getMilliseconds(), 3);
+            },
+            "f{1}": function f1(date) {
+                return getPaddedComp(date.getMilliseconds(), 0);
+            },
+            "b+": function b(date) {
+                return date.getHours() >= 12 ? "PM" : "AM";
+            }
+        };
+        $.extend(Date.prototype, {
+            toString: function toString(format) {
+                if (!format) return this.toLocaleDateString();
+                var formattedDate = format;
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(format)) {
+                        formattedDate = formattedDate.replace(RegExp.$1, o[k](this));
+                    }
+                }
+                return formattedDate;
+            }
+        });
+        $.extend(Array.prototype, {
+            clean: function clean() {
+                for (var deleteValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "", i = 0; i < this.length; i++) {
+                    if (this[i] == deleteValue) {
+                        this.splice(i, 1);
+                        i--;
+                    }
+                }
+                return this;
+            }
+        });
+        $.extend(Number.prototype, {
+            toString: function toString(num) {
+                if (isNaN(num)) num = 2;
+                return this.toFixed(num);
+            }
+        });
+        $.extend(String.prototype, {
+            toFloat: function toFloat() {
+                return parseFloat(this);
+            },
+            toInt: function toInt() {
+                return parseInt(this);
+            },
+            includesAny: function includesAny() {
+                for (var _len = arguments.length, arr = new Array(_len), _key = 0; _key < _len; _key++) {
+                    arr[_key] = arguments[_key];
+                }
+                if (!Array.isArray(arr)) return false;
+                return new RegExp(arr.join("|")).test(this);
+            },
+            replaceAll: function replaceAll(search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, "g"), replacement);
+            }
+        });
+        if (!String.prototype.startsWith) {
+            Object.defineProperty(String.prototype, "startsWith", {
+                value: function value(search, rawPos) {
+                    var pos = rawPos > 0 ? rawPos | 0 : 0;
+                    return this.substring(pos, pos + search.length) === search;
+                }
+            });
+        }
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function(search, this_len) {
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
+        if (!String.prototype.includes) {
+            String.prototype.includes = function(search, start) {
+                "use strict";
+                if (search instanceof RegExp) {
+                    throw TypeError("first argument must not be a RegExp");
+                }
+                if (start === undefined) {
+                    start = 0;
+                }
+                return this.indexOf(search, start) !== -1;
+            };
+        }
+        $.extend(window, {
+            parameters: function parameters(url) {
+                var queryString = url ? url.split("?")[1] : window.location.search.slice(1), cachedkey = "urlparameters" + queryString, obj = $(window).data(cachedkey);
+                if (obj == undefined) {
+                    obj = new Proxy({}, propertiesCaseInsensitive);
+                    $(window).data(cachedkey, obj);
+                } else return obj;
+                if (queryString) {
+                    queryString = queryString.split("#")[0];
+                    var arr = queryString.split("&");
+                    for (var i = 0; i < arr.length; i++) {
+                        var a = arr[i].split("="), paramName = a[0], paramValue = typeof a[1] === "undefined" ? true : a[1];
+                        if (paramName.match(/\[(\d+)?\]$/)) {
+                            var key = paramName.replace(/\[(\d+)?\]/, "");
+                            if (!obj[key]) obj[key] = [];
+                            if (paramName.match(/\[\d+\]$/)) {
+                                var index = /\[(\d+)\]/.exec(paramName)[1];
+                                obj[key][index] = paramValue;
+                            } else {
+                                obj[key].push(paramValue);
+                            }
+                        } else {
+                            if (!obj[paramName]) {
+                                obj[paramName] = paramValue;
+                            } else if (obj[paramName] && typeof obj[paramName] === "string") {
+                                obj[paramName] = [ obj[paramName] ];
+                                obj[paramName].push(paramValue);
+                            } else {
+                                obj[paramName].push(paramValue);
+                            }
+                        }
+                    }
+                }
+                return obj;
+            }
+        });
+        var pacesetup = __webpack_require__(99);
+        function _slicedToArray(arr, i) {
+            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || gm_config_unsupportedIterableToArray(arr, i) || _nonIterableRest();
+        }
+        function _nonIterableRest() {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+        }
+        function gm_config_unsupportedIterableToArray(o, minLen) {
+            if (!o) return;
+            if (typeof o === "string") return gm_config_arrayLikeToArray(o, minLen);
+            var n = Object.prototype.toString.call(o).slice(8, -1);
+            if (n === "Object" && o.constructor) n = o.constructor.name;
+            if (n === "Map" || n === "Set") return Array.from(o);
+            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return gm_config_arrayLikeToArray(o, minLen);
+        }
+        function gm_config_arrayLikeToArray(arr, len) {
             if (len == null || len > arr.length) len = arr.length;
             for (var i = 0, arr2 = new Array(len); i < len; i++) {
                 arr2[i] = arr[i];
@@ -703,14 +936,17 @@
             $("#autogetnextpage").text("自动获取" + getAutoNextPagesCount() + "页");
         };
         GM_registerMenuCommand("设置", config.setup);
-        var url = window.location.href.toLocaleLowerCase(), common_settings = {
+        var url = window.location.href.toLocaleLowerCase();
+        var common_settings = {
             url,
-            tid: url.match(/(t\d+)/g),
+            tid: url.match(/(t\d+)/g)[1],
             pageCount: conf.pageCount,
             isDetailPage: url.includes("teachernew"),
             isListPage: url.includes("reservenew"),
             isCoursePage: url.includes("study_center")
-        }, common_configExprMilliseconds = 36e5 * conf.tInfoExprHours, num = /[0-9]*/g;
+        };
+        var configExprMilliseconds = 36e5 * conf.tInfoExprHours;
+        var num = /[0-9]*/g;
         function gettid() {
             return common_settings.tid;
         }
@@ -728,7 +964,7 @@
                 continue;
             }
         }
-        function common_getBatchNumber() {
+        function getBatchNumber() {
             var cur = Date.now();
             if (conf.newBatcherKeyMinutes <= 0) cur;
             var saved = parseInt(GM_getValue("_getBatchNumber"));
@@ -754,14 +990,14 @@
             if (all < 1) all = 1;
             return ((tinfo.thumbup + Number.EPSILON) / all).toFixed(2) * 100;
         }
-        function common_submit(fun) {
-            var queue = $.queue(document, "fx", fun);
+        function common_submit(func) {
+            var queue = $.queue(document, "fx", func);
             if (queue[0] == "inprogress") {
                 return;
             }
             $.dequeue(document);
         }
-        function common_getLabelCount(jqLabelElement) {
+        function getLabelCount(jqLabelElement) {
             return function() {
                 var l = 0;
                 $.each(jqLabelElement.text().match(num).clean(""), (function(i, val) {
@@ -770,7 +1006,7 @@
                 return l;
             }();
         }
-        function common_getLabelByItems(jqLabelSpanList) {
+        function getLabelByItems(jqLabelSpanList) {
             return jqLabelSpanList.map((function(i, v) {
                 var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
                 return {
@@ -783,15 +1019,15 @@
                 return meta;
             }), {});
         }
-        function common_getTeacherInfoFromDetailPage() {
+        function getTeacherInfoFromDetailPage() {
             var tinfo_saved = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}, jqr = arguments.length > 1 ? arguments[1] : undefined, tinfo_latest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
             var tinfo = {
-                label: common_getLabelCount(jqr.find(".t-d-label")),
+                label: getLabelCount(jqr.find(".t-d-label")),
                 updateTime: Date.now(),
-                labels: common_getLabelByItems(jqr.find(".t-d-label>span")),
+                labels: getLabelByItems(jqr.find(".t-d-label>span")),
                 teacherStar: Number(jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-star").text()),
                 certificaties: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-icon-tag>span:eq(0)").text(),
                 suitables: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.suitable>span:not(:first)").map((function(i, v) {
@@ -815,7 +1051,7 @@
             var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("");
             tinfo.tage = Number(agesstr[1]);
             tinfo.age = Number(agesstr[0]);
-            tinfo.batchNumber = common_getBatchNumber();
+            tinfo.batchNumber = getBatchNumber();
             tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
             console.log(tinfo);
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
@@ -823,239 +1059,17 @@
             }));
             return tinfo;
         }
-        const propertiesCaseInsensitive = class {
-            has(target, prop) {
-                if (typeof prop === "symbol") {
-                    return prop in target;
-                }
-                prop = prop.toLowerCase();
-                if (prop in target) return true;
-                let keys = Object.keys(target);
-                let i = keys.length;
-                while (i--) {
-                    if (keys[i] && keys[i].toLowerCase() == prop) return true;
-                }
-                return false;
-            }
-            get(target, prop, receiver) {
-                if (typeof prop === "symbol") {
-                    return target[prop];
-                }
-                prop = prop.toLowerCase();
-                if (prop in target) return target[prop];
-                let keys = Object.keys(target);
-                let i = keys.length;
-                while (i--) {
-                    if (keys[i] && keys[i].toLowerCase() == prop) return target[keys[i]];
-                }
-                return undefined;
-            }
-            set(target, prop, value) {
-                if (typeof prop === "symbol") {
-                    target[prop] = value;
-                }
-                target[prop.toLowerCase()] = value;
-                return true;
-            }
-        };
-        function _toConsumableArray(arr) {
-            return _arrayWithoutHoles(arr) || _iterableToArray(arr) || jqueryextend_unsupportedIterableToArray(arr) || _nonIterableSpread();
+        function processTeacherDetailPage(jqr) {
+            var tinfo_saved = GM_getValue(getinfokey(), {});
+            tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
+            GM_setValue(getinfokey(), tinfo_saved);
         }
-        function _nonIterableSpread() {
-            throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+        if (common_settings.isDetailPage) {
+            common_submit((function(next) {
+                processTeacherDetailPage($(document));
+                next();
+            }));
         }
-        function jqueryextend_unsupportedIterableToArray(o, minLen) {
-            if (!o) return;
-            if (typeof o === "string") return jqueryextend_arrayLikeToArray(o, minLen);
-            var n = Object.prototype.toString.call(o).slice(8, -1);
-            if (n === "Object" && o.constructor) n = o.constructor.name;
-            if (n === "Map" || n === "Set") return Array.from(o);
-            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return jqueryextend_arrayLikeToArray(o, minLen);
-        }
-        function _iterableToArray(iter) {
-            if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-        }
-        function _arrayWithoutHoles(arr) {
-            if (Array.isArray(arr)) return jqueryextend_arrayLikeToArray(arr);
-        }
-        function jqueryextend_arrayLikeToArray(arr, len) {
-            if (len == null || len > arr.length) len = arr.length;
-            for (var i = 0, arr2 = new Array(len); i < len; i++) {
-                arr2[i] = arr[i];
-            }
-            return arr2;
-        }
-        var getPaddedComp = function getPaddedComp(comp) {
-            var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-            if (len < 1) len = 1;
-            comp = "" + comp;
-            var paddedLen = len - ("" + comp).length;
-            if (paddedLen > 0) {
-                return [].concat(_toConsumableArray(Array(paddedLen).fill("0")), _toConsumableArray(comp)).join("");
-            } else return comp;
-        }, o = {
-            "[y|Y]{4}": function yY4(date) {
-                return date.getFullYear();
-            },
-            "[y|Y]{2}": function yY2(date) {
-                return date.getFullYear().toString().slice(2);
-            },
-            MM: function MM(date) {
-                return getPaddedComp(date.getMonth() + 1);
-            },
-            M: function M(date) {
-                return date.getMonth() + 1;
-            },
-            "[d|D]{2}": function dD2(date) {
-                return getPaddedComp(date.getDate());
-            },
-            "[d|D]{1}": function dD1(date) {
-                return date.getDate();
-            },
-            "h{2}": function h2(date) {
-                return getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours());
-            },
-            "h{1}": function h1(date) {
-                return date.getHours() > 12 ? date.getHours() % 12 : date.getHours();
-            },
-            "H{2}": function H2(date) {
-                return getPaddedComp(date.getHours());
-            },
-            "H{1}": function H1(date) {
-                return date.getHours();
-            },
-            "m{2}": function m2(date) {
-                return getPaddedComp(date.getMinutes());
-            },
-            "m{1}": function m1(date) {
-                return date.getMinutes();
-            },
-            "s+": function s(date) {
-                return getPaddedComp(date.getSeconds());
-            },
-            "f+": function f(date) {
-                return getPaddedComp(date.getMilliseconds(), 3);
-            },
-            "f{1}": function f1(date) {
-                return getPaddedComp(date.getMilliseconds(), 0);
-            },
-            "b+": function b(date) {
-                return date.getHours() >= 12 ? "PM" : "AM";
-            }
-        };
-        $.extend(Date.prototype, {
-            toString: function toString(format) {
-                if (!format) return this.toLocaleDateString();
-                var formattedDate = format;
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(format)) {
-                        formattedDate = formattedDate.replace(RegExp.$1, o[k](this));
-                    }
-                }
-                return formattedDate;
-            }
-        });
-        $.extend(Array.prototype, {
-            clean: function clean() {
-                for (var deleteValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "", i = 0; i < this.length; i++) {
-                    if (this[i] == deleteValue) {
-                        this.splice(i, 1);
-                        i--;
-                    }
-                }
-                return this;
-            }
-        });
-        $.extend(Number.prototype, {
-            toString: function toString(num) {
-                if (isNaN(num)) num = 2;
-                return this.toFixed(num);
-            }
-        });
-        $.extend(String.prototype, {
-            toFloat: function toFloat() {
-                return parseFloat(this);
-            },
-            toInt: function toInt() {
-                return parseInt(this);
-            },
-            includesAny: function includesAny() {
-                for (var _len = arguments.length, arr = new Array(_len), _key = 0; _key < _len; _key++) {
-                    arr[_key] = arguments[_key];
-                }
-                if (!Array.isArray(arr)) return false;
-                return new RegExp(arr.join("|")).test(this);
-            },
-            replaceAll: function replaceAll(search, replacement) {
-                var target = this;
-                return target.replace(new RegExp(search, "g"), replacement);
-            }
-        });
-        if (!String.prototype.startsWith) {
-            Object.defineProperty(String.prototype, "startsWith", {
-                value: function value(search, rawPos) {
-                    var pos = rawPos > 0 ? rawPos | 0 : 0;
-                    return this.substring(pos, pos + search.length) === search;
-                }
-            });
-        }
-        if (!String.prototype.endsWith) {
-            String.prototype.endsWith = function(search, this_len) {
-                if (this_len === undefined || this_len > this.length) {
-                    this_len = this.length;
-                }
-                return this.substring(this_len - search.length, this_len) === search;
-            };
-        }
-        if (!String.prototype.includes) {
-            String.prototype.includes = function(search, start) {
-                "use strict";
-                if (search instanceof RegExp) {
-                    throw TypeError("first argument must not be a RegExp");
-                }
-                if (start === undefined) {
-                    start = 0;
-                }
-                return this.indexOf(search, start) !== -1;
-            };
-        }
-        $.extend(window, {
-            parameters: function parameters(url) {
-                var queryString = url ? url.split("?")[1] : window.location.search.slice(1), cachedkey = "urlparameters" + queryString, obj = $(window).data(cachedkey);
-                if (obj == undefined) {
-                    obj = new Proxy({}, propertiesCaseInsensitive);
-                    $(window).data(cachedkey, obj);
-                } else return obj;
-                if (queryString) {
-                    queryString = queryString.split("#")[0];
-                    var arr = queryString.split("&");
-                    for (var i = 0; i < arr.length; i++) {
-                        var a = arr[i].split("="), paramName = a[0], paramValue = typeof a[1] === "undefined" ? true : a[1];
-                        if (paramName.match(/\[(\d+)?\]$/)) {
-                            var key = paramName.replace(/\[(\d+)?\]/, "");
-                            if (!obj[key]) obj[key] = [];
-                            if (paramName.match(/\[\d+\]$/)) {
-                                var index = /\[(\d+)\]/.exec(paramName)[1];
-                                obj[key][index] = paramValue;
-                            } else {
-                                obj[key].push(paramValue);
-                            }
-                        } else {
-                            if (!obj[paramName]) {
-                                obj[paramName] = paramValue;
-                            } else if (obj[paramName] && typeof obj[paramName] === "string") {
-                                obj[paramName] = [ obj[paramName] ];
-                                obj[paramName].push(paramValue);
-                            } else {
-                                obj[paramName].push(paramValue);
-                            }
-                        }
-                    }
-                }
-                return obj;
-            }
-        });
-        var pacesetup = __webpack_require__(99);
         function _defineProperty(obj, key, value) {
             if (key in obj) {
                 Object.defineProperty(obj, key, {
@@ -1153,11 +1167,11 @@
                 labels
             };
         }
-        if (settings.isListPage) {
+        if (common_settings.isListPage) {
             $(".item-top-cont").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
-            submit((function(next) {
+            common_submit((function(next) {
                 var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autonextpagecount = GM_getValue("autonextpagecount", 0);
                 if (autonextpagecount > 0 && $(".s-t-page>.next-page").length > 0) {
                     var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
@@ -1191,7 +1205,7 @@
                 next();
             }));
             $(".item").each((function(index, el) {
-                submit((function(next) {
+                common_submit((function(next) {
                     Pace.track((function() {
                         var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
                         if (tinfo_saved) {
@@ -1230,7 +1244,7 @@
                     }));
                 }));
             }));
-            submit((function(next) {
+            common_submit((function(next) {
                 var autonextpagecount = GM_getValue("autonextpagecount", 0);
                 if (autonextpagecount > 0) {
                     GM_setValue("autonextpagecount", autonextpagecount - 1);
@@ -1274,17 +1288,6 @@
                 for: "cb" + id,
                 text: lbl ? lbl : val
             }).appendTo(container);
-        }
-        if (common_settings.isDetailPage) {
-            var processTeacherDetailPage = function processTeacherDetailPage(jqr) {
-                var tinfo_saved = GM_getValue(getinfokey(), {});
-                tinfo_saved = common_getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
-                GM_setValue(getinfokey(), tinfo_saved);
-            };
-            common_submit((function(next) {
-                processTeacherDetailPage($(document));
-                next();
-            }));
         }
         (function() {
             "use strict";
@@ -1439,7 +1442,7 @@
                             }
                         }).css({
                             width: "45px"
-                        }).val(GM_getValue("tInfoExprHours", common_configExprMilliseconds / 36e5)).hide().end().eq(3).button({
+                        }).val(GM_getValue("tInfoExprHours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
                             icon: "uiicon-trash",
                             showLabel: true
                         }).click((function() {
