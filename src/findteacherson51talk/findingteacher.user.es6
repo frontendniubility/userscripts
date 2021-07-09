@@ -29,7 +29,7 @@ import './pacesetup'
 import './detailpage'
 
 import { conf } from './bestteacher_gm_toolbar'
-import { configExprMilliseconds, gettid, settings, submit } from './common'
+import { configExprMilliseconds, getTId, settings, submit } from './common'
 import {
   addCheckbox,
   executeFilters,
@@ -668,7 +668,7 @@ import {
             }
             if (settings.isDetailPage) {
               let t = teachers.find((currentValue, index, arr) => {
-                return currentValue.tid == gettid()
+                return currentValue.tid == getTId()
               })
               $('#teacherRank').html(getRankHtml(t))
             }

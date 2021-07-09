@@ -23,8 +23,9 @@ export const settings = {
 export let configExprMilliseconds = 3600000 * conf.tInfoExprHours //缓存7天小时
 let num = /[0-9]*/g
 
-export function gettid() {
-  return settings.tid
+export function getTId(url) {
+  if (!url) return settings.tid
+  return url.match(/(t\d+)/g)[0]
 }
 
 export function getorAddSession(key, func) {
@@ -65,7 +66,7 @@ export function getBatchNumber() {
  * @return {string}
  */
 export function getinfokey() {
-  return 'tinfo-' + gettid()
+  return 'tinfo-' + getTId()
 }
 
 /**
@@ -243,8 +244,6 @@ export function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest
   tinfo.age = Number(agesstr[0])
   tinfo.batchNumber = getBatchNumber()
   tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest)
-
-  
 
   jqr.find('.teacher-name-tit').prop('innerHTML', function(i, val) {
     return `${val}

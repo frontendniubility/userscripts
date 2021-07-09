@@ -1,10 +1,8 @@
-var path = require('path');
+var path = require('path')
 
 module.exports = {
-
   module: {
     rules: [
-
       {
         test: /\.m?js$|\.es6$|\.js$/, //不能对js文件进行babel,有文件有问题
         include: [path.resolve('./src')],
@@ -17,46 +15,45 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          minetype: 'application/font-woff',
-        },
+          minetype: 'application/font-woff'
+        }
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          minetype: 'application/font-woff',
-        },
+          minetype: 'application/font-woff'
+        }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          minetype: 'application/octet-stream',
-        },
+          minetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          minetype: 'application/vnd.ms-fontobject',
-        },
+          minetype: 'application/vnd.ms-fontobject'
+        }
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          minetype: 'image/svg+xml',
-        },
+          minetype: 'image/svg+xml'
+        }
       },
       {
         //use数组中loader执行顺序：从右到左，从下到上，依次执行
         test: /\.(sa|sc|le|c)ss$/, // 针对 .scss 或者 .css 后缀的文件设置 loader
         use: [
-
           {
             loader: 'style-loader' // 用style标签将样式插入到head中
           },
@@ -87,7 +84,7 @@ module.exports = {
           //给图片进行重命名
           //[hash:10]取图片前10位
           //[ext]取文件原来扩展名
-          name: '[hash:10].[ext]',
+          name: '[hash:10].[ext]'
         }
       },
 
@@ -95,9 +92,9 @@ module.exports = {
         test: /\.html?$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
-        },
-      },
+          name: '[name].[ext]'
+        }
+      }
     ]
   }
 }

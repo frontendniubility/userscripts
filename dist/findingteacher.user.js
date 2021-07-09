@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeacher
-// @version     2021.7.508164909
+// @version     2021.7.509143800
 // @author      jimbo
 // @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -939,7 +939,7 @@
         var url = window.location.href.toLocaleLowerCase();
         var common_settings = {
             url,
-            tid: url.match(/(t\d+)/g)[1],
+            tid: url.match(/(t\d+)/g) ? url.match(/(t\d+)/g)[0] : null,
             pageCount: conf.pageCount,
             isDetailPage: url.includes("teachernew"),
             isListPage: url.includes("reservenew"),
@@ -947,8 +947,9 @@
         };
         var configExprMilliseconds = 36e5 * conf.tInfoExprHours;
         var num = /[0-9]*/g;
-        function gettid() {
-            return common_settings.tid;
+        function getTId(url) {
+            if (!url) return common_settings.tid;
+            return url.match(/(t\d+)/g)[0];
         }
         function getorAddSession(key, func) {
             if (!(key in sessionStorage)) {
@@ -975,7 +976,7 @@
             return saved;
         }
         function getinfokey() {
-            return "tinfo-" + gettid();
+            return "tinfo-" + getTId();
         }
         function calcIndicator(tinfo) {
             if (isNaN(tinfo.label)) tinfo.label = 0;
@@ -1053,7 +1054,6 @@
             tinfo.age = Number(agesstr[0]);
             tinfo.batchNumber = getBatchNumber();
             tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest);
-            console.log(tinfo);
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
                 return "".concat(val, "\n<span class=\"age age-line\"><label title='指标'>").concat(tinfo_saved.indicator, "</label></span>\n<span class=\"age age-line\"><label title='好评率'>").concat(tinfo_saved.thumbupRate, "%</label></span>\n<span class=\"age age-line\"><label title='被赞数量'>").concat(tinfo_saved.thumbup, "</label></span>\n<span class=\"age age-line\"><label title='被踩数量'>").concat(tinfo_saved.thumbdown, "</label></span>\n<span class=\"age age-line\"><label title='评论标签数量'>").concat(tinfo_saved.label, '</label></span>\n<span class="age age-line"><label title=\'在同类别教师中的排名\'><span id="teacherRank"></span></label></span>\n  ');
             }));
@@ -1207,7 +1207,7 @@
             $(".item").each((function(index, el) {
                 common_submit((function(next) {
                     Pace.track((function() {
-                        var jqel = $(el), tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", ""), tinfokey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
+                        var jqel = $(el), tid = getTId(jqel.find(".teacher-details-link a").attr("href")), tinfokey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqel), tinfo_saved = GM_getValue(tinfokey);
                         if (tinfo_saved) {
                             var now = Date.now();
                             if (!tinfo_saved.updateTime) {
@@ -1417,7 +1417,6 @@
                             var age1 = $("#tAgeSlider").slider("values", 0), age2 = $("#tAgeSlider").slider("values", 1), uifilters = getUiFilters(), filterconfig = GM_getValue("filterconfig", uifilters);
                             filterconfig.age1 = age1;
                             filterconfig.age2 = age2;
-                            console.log("log2 ".concat(age1, "  ").concat(age2));
                             GM_setValue("filterconfig", filterconfig);
                             executeFilters(uifilters);
                         }));
@@ -1702,7 +1701,7 @@
                                 }
                                 if (common_settings.isDetailPage) {
                                     var t = teachers.find((function(currentValue, index, arr) {
-                                        return currentValue.tid == gettid();
+                                        return currentValue.tid == getTId();
                                     }));
                                     $("#teacherRank").html(getRankHtml(t));
                                 }

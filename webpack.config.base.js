@@ -1,21 +1,11 @@
 const path = require('path')
-var {
-  merge
-} = require('webpack-merge');
+var { merge } = require('webpack-merge')
 const TerserPlugin = require('terser-webpack-plugin')
 
-var rulesconfig = require('./webpack.common.rules');
-var {
-  webpackUserscript
-} = require('./webpack.userscripts');
+var rulesconfig = require('./webpack.common.rules')
+var { webpackUserscript } = require('./webpack.userscripts')
 
-
-const {
-  p,
-  stringIncludesAny,
-  entries,
-  log
-} = require('./webpack.comom')
+const { p, stringIncludesAny, entries, logger } = require('./webpack.common')
 
 module.exports = merge(rulesconfig, {
   mode: 'production', //env.NODE_ENV === 'development' ? 'development' : 'production',
@@ -34,16 +24,16 @@ module.exports = merge(rulesconfig, {
           output: {
             comments: false,
             beautify: true,
-            inline_script: false,
+            inline_script: false
           },
           toplevel: false,
           nameCache: null,
           ie8: false,
           keep_fnames: true,
-          keep_classnames: true,
-        },
+          keep_classnames: true
+        }
       })
-    ],
+    ]
     //removeEmptyChunks: true
   },
 
@@ -58,7 +48,7 @@ module.exports = merge(rulesconfig, {
   // 'normal'	true	Standard output
   // 'verbose'	none	Output everything
   // 'detailed'	none	Output everything except chunkModules and chunkRootModules
-  // 'summary'	none	Output webpack version, warnings count and errors 
+  // 'summary'	none	Output webpack version, warnings count and errors
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/dist/',
@@ -70,7 +60,7 @@ module.exports = merge(rulesconfig, {
     jquery: '$',
     vue: 'Vue',
     axios: 'axios',
-    'axios-userscript-adapter': 'axiosGmxhrAdapter',
+    'axios-userscript-adapter': 'axiosGmxhrAdapter'
   },
   resolve: {
     modules: [path.resolve(__dirname, 'libs'), path.resolve(__dirname, 'node_modules')],
@@ -84,5 +74,5 @@ module.exports = merge(rulesconfig, {
   devServer: {
     publicPath: '/',
     contentBase: path.join(__dirname, 'dist')
-  },
+  }
 })
