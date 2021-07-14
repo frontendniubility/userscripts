@@ -1,17 +1,25 @@
 
 declare global {
 
+  interface Object {
+    /**
+     * 替换所有
+     * @param search 旧值
+     * @param replacement 被替换值
+     */
+    replaceAll(search: string, replacement: string): string;
+  }
   interface Date {
     toString(format: string): string
   }
 
-  interface Array {
-    clean<T>(deleteValue: T): Array
+  interface Array<T> {
+    clean<T>(deleteValue: T): Array<T>
   }
   interface Number {
     toString(num: number): Number
   }
-  interface String {
+  interface string {
     toFloat(): Number;
     toInt(): Number;
     /**
@@ -26,21 +34,14 @@ declare global {
      */
     replaceAll(search: string, replacement: string): string;
   }
-  interface any {
-    /**
-     * 替换所有
-     * @param search 旧值
-     * @param replacement 被替换值
-     */
-    replaceAll(search: string, replacement: string): string;
-  }
+
 
   interface window {
-    parameters(url: String): TypeOfParameters
+    parameters(url: string): TypeOfParameters
   }
 }
 
 declare interface TypeOfParameters {
-  [paramName: String]: String | Number | Array
+  [paramName: string]: string | Number | Array<any>
 }
 export { }

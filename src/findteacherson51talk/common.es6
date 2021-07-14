@@ -28,6 +28,7 @@ export function getTId(url) {
   return url.match(/(t\d+)/g)[0]
 }
 
+
 export function getorAddSession(key, func) {
   if (!(key in sessionStorage)) {
     let data = typeof func == 'function' ? func(key) : func
@@ -36,7 +37,10 @@ export function getorAddSession(key, func) {
   }
   return sessionStorage.getItem(key)
 }
-
+/**
+ *
+ * @param delay
+ */
 function sleep(delay) {
   let start = Date.now()
   while (Date.now() - start < delay) {
@@ -46,8 +50,7 @@ function sleep(delay) {
 
 /**
  *
- *
- * @return {string}
+ * @returns
  */
 export function getBatchNumber() {
   var cur = Date.now()

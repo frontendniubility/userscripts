@@ -217,7 +217,6 @@ if (settings.isListPage) {
 
   //获取列表中数据
   $('.item').each(function(index, el) {
-    
     submit(function(next) {
       Pace.track(function() {
         let jqel = $(el)

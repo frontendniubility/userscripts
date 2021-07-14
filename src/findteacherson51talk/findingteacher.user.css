@@ -1,20 +1,44 @@
-
 @import './../../libs/jquery-ui-1.12.1/jquery-ui.css';
 @import './../../libs/jqGrid-4.15.5/dist/css/ui.jqgrid.css';
 @import './../../libs/pace-1.2.4/themes/red/pace-theme-big-counter.css';
 
 
 
-.search-teachers .s-t-list .item-time-list {margin-top:315px;}
-.search-teachers .s-t-list .item { height: 679px; }
-.search-teachers .s-t-list .s-t-content { margin-right: 0px;}
-.search-teachers { width: 100%; }
-.search-teachers .s-t-list .item .item-top .teacher-name {line-height: 15px;}
-.search-teachers .s-t-list .item { width: 233px; height: auto; margin-right: 5px; margin-bottom: 5px; }
- 
+.search-teachers .s-t-list .item-time-list {
+  margin-top: 315px;
+}
 
-.ui-tabs .ui-tabs-panel{padding:.5em 0.2em;}
-.ui-dialog .ui-dialog-content { padding: .5em 0.2em;}
+.search-teachers .s-t-list .item {
+  height: 679px;
+}
+
+.search-teachers .s-t-list .s-t-content {
+  margin-right: 0px;
+}
+
+.search-teachers {
+  width: 100%;
+}
+
+.search-teachers .s-t-list .item .item-top .teacher-name {
+  line-height: 15px;
+}
+
+.search-teachers .s-t-list .item {
+  width: 233px;
+  height: auto;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+
+.ui-tabs .ui-tabs-panel {
+  padding: .5em 0.2em;
+}
+
+.ui-dialog .ui-dialog-content {
+  padding: .5em 0.2em;
+}
 
 .search-teachers .s-t-top .s-t-days .s-t-days-list li {
   float: left;
@@ -24,20 +48,28 @@
   margin-right: 5px;
   margin-bottom: 5px;
 }
+
 .search-teachers .s-t-top .s-t-top-details {
   padding: 2px 0 2px 30px;
 }
+
 .search-teachers .s-t-top .s-t-top-right {
   height: auto;
 }
+
 .search-teachers .s-t-top .s-t-top-left .condition-item {
   margin-bottom: 2px;
 }
-.s-t-page { padding-top: 2px;}
 
-#buttons input,#buttons button{
+.s-t-page {
+  padding-top: 2px;
+}
+
+#buttons input,
+#buttons button {
   margin-right: 3px;
 }
+
 /* 
 .pace .pace-progress {
   background: #29d;

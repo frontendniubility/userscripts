@@ -14,7 +14,7 @@ export const maxrate: Number,
   maxfc: Number,
   minfc: Number,
   maxage: Number,
-  minage: Number,
+  minage: Number;
 
 
 
@@ -24,12 +24,9 @@ export function getAutoNextPagesCount(): number
 
 export function updateTeacherinfoToUI(jqel: JQuery<HTMLDivElement>, tinfo: TeacherInfo): void;
 
-
 export function executeFilters(uifilters: TypeOfUiFilter): void;
 
-
-
-function getUiFilters(): TypeOfUiFilter;
+export function getUiFilters(): TypeOfUiFilter;
 declare interface TypeOfUiFilter {
   l1: Number,
   l2: Number,
@@ -45,8 +42,6 @@ declare interface TypeOfUiFilter {
  * @returns {TeacherInfoList}
  */
 export function getTeacherInfoFromListPageUI(jqel: JQuery<HTMLDivElement>): TeacherInfoBase
-
-
 
 export function isStopShowboxAndAutoGetNextTimeTeachers(): boolean
 
