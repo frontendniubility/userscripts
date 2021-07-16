@@ -19,7 +19,7 @@ declare interface TypeOfSetting {
   /**
    * 自动获取时的最大页数
    */
-  pageCount: number
+  pageMaxCount: number
   /**
    * 是否是教师详细页
    */
@@ -36,8 +36,14 @@ declare interface TypeOfSetting {
 /**
  * 获取教师ID
  */
-export function gettid(): string
+export function getTId(): string
 
+/**
+ * 获取sessionStorage中存储值，如果不存在则设置
+ * @param key 
+ * @param func 
+ */
+export function getOrSetSession(key: string, func: Function | object): any
 
 declare type Callback<T> = (key: string) => T
 

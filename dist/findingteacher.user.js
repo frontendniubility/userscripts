@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        BestTeacher
-// @version     2021.7.509143800
+// @name        Who's the Best Teacher
+// @version     2021.7.516143257
 // @author      jimbo
-// @description 辅助选老师-排序显示，经验值计算|好评率|显示年龄|列表显示所有教师
+// @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/hunttingteacheron51talk
 // @match       *://www.51talk.com/ReserveNew/index*
@@ -107,7 +107,7 @@
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_1__.Z);
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_2__.Z);
             ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_3__.Z);
-            ___CSS_LOADER_EXPORT___.push([ module.id, "\r\n.search-teachers .s-t-list .item-time-list {margin-top:315px;}\r\n.search-teachers .s-t-list .item { height: 679px; }\r\n.search-teachers .s-t-list .s-t-content { margin-right: 0px;}\r\n.search-teachers { width: 100%; }\r\n.search-teachers .s-t-list .item .item-top .teacher-name {line-height: 15px;}\r\n.search-teachers .s-t-list .item { width: 233px; height: auto; margin-right: 5px; margin-bottom: 5px; }\r\n \r\n\r\n.ui-tabs .ui-tabs-panel{padding:.5em 0.2em;}\r\n.ui-dialog .ui-dialog-content { padding: .5em 0.2em;}\r\n\r\n.search-teachers .s-t-top .s-t-days .s-t-days-list li {\r\n  float: left;\r\n  width: 118px;\r\n  height: 34px;\r\n  line-height: 34px;\r\n  margin-right: 5px;\r\n  margin-bottom: 5px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-details {\r\n  padding: 2px 0 2px 30px;\r\n}\r\n.search-teachers .s-t-top .s-t-top-right {\r\n  height: auto;\r\n}\r\n.search-teachers .s-t-top .s-t-top-left .condition-item {\r\n  margin-bottom: 2px;\r\n}\r\n.s-t-page { padding-top: 2px;}\r\n\r\n#buttons input,#buttons button{\r\n  margin-right: 3px;\r\n}\r\n/* \r\n.pace .pace-progress {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 100%;\r\n  width: 100%;\r\n  height: 2px;\r\n} */\r\n", "" ]);
+            ___CSS_LOADER_EXPORT___.push([ module.id, ".search-teachers .s-t-list .item-time-list {\r\n  margin-top: 315px;\r\n}\r\n\r\n.search-teachers .s-t-list .item {\r\n  height: 679px;\r\n}\r\n\r\n.search-teachers .s-t-list .s-t-content {\r\n  margin-right: 0px;\r\n}\r\n\r\n.search-teachers {\r\n  width: 100%;\r\n}\r\n\r\n.search-teachers .s-t-list .item .item-top .teacher-name {\r\n  line-height: 15px;\r\n}\r\n\r\n.search-teachers .s-t-list .item {\r\n  width: 233px;\r\n  height: auto;\r\n  margin-right: 5px;\r\n  margin-bottom: 5px;\r\n}\r\n\r\n\r\n.ui-tabs .ui-tabs-panel {\r\n  padding: .5em 0.2em;\r\n}\r\n\r\n.ui-dialog .ui-dialog-content {\r\n  padding: .5em 0.2em;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-days .s-t-days-list li {\r\n  float: left;\r\n  width: 118px;\r\n  height: 34px;\r\n  line-height: 34px;\r\n  margin-right: 5px;\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-details {\r\n  padding: 2px 0 2px 30px;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-right {\r\n  height: auto;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-left .condition-item {\r\n  margin-bottom: 2px;\r\n}\r\n\r\n.s-t-page {\r\n  padding-top: 2px;\r\n}\r\n\r\n#buttons input,\r\n#buttons button {\r\n  margin-right: 3px;\r\n}\r\n\r\n/* \r\n.pace .pace-progress {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 100%;\r\n  width: 100%;\r\n  height: 2px;\r\n} */", "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
         645: module => {
@@ -724,7 +724,7 @@
             return arr2;
         }
         function _iterableToArrayLimit(arr, i) {
-            var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+            var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
             if (_i == null) return;
             var _arr = [], _n = true, _d = false, _s, _e;
             try {
@@ -903,7 +903,7 @@
             return ret;
         };
         var config = GM_config([ {
-            key: "pageCount",
+            key: "pageMaxCount",
             label: "最大页数 (自动获取时)",
             default: 20,
             type: "dropdown",
@@ -927,20 +927,51 @@
             type: "dropdown",
             values: [ 5, 10, 30, 50, 120, 500, 3e3, 5e3, 10080 ]
         }, {
+            key: "calcIndicator",
+            label: "[高级]排名公式",
+            default: "",
+            type: "text",
+            placeholder: "Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount",
+            multiline: true,
+            resizable: true
+        }, {
             key: "version",
             type: "hidden",
             default: 1
         } ]), conf = config.load();
         config.onsave = function(cfg) {
             conf = cfg;
+            try {
+                new Function("t", "return ".concat(conf.calcIndicator))({});
+            } catch (error) {
+                console.log(error);
+                alert("计算公式错误，排名计算方式使用默认公式。Error:".concat(error));
+                return false;
+            }
             $("#autogetnextpage").text("自动获取" + getAutoNextPagesCount() + "页");
         };
         GM_registerMenuCommand("设置", config.setup);
+        function GetCalculatorIndicator() {
+            var f;
+            if (conf.calcIndicator) {
+                try {
+                    f = new Function("t", "return ".concat(conf.calcIndicator));
+                } catch (error) {
+                    f = new Function("t", "return Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount");
+                    console.log(error);
+                    alert("计算公式错误，排名计算方式使用默认公式。Error:".concat(error));
+                }
+            } else {
+                f = new Function("t", "return Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount");
+            }
+            return f;
+        }
+        var indicatorCalculator = GetCalculatorIndicator();
         var url = window.location.href.toLocaleLowerCase();
         var common_settings = {
             url,
             tid: url.match(/(t\d+)/g) ? url.match(/(t\d+)/g)[0] : null,
-            pageCount: conf.pageCount,
+            pageMaxCount: conf.pageMaxCount,
             isDetailPage: url.includes("teachernew"),
             isListPage: url.includes("reservenew"),
             isCoursePage: url.includes("study_center")
@@ -951,13 +982,23 @@
             if (!url) return common_settings.tid;
             return url.match(/(t\d+)/g)[0];
         }
-        function getorAddSession(key, func) {
-            if (!(key in sessionStorage)) {
-                var data = typeof func == "function" ? func(key) : func;
-                sessionStorage.setItem(key, data);
+        function getSession(key, funcDefaultValue) {
+            var v = sessionStorage.getItem(key);
+            if (v !== null) {
+                return JSON.parse(v);
+            } else {
+                var data = typeof funcDefaultValue == "function" ? funcDefaultValue(key) : funcDefaultValue;
+                sessionStorage.setItem(key, JSON.stringify(data));
                 return data;
             }
-            return sessionStorage.getItem(key);
+        }
+        function setSession(key, funcValue) {
+            if (funcValue === null) {
+                sessionStorage.removeItem(key);
+            } else {
+                var data = typeof funcValue == "function" ? funcValue(key) : funcValue;
+                sessionStorage.setItem(key, JSON.stringify(data));
+            }
         }
         function sleep(delay) {
             var start = Date.now();
@@ -982,7 +1023,7 @@
             if (isNaN(tinfo.label)) tinfo.label = 0;
             if (isNaN(tinfo.thumbupRate)) tinfo.thumbupRate = 0;
             if (isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = 0;
-            return Math.ceil(tinfo.label * tinfo.thumbupRate / 100) + tinfo.favoritesCount;
+            return indicatorCalculator(tinfo);
         }
         function calcThumbRate(tinfo) {
             if (isNaN(tinfo.thumbdown)) tinfo.thumbdown = 0;
@@ -1090,7 +1131,7 @@
         }
         function listpage_getAutoNextPagesCount() {
             var pages = getLeftPageCount();
-            if (settings.pageCount > pages) return pages; else return settings.pageCount;
+            if (settings.pageMaxCount > pages) return pages; else return settings.pageMaxCount;
         }
         function updateTeacherinfoToUI(jqel, tinfo) {
             if (tinfo.label > maxlabel) maxlabel = tinfo.label;
@@ -1172,8 +1213,9 @@
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
             common_submit((function(next) {
-                var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autonextpagecount = GM_getValue("autonextpagecount", 0);
-                if (autonextpagecount > 0 && $(".s-t-page>.next-page").length > 0) {
+                var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autoNextPageCount = getSession("autoNextPageCount", 0);
+                debugger;
+                if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
                     var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
                     dialog.appendTo("body");
                     dialog.dialog({
@@ -1183,21 +1225,21 @@
                         modal: false,
                         buttons: (_buttons = {
                             停止获取: function 停止获取() {
-                                sessionStorage.setItem("selectedTimeSlots", "");
-                                GM_setValue("autonextpagecount", 0);
+                                sessionStorage.removeItem("selectedTimeSlots");
+                                setSession("autoNextPageCount", 0);
                                 $(this).dialog("close");
                             }
                         }, _defineProperty(_buttons, "取后".concat((remainPages * .25).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.setItem("selectedTimeSlots", "");
-                            GM_setValue("autonextpagecount", (remainPages * .25).toFixed(0));
+                            sessionStorage.removeItem("selectedTimeSlots");
+                            setSession("autoNextPageCount", (remainPages * .25).toFixed(0));
                             $(this).dialog("close");
                         })), _defineProperty(_buttons, "取后".concat((remainPages * .5).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.setItem("selectedTimeSlots", "");
-                            GM_setValue("autonextpagecount", (remainPages * .5).toFixed(0));
+                            sessionStorage.removeItem("selectedTimeSlots");
+                            setSession("autoNextPageCount", (remainPages * .5).toFixed(0));
                             $(this).dialog("close");
                         })), _defineProperty(_buttons, "取后".concat((remainPages * .75).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.setItem("selectedTimeSlots", "");
-                            GM_setValue("autonextpagecount", (remainPages * .75).toFixed(0));
+                            sessionStorage.removeItem("selectedTimeSlots");
+                            setSession("autoNextPageCount", (remainPages * .75).toFixed(0));
                             $(this).dialog("close");
                         })), _buttons)
                     });
@@ -1245,11 +1287,11 @@
                 }));
             }));
             common_submit((function(next) {
-                var autonextpagecount = GM_getValue("autonextpagecount", 0);
-                if (autonextpagecount > 0) {
-                    GM_setValue("autonextpagecount", autonextpagecount - 1);
+                var autoNextPageCount = getSession("autoNextPageCount", 0);
+                if (autoNextPageCount > 0) {
+                    setSession("autoNextPageCount", autoNextPageCount - 1);
                     if ($(".s-t-page>.next-page").length == 0) {
-                        GM_setValue("autonextpagecount", 0);
+                        setSession("autoNextPageCount", 0);
                         if (isStopShowboxAndAutoGetNextTimeTeachers()) return;
                     } else {
                         $(".s-t-page .next-page")[0].click();
@@ -1266,9 +1308,9 @@
             if (!str) return false;
             var selectedTimeSlots = JSON.parse(str), cur = selectedTimeSlots.shift();
             if (cur) {
-                GM_setValue("autonextpagecount", 500);
-                sessionStorage.setItem("selectedTimeSlots", JSON.stringify(selectedTimeSlots));
-                sessionStorage.setItem("selectedTimeSlotsRemain", selectedTimeSlots.length);
+                setSession("autoNextPageCount", 500);
+                setSession("selectedTimeSlots", selectedTimeSlots);
+                setSession("selectedTimeSlotsRemain", selectedTimeSlots.length);
                 $('form[name="searchform"]>input[name="selectTime"]').val(cur);
                 $('form[name="searchform"]>input[name="pageID"]').val(1);
                 $(".go-search").trigger("click");
@@ -1482,8 +1524,8 @@
                                     selectedTimeSlots.push($(item).val());
                                 }
                             }));
-                            sessionStorage.setItem("selectedTimeSlots", JSON.stringify(selectedTimeSlots));
-                            sessionStorage.setItem("selectedTimeSlotsTotal", selectedTimeSlots.length);
+                            setSession("selectedTimeSlots", selectedTimeSlots);
+                            setSession("selectedTimeSlotsTotal", selectedTimeSlots.length);
                             isStopShowboxAndAutoGetNextTimeTeachers();
                         })).end();
                         $("div.condition-type:eq(0)>ul.condition-type-time>li").each((function(i, item) {
