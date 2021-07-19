@@ -33,45 +33,29 @@ import { configExprMilliseconds, getTId, setSession, settings, submit } from './
 
 import { conf } from './bestteacher_gm_toolbar';
 
-(function() {
+(function () {
     'use strict';
 
-    let asc = function(a, b) {
+    let asc = function (a, b) {
         let av = $(a).attr('indicator');
         let bv = $(b).attr('indicator');
         if (!av || !bv) return 0;
-        return $(a)
-            .attr('indicator')
-            .toFloat() >
-            $(b)
-                .attr('indicator')
-                .toFloat()
-            ? 1
-            : -1;
+        return $(a).attr('indicator').toFloat() > $(b).attr('indicator').toFloat() ? 1 : -1;
     };
-    let desc = function(a, b) {
+    let desc = function (a, b) {
         let av = $(a).attr('indicator');
         let bv = $(b).attr('indicator');
         if (!av || !bv) return 0;
-        return $(a)
-            .attr('indicator')
-            .toFloat() >
-            $(b)
-                .attr('indicator')
-                .toFloat()
-            ? -1
-            : 1;
+        return $(a).attr('indicator').toFloat() > $(b).attr('indicator').toFloat() ? -1 : 1;
     };
-    let sortByIndicator = function(sortBy) {
+    let sortByIndicator = function (sortBy) {
         let sortEle = $('.s-t-content.f-cb .item').sort(sortBy);
-        $('.s-t-content.f-cb')
-            .empty()
-            .append(sortEle);
+        $('.s-t-content.f-cb').empty().append(sortEle);
     };
 
     if (settings.isListPage || settings.isDetailPage) {
         //构建插件信息
-        submit(function(next) {
+        submit(function (next) {
             try {
                 let config = GM_getValue('filterconfig', {
                     l1: 300,
@@ -79,7 +63,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     rate1: 97,
                     rate2: maxrate,
                     age1: minage,
-                    age2: maxage,
+                    age2: maxage
                 });
                 let buttons = '';
                 if (settings.isListPage) {
@@ -129,11 +113,11 @@ import { conf } from './bestteacher_gm_toolbar';
                         min: minlabel - 1,
                         max: maxlabel,
                         values: [config.l1 < minlabel - 1 ? minlabel - 1 : config.l1, maxlabel],
-                        slide: function(event, ui) {
+                        slide: function (event, ui) {
                             $('#_tLabelCount').html(ui.values[0] + ' - ' + ui.values[1]);
-                        },
+                        }
                     })
-                    .on('slidestop', function(event, ui) {
+                    .on('slidestop', function (event, ui) {
                         let l1 = $('#tlabelslider').slider('values', 0);
                         let l2 = $('#tlabelslider').slider('values', 1);
                         let uifilters = getUiFilters();
@@ -149,11 +133,11 @@ import { conf } from './bestteacher_gm_toolbar';
                         min: minfc,
                         max: maxfc,
                         values: [config.fc1 < minfc ? minfc : config.fc1, maxfc],
-                        slide: function(event, ui) {
+                        slide: function (event, ui) {
                             $('#_tfc').html(ui.values[0] + ' - ' + ui.values[1]);
-                        },
+                        }
                     })
-                    .on('slidestop', function(event, ui) {
+                    .on('slidestop', function (event, ui) {
                         let fc1 = $('#fcSlider').slider('values', 0);
                         let fc2 = $('#fcSlider').slider('values', 1);
                         let uifilters = getUiFilters();
@@ -169,11 +153,11 @@ import { conf } from './bestteacher_gm_toolbar';
                         min: minrate,
                         max: maxrate,
                         values: [config.rate1 < minrate ? minrate : config.rate1, maxrate],
-                        slide: function(_event, ui) {
+                        slide: function (_event, ui) {
                             $('#_thumbupRate').html(ui.values[0] + '% - ' + ui.values[1] + '%');
-                        },
+                        }
                     })
-                    .on('slidestop', function(event, ui) {
+                    .on('slidestop', function (event, ui) {
                         let rate1 = $('#thumbupRateslider').slider('values', 0);
                         let rate2 = $('#thumbupRateslider').slider('values', 1);
                         let uifilters = getUiFilters();
@@ -190,11 +174,11 @@ import { conf } from './bestteacher_gm_toolbar';
                         min: minage,
                         max: maxage,
                         values: [config.age1 < minage ? minage : config.age1, config.age2 > maxage ? maxage : config.age2],
-                        slide: function(event, ui) {
+                        slide: function (event, ui) {
                             $('#_tAge').html(ui.values[0] + ' - ' + ui.values[1]);
-                        },
+                        }
                     })
-                    .on('slidestop', function(event, ui) {
+                    .on('slidestop', function (event, ui) {
                         let age1 = $('#tAgeSlider').slider('values', 0);
                         let age2 = $('#tAgeSlider').slider('values', 1);
                         let uifilters = getUiFilters();
@@ -210,9 +194,9 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(0)
                     .button({
                         icon: 'ui-icon-arrowthick-1-n',
-                        showLabel: true,
+                        showLabel: true
                     })
-                    .click(function() {
+                    .click(function () {
                         $('#desc').show();
                         $(this).hide();
                         sortByIndicator(asc);
@@ -222,9 +206,9 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(1)
                     .button({
                         icon: 'ui-icon-arrowthick-1-s',
-                        showLabel: true,
+                        showLabel: true
                     })
-                    .click(function() {
+                    .click(function () {
                         $('#asc').show();
                         $(this).hide();
                         sortByIndicator(desc);
@@ -234,12 +218,12 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(2)
                     .spinner({
                         min: 0,
-                        spin: function(event, ui) {
+                        spin: function (event, ui) {
                             GM_setValue('tInfoExprHours', ui.value);
-                        },
+                        }
                     })
                     .css({
-                        width: '45px',
+                        width: '45px'
                     })
                     .val(GM_getValue('tInfoExprHours', configExprMilliseconds / 3600000))
                     .hide()
@@ -248,13 +232,13 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(3)
                     .button({
                         icon: 'uiicon-trash',
-                        showLabel: true,
+                        showLabel: true
                     })
-                    .click(function() {
+                    .click(function () {
                         var keys = GM_listValues();
-                        $.each(keys, function(i, item) {
+                        $.each(keys, function (i, item) {
                             let title = `正在删除第${i}个教师缓存`;
-                            submit(function(next) {
+                            submit(function (next) {
                                 try {
                                     $('title').html(title);
                                     GM_deleteValue(item);
@@ -270,7 +254,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(4)
                     .button({
                         icon: 'ui-icon-comment',
-                        showLabel: true,
+                        showLabel: true
                     })
                     .prop('href', 'https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=')
                     .prop('target', '_blank')
@@ -279,7 +263,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(5)
                     .button({
                         icon: 'ui-icon-help',
-                        showLabel: true,
+                        showLabel: true
                     })
                     .prop('href', 'https://github.com/niubilityfrontend/userscripts/tree/master/hunttingteacheron51talk')
                     .prop('target', '_blank')
@@ -289,13 +273,11 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(0)
                     .button({
                         icon: 'ui-icon-seek-next',
-                        showLabel: true,
+                        showLabel: true
                     })
-                    .click(function() {
-                        $('#timesmutipulecheck>input').each(function(i, item) {
-                            $(item)
-                                .prop('checked', !$(item).is(':checked'))
-                                .change();
+                    .click(function () {
+                        $('#timesmutipulecheck>input').each(function (i, item) {
+                            $(item).prop('checked', !$(item).is(':checked')).change();
                         });
                     })
                     .end()
@@ -303,11 +285,11 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(1)
                     .button({
                         icon: 'ui-icon-seek-next',
-                        showLabel: true,
+                        showLabel: true
                     })
-                    .click(function() {
+                    .click(function () {
                         let selectedTimeSlots = [];
-                        $('#timesmutipulecheck>input').each(function(i, item) {
+                        $('#timesmutipulecheck>input').each(function (i, item) {
                             if ($(item).is(':checked')) {
                                 selectedTimeSlots.push($(item).val());
                             }
@@ -318,7 +300,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     })
                     .end();
                 //初始化时间选择按钮
-                $('div.condition-type:eq(0)>ul.condition-type-time>li').each(function(i, item) {
+                $('div.condition-type:eq(0)>ul.condition-type-time>li').each(function (i, item) {
                     addCheckbox($(item).attr('data-val'), $(item).text());
                 });
                 let timesstr = sessionStorage.getItem('selectedTimeSlots'),
@@ -336,15 +318,13 @@ import { conf } from './bestteacher_gm_toolbar';
                 } else {
                     $("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr('checked', true);
                 }
-                $('#timesmutipulecheck')
-                    .find('input')
-                    .checkboxradio({
-                        icon: false,
-                    });
+                $('#timesmutipulecheck').find('input').checkboxradio({
+                    icon: false
+                });
 
                 function getCatchedTeachers() {
                     let teachers = [];
-                    $.each(GM_listValues(), function(i, item) {
+                    $.each(GM_listValues(), function (i, item) {
                         if (item.startsWith('tinfo-')) {
                             let t = GM_getValue(item);
                             t.tid = item.slice(6, item.length);
@@ -353,7 +333,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     });
                     let indexs = {};
                     teachers = teachers
-                        .sort(function(t1, t2) {
+                        .sort(function (t1, t2) {
                             if (t1.indicator == t2.indicator) return t1.favoritesCount > t2.favoritesCount ? -1 : 1;
                             return t1.indicator > t2.indicator ? -1 : 1;
                         })
@@ -363,26 +343,14 @@ import { conf } from './bestteacher_gm_toolbar';
                             } else {
                                 indexs[val.type] += 1;
                             }
-                            let t = $.extend(val, {
-                                // 'slevel': slevel,
-                                tage: Number(val.tage),
-                                thumbup: Number(val.thumbup),
-                                thumbdown: Number(val.thumbdown),
-                                thumbupRate: Number(val.thumbupRate),
-                                indicator: Number(val.indicator),
-                                //'favoritesCount': val.favoritesCount,
-                                //'isfavorite': val.isfavorite,
-                                //'updateTime': Date.now(),
-                                rank: indexs[val.type],
-                            });
-                            //GM_setValue("tinfo-"+t.tid,t);
-                            return t;
+                            val.rank = indexs[val.type];
+                            return val;
                         });
                     return teachers;
                 }
                 $('#tabs').tabs({
                     active: '#tabs-2',
-                    activate: function(event, ui) {
+                    activate: function (event, ui) {
                         if (ui.newPanel.attr('id') != 'tabs-2') return;
                         let teachers = getCatchedTeachers();
                         $('#teachertab')
@@ -401,7 +369,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         sorttype: 'float',
                                         align: 'right',
                                         searchoptions: {
-                                            sopt: ['cn'],
+                                            sopt: ['cn']
                                         },
                                         formatter: function formatter(value, options, rData) {
                                             let date = new Date(Number(value));
@@ -409,7 +377,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                                 return date.toString('HHmmss');
                                             }
                                             return value;
-                                        },
+                                        }
                                     }, //
                                     {
                                         name: 'type',
@@ -419,23 +387,14 @@ import { conf } from './bestteacher_gm_toolbar';
                                         align: 'left',
                                         searchoptions: {
                                             sopt: ['cn'],
-                                            defaultValue: $('.s-t-top-list .li-active').text() == '收藏外教' ? '' : $('.s-t-top-list .li-active').text(),
+                                            defaultValue: $('.s-t-top-list .li-active').text() == '收藏外教' ? '' : $('.s-t-top-list .li-active').text()
                                         },
                                         formatter: function formatter(value, options, rData) {
                                             if (value) return value;
                                             else return 'na';
-                                        },
+                                        }
                                     }, //
-                                    {
-                                        name: 'rank',
-                                        index: 'rank',
-                                        width: 40,
-                                        sorttype: 'float',
-                                        align: 'right',
-                                        searchoptions: {
-                                            sopt: ['le'],
-                                        },
-                                    }, //
+                                    { name: 'rank', index: 'rank', width: 40, sorttype: 'float', align: 'right', searchoptions: { sopt: ['le'] } }, //
                                     {
                                         name: 'name',
                                         index: 'name',
@@ -443,7 +402,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         sorttype: 'string',
                                         formatter: function formatter(value, options, rData) {
                                             return "<a href='http://www.51talk.com/TeacherNew/info/" + rData['tid'] + "' target='_blank' style='color:blue'>" + (!!value ? value : rData['tid']) + '</a>';
-                                        },
+                                        }
                                     }, //
                                     {
                                         name: 'isfavorite',
@@ -451,109 +410,28 @@ import { conf } from './bestteacher_gm_toolbar';
                                         width: 39,
                                         sorttype: 'string',
                                         align: 'left',
-                                        searchoptions: {
-                                            sopt: ['cn'],
-                                        },
+                                        searchoptions: { sopt: ['cn'] },
                                         formatter: function formatter(value, options, rData) {
                                             if (value) return '收藏';
                                             else return '';
-                                        },
+                                        }
                                     }, //
-                                    {
-                                        name: 'indicator',
-                                        index: 'indicator',
-                                        width: 50,
-                                        sorttype: 'float',
-                                        align: 'right',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'label',
-                                        index: 'label',
-                                        width: 45,
-                                        align: 'right',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'thumbupRate',
-                                        index: 'thumbupRate',
-                                        width: 35,
-                                        align: 'right',
-                                        sorttype: 'float',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'favoritesCount',
-                                        index: 'favoritesCount',
-                                        width: 35,
-                                        align: 'right',
-                                        sorttype: 'float',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'slevel',
-                                        index: 'slevel',
-                                        width: 85,
-                                        sorttype: 'string',
-                                        align: 'left',
-                                        searchoptions: {
-                                            sopt: ['cn', 'nc'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'tage',
-                                        index: 'tage',
-                                        width: 25,
-                                        sorttype: 'float',
-                                        align: 'right',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'thumbup',
-                                        index: 'thumbup',
-                                        width: 45,
-                                        align: 'right',
-                                        sorttype: 'float',
-                                        searchoptions: {
-                                            sopt: ['ge'],
-                                        },
-                                    }, //
-                                    {
-                                        name: 'thumbdown',
-                                        index: 'thumbdown',
-                                        width: 30,
-                                        sorttype: 'float',
-                                        align: 'right',
-                                    }, //
-                                    {
-                                        name: 'age',
-                                        index: 'age',
-                                        width: 30,
-                                        sorttype: 'float',
-                                        align: 'right',
-                                        searchoptions: {
-                                            sopt: ['le', 'ge', 'eq'],
-                                        },
-                                    }, //
+                                    { name: 'indicator', index: 'indicator', width: 50, sorttype: 'float', align: 'right', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'label', index: 'label', width: 45, align: 'right', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'thumbupRate', index: 'thumbupRate', width: 35, align: 'right', sorttype: 'float', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'favoritesCount', index: 'favoritesCount', width: 35, align: 'right', sorttype: 'float', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'slevel', index: 'slevel', width: 85, sorttype: 'string', align: 'left', searchoptions: { sopt: ['cn', 'nc'] } }, //
+                                    { name: 'tage', index: 'tage', width: 25, sorttype: 'float', align: 'right', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'thumbup', index: 'thumbup', width: 45, align: 'right', sorttype: 'float', searchoptions: { sopt: ['ge'] } }, //
+                                    { name: 'thumbdown', index: 'thumbdown', width: 30, sorttype: 'float', align: 'right' }, //
+                                    { name: 'age', index: 'age', width: 30, sorttype: 'float', align: 'right', searchoptions: { sopt: ['le', 'ge', 'eq'] } }, //
                                     {
                                         name: 'updateTime',
                                         index: 'updateTime',
                                         width: 35,
                                         sorttype: 'Date',
                                         align: 'right',
-                                        searchoptions: {
-                                            sopt: ['cn'],
-                                        },
+                                        searchoptions: { sopt: ['cn'] },
                                         formatter: function formatter(value, options, rData) {
                                             if (value) {
                                                 let d = Date.now() - value;
@@ -568,8 +446,8 @@ import { conf } from './bestteacher_gm_toolbar';
                                                 }
                                                 return d;
                                             } else return 'na';
-                                        },
-                                    },
+                                        }
+                                    }
                                 ],
                                 multiselect: false,
                                 rowNum: 10,
@@ -584,22 +462,18 @@ import { conf } from './bestteacher_gm_toolbar';
                                 responsive: true,
                                 del: true,
                                 //refresh: true,
-                                //autowidth: true,
-                                //width: 732
+                                autowidth: true
+                                // width: 732
                                 //caption: "",,
                             })
                             .jqGrid('filterToolbar', {
-                                searchOperators: true,
+                                searchOperators: true
                             })[0]
                             .triggerToolbar();
                         if (settings.isListPage) {
-                            $.each($('.item'), function(i, item) {
+                            $.each($('.item'), function (i, item) {
                                 let jqel = $(item);
-                                let tid = jqel
-                                    .find('.teacher-details-link a')
-                                    .attr('href')
-                                    .replace('https://www.51talk.com/TeacherNew/info/', '')
-                                    .replace('http://www.51talk.com/TeacherNew/info/', '');
+                                let tid = jqel.find('.teacher-details-link a').attr('href').replace('https://www.51talk.com/TeacherNew/info/', '').replace('http://www.51talk.com/TeacherNew/info/', '');
                                 let t = teachers.find((currentValue, index, arr) => {
                                     return currentValue.tid == tid;
                                 });
@@ -614,7 +488,7 @@ import { conf } from './bestteacher_gm_toolbar';
                             });
                             $('#teacherRank').html(getRankHtml(t));
                         }
-                    },
+                    }
                 });
                 let uifilters = getUiFilters();
                 executeFilters(uifilters);
@@ -640,7 +514,7 @@ import { conf } from './bestteacher_gm_toolbar';
             }
         }
         //弹出信息框
-        submit(function(next) {
+        submit(function (next) {
             $('.s-t-list').before($('.s-t-page').prop('outerHTML'));
             $('#tabs>div:first').append($('.s-t-page').prop('outerHTML'));
             sortByIndicator(desc);
@@ -649,23 +523,17 @@ import { conf } from './bestteacher_gm_toolbar';
                 $('#tabs').tabs('option', 'disabled', [0]);
             }
             $('#filterdialog').dialog({
-                width: '850',
+                width: '850'
             });
-            $('#filterdialog')
-                .parent()
-                .scrollFix();
+            $('#filterdialog').parent().scrollFix();
             $('#filterdialog').dialog('open');
             next();
         });
     }
     if (settings.isCoursePage) {
-        submit(function(next) {
-            $('.course_lock')
-                .removeClass('course_lock')
-                .addClass('course_unlock');
-            $('img.course_mask')
-                .removeClass('course_mask')
-                .attr('src', '');
+        submit(function (next) {
+            $('.course_lock').removeClass('course_lock').addClass('course_unlock');
+            $('img.course_mask').removeClass('course_mask').attr('src', '');
             next();
         });
     }

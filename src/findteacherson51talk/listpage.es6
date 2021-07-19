@@ -1,6 +1,6 @@
 import './jqueryextend';
 
-import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getTeacherInfoFromDetailPage, getTId, settings, submit, url, getSession, setSession } from './common';
+import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTId, getTeacherInfoFromDetailPage, setSession, settings, submit, url } from './common';
 
 let maxrate = 0,
     minrate = 99999,
@@ -12,11 +12,7 @@ let maxrate = 0,
     minage = 99999;
 
 function getLeftPageCount() {
-    let pages = Number(
-        $('.s-t-page>.next-page:first')
-            .prev()
-            .text(),
-    );
+    let pages = Number($('.s-t-page>.next-page:first').prev().text());
     let curr = Number($('.s-t-page>.active:first').text());
     if (pages) return pages - curr;
     else return 0;
@@ -42,7 +38,7 @@ function updateTeacherinfoToUI(jqel, tinfo) {
     jqel.find('.teacher-name').html(
         jqel.find('.teacher-name').html() +
             `<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbupRate}%</label>
-      | <label title='收藏数量'>${tinfo.favoritesCount} </label> `,
+      | <label title='收藏数量'>${tinfo.favoritesCount} </label> `
     );
     // jqel.find(".teacher-age").html(jqel.find(".teacher-age").html() + " | <label title='收藏数量'>" + tinfo.favoritesCount + "</label>");
     jqel.attr('indicator', tinfo.indicator);
@@ -51,7 +47,7 @@ function updateTeacherinfoToUI(jqel, tinfo) {
 function executeFilters(uifilters) {
     let tcount = 0,
         hidecount = 0;
-    $.each($('.item'), function(i, item) {
+    $.each($('.item'), function (i, item) {
         let node = $(item);
         let tinfojson = node.attr('teacherinfo');
         if (!tinfojson) {
@@ -67,17 +63,7 @@ function executeFilters(uifilters) {
             if (node.is(':hidden')) {
                 //如果node是隐藏的则显示node元素，否则隐藏
                 node.show();
-                node.animate(
-                    {
-                        left: '+=50',
-                    },
-                    3500,
-                ).animate(
-                    {
-                        left: '-=50',
-                    },
-                    3500,
-                );
+                node.animate({ left: '+=50' }, 3500).animate({ left: '-=50' }, 3500);
             } else {
                 //nothing todo
             }
@@ -101,16 +87,7 @@ function getUiFilters() {
     let fc1 = $('#fcSlider').slider('values', 0);
     let fc2 = $('#fcSlider').slider('values', 1);
 
-    return {
-        l1,
-        l2,
-        rate1,
-        rate2,
-        age1,
-        age2,
-        fc1,
-        fc2,
-    };
+    return { l1, l2, rate1, rate2, age1, age2, fc1, fc2 };
 }
 
 /**
@@ -130,7 +107,7 @@ function getTeacherInfoFromListPageUI(jqel) {
             name,
             batchNumber,
             isfavorite,
-            labels,
+            labels
         };
     } else
         return {
@@ -138,21 +115,21 @@ function getTeacherInfoFromListPageUI(jqel) {
             name,
             batchNumber,
             type,
-            labels,
+            labels
         };
 }
 
 if (settings.isListPage) {
-    $('.item-top-cont').prop('innerHTML', function(i, val) {
+    $('.item-top-cont').prop('innerHTML', function (i, val) {
         return val.replaceAll('<!--', '').replaceAll('-->', '');
     });
     // 自动获取时,显示停止按钮
-    submit(function(next) {
+    submit(function (next) {
         let totalPages = Number($('.s-t-page>a:eq(-2)').text()),
             curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
             remainPages = totalPages - curPageId;
         let autoNextPageCount = getSession('autoNextPageCount', 0);
-        debugger;
+
         if (autoNextPageCount > 0 && $('.s-t-page>.next-page').length > 0) {
             let dialog = $(`<div id="dialog-confirm" title="是否停止自动搜索老师?">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
@@ -169,36 +146,36 @@ if (settings.isListPage) {
                 width: 400,
                 modal: false,
                 buttons: {
-                    停止获取: function() {
+                    停止获取: function () {
                         sessionStorage.removeItem('selectedTimeSlots');
                         setSession('autoNextPageCount', 0);
                         $(this).dialog('close');
                     },
-                    [`取后${(remainPages * 0.25).toFixed(0)}页`]: function() {
+                    [`取后${(remainPages * 0.25).toFixed(0)}页`]: function () {
                         sessionStorage.removeItem('selectedTimeSlots');
                         setSession('autoNextPageCount', (remainPages * 0.25).toFixed(0));
                         $(this).dialog('close');
                     },
-                    [`取后${(remainPages * 0.5).toFixed(0)}页`]: function() {
+                    [`取后${(remainPages * 0.5).toFixed(0)}页`]: function () {
                         sessionStorage.removeItem('selectedTimeSlots');
                         setSession('autoNextPageCount', (remainPages * 0.5).toFixed(0));
                         $(this).dialog('close');
                     },
-                    [`取后${(remainPages * 0.75).toFixed(0)}页`]: function() {
+                    [`取后${(remainPages * 0.75).toFixed(0)}页`]: function () {
                         sessionStorage.removeItem('selectedTimeSlots');
                         setSession('autoNextPageCount', (remainPages * 0.75).toFixed(0));
                         $(this).dialog('close');
-                    },
-                },
+                    }
+                }
             });
         }
         next();
     });
 
     //获取列表中数据
-    $('.item').each(function(index, el) {
-        submit(function(next) {
-            Pace.track(function() {
+    $('.item').each(function (index, el) {
+        submit(function (next) {
+            Pace.track(function () {
                 let jqel = $(el);
                 let tid = getTId(jqel.find('.teacher-details-link a').attr('href'));
                 let tinfokey = 'tinfo-' + tid;
@@ -228,17 +205,17 @@ if (settings.isListPage) {
                     url: window.location.protocol + '//www.51talk.com/TeacherNew/teacherComment?tid=' + tid + '&type=bad&has_msg=1',
                     type: 'GET',
                     dateType: 'html',
-                    success: function(r) {
+                    success: function (r) {
                         let jqr = $(r);
                         let tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
                         jqr.remove();
                         updateTeacherinfoToUI(jqel, tinfo);
                         GM_setValue(tinfokey, tinfo);
                     },
-                    error: function(data) {
+                    error: function (data) {
                         console.log('xhr error when getting teacher ' + JSON.stringify(jqel) + ',error msg:' + JSON.stringify(data));
-                    },
-                }).always(function() {
+                    }
+                }).always(function () {
                     while (Date.now() - start < 600) {
                         continue;
                     }
@@ -248,7 +225,7 @@ if (settings.isListPage) {
         });
     });
 
-    submit(function(next) {
+    submit(function (next) {
         //翻页
         let autoNextPageCount = getSession('autoNextPageCount', 0);
         if (autoNextPageCount > 0) {
@@ -292,11 +269,11 @@ function addCheckbox(val, lbl, group) {
         type: 'checkbox',
         id: 'cb' + id,
         value: val,
-        name: group,
+        name: group
     }).appendTo(container);
     $('<label />', {
         for: 'cb' + id,
-        text: lbl ? lbl : val,
+        text: lbl ? lbl : val
     }).appendTo(container);
 }
 

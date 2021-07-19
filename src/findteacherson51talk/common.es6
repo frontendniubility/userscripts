@@ -12,12 +12,12 @@ import { conf, indicatorCalculator } from './bestteacher_gm_toolbar';
 export const url = window.location.href.toLocaleLowerCase();
 
 export const settings = {
-    url: url,
-    tid: url.match(/(t\d+)/g) ? url.match(/(t\d+)/g)[0] : null,
-    pageMaxCount: conf.pageMaxCount,
+    isCoursePage: url.includes('study_center'),
     isDetailPage: url.includes('teachernew'),
     isListPage: url.includes('reservenew'),
-    isCoursePage: url.includes('study_center'),
+    pageMaxCount: conf.pageMaxCount,
+    tid: url.match(/(t\d+)/g) ? url.match(/(t\d+)/g)[0] : null,
+    url: url
 };
 
 export let configExprMilliseconds = 3600000 * conf.tInfoExprHours; //缓存7天小时
@@ -139,7 +139,7 @@ export function getLabelCount(jqLabelElement) {
                 .clean(''),
             function(i, val) {
                 l += Number(val);
-            },
+            }
         );
         return l;
     })();
@@ -155,7 +155,7 @@ export function getLabelByItems(jqLabelSpanList) {
             var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML);
             return {
                 key: r[1],
-                value: r[2],
+                value: r[2]
             };
         })
         .get()
@@ -185,7 +185,7 @@ export function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest
          */
         function(i, val) {
             return val.replaceAll('<!--', '').replaceAll('-->', '');
-        },
+        }
     );
 
     let tinfo = {
@@ -203,7 +203,7 @@ export function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest
             .reduce(function(pre, cur) {
                 if (cur) pre.push(cur);
                 return pre;
-            }, []),
+            }, [])
     };
 
     if (jqr.find('.evaluate-content-left span').length >= 3) {
@@ -212,14 +212,14 @@ export function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest
                 .find('.evaluate-content-left span:eq(1)')
                 .text()
                 .match(num)
-                .clean('')[0],
+                .clean('')[0]
         );
         tinfo.thumbdown = Number(
             jqr
                 .find('.evaluate-content-left span:eq(2)')
                 .text()
                 .match(num)
-                .clean('')[0],
+                .clean('')[0]
         );
         tinfo.thumbupRate = calcThumbRate(tinfo);
 
@@ -233,7 +233,7 @@ export function getTeacherInfoFromDetailPage(tinfo_saved = {}, jqr, tinfo_latest
             .find('.clear-search')
             .text()
             .match(num)
-            .clean('')[0],
+            .clean('')[0]
     );
     tinfo.isfavorite = jqr.find('.go-search.cancel-collection').length > 0;
 

@@ -155,4 +155,5 @@ declare interface TeacherInfo extends TeacherInfoBase {
   favoritesCount: number
   tage: number
   age: number
+  rank: number
 }
