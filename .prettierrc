@@ -19,7 +19,7 @@
   "singleQuote": true,
   "stylelintIntegration": false,
   "tabWidth": 4,
-  "trailingComma": "none",
+  "trailingComma": "all",
   "tslintIntegration": false,
   "useTabs": false,
   "withNodeModules": true
