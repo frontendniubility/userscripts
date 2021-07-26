@@ -63,7 +63,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     rate1: 97,
                     rate2: maxrate,
                     age1: minage,
-                    age2: maxage
+                    age2: maxage,
                 });
                 let buttons = '';
                 if (settings.isListPage) {
@@ -115,7 +115,7 @@ import { conf } from './bestteacher_gm_toolbar';
                         values: [config.l1 < minlabel - 1 ? minlabel - 1 : config.l1, maxlabel],
                         slide: function (event, ui) {
                             $('#_tLabelCount').html(ui.values[0] + ' - ' + ui.values[1]);
-                        }
+                        },
                     })
                     .on('slidestop', function (event, ui) {
                         let l1 = $('#tlabelslider').slider('values', 0);
@@ -135,7 +135,7 @@ import { conf } from './bestteacher_gm_toolbar';
                         values: [config.fc1 < minfc ? minfc : config.fc1, maxfc],
                         slide: function (event, ui) {
                             $('#_tfc').html(ui.values[0] + ' - ' + ui.values[1]);
-                        }
+                        },
                     })
                     .on('slidestop', function (event, ui) {
                         let fc1 = $('#fcSlider').slider('values', 0);
@@ -155,7 +155,7 @@ import { conf } from './bestteacher_gm_toolbar';
                         values: [config.rate1 < minrate ? minrate : config.rate1, maxrate],
                         slide: function (_event, ui) {
                             $('#_thumbupRate').html(ui.values[0] + '% - ' + ui.values[1] + '%');
-                        }
+                        },
                     })
                     .on('slidestop', function (event, ui) {
                         let rate1 = $('#thumbupRateslider').slider('values', 0);
@@ -176,7 +176,7 @@ import { conf } from './bestteacher_gm_toolbar';
                         values: [config.age1 < minage ? minage : config.age1, config.age2 > maxage ? maxage : config.age2],
                         slide: function (event, ui) {
                             $('#_tAge').html(ui.values[0] + ' - ' + ui.values[1]);
-                        }
+                        },
                     })
                     .on('slidestop', function (event, ui) {
                         let age1 = $('#tAgeSlider').slider('values', 0);
@@ -194,7 +194,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(0)
                     .button({
                         icon: 'ui-icon-arrowthick-1-n',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .click(function () {
                         $('#desc').show();
@@ -206,7 +206,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(1)
                     .button({
                         icon: 'ui-icon-arrowthick-1-s',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .click(function () {
                         $('#asc').show();
@@ -220,10 +220,10 @@ import { conf } from './bestteacher_gm_toolbar';
                         min: 0,
                         spin: function (event, ui) {
                             GM_setValue('tInfoExprHours', ui.value);
-                        }
+                        },
                     })
                     .css({
-                        width: '45px'
+                        width: '45px',
                     })
                     .val(GM_getValue('tInfoExprHours', configExprMilliseconds / 3600000))
                     .hide()
@@ -232,7 +232,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(3)
                     .button({
                         icon: 'uiicon-trash',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .click(function () {
                         var keys = GM_listValues();
@@ -254,7 +254,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(4)
                     .button({
                         icon: 'ui-icon-comment',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .prop('href', 'https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=')
                     .prop('target', '_blank')
@@ -263,7 +263,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(5)
                     .button({
                         icon: 'ui-icon-help',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .prop('href', 'https://github.com/niubilityfrontend/userscripts/tree/master/hunttingteacheron51talk')
                     .prop('target', '_blank')
@@ -273,7 +273,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(0)
                     .button({
                         icon: 'ui-icon-seek-next',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .click(function () {
                         $('#timesmutipulecheck>input').each(function (i, item) {
@@ -285,7 +285,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     .eq(1)
                     .button({
                         icon: 'ui-icon-seek-next',
-                        showLabel: true
+                        showLabel: true,
                     })
                     .click(function () {
                         let selectedTimeSlots = [];
@@ -319,7 +319,7 @@ import { conf } from './bestteacher_gm_toolbar';
                     $("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr('checked', true);
                 }
                 $('#timesmutipulecheck').find('input').checkboxradio({
-                    icon: false
+                    icon: false,
                 });
 
                 function getCatchedTeachers() {
@@ -369,7 +369,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         sorttype: 'float',
                                         align: 'right',
                                         searchoptions: {
-                                            sopt: ['cn']
+                                            sopt: ['cn'],
                                         },
                                         formatter: function formatter(value, options, rData) {
                                             let date = new Date(Number(value));
@@ -377,7 +377,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                                 return date.toString('HHmmss');
                                             }
                                             return value;
-                                        }
+                                        },
                                     }, //
                                     {
                                         name: 'type',
@@ -387,12 +387,12 @@ import { conf } from './bestteacher_gm_toolbar';
                                         align: 'left',
                                         searchoptions: {
                                             sopt: ['cn'],
-                                            defaultValue: $('.s-t-top-list .li-active').text() == '收藏外教' ? '' : $('.s-t-top-list .li-active').text()
+                                            defaultValue: $('.s-t-top-list .li-active').text() == '收藏外教' ? '' : $('.s-t-top-list .li-active').text(),
                                         },
                                         formatter: function formatter(value, options, rData) {
                                             if (value) return value;
                                             else return 'na';
-                                        }
+                                        },
                                     }, //
                                     { name: 'rank', index: 'rank', width: 40, sorttype: 'float', align: 'right', searchoptions: { sopt: ['le'] } }, //
                                     {
@@ -402,7 +402,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         sorttype: 'string',
                                         formatter: function formatter(value, options, rData) {
                                             return "<a href='http://www.51talk.com/TeacherNew/info/" + rData['tid'] + "' target='_blank' style='color:blue'>" + (!!value ? value : rData['tid']) + '</a>';
-                                        }
+                                        },
                                     }, //
                                     {
                                         name: 'isfavorite',
@@ -414,7 +414,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         formatter: function formatter(value, options, rData) {
                                             if (value) return '收藏';
                                             else return '';
-                                        }
+                                        },
                                     }, //
                                     { name: 'indicator', index: 'indicator', width: 50, sorttype: 'float', align: 'right', searchoptions: { sopt: ['ge'] } }, //
                                     { name: 'label', index: 'label', width: 45, align: 'right', searchoptions: { sopt: ['ge'] } }, //
@@ -446,8 +446,8 @@ import { conf } from './bestteacher_gm_toolbar';
                                                 }
                                                 return d;
                                             } else return 'na';
-                                        }
-                                    }
+                                        },
+                                    },
                                 ],
                                 multiselect: false,
                                 rowNum: 10,
@@ -458,16 +458,16 @@ import { conf } from './bestteacher_gm_toolbar';
                                 multiSort: true,
                                 sortorder: 'desc',
                                 grouping: false,
-                                shrinkToFit: false,
+                                // shrinkToFit: false,
                                 responsive: true,
                                 del: true,
                                 //refresh: true,
-                                autowidth: true
-                                // width: 732
+                                // autowidth: true,
+                                width: 830,
                                 //caption: "",,
                             })
                             .jqGrid('filterToolbar', {
-                                searchOperators: true
+                                searchOperators: true,
                             })[0]
                             .triggerToolbar();
                         if (settings.isListPage) {
@@ -488,7 +488,7 @@ import { conf } from './bestteacher_gm_toolbar';
                             });
                             $('#teacherRank').html(getRankHtml(t));
                         }
-                    }
+                    },
                 });
                 let uifilters = getUiFilters();
                 executeFilters(uifilters);
@@ -523,7 +523,7 @@ import { conf } from './bestteacher_gm_toolbar';
                 $('#tabs').tabs('option', 'disabled', [0]);
             }
             $('#filterdialog').dialog({
-                width: '850'
+                width: '850',
             });
             $('#filterdialog').parent().scrollFix();
             $('#filterdialog').dialog('open');

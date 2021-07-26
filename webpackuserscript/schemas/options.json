@@ -15,14 +15,22 @@
     "StringFilter": {
       "description": "filter used to test against a string",
       "anyOf": [
-        { "instanceof": "RegExp" },
-        { "type": "string" },
+        {
+          "instanceof": "RegExp"
+        },
+        {
+          "type": "string"
+        },
         {
           "type": "array",
           "items": {
             "anyOf": [
-              { "type": "string" },
-              { "instanceof": "RegExp" }
+              {
+                "type": "string"
+              },
+              {
+                "instanceof": "RegExp"
+              }
             ]
           }
         }
@@ -36,9 +44,15 @@
       "properties": {
         "headers": {
           "anyOf": [
-            { "$ref": "#/definitions/HeaderObject" },
-            { "$ref": "#/definitions/HeaderProvider" },
-            { "$ref": "#/definitions/HeaderFile" }
+            {
+              "$ref": "#/definitions/HeaderObject"
+            },
+            {
+              "$ref": "#/definitions/HeaderProvider"
+            },
+            {
+              "$ref": "#/definitions/HeaderFile"
+            }
           ]
         },
         "pretty": {
@@ -66,8 +80,12 @@
             },
             "enable": {
               "anyOf": [
-                { "typeof": "function" },
-                { "type": "boolean" }
+                {
+                  "typeof": "function"
+                },
+                {
+                  "type": "boolean"
+                }
               ]
             }
           }
@@ -80,7 +98,9 @@
         },
         "ssri": {
           "anyOf": [
-            { "type": "boolean" },
+            {
+              "type": "boolean"
+            },
             {
               "type": "object",
               "properties": {
@@ -93,7 +113,11 @@
                 "algorithms": {
                   "type": "array",
                   "items": {
-                    "enum": ["sha256", "sha384", "sha512"]
+                    "enum": [
+                      "sha256",
+                      "sha384",
+                      "sha512"
+                    ]
                   }
                 },
                 "integrity": {

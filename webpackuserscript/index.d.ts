@@ -1,4 +1,4 @@
-import {Compiler, Plugin} from 'webpack';
+import { Compiler, Plugin } from 'webpack';
 
 declare namespace WebpackUserscript {
   type WebpackUserscriptOptions =
