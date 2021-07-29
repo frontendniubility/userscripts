@@ -1,25 +1,55 @@
-const { p, stringIncludesAny, entries, logger } = require('./../../webpack.common')
+const logger = require('./../../log').loggers.get('test');
 
-let b = Promise.resolve()
+const meta = {
+    subject: 'Hello, World!',
+    message: 'This message is a unique property separate from implicit merging.',
+};
 
-let i = 60
-function sleep(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms)
-  })
+let i = 1;
+while (i-- > 0) {
+    logger.warn('first param is  %s ,%s, %d', 'ivvv', 'oooo', 3333, 444);
+    // logger.info('This is overridden by meta', meta);
+    // logger.info('email.message is shown %j', meta);
 }
-while (i--) {
-  
-  let c = i
-  logger.warn(`add task , the i is ${c}`)
-  b = b.then(data => {
-    logger.warn(`get the Data ${data} , the i is ${c}`)
-    return new Promise(resolve => {
-      logger.warn(`start the ${c} task`)
-      setTimeout(() => {
-        logger.warn(`runing the ${c} task`)
-        resolve(c)
-      }, 1000)
-    })
-  })
-}
+
+logger.log('info', 'any message', {
+    label: 'label!',
+    extra: true,
+});
+
+logger.log('info', "let's %s some %s", 'interpolate', 'splat parameters', {
+    label: 'label!',
+    extra: true,
+});
+
+logger.log(
+    'info',
+    'first is a string %s [[%j]]',
+    'behold a string',
+    { beAware: 'this will interpolate' },
+    {
+        label: 'label!',
+        extra: true,
+    },
+);
+
+logger.log(
+    'info',
+    'first is an object [[%j]]',
+    { beAware: 'this will interpolate' },
+    {
+        label: 'label!',
+        extra: true,
+    },
+);
+
+//
+// Non-enumerable properties (such as "message" and "stack" in Error
+// instances) will not be merged into any `info`.
+//
+const terr = new Error('lol please stop doing this');
+terr.label = 'error';
+terr.extra = true;
+logger.log('info', 'any message', terr);
+
+logger.log('info', "let's %s some %s", 'interpolate', 'splat parameters', terr);

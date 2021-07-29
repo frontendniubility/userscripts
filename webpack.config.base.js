@@ -5,8 +5,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 var rulesconfig = require('./webpack.common.rules');
 var { webpackUserscript } = require('./webpack.userscripts');
 
-const { p, stringIncludesAny, entries, logger } = require('./webpack.common');
-
+const { p, stringIncludesAny, entries } = require('./webpack.common');
+const logger = require('./log').loggers.get('webpack');
 module.exports = merge(rulesconfig, {
     mode: 'production', //env.NODE_ENV === 'development' ? 'development' : 'production',
     optimization: {
@@ -24,16 +24,16 @@ module.exports = merge(rulesconfig, {
                     output: {
                         comments: false,
                         beautify: true,
-                        inline_script: false
+                        inline_script: false,
                     },
                     toplevel: false,
                     nameCache: null,
                     ie8: false,
                     keep_fnames: true,
-                    keep_classnames: true
-                }
-            })
-        ]
+                    keep_classnames: true,
+                },
+            }),
+        ],
         //removeEmptyChunks: true
     },
 
@@ -54,25 +54,25 @@ module.exports = merge(rulesconfig, {
         publicPath: '/dist/',
         filename: '[name].js',
         clean: true,
-        chunkFilename: '[name].js'
+        chunkFilename: '[name].js',
     },
     externals: {
         jquery: '$',
         vue: 'Vue',
         axios: 'axios',
-        'axios-userscript-adapter': 'axiosGmxhrAdapter'
+        'axios-userscript-adapter': 'axiosGmxhrAdapter',
     },
     resolve: {
         modules: [path.resolve(__dirname, 'libs'), path.resolve(__dirname, 'node_modules')],
         extensions: ['.es6', '.mjs', '.cjs', '.js', '.css', '.json', '.wasm'],
         alias: {
             // libs$: path.resolve('libs') // 直接引用src源码
-        }
+        },
     },
     target: 'web',
 
     devServer: {
         publicPath: '/',
-        contentBase: path.join(__dirname, 'dist')
-    }
+        contentBase: path.join(__dirname, 'dist'),
+    },
 });

@@ -117,9 +117,10 @@ module.exports = class WebpackUserscript {
         };
         const headerProvider = createHeaderProvider(packageInfoObj, this.options.headers);
         fileDependencies.add(packageJsonFile);
-
+        // compiler.hooks.watchRun(c=>{})
         compiler.hooks.emit.tapPromise(PLUGIN_NAME, async compilation => {
             // compilation.logger.info(compilation.entries)
+          
             for (const chunk of compilation.chunks) {
                 if (!chunk.canBeInitial()) {
                     // non-entry
