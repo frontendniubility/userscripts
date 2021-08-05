@@ -3,11 +3,11 @@ const glob = require('glob');
 const fs = require('fs');
 const extend = require('extend');
 const WebpackUserscript = require('./webpackuserscript/index');
-const webpacktestplugin = require('./webpacktestplugin/index');
+const webpacktestplugin = require('./webpackhookstest/index');
 
 // const WebpackUserscript = require('webpack-userscript')
 const logger = require('./log').loggers.get('webpack');
-const { p, stringIncludesAny, entries,  } = require('./webpack.common');
+const { p, stringIncludesAny, entries } = require('./webpack.common');
 
 let parseMeta = script =>
     script

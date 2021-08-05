@@ -60,7 +60,7 @@ let stringIncludesAny = function (s, ...arr) {
 
 let entries = glob
     .sync('./src/*/*.@(user.js|user.es6|user.mjs|user.cjs|user.ts)')
-    .filter((current, index, all) => stringIncludesAny(current, 'test.user.es6'))
+    // .filter((current, index, all) => stringIncludesAny(current, 'test.user.es6'))
     .reduce((entries, fullpath) => {
         entries[path.parse(fullpath).name] = fullpath;
         return entries;

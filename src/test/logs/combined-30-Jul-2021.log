@@ -1,0 +1,7 @@
+20210730 144729.477 - warn  : first param is  ivvv ,oooo, 3333
+20210730 144729.486 label! info  : any message
+20210730 144729.488 label! info  : let's interpolate some splat parameters
+20210730 144729.491 label! info  : first is a string behold a string [[{"beAware":"this will interpolate"}]]
+20210730 144729.493 label! info  : first is an object [[{"beAware":"this will interpolate"}]]
+20210730 144729.498 error info  : any message lol please stop doing this
+20210730 144729.503 error info  : let's interpolate some splat parameters

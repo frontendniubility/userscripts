@@ -1,24 +1,49 @@
-import parseMeta from '@libs/parseMeta.mjs';
-
 const p = (...args) => (console.log(...args), args[0]);
+const _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
+    len = _sym.length;
+function generate(count, k) {
+    let str = [];
+    for (var i = 0; i < count; i++) {
+        str[i] = _sym[parseInt(Math.random() * len)];
+    }
 
-var test = 'Your awesome js code.';
-let jquery =p;
-var s = `
-    // ==UserScript==
-// @name        userscripts
-// @version     0.0.1
-// @description tampermonkey scripts
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
-// @match       *://*/*
-// ==/UserScript==
-</CDATASection>`;
+    return str.join('');
+}
 
-p(parseMeta);
+/**
+ * Gets the classname of an object or function if it can.  Otherwise returns the provided default.
+ *
+ * Getting the name of a function is not a standard feature, so while this will work in many
+ * cases, it should not be relied upon except for informational messages (e.g. logging and Error
+ * messages).
+ *
+ * @private
+ */
+function className(object, defaultName) {
+    if (!object) return '';
+    var result = '';
+    if (typeof object === 'function') {
+        result = object.name || object.toString().match(/^function\s?([^\s(]*)/)[1];
+    } else if (typeof object.constructor === 'function') {
+        result = className(object.constructor, defaultName);
+    }
+    return result || defaultName;
+}
 
-var data = parseMeta(s);
+var a = new Date();
+var name = Object.prototype.toString.call(a).match(/\[object (.*?)\]/)[1];
 
-p(data);
+p(name);
 
-p(jquery);
+function Foo() {}
+var f = new Foo();
+
+p(f.constructor.name);
+
+var Bar = function () {};
+
+var b = Bar();
+// p(b.constructor.name);
+p(typeof Bar);
+let m = Bar();
+p(className(m));

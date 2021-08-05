@@ -96,7 +96,8 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
     "webpack-userscript": "^2.5.7",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -119,7 +120,7 @@
   "main": "build-readme.js",
   "scripts": {
     "watch": "webpack --config webpack.config.js --watch",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js  --color",
     "start": "webpack serve --config webpack.config.js --progress --open --color",
     "watchvue": "webpack --config webpack.config.vue.js --watch",
     "buildvue": "webpack --config webpack.config.vue.js",

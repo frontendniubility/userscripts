@@ -34,6 +34,7 @@ module.exports = merge(rulesconfig, {
                 },
             }),
         ],
+        usedExports: true,
         //removeEmptyChunks: true
     },
 

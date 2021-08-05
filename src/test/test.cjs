@@ -1,4 +1,4 @@
-const logger = require('./../../log').loggers.get('test');
+const logger = require('./../../log').loggers.get('webpacktest');
 
 const meta = {
     subject: 'Hello, World!',
