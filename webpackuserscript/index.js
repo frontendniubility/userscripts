@@ -128,7 +128,6 @@ module.exports = class WebpackUserscript {
             compilation.hooks.afterProcessAssets.tap(
                 {
                     name: PLUGIN_NAME,
-                    // stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
                 },
 
                 assets => {
@@ -239,7 +238,7 @@ module.exports = class WebpackUserscript {
                                     this.options.pretty,
                                 );
                                 compilation.emitAsset(hotDevFilename, new ConcatSource(hotDevHeaderString), {
-                                    development: fasle,
+                                    development: false,
                                 });
                             }
 
@@ -249,8 +248,7 @@ module.exports = class WebpackUserscript {
                             }
                         }
                     }
-                    // resolve();
-                    console.log('----------DONE----');
+                    // resolve(); 
                 },
             );
 

@@ -100,7 +100,7 @@ let optTest = Object.assign({}, logopt, {
     transports: [
         new transports.Stream({
             stream: process.stderr,
-            level: 'silly',
+            level: 'all',
         }),
 
         new transports.DailyRotateFile({

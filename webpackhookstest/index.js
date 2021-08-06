@@ -62,14 +62,14 @@ module.exports = class webpacktestplugin {
                                 compilation.iDDDDDDDDD = generate();
                             }
                             Object.keys(compilation.hooks).forEach(function (cnKey, index, array) {
+                                let deprecatedHooks = ['additionalChunkAssets', 'optimizeChunkAssets', 'afterOptimizeChunkAssets', 'normalModuleLoader'];
+                                let noNeeds = ['dependencyReferencedExports'];
+                                if (deprecatedHooks.concat(noNeeds).includes(cnKey)) return;
                                 /** @type {Hook}  */
                                 let compilationHook = compilation.hooks[cnKey];
                                 let _crKey = `${crKey}`;
 
-                                let deprecatedHooks = ['additionalChunkAssets', 'optimizeChunkAssets', 'afterOptimizeChunkAssets', 'normalModuleLoader'];
-                                let noNeeds = ['dependencyReferencedExports'];
-
-                                if (!compilationHook.for && !deprecatedHooks.concat(noNeeds).includes(cnKey)) {
+                                if (!compilationHook.for) {
                                     try {
                                         if (cnKey != 'log') {
                                             // logger.cntap(`${''.padEnd(p1)} crkey> ${_crKey.padEnd(p2)} cnkey> ${cnKey.padEnd(p3)} > ${compilationHook._args != null ? 'args:  ' + compilationHook._args.join(', ') : 'null'}`);
