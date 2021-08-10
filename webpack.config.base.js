@@ -73,7 +73,13 @@ module.exports = merge(rulesconfig, {
     target: 'web',
 
     devServer: {
+        allowedHosts: ['localhost', 'host.com', 'subdomain.host.com', 'subdomain2.host.com', 'host2.com'],
         publicPath: '/',
         contentBase: path.join(__dirname, 'dist'),
+
+        port: 8080,
+        disableHostCheck: true,
+
+        public: 'localhost:8080',
     },
 });

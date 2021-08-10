@@ -2,10 +2,9 @@ const path = require('path');
 const glob = require('glob');
 const fs = require('fs');
 const extend = require('extend');
-const WebpackUserscript = require('./webpackuserscript/index');
-const webpacktestplugin = require('./webpackhookstest/index');
+const WebpackUserscript = require('./libs/webpackuserscript');
+const webpacktestplugin = require('./libs/webpackhookstest');
 
-// const WebpackUserscript = require('webpack-userscript')
 const logger = require('./log').loggers.get('webpack');
 const { p, stringIncludesAny, entries } = require('./webpack.common');
 

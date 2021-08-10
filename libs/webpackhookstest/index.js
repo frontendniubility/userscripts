@@ -1,15 +1,15 @@
 //
 
-const logger = require('../log').loggers.get('webpacktest');
+const logger = require('../../log').loggers.get('webpacktest');
 
 /**
  * @typedef {import('webpack')} webpack
  * @typedef {import('webpack').Compiler} Compiler
- *  @typedef {import('tapable').Hook} Hook
+ * @typedef {import('tapable').Hook} Hook
  * @typedef {import('tapable').HookMap } HookMap
- *   @typedef {import('webpack').Compilation} Compilation
- *   @typedef {import('webpack').Module} Module
- *  @typedef {import('webpack').NormalModule} NormalModule
+ * @typedef {import('webpack').Compilation} Compilation
+ * @typedef {import('webpack').Module} Module
+ * @typedef {import('webpack').NormalModule} NormalModule
  *
  */
 const _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
@@ -34,7 +34,7 @@ function className(object, defaultName) {
     return result || defaultName;
 }
 
-module.exports = class webpacktestplugin {
+module.exports = class webpackTestPlugin {
     /**
      *
      * @param {Compiler} compiler

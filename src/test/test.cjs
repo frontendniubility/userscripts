@@ -53,3 +53,5 @@ terr.extra = true;
 logger.log('info', 'any message', terr);
 
 logger.log('info', "let's %s some %s", 'interpolate', 'splat parameters', terr);
+
+b => b;

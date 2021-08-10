@@ -14,15 +14,13 @@ const optionsSchema = require('./schemas/options.json');
 const { computeSSRI } = require('./ssri');
 const webpack = require('webpack');
 
+const PLUGIN_NAME = 'WebpackUserscript';
+
 /**
- * @typedef {import('webpack')} webpack
  * @typedef {import('webpack').Compilation} Compilation
  * @typedef {import('webpack').Compiler} Compiler
  */
-const PLUGIN_NAME = 'WebpackUserscript';
-/**
- * @type {WebpackUserscriptOptions}
- */
+
 const DEFAULT_CONFIG = {
     pretty: true,
     metajs: true,
@@ -36,30 +34,10 @@ const DEFAULT_SSRI_CONFIG = {
     single: false,
 };
 const fileDependencies = new Set();
-/**
- *
- * @extends webpack
- */
+
 module.exports = class WebpackUserscript {
     /**
-     * @typedef ProxyScriptOptions
-     * @property {boolean|(()=>boolean)} enable
-     * @property {string} filename The filename of the proxy script
-     * @property {string} baseUrl The base URL of the dev server
-     */
-    /**
-     * @typedef WebpackUserscriptOptions
-     * @property {object|string|((data: object) => object)} headers the header object
-     * @property {boolean} metajs to generate *.meta.js
-     * @property {boolean} pretty to prettify the header block
-     * @property {boolean} renameExt to rename *.js files that are not *.user.js to become *.user.js
-     * @property {string} downloadBaseUrl base URL for download URL
-     * @property {string} updateBaseUrl base URL for update URL
-     * @property {boolean|object} ssri enable subresource integrity support
-     * @property {ProxyScriptOptions} proxyScript Containing a \"@require\" header in the meta block to include the main script
-     */
-    /**
-     * @param {WebpackUserscriptOptions|string|((data: object) => object)} [options]
+     * @param { WPUSOptions} options
      */
     constructor(options = {}) {
         validateOptions.validate(optionsSchema, options, PLUGIN_NAME);
@@ -105,7 +83,7 @@ module.exports = class WebpackUserscript {
 
     /**
      *
-     * @param {webpack.Compiler} compiler
+     * @param {Compiler} compiler
      */
     apply(compiler) {
         const packageJsonFile = pkgUp.sync({
@@ -164,7 +142,7 @@ module.exports = class WebpackUserscript {
                                 ...packageInfoObj,
                             };
                             /**
-                             * @type HeaderObject
+                             * @type WebpackUserscript.HeaderObject
                              */
                             const tplHeaderObj = headerProvider(data);
                             if (!tplHeaderObj.downloadURL && this.options.downloadBaseUrl) {
@@ -248,12 +226,8 @@ module.exports = class WebpackUserscript {
                             }
                         }
                     }
-                    // resolve(); 
                 },
             );
-
-            //     cb();
-            // });
         });
 
         compiler.hooks.afterEmit.tapAsync(PLUGIN_NAME, (compilation, callback) => {

@@ -1,8 +1,13 @@
-import { Compiler, Plugin } from 'webpack';
+// import webpack from 'webpack'
+
+import webpack from 'webpack';
+type Compiler = webpack.Compiler;
+// type Plugin = webpack.BannerPlugin;
+
 
 declare namespace WebpackUserscript {
   type WebpackUserscriptOptions =
-    | WPUSOptions
+    WPUSOptions
     | HeaderFile // shorthand for WPUSOptions.headers
     | HeaderProvider; // shorthand for WPUSOptions.headers
 
@@ -208,7 +213,7 @@ declare namespace WebpackUserscript {
   }
 }
 
-declare class WebpackUserscript extends Plugin {
+declare class WebpackUserscript /* extends Plugin */ {
   constructor(options?: WebpackUserscript.WebpackUserscriptOptions);
 
   apply(compiler: Compiler): void;
