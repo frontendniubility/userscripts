@@ -24,6 +24,11 @@
             "date": 1628589023194,
             "name": "logs\\2021-Aug-10\\webpacktest-2021-Aug-10.log",
             "hash": "9855a93e459d686827f8d86477805f2d"
+        },
+        {
+            "date": 1628646246852,
+            "name": "logs\\2021-Aug-11\\webpacktest-2021-Aug-11.log",
+            "hash": "3b146422bf669ccfb17f44975927abac"
         }
     ]
 }
