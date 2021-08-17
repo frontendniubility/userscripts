@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-const validateOptions = require('schema-utils');
+const { validate } = require('schema-utils');
 const { ConcatSource, RawSource } = require('webpack-sources');
 const userscriptMeta = require('@tkausl/userscript-meta');
 const _pick = require('lodash.pick');
@@ -12,13 +12,14 @@ const createHeaderProvider = require('./createHeaderProvider');
 const interpolate = require('./interpolate');
 const optionsSchema = require('./schemas/options.json');
 const { computeSSRI } = require('./ssri');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 
 const PLUGIN_NAME = 'WebpackUserscript';
 
 /**
  * @typedef {import('webpack').Compilation} Compilation
  * @typedef {import('webpack').Compiler} Compiler
+ * @typedef {import('./index').WPUSOptions} WPUSOptions
  */
 
 const DEFAULT_CONFIG = {
@@ -40,7 +41,7 @@ module.exports = class WebpackUserscript {
      * @param { WPUSOptions} options
      */
     constructor(options = {}) {
-        validateOptions.validate(optionsSchema, options, PLUGIN_NAME);
+        validate(optionsSchema, options, PLUGIN_NAME);
 
         options.proxyScript = Object.assign(
             {
@@ -58,24 +59,7 @@ module.exports = class WebpackUserscript {
             options.downloadBaseUrl = options.updateBaseUrl;
         }
 
-        this.options = Object.assign(
-            {},
-            DEFAULT_CONFIG,
-            typeof options === 'string'
-                ? {
-                      headers: loadHeaderFile(options, fileDependencies),
-                  }
-                : typeof options === 'function'
-                ? {
-                      headers: options,
-                  }
-                : typeof options.headers === 'string'
-                ? {
-                      ...options,
-                      headers: loadHeaderFile(options.headers, fileDependencies),
-                  }
-                : options,
-        );
+        this.options = Object.assign({}, DEFAULT_CONFIG, typeof options === 'string' ? { headers: loadHeaderFile(options, fileDependencies) } : typeof options === 'function' ? { headers: options } : typeof options.headers === 'string' ? { ...options, headers: loadHeaderFile(options.headers, fileDependencies) } : options);
 
         this.buildNo = 0;
         this.ssriCache = {};

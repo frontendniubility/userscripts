@@ -10,6 +10,7 @@ const logger = require('./log').loggers.get('webpack');
 module.exports = merge(rulesconfig, {
     mode: 'production', //env.NODE_ENV === 'development' ? 'development' : 'production',
     optimization: {
+        emitOnErrors: true,
         minimize: true,
         minimizer: [
             new TerserPlugin({

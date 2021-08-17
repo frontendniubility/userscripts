@@ -5,17 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch via NPM",
+      "type": "node",
       "request": "launch",
+      "name": "Launch Webpack",
+      "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch via NPM",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
       "runtimeArgs": [
-        "run build",
+        "npm run build",
         "debug"
       ],
-      "runtimeExecutable": "npm",
+      "port": 9229,
       "skipFiles": [
         "<node_internals>/**"
-      ],
-      "type": "pwa-node"
+      ]
     },
     {
       "type": "pwa-node",

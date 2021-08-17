@@ -1,7 +1,9 @@
 //
 
 const logger = require('../../log').loggers.get('webpacktest');
-
+const webpack = require('webpack');
+const { Hook } = require('tapable');
+const { log } = require('winston');
 /**
  * @typedef {import('webpack')} webpack
  * @typedef {import('webpack').Compiler} Compiler
@@ -12,16 +14,6 @@ const logger = require('../../log').loggers.get('webpacktest');
  * @typedef {import('webpack').NormalModule} NormalModule
  *
  */
-const _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
-    len = _sym.length;
-function generate(count = 10) {
-    let str = [];
-    for (var i = 0; i < count; i++) {
-        str[i] = _sym[parseInt(Math.random() * len)];
-    }
-
-    return str.join('');
-}
 
 function className(object, defaultName) {
     if (!object) return '';
@@ -33,8 +25,20 @@ function className(object, defaultName) {
     }
     return result || defaultName;
 }
+// logger.info(Hook);
 
 module.exports = class webpackTestPlugin {
+    constructor() {}
+    static __objectId = 0;
+    static inject(target) {
+        target.__objectId = function () {
+            this.____newId = webpackTestPlugin.__objectId++;
+            this.__objectId = function () {
+                return this.____newId;
+            };
+            return this.____newId;
+        };
+    }
     /**
      *
      * @param {Compiler} compiler
@@ -58,9 +62,7 @@ module.exports = class webpackTestPlugin {
                         logger.crrun(`${''.padEnd(p1)} CRKEY> ${crKey.padEnd(p2)} > ${'----'.padEnd(p3)}  > ${compilerHook._args != null ? 'args:  ' + compilerHook._args.join(', ') : 'null'}`);
 
                         if (compilerHook._args.includes('compilation')) {
-                            if (!compilation.iDDDDDDDDD) {
-                                compilation.iDDDDDDDDD = generate();
-                            }
+                            webpackTestPlugin.inject(compilation); 
                             Object.keys(compilation.hooks).forEach(function (cnKey, index, array) {
                                 let deprecatedHooks = ['additionalChunkAssets', 'optimizeChunkAssets', 'afterOptimizeChunkAssets', 'normalModuleLoader'];
                                 let noNeeds = ['dependencyReferencedExports'];
@@ -83,10 +85,10 @@ module.exports = class webpackTestPlugin {
                                                 function (module) {
                                                     // console.log(className(module));
                                                     if (className(module) === 'NormalModule') {
-                                                        logger.cnrun(`${''.padEnd(p1)} cnkey> ${cnKey.padEnd(p2)} crkey> ${_crKey.padEnd(p3)} >${className(compilationHook)} ${compilation.iDDDDDDDDD}    > ${compilationHook._args != null ? 'args:  ' + compilationHook._args.join(', ') : 'null'} > ${JSON.stringify(module.type)}`);
+                                                        logger.cnrun(`${''.padEnd(p1)} cnkey> ${cnKey.padEnd(p2)} crkey> ${_crKey.padEnd(p3)} > ${compilation.__objectId()}    > ${compilationHook._args != null ? 'args:  ' + compilationHook._args.join(', ') : 'null'} > ${JSON.stringify(module.type)}`);
                                                         // console.log(module);
                                                     } else {
-                                                        // logger.cnrun(`${''.padEnd(p1)} cnkey> ${cnKey.padEnd(p2)} crkey> ${_crKey.padEnd(p3)} >${className(compilationHook)} ${compilation.iDDDDDDDDD}    > ${compilationHook._args != null ? 'args:  ' + compilationHook._args.join(', ') : 'null'}`);
+                                                        // logger.cnrun(`${''.padEnd(p1)} cnkey> ${cnKey.padEnd(p2)} crkey> ${_crKey.padEnd(p3)} >${className(compilationHook)} ${compilation.__objectId())}    > ${compilationHook._args != null ? 'args:  ' + compilationHook._args.join(', ') : 'null'}`);
                                                     }
                                                 },
                                             );
