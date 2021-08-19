@@ -1,7 +1,20 @@
 import './jqueryextend';
 
-import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTId, getTeacherInfoFromDetailPage, setSession, settings, submit, url } from './common';
+import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTId, getTeacherInfoFromDetailPage, setSession, settings, submit } from './common';
 
+import { config } from './bestteacher_gm_toolbar';
+
+config.onsave = cfg => {
+    // conf = cfg;
+    try {
+        new Function('t', `return ${cfg.load().calcIndicator}`)({});
+    } catch (error) {
+        console.log(error);
+        alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`);
+        return false;
+    }
+    $('#autogetnextpage').text('自动获取' + getAutoNextPagesCount() + '页');
+};
 let maxrate = 0,
     minrate = 99999,
     maxlabel = 0,
@@ -38,7 +51,7 @@ function updateTeacherinfoToUI(jqel, tinfo) {
     jqel.find('.teacher-name').html(
         jqel.find('.teacher-name').html() +
             `<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbupRate}%</label>
-      | <label title='收藏数量'>${tinfo.favoritesCount} </label> `
+      | <label title='收藏数量'>${tinfo.favoritesCount} </label> `,
     );
     // jqel.find(".teacher-age").html(jqel.find(".teacher-age").html() + " | <label title='收藏数量'>" + tinfo.favoritesCount + "</label>");
     jqel.attr('indicator', tinfo.indicator);
@@ -57,8 +70,8 @@ function executeFilters(uifilters) {
         var ret = true;
         if (!isNaN(tinfo.thumbupRate)) ret = tinfo.thumbupRate >= uifilters.rate1 && tinfo.thumbupRate <= uifilters.rate2;
         if (!isNaN(tinfo.label)) ret = tinfo.label >= uifilters.l1 && tinfo.label <= uifilters.l2 && ret;
-        if (!isNaN(tinfo.age)) tinfo.age >= uifilters.age1 && tinfo.age <= uifilters.age2 && ret;
-        if (!isNaN(tinfo.favoritesCount)) tinfo.favoritesCount >= uifilters.fc1 && tinfo.favoritesCount <= uifilters.fc2 && ret;
+        if (!isNaN(tinfo.age)) tinfo.age = uifilters.age1 && tinfo.age <= uifilters.age2 && ret;
+        if (!isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = uifilters.fc1 && tinfo.favoritesCount <= uifilters.fc2 && ret;
         if (ret) {
             if (node.is(':hidden')) {
                 //如果node是隐藏的则显示node元素，否则隐藏
@@ -107,7 +120,7 @@ function getTeacherInfoFromListPageUI(jqel) {
             name,
             batchNumber,
             isfavorite,
-            labels
+            labels,
         };
     } else
         return {
@@ -115,7 +128,7 @@ function getTeacherInfoFromListPageUI(jqel) {
             name,
             batchNumber,
             type,
-            labels
+            labels,
         };
 }
 
@@ -165,8 +178,8 @@ if (settings.isListPage) {
                         sessionStorage.removeItem('selectedTimeSlots');
                         setSession('autoNextPageCount', (remainPages * 0.75).toFixed(0));
                         $(this).dialog('close');
-                    }
-                }
+                    },
+                },
             });
         }
         next();
@@ -207,14 +220,14 @@ if (settings.isListPage) {
                     dateType: 'html',
                     success: function (r) {
                         let jqr = $(r);
-                        let tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
+                        tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
                         jqr.remove();
                         updateTeacherinfoToUI(jqel, tinfo);
                         GM_setValue(tinfokey, tinfo);
                     },
                     error: function (data) {
                         console.log('xhr error when getting teacher ' + JSON.stringify(jqel) + ',error msg:' + JSON.stringify(data));
-                    }
+                    },
                 }).always(function () {
                     while (Date.now() - start < 600) {
                         continue;
@@ -269,11 +282,11 @@ function addCheckbox(val, lbl, group) {
         type: 'checkbox',
         id: 'cb' + id,
         value: val,
-        name: group
+        name: group,
     }).appendTo(container);
     $('<label />', {
         for: 'cb' + id,
-        text: lbl ? lbl : val
+        text: lbl ? lbl : val,
     }).appendTo(container);
 }
 

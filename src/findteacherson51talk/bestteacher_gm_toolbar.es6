@@ -58,17 +58,7 @@ const config = GM_config([
     },
 ]);
 let conf = config.load();
-config.onsave = cfg => {
-    conf = cfg;
-    try {
-        new Function('t', `return ${conf.calcIndicator}`)({});
-    } catch (error) {
-        console.log(error);
-        alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`);
-        return false;
-    }
-    $('#autogetnextpage').text('自动获取' + getAutoNextPagesCount() + '页');
-};
+
 GM_registerMenuCommand('设置', config.setup);
 
 function GetCalculatorIndicator() {
@@ -88,4 +78,4 @@ function GetCalculatorIndicator() {
 }
 
 export let indicatorCalculator = GetCalculatorIndicator();
-export { conf };
+export { conf, config };
