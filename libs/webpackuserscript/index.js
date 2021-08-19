@@ -112,7 +112,9 @@ module.exports = class WebpackUserscript {
                             const basename = filename.endsWith('.user.js') ? path.basename(filename, '.user.js') : filename.endsWith('.js') ? path.basename(filename, '.js') : filename;
                             const outputFile = this.options.renameExt && !filename.endsWith('.user.js') ? filename.replace(/\.js$/, '') + '.user.js' : filename;
                             const metaFile = basename + '.meta.js';
-
+                            /**
+                             * @type {import('./index').DataObject}
+                             */
                             const data = {
                                 hash,
                                 chunkHash: chunk.hash,
@@ -126,7 +128,7 @@ module.exports = class WebpackUserscript {
                                 ...packageInfoObj,
                             };
                             /**
-                             * @type WebpackUserscript.HeaderObject
+                             * @type {import('./index').HeaderObject}
                              */
                             const tplHeaderObj = headerProvider(data);
                             if (!tplHeaderObj.downloadURL && this.options.downloadBaseUrl) {

@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 const winston = require('winston');
 const { format, transports } = winston;
 // const { combine, metadata, timestamp, label, prettyPrint, printf, colorize, padLevels } = format;
 require('winston-daily-rotate-file');
 
-const { configs } = require('triple-beam');
+const { configs }  =require ('triple-beam');
 
 const customConfigs = {
     levels: {

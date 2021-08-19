@@ -1,3 +1,5 @@
+
+
 // ==UserScript==
 // @name Who's the Best Teacher
 // @version 2021.4.15001
@@ -31,6 +33,7 @@ import './detailpage';
 import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from './listpage';
 import { configExprMilliseconds, getTId, setSession, settings, submit } from './common';
 
+import {$} from 'jquery'
 import { conf } from './bestteacher_gm_toolbar';
 
 (function () {
@@ -53,6 +56,41 @@ import { conf } from './bestteacher_gm_toolbar';
         $('.s-t-content.f-cb').empty().append(sortEle);
     };
 
+    function getCatchedTeachers() {
+        let teachers = [];
+        $.each(GM_listValues(), function (i, item) {
+            if (item.startsWith('tinfo-')) {
+                let t = GM_getValue(item);
+                t.tid = item.slice(6, item.length);
+                teachers.push(t);
+            }
+        });
+        let indexs = {};
+        teachers = teachers
+            .sort(function (t1, t2) {
+                if (t1.indicator == t2.indicator) return t1.favoritesCount > t2.favoritesCount ? -1 : 1;
+                return t1.indicator > t2.indicator ? -1 : 1;
+            })
+            .map((val, idx) => {
+                if (isNaN(indexs[val.type])) {
+                    indexs[val.type] = 1;
+                } else {
+                    indexs[val.type] += 1;
+                }
+                val.rank = indexs[val.type];
+                return val;
+            });
+        return teachers;
+    }
+    function getRankHtml(t) {
+        if (t) {
+            let colorif = '';
+            if (t.rank <= conf.markRankRed) {
+                colorif = "style = 'color:red'";
+            }
+            return `<label title='在同类别教师中的排名' ${colorif}> ${t.rank}名</label>`;
+        }
+    }
     if (settings.isListPage || settings.isDetailPage) {
         //构建插件信息
         submit(function (next) {
@@ -322,32 +360,6 @@ import { conf } from './bestteacher_gm_toolbar';
                     icon: false,
                 });
 
-                function getCatchedTeachers() {
-                    let teachers = [];
-                    $.each(GM_listValues(), function (i, item) {
-                        if (item.startsWith('tinfo-')) {
-                            let t = GM_getValue(item);
-                            t.tid = item.slice(6, item.length);
-                            teachers.push(t);
-                        }
-                    });
-                    let indexs = {};
-                    teachers = teachers
-                        .sort(function (t1, t2) {
-                            if (t1.indicator == t2.indicator) return t1.favoritesCount > t2.favoritesCount ? -1 : 1;
-                            return t1.indicator > t2.indicator ? -1 : 1;
-                        })
-                        .map((val, idx) => {
-                            if (isNaN(indexs[val.type])) {
-                                indexs[val.type] = 1;
-                            } else {
-                                indexs[val.type] += 1;
-                            }
-                            val.rank = indexs[val.type];
-                            return val;
-                        });
-                    return teachers;
-                }
                 $('#tabs').tabs({
                     active: '#tabs-2',
                     activate: function (event, ui) {
@@ -401,7 +413,7 @@ import { conf } from './bestteacher_gm_toolbar';
                                         width: 125,
                                         sorttype: 'string',
                                         formatter: function formatter(value, options, rData) {
-                                            return "<a href='http://www.51talk.com/TeacherNew/info/" + rData['tid'] + "' target='_blank' style='color:blue'>" + (!!value ? value : rData['tid']) + '</a>';
+                                            return "<a href='http://www.51talk.com/TeacherNew/info/" + rData['tid'] + "' target='_blank' style='color:blue'>" + (value ? value : rData['tid']) + '</a>';
                                         },
                                     }, //
                                     {
@@ -444,7 +456,6 @@ import { conf } from './bestteacher_gm_toolbar';
                                                 } else {
                                                     return (d / 86400000).toFixed(0) + '天';
                                                 }
-                                                return d;
                                             } else return 'na';
                                         },
                                     },
@@ -504,15 +515,6 @@ import { conf } from './bestteacher_gm_toolbar';
             }
         });
 
-        function getRankHtml(t) {
-            if (t) {
-                let colorif = '';
-                if (t.rank <= conf.markRankRed) {
-                    colorif = "style = 'color:red'";
-                }
-                return `<label title='在同类别教师中的排名' ${colorif}> ${t.rank}名</label>`;
-            }
-        }
         //弹出信息框
         submit(function (next) {
             $('.s-t-list').before($('.s-t-page').prop('outerHTML'));

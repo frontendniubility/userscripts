@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2021.8.506102140
+// @version     2021.8.517144805
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -16,4 +16,5 @@
     }, c = function c(_c) {
         return _c;
     }, r = a(c(1));
+    c(2);
 })();
