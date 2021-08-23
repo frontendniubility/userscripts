@@ -3,10 +3,8 @@ var { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 
 var rulesconfig = require('./webpack.common.rules');
-var { webpackUserscript } = require('./webpack.userscripts');
 
-const { p, stringIncludesAny, entries } = require('./webpack.common');
-const logger = require('./log').loggers.get('webpack');
+const { entries } = require('./webpack.common');
 module.exports = merge(rulesconfig, {
     mode: 'production', //env.NODE_ENV === 'development' ? 'development' : 'production',
     optimization: {

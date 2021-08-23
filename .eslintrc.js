@@ -3,6 +3,7 @@ module.exports = {
         browser: true,
         es2021: true,
         commonjs: true,
+        typescript: true,
     },
     extends: ['eslint:recommended', 'plugin:vue/essential'],
     parserOptions: {
@@ -11,7 +12,7 @@ module.exports = {
     },
     plugins: ['vue'],
     rules: {
-        "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
+        'no-unused-vars': ['error', { vars: 'all', args: 'none', ignoreRestSiblings: false }],
     },
     globals: {
         // "$": "writable",
@@ -22,6 +23,8 @@ module.exports = {
         GM_deleteValue: 'readonly',
         GM_registerMenuCommand: 'readonly',
         GM_addStyle: 'readonly',
-        Pace:'readonly'
+        Pace: 'readonly',
     },
+    // parser: 'eslint',
+    parser: '@typescript-eslint/parser',
 };

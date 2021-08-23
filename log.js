@@ -4,7 +4,7 @@ const { format, transports } = winston;
 // const { combine, metadata, timestamp, label, prettyPrint, printf, colorize, padLevels } = format;
 require('winston-daily-rotate-file');
 
-const { configs }  =require ('triple-beam');
+const { configs } = require('triple-beam');
 
 const customConfigs = {
     levels: {
@@ -47,7 +47,7 @@ let logopt = {
         }),
         format.padLevels({
             levels: Object.keys(combinedConfigs.levels).reduce((acc, level) => {
-                if (level == 'cnrun') acc[level] = 1;
+                if (level == 'cnrun') acc[level] = 0;
                 else acc[level] = 1;
                 return acc;
             }, {}),

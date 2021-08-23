@@ -1,26 +1,23 @@
 {
   "arrowParens": "avoid",
   "bracketSpacing": true,
-  "disableLanguages": [
-    "vue"
-  ],
-  "enableDebugLogs": true,
+  "disableLanguages": [],
+  "enableDebugLogs": false,
   "endOfLine": "auto",
   "eslintIntegration": false,
   "htmlWhitespaceSensitivity": "ignore",
   "ignorePath": ".prettierignore",
   "jsxBracketSameLine": false,
   "jsxSingleQuote": false,
-  "parser": "babel",
   "printWidth": 800,
   "proseWrap": "always",
   "requireConfig": true,
   "semi": true,
   "singleQuote": true,
-  "stylelintIntegration": false,
+  "stylelintIntegration": true,
   "tabWidth": 4,
   "trailingComma": "all",
-  "tslintIntegration": false,
-  "useTabs": false,
+  "tslintIntegration": true,
+  "useTabs": true,
   "withNodeModules": true
 }
