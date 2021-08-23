@@ -1,26 +1,12 @@
-import {
+import { TeacherInfo, TeacherInfoBase } from "./common";
+import "./jqueryextend";
 
-  TeacherInfo,
-  TeacherInfoBase,
+///88
+export const maxrate: number, minrate: number, maxlabel: number, minlabel: number, maxfc: number, minfc: number, maxage: number, minage: number;
 
-} from './common';
-import './jqueryextend';
+export function getLeftPageCount(): number;
 
-
-export const maxrate: Number,
-  minrate: Number,
-  maxlabel: Number,
-  minlabel: Number,
-  maxfc: Number,
-  minfc: Number,
-  maxage: Number,
-  minage: Number;
-
-
-
-export function getLeftPageCount(): number
-
-export function getAutoNextPagesCount(): number
+export function getAutoNextPagesCount(): number;
 
 export function updateTeacherinfoToUI(jqel: JQuery<HTMLDivElement>, tinfo: TeacherInfo): void;
 
@@ -28,21 +14,21 @@ export function executeFilters(uifilters: TypeOfUiFilter): void;
 
 export function getUiFilters(): TypeOfUiFilter;
 declare interface TypeOfUiFilter {
-  l1: Number,
-  l2: Number,
-  rate1: Number,
-  rate2: Number,
-  age1: Number,
-  age2: Number,
-  fc1: Number,
-  fc2: Number,
+	l1: number;
+	l2: number;
+	rate1: number;
+	rate2: number;
+	age1: number;
+	age2: number;
+	fc1: number;
+	fc2: number;
 }
-/** 
- * @param {JQuery<Element>} jqel 
+/**
+ * @param {JQuery<Element>} jqel
  * @returns {TeacherInfoList}
  */
-export function getTeacherInfoFromListPageUI(jqel: JQuery<HTMLDivElement>): TeacherInfoBase
+export function getTeacherInfoFromListPageUI(jqel: JQuery<HTMLDivElement>): TeacherInfoBase;
 
-export function isStopShowboxAndAutoGetNextTimeTeachers(): boolean
+export function isStopShowboxAndAutoGetNextTimeTeachers(): boolean;
 
-export function addCheckbox(val: String, lbl: string, group: string): void;
+export function addCheckbox(val: string, lbl: string, group: string): void;
