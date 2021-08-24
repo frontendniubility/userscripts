@@ -38,14 +38,22 @@ function getAutoNextPagesCount() {
 }
 
 function updateTeacherinfoToUI(jqel, tinfo) {
-	if (tinfo.label > maxlabel) maxlabel = tinfo.label;
-	if (tinfo.label < minlabel) minlabel = tinfo.label;
-	if (tinfo.favoritesCount > maxfc) maxfc = tinfo.favoritesCount;
-	if (tinfo.favoritesCount < minfc) minfc = tinfo.favoritesCount;
-	if (tinfo.thumbupRate > maxrate) maxrate = tinfo.thumbupRate;
-	if (tinfo.thumbupRate < minrate) minrate = tinfo.thumbupRate;
-	if (tinfo.age > maxage) maxage = tinfo.age ? tinfo.age : 100;
-	if (tinfo.age < minage) minage = tinfo.age ? tinfo.age : 0;
+	if (!isNaN(tinfo.label)) {
+		if (tinfo.label > maxlabel) maxlabel = tinfo.label;
+		if (tinfo.label < minlabel) minlabel = tinfo.label;
+	}
+	if (!isNaN(tinfo.favoritesCount)) {
+		if (tinfo.favoritesCount > maxfc) maxfc = tinfo.favoritesCount;
+		if (tinfo.favoritesCount < minfc) minfc = tinfo.favoritesCount;
+	}
+	if (!isNaN(tinfo.thumbupRate)) {
+		if (tinfo.thumbupRate > maxrate) maxrate = tinfo.thumbupRate;
+		if (tinfo.thumbupRate < minrate) minrate = tinfo.thumbupRate;
+	}
+	if (!isNaN(tinfo.age)) {
+		if (tinfo.age > maxage) maxage = tinfo.age;
+		if (tinfo.age < minage) minage = tinfo.age;
+	}
 
 	jqel.attr("teacherinfo", JSON.stringify(tinfo));
 	jqel.find(".teacher-name").html(
@@ -70,8 +78,8 @@ function executeFilters(uifilters) {
 		var ret = true;
 		if (!isNaN(tinfo.thumbupRate)) ret = tinfo.thumbupRate >= uifilters.rate1 && tinfo.thumbupRate <= uifilters.rate2;
 		if (!isNaN(tinfo.label)) ret = tinfo.label >= uifilters.l1 && tinfo.label <= uifilters.l2 && ret;
-		if (!isNaN(tinfo.age)) tinfo.age = uifilters.age1 && tinfo.age <= uifilters.age2 && ret;
-		if (!isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = uifilters.fc1 && tinfo.favoritesCount <= uifilters.fc2 && ret;
+		if (!isNaN(tinfo.age)) ret = tinfo.age >= uifilters.age1 && tinfo.age <= uifilters.age2 && ret;
+		if (!isNaN(tinfo.favoritesCount)) ret = tinfo.favoritesCount >= uifilters.fc1 && tinfo.favoritesCount <= uifilters.fc2 && ret;
 		if (ret) {
 			if (node.is(":hidden")) {
 				//如果node是隐藏的则显示node元素，否则隐藏
