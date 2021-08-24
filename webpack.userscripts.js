@@ -107,5 +107,5 @@ let wpus = new WebpackUserscript({
 });
 
 module.exports = {
-	plugins: [wpus, new webpacktestplugin()],
+	plugins: [wpus/* , new webpacktestplugin() */],
 };

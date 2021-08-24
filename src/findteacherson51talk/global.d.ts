@@ -12,12 +12,12 @@ declare global {
 	}
 
 	interface Array<T> {
-		clean<T>(deleteValue: T): Array<T>;
+		clean(deleteValue: T): Array<T>;
 	}
-	interface number {
+	interface Number {
 		toString(num: number): number;
 	}
-	interface string {
+	interface String {
 		toFloat(): number;
 		toInt(): number;
 		/**

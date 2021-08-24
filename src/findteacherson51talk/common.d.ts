@@ -38,31 +38,20 @@ declare interface TypeOfSetting {
  */
 export function getTId(): string;
 
+declare type Callback<T> = (key: string) => T;
+
 /**
  * 获取sessionStorage中存储值，如果不存在则设置
  * @param key
  * @param func
  */
-export function getOrSetSession(key: string, func: string): string;
-
-declare type Callback<T> = (key: string) => T;
-
-/**
- *
- * @param key
- * @param func
- */
-export function getorAddSession<T>(key: string, func: Callback<T> | T): T;
-
-/**
- * 暂停当前线程delay毫秒
- */
-declare function sleep(delay: number): void;
+export function getSession<T>(key: string, funcDefaultValue: Callback<T> | T): T;
+export function setSession<T>(key: string, funcValue: Callback<T> | T): void;
 
 /**
  * 获取排序标识的编号
  */
-export function getBatchNumber(): string;
+export function getBatchNumber(): number;
 
 /**
  * 获取教师信息存储标识 tinfo- + gettid()
@@ -81,7 +70,7 @@ export function getLabelCount(jqLabelElement: JQuery<HTMLLabelElement>): number;
  * @param  {JQuery<HTMLSpanElement>} jqLabelSpanList the all html page elements
  * @returns  {TypeOfLabels}
  */
-export function getLabelByItems(jqLabelSpanList): TypeOfLabels;
+export function getLabelByItems(jqLabelSpanList: JQuery<HTMLSpanElement>): TypeOfLabels;
 
 /*********************** */
 

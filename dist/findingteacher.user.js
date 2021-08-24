@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Who's the Best Teacher
-// @version     2021.8.519153503
+// @version     2021.8.524094107
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -28,7 +28,7 @@
 
 (() => {
     var __webpack_modules__ = {
-        99: () => {
+        564: () => {
             Pace.Options = {
                 ajax: false,
                 document: false,
@@ -688,7 +688,7 @@
                 return obj;
             }
         });
-        var pacesetup = __webpack_require__(99);
+        var pacesetup = __webpack_require__(564);
         function _slicedToArray(arr, i) {
             return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || gm_config_unsupportedIterableToArray(arr, i) || _nonIterableRest();
         }
@@ -943,14 +943,14 @@
             return f;
         }
         var indicatorCalculator = GetCalculatorIndicator();
-        var url = window.location.href.toLocaleLowerCase();
+        var currentURL = window.location.href.toLocaleLowerCase();
         var settings = {
-            isCoursePage: url.includes("study_center"),
-            isDetailPage: url.includes("teachernew"),
-            isListPage: url.includes("reservenew"),
+            isCoursePage: currentURL.includes("study_center"),
+            isDetailPage: currentURL.includes("teachernew"),
+            isListPage: currentURL.includes("reservenew"),
             pageMaxCount: conf.pageMaxCount,
-            tid: url.match(/(t\d+)/g) ? url.match(/(t\d+)/g)[0] : null,
-            url
+            tid: currentURL.match(/(t\d+)/g) ? currentURL.match(/(t\d+)/g)[0] : null,
+            url: currentURL
         };
         var configExprMilliseconds = 36e5 * conf.tInfoExprHours;
         var num = /[0-9]*/g;
@@ -976,15 +976,9 @@
                 sessionStorage.setItem(key, JSON.stringify(data));
             }
         }
-        function sleep(delay) {
-            var start = Date.now();
-            while (Date.now() - start < delay) {
-                continue;
-            }
-        }
         function getBatchNumber() {
             var cur = Date.now();
-            if (conf.newBatcherKeyMinutes <= 0) cur;
+            if (conf.newBatcherKeyMinutes <= 0) return cur;
             var saved = parseInt(GM_getValue("_getBatchNumber"));
             if (!saved || Date.now() - saved > conf.newBatcherKeyMinutes * 6e5) {
                 GM_setValue("_getBatchNumber", cur);
@@ -1037,8 +1031,8 @@
                 return meta;
             }), {});
         }
-        function getTeacherInfoFromDetailPage() {
-            var tinfo_saved = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}, jqr = arguments.length > 1 ? arguments[1] : undefined, tinfo_latest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        function getTeacherInfoFromDetailPage(tinfo_saved, jqr) {
+            var tinfo_latest = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
             jqr.find(".teacher-name-tit").prop("innerHTML", (function(i, val) {
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
@@ -1317,7 +1311,7 @@
                 text: lbl ? lbl : val
             }).appendTo(container);
         }
-        var code = '<div id="filterdialog" title="Teacher Filter"> <div id="tabs"> <div> <ul> <li><a href="#tabs-1">Search Teachers</a></li> <li><a href="#tabs-2">Sorted Teachers</a></li> </ul> <br/> <div id="filterButtons"> <div id="buttons" style="text-align:center"> <button id="asc" title="当前为降序，点击后按升序排列">升序</button> <button id="desc" title="当前为升序，点击进行降序排列" style="display:none">降序</button> <input id="tInfoExprHours" title="缓存过期时间（小时）"> <button title="清空缓存，并重新搜索">清除缓存</button> <a>报告BUG</a> <a>帮助</a> </div> <div id="buttons1" style="text-align:center"> <div id="timesmutipulecheck"></div> <button>反选时间段</button> <button id="autogettodaysteachers" title="自动获取上述选择时段的全部教师并缓存">获取选定时段老师</button> </div> </div> </div> <div id="tabs-1"> 当前可选<span id="tcount"></span>位,被折叠<span id="thidecount"></span>位。<br/> 有效经验值 <span id="_tLabelCount"></span><br/> <div id="tlabelslider"></div> 收藏数 <span id="_tfc"></span><br/> <div id="fcSlider"></div> 好评率 <span id="_thumbupRate"></span><br/> <div id="thumbupRateslider"></div> 年龄 <span id="_tAge"></span><br/> <div id="tAgeSlider"></div> </div> <div id="tabs-2"> <table id="teachertab"> <caption></caption> <th id="vwswslwo"></th> </table> <div id="pager5"></div> </div> </div> </div>';
+        var code = '<div id="filterdialog" title="Teacher Filter"> <div id="tabs"> <div> <ul> <li><a href="#tabs-1">Search Teachers</a></li> <li><a href="#tabs-2">Sorted Teachers</a></li> </ul> <br/> <div id="filterButtons"> <div id="buttons" style="text-align:center"> <button id="asc" title="当前为降序，点击后按升序排列">升序</button> <button id="desc" title="当前为升序，点击进行降序排列" style="display:none">降序</button> <input id="tInfoExprHours" title="缓存过期时间（小时）"/> <button title="清空缓存，并重新搜索">清除缓存</button> <a>报告BUG</a> <a>帮助</a> </div> <div id="buttons1" style="text-align:center"> <div id="timesmutipulecheck"></div> <button>反选时间段</button> <button id="autogettodaysteachers" title="自动获取上述选择时段的全部教师并缓存">获取选定时段老师</button> </div> </div> </div> <div id="tabs-1"> 当前可选 <span id="tcount"></span> 位,被折叠 <span id="thidecount"></span> 位。 <br/> 有效经验值 <span id="_tLabelCount"></span> <br/> <div id="tlabelslider"></div> 收藏数 <span id="_tfc"></span> <br/> <div id="fcSlider"></div> 好评率 <span id="_thumbupRate"></span> <br/> <div id="thumbupRateslider"></div> 年龄 <span id="_tAge"></span> <br/> <div id="tAgeSlider"></div> </div> <div id="tabs-2"> <table id="teachertab"> <caption></caption> <th id="vwswslwo"></th> </table> <div id="pager5"></div> </div> </div> </div> ';
         const pluginUITemplate = code;
         var asc = function asc(a, b) {
             var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
@@ -1469,12 +1463,12 @@
                         var keys = GM_listValues();
                         $.each(keys, (function(i, item) {
                             var title = "正在删除第".concat(i, "个教师缓存");
-                            common_submit((function(next) {
+                            common_submit((function(next1) {
                                 try {
                                     $("title").html(title);
                                     GM_deleteValue(item);
                                 } finally {
-                                    next();
+                                    next1();
                                 }
                             }));
                         }));
