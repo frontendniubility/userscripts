@@ -1,5 +1,4 @@
 {
-  
   "name": "userscripts",
   "version": "0.0.1",
   "description": "tampermonkey scripts",
@@ -87,6 +86,8 @@
     "pnpm": "^6.14.2",
     "prettier": "^2.3.2",
     "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1",
+    "prettier-stylelint": "^0.4.2",
     "sass-loader": "^12.1.0",
     "scriptjs": "^2.5.9",
     "semantic-release": "^17.4.4",
@@ -95,6 +96,12 @@
     "standard": "^16.0.3",
     "standardx": "^7.0.0",
     "style-loader": "^3.2.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-css-modules": "^2.2.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recess-order": "^2.5.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-scss": "^3.20.1",
     "tap-difflet": "^0.7.2",
     "tape": "^5.3.1",
     "ts-standard": "^10.0.0",
@@ -136,7 +143,9 @@
     "watchvue": "webpack --config webpack.config.vue.js --watch",
     "buildvue": "webpack --config webpack.config.vue.js",
     "startvue": "webpack serve --config webpack.config.vue.js --progress --open --color",
-    "buildreadme": "node build-readme.js"
+    "buildreadme": "node build-readme.js",
+    "fix-code": "prettier-eslint --write 'src/**/*.{js,jsx}' ",
+    "fix-styles": "prettier-stylelint --write 'src/**/*.{css,scss}' "
   },
   "repository": {
     "type": "git",

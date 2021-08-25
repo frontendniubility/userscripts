@@ -80,8 +80,6 @@ function calcIndicator(tinfo) {
 	if (isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = 0;
 
 	return indicatorCalculator(tinfo);
-	// return eval('(function(t){return Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount})(tinfo)');
-	//return Math.ceil((tinfo.label * tinfo.thumbupRate) / 100) + tinfo.favoritesCount
 }
 
 /**

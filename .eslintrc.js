@@ -45,17 +45,11 @@ module.exports = {
 		prettierPlugins: "readonly",
 		prettier: "readonly",
 	},
-
+	parser: "babel-eslint",
 	overrides: [
 		{
 			files: ["**/*.ts", "**/*.tsx"],
-			env: {
-				browser: true,
-				es2021: true,
-				commonjs: true,
-				jquery: true,
-				greasemonkey: true,
-			},
+		
 			extends: [
 				"eslint:recommended", //
 				"plugin:@typescript-eslint/recommended",

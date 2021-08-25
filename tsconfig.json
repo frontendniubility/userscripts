@@ -1,10 +1,14 @@
 {
 	"compilerOptions": {
+		"target": "es5",
 
+		"removeComments": true,
+
+		"outDir": "./dist",
+		"watch": true,
 		"allowJs": false,
 		"checkJs": false,
 
-		"outDir": "/dist",
 		"rootDir": "/",
 		"strict": true,
 		// "esMoudleInterop": true,
@@ -12,11 +16,12 @@
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"esModuleInterop": true,
-		"target": "esnext",
 
 		"declaration": true,
 		"sourceMap": true
 	},
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules", "**/__tests__/*"]
+	"exclude": ["node_modules", "**/__tests__/*"],
+
+	"compileOnSave": true
 }
