@@ -1,7 +1,9 @@
 import { getTeacherInfoFromDetailPage, getinfokey, settings, submit } from "./common";
 
 /**
- *
+ * @typedef {import('./common').TeacherInfo} TeacherInfo
+ * 
+/**
  *
  * @param {JQuery<Element>} jqr
  */

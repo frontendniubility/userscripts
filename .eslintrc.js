@@ -49,7 +49,7 @@ module.exports = {
 	overrides: [
 		{
 			files: ["**/*.ts", "**/*.tsx"],
-		
+
 			extends: [
 				"eslint:recommended", //
 				"plugin:@typescript-eslint/recommended",
@@ -57,10 +57,6 @@ module.exports = {
 			globals: { Pace: "readonly" },
 
 			parserOptions: {
-				ecmaVersion: 12,
-				sourceType: "module",
-				shouldFix: true,
-				node: true,
 				project: "./tsconfig.json",
 			},
 			plugins: ["@typescript-eslint"],
