@@ -6,8 +6,10 @@ module.exports = {
 		commonjs: true,
 		jquery: true,
 		greasemonkey: true,
+		node: true,
 	},
-	ignorePatterns: ["node_modules", "dist"],
+
+	ignorePatterns: ["/node_modules", "dist"],
 	extends: [
 		// add more generic rulesets here, such as:
 		// 'standard',
@@ -19,10 +21,9 @@ module.exports = {
 		"prettier",
 	],
 	parserOptions: {
-		ecmaVersion: 12,
+		ecmaVersion: 2015,
 		sourceType: "module",
-		shouldFix: true,
-		node: true,
+		parser: "babel-eslint",
 	},
 	plugins: ["vue"],
 	rules: {
@@ -37,7 +38,7 @@ module.exports = {
 		prettierPlugins: "readonly",
 		prettier: "readonly",
 	},
-	parser: "babel-eslint",
+
 	overrides: [
 		{
 			files: ["**/*.ts", "**/*.tsx"],
