@@ -7,7 +7,7 @@ module.exports = {
 		jquery: true,
 		greasemonkey: true,
 	},
-	ignorePatterns: ["node_modules", "build", "coverage", "dist"],
+	ignorePatterns: ["node_modules", "dist"],
 	extends: [
 		// add more generic rulesets here, such as:
 		// 'standard',
@@ -30,14 +30,6 @@ module.exports = {
 	},
 
 	globals: {
-		// "$": "writable",
-		// $: "readonly",
-		// GM_listValues: "readonly",
-		// GM_getValue: "readonly",
-		// GM_setValue: "readonly",
-		// GM_deleteValue: "readonly",
-		// GM_registerMenuCommand: "readonly",
-		// GM_addStyle: "readonly",
 		Pace: "readonly",
 		GM_config: "readonly",
 		waitForElems: "readonly",
@@ -54,7 +46,6 @@ module.exports = {
 				"eslint:recommended", //
 				"plugin:@typescript-eslint/recommended",
 			],
-			globals: { Pace: "readonly" },
 
 			parserOptions: {
 				project: "./tsconfig.json",

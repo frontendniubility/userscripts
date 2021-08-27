@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Who's the Best Teacher
-// @version     2021.8.525160757
+// @version     2021.8.526163644
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -491,98 +491,56 @@
                 return true;
             }
         };
-        function _toConsumableArray(arr) {
-            return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-        }
-        function _nonIterableSpread() {
-            throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-        }
-        function _unsupportedIterableToArray(o, minLen) {
-            if (!o) return;
-            if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-            var n = Object.prototype.toString.call(o).slice(8, -1);
-            if (n === "Object" && o.constructor) n = o.constructor.name;
-            if (n === "Map" || n === "Set") return Array.from(o);
-            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-        }
-        function _iterableToArray(iter) {
-            if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-        }
-        function _arrayWithoutHoles(arr) {
-            if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-        }
-        function _arrayLikeToArray(arr, len) {
-            if (len == null || len > arr.length) len = arr.length;
-            for (var i = 0, arr2 = new Array(len); i < len; i++) {
-                arr2[i] = arr[i];
-            }
-            return arr2;
-        }
-        var getPaddedComp = function getPaddedComp(comp) {
-            var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+        let getPaddedComp = (comp, len = 2) => {
             if (len < 1) len = 1;
             comp = "" + comp;
-            var paddedLen = len - ("" + comp).length;
+            let paddedLen = len - ("" + comp).length;
             if (paddedLen > 0) {
-                return [].concat(_toConsumableArray(Array(paddedLen).fill("0")), _toConsumableArray(comp)).join("");
+                return [ ...Array(paddedLen).fill("0"), ...comp ].join("");
             } else return comp;
-        }, o = {
-            "[y|Y]{4}": function yY4(date) {
-                return date.getFullYear();
-            },
-            "[y|Y]{2}": function yY2(date) {
-                return date.getFullYear().toString().slice(2);
-            },
-            MM: function MM(date) {
-                return getPaddedComp(date.getMonth() + 1);
-            },
-            M: function M(date) {
-                return date.getMonth() + 1;
-            },
-            "[d|D]{2}": function dD2(date) {
-                return getPaddedComp(date.getDate());
-            },
-            "[d|D]{1}": function dD1(date) {
-                return date.getDate();
-            },
-            "h{2}": function h2(date) {
-                return getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours());
-            },
-            "h{1}": function h1(date) {
-                return date.getHours() > 12 ? date.getHours() % 12 : date.getHours();
-            },
-            "H{2}": function H2(date) {
-                return getPaddedComp(date.getHours());
-            },
-            "H{1}": function H1(date) {
-                return date.getHours();
-            },
-            "m{2}": function m2(date) {
-                return getPaddedComp(date.getMinutes());
-            },
-            "m{1}": function m1(date) {
-                return date.getMinutes();
-            },
-            "s+": function s(date) {
-                return getPaddedComp(date.getSeconds());
-            },
-            "f+": function f(date) {
-                return getPaddedComp(date.getMilliseconds(), 3);
-            },
-            "f{1}": function f1(date) {
-                return getPaddedComp(date.getMilliseconds(), 0);
-            },
-            "b+": function b(date) {
-                return date.getHours() >= 12 ? "PM" : "AM";
-            }
+        }, formatters = {
+            "[y|Y]{4}": date => date.getFullYear(),
+            "[y|Y]{2}": date => date.getFullYear().toString().slice(2),
+            MM: date => getPaddedComp(date.getMonth() + 1),
+            M: date => date.getMonth() + 1,
+            "[d|D]{2}": date => getPaddedComp(date.getDate()),
+            "[d|D]{1}": date => date.getDate(),
+            "h{2}": date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
+            "h{1}": date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
+            "H{2}": date => getPaddedComp(date.getHours()),
+            "H{1}": date => date.getHours(),
+            "m{2}": date => getPaddedComp(date.getMinutes()),
+            "m{1}": date => date.getMinutes(),
+            "s+": date => getPaddedComp(date.getSeconds()),
+            "f+": date => getPaddedComp(date.getMilliseconds(), 3),
+            "f{1}": date => getPaddedComp(date.getMilliseconds(), 0),
+            "b+": date => date.getHours() >= 12 ? "PM" : "AM"
+        }, formatters1 = {
+            [/([y|Y]{4})/]: date => date.getFullYear(),
+            [/([y|Y]{2})/]: date => date.getFullYear().toString().slice(2),
+            [/(MM)/]: date => getPaddedComp(date.getMonth() + 1),
+            [/(M)/]: date => date.getMonth() + 1,
+            [/([d|D]{2})/]: date => getPaddedComp(date.getDate()),
+            [/([d|D]{1})/]: date => date.getDate(),
+            [/(h{2})/]: date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
+            [/(h{1})/]: date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
+            [/(H{2})/]: date => getPaddedComp(date.getHours()),
+            [/(H{1})/]: date => date.getHours(),
+            [/(m{2})/]: date => getPaddedComp(date.getMinutes()),
+            [/(m{1})/]: date => date.getMinutes(),
+            [/(s+)/]: date => getPaddedComp(date.getSeconds()),
+            [/(f+)/]: date => getPaddedComp(date.getMilliseconds(), 3),
+            [/(f{1})/]: date => getPaddedComp(date.getMilliseconds(), 0),
+            [/(b+)/]: date => date.getHours() >= 12 ? "PM" : "AM"
         };
+        Date.prototype._toString = Date.prototype.toString;
         $.extend(Date.prototype, {
             toString: function toString(format) {
-                if (!format) return this.toLocaleDateString();
+                if (!format) return this._toString();
                 var formattedDate = format;
-                for (var k in o) {
+                for (var k in formatters) {
                     if (new RegExp("(" + k + ")").test(format)) {
-                        formattedDate = formattedDate.replace(RegExp.$1, o[k](this));
+                        formattedDate = formattedDate.replace(RegExp.$1, formatters[k](this));
                     }
                 }
                 return formattedDate;
@@ -690,20 +648,20 @@
         });
         var pacesetup = __webpack_require__(564);
         function _slicedToArray(arr, i) {
-            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || gm_config_unsupportedIterableToArray(arr, i) || _nonIterableRest();
+            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
         }
         function _nonIterableRest() {
             throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
         }
-        function gm_config_unsupportedIterableToArray(o, minLen) {
+        function _unsupportedIterableToArray(o, minLen) {
             if (!o) return;
-            if (typeof o === "string") return gm_config_arrayLikeToArray(o, minLen);
+            if (typeof o === "string") return _arrayLikeToArray(o, minLen);
             var n = Object.prototype.toString.call(o).slice(8, -1);
             if (n === "Object" && o.constructor) n = o.constructor.name;
             if (n === "Map" || n === "Set") return Array.from(o);
-            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return gm_config_arrayLikeToArray(o, minLen);
+            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
         }
-        function gm_config_arrayLikeToArray(arr, len) {
+        function _arrayLikeToArray(arr, len) {
             if (len == null || len > arr.length) len = arr.length;
             for (var i = 0, arr2 = new Array(len); i < len; i++) {
                 arr2[i] = arr[i];
