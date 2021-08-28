@@ -39,6 +39,16 @@
             "date": 1629858714688,
             "name": "logs\\2021-Aug-25\\webpacktest-2021-Aug-25.log",
             "hash": "6a2d368b3b15f50ca7bba7aa0105e46b"
+        },
+        {
+            "date": 1629943139950,
+            "name": "logs\\2021-Aug-26\\webpacktest-2021-Aug-26.log",
+            "hash": "57f69ef72fcd8c3d5914362ccc4e163e"
+        },
+        {
+            "date": 1630028078518,
+            "name": "logs\\2021-Aug-27\\webpacktest-2021-Aug-27.log",
+            "hash": "1ce3a71265042d8ad23bf4428133b402"
         }
     ]
 }

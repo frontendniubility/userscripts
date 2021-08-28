@@ -6,8 +6,10 @@ module.exports = {
 		commonjs: true,
 		jquery: true,
 		greasemonkey: true,
+		node: true,
 	},
-	ignorePatterns: ["node_modules", "build", "coverage", "dist"],
+
+	ignorePatterns: ["/node_modules", "dist"],
 	extends: [
 		// add more generic rulesets here, such as:
 		// 'standard',
@@ -19,10 +21,9 @@ module.exports = {
 		"prettier",
 	],
 	parserOptions: {
-		ecmaVersion: 12,
+		ecmaVersion: 2015,
 		sourceType: "module",
-		shouldFix: true,
-		node: true,
+		parser: "babel-eslint",
 	},
 	plugins: ["vue"],
 	rules: {
@@ -30,14 +31,6 @@ module.exports = {
 	},
 
 	globals: {
-		// "$": "writable",
-		// $: "readonly",
-		// GM_listValues: "readonly",
-		// GM_getValue: "readonly",
-		// GM_setValue: "readonly",
-		// GM_deleteValue: "readonly",
-		// GM_registerMenuCommand: "readonly",
-		// GM_addStyle: "readonly",
 		Pace: "readonly",
 		GM_config: "readonly",
 		waitForElems: "readonly",
@@ -45,7 +38,7 @@ module.exports = {
 		prettierPlugins: "readonly",
 		prettier: "readonly",
 	},
-	parser: "babel-eslint",
+
 	overrides: [
 		{
 			files: ["**/*.ts", "**/*.tsx"],
@@ -54,7 +47,6 @@ module.exports = {
 				"eslint:recommended", //
 				"plugin:@typescript-eslint/recommended",
 			],
-			globals: { Pace: "readonly" },
 
 			parserOptions: {
 				project: "./tsconfig.json",
