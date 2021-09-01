@@ -5,7 +5,7 @@
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @author jimbo
 // @license OSL-3.0
-// @supportURL https://github.com/niubilityfrontend/hunttingteacheron51talk
+// @supportURL https://github.com/niubilityfrontend/findteacherson51talk
 // @match *://www.51talk.com/ReserveNew/index*
 // @match *://www.51talk.com/TeacherNew/*
 // @match *://www.51talk.com/user/*
@@ -23,10 +23,10 @@
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // ==/UserScript==
 
+import "./detailpage";
 import "./findingteacher.user.css";
 import "./jqueryextend";
 import "./pacesetup";
-import "./detailpage";
 
 import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage";
 import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
@@ -245,7 +245,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				//系统帮助
 				.eq(5)
 				.button({ icon: "ui-icon-help", showLabel: true })
-				.prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/hunttingteacheron51talk")
+				.prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk")
 				.prop("target", "_blank")
 				.end();
 			$("#buttons1>button")

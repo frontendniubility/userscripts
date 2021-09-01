@@ -5,7 +5,7 @@
 // @description
 // @author       jimbo
 // @license      OSL-3.0
-// @supportURL   https://github.com/niubilityfrontend/hunttingteacheron51talk
+// @supportURL   https://github.com/niubilityfrontend/findteacherson51talk
 // @match        *:*/*
 // @match        *127.0.0.1*:*/*
 // @match        *localhost*:*/*
