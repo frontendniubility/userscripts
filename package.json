@@ -150,7 +150,7 @@
     "buildreadme": "node build-readme.js",
     "fix-code": "prettier-eslint --write 'src/**/*.{js,jsx}' ",
     "fix-styles": "prettier-stylelint --write 'src/**/*.{css,scss}' ",
-    "changelog": "auto-changelog --remote upstream --commit-limit false",
+    "changelog": "auto-changelog --remote upstream --commit-limit true",
     "fix": "yarn lint:fix && yarn style:fix",
     "lint": "eslint --cache --max-warnings 0 --format codeframe .",
     "lint:fix": "yarn lint --fix",
