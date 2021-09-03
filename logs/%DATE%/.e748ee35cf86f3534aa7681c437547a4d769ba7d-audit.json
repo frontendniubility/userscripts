@@ -6,16 +6,6 @@
     "auditLog": "logs\\%DATE%\\.e748ee35cf86f3534aa7681c437547a4d769ba7d-audit.json",
     "files": [
         {
-            "date": 1629279625368,
-            "name": "logs\\2021-Aug-18\\webpacktest-2021-Aug-18.log",
-            "hash": "42796da1123b42c49c29d60adf850234"
-        },
-        {
-            "date": 1629341550970,
-            "name": "logs\\2021-Aug-19\\webpacktest-2021-Aug-19.log",
-            "hash": "b8b0db8c507b57d7336ec44c8c05a868"
-        },
-        {
             "date": 1629684529594,
             "name": "logs\\2021-Aug-23\\webpacktest-2021-Aug-23.log",
             "hash": "cbc8d5fd14341c41b2c036ea94c0e404"
@@ -49,6 +39,16 @@
             "date": 1630479770792,
             "name": "logs\\2021-Sep-01\\webpacktest-2021-Sep-01.log",
             "hash": "6f0eae8bfd880254ae48c84a7fafc6ad"
+        },
+        {
+            "date": 1630548765585,
+            "name": "logs\\2021-Sep-02\\webpacktest-2021-Sep-02.log",
+            "hash": "6370b92abc17f0c2070cf11c2ae0e957"
+        },
+        {
+            "date": 1630632557100,
+            "name": "logs\\2021-Sep-03\\webpacktest-2021-Sep-03.log",
+            "hash": "fa5f470a76da67a1a5df0f77e0ea5626"
         }
     ]
 }
