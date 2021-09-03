@@ -8,7 +8,7 @@ if [ -n "$1" ]; then
 else
 	read  -p 'Commit message > ' msg
 	if [ -z "$msg" ]; then
-		msg="Auto synchronizing"		
+		msg="fix bugs and optimized"		
 	fi
 fi
 echo "Committing as '$msg'"
