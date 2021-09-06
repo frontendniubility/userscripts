@@ -4,7 +4,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 var rulesconfig = require("./webpack.common.rules");
 
-const { entries } = require("./webpack.common.base");
+const { entries } = require("./webpack.common.entries");
 module.exports = merge(rulesconfig, {
 	mode: "production", //env.NODE_ENV === 'development' ? 'development' : 'production',
 	optimization: {

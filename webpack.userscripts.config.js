@@ -6,7 +6,7 @@ const WebpackUserscript = require("./libs/webpackuserscript");
 // const webpacktestplugin = require("./libs/webpackhookstest");
 
 const logger = require("./log").loggers.get("webpack");
-const { entries } = require("./webpack.common.base");
+const { entries } = require("./webpack.common.entries");
 
 let parseMeta = script =>
 	script
