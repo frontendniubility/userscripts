@@ -3,7 +3,7 @@ const extend = require("extend");
 const path = require("path");
 const glob = require("glob");
 ///---------
-const logger = require("./log").loggers.get("webpack");
+// const logger = require("./log").loggers.get("webpack");
 
 const { formatters } = require("./libs/dateFormat.cjs");
 
@@ -21,15 +21,6 @@ extend(Date.prototype, {
 	},
 });
 
-const p = (...args) =>
-	args.forEach((item, index, all) => {
-		if (typeof item == "object") {
-			logger.debug(JSON.stringify(item));
-		} else {
-			logger.debug(item);
-		}
-	});
-
 let stringIncludesAny = function (s, ...arr) {
 	return new RegExp(arr.join("|")).test(s);
 };
@@ -44,6 +35,6 @@ let entries = glob
 
 module.exports = {
 	entries,
-	p,
+
 	stringIncludesAny,
 };

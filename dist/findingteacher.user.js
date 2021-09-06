@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Who's the Best Teacher
-// @version     2021.8.526163644
+// @version     2021.9.506094752
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/hunttingteacheron51talk
+// @supportURL  https://github.com/niubilityfrontend/findteacherson51talk
 // @match       *://www.51talk.com/ReserveNew/index*
 // @match       *://www.51talk.com/TeacherNew/*
 // @match       *://www.51talk.com/user/*
@@ -435,218 +435,6 @@
     var __webpack_exports__ = {};
     (() => {
         "use strict";
-        var injectStylesIntoStyleTag = __webpack_require__(379);
-        var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
-        var styleDomAPI = __webpack_require__(795);
-        var styleDomAPI_default = __webpack_require__.n(styleDomAPI);
-        var insertBySelector = __webpack_require__(569);
-        var insertBySelector_default = __webpack_require__.n(insertBySelector);
-        var setAttributesWithoutAttributes = __webpack_require__(565);
-        var setAttributesWithoutAttributes_default = __webpack_require__.n(setAttributesWithoutAttributes);
-        var insertStyleElement = __webpack_require__(216);
-        var insertStyleElement_default = __webpack_require__.n(insertStyleElement);
-        var styleTagTransform = __webpack_require__(589);
-        var styleTagTransform_default = __webpack_require__.n(styleTagTransform);
-        var findingteacher_user = __webpack_require__(228);
-        var options = {};
-        options.styleTagTransform = styleTagTransform_default();
-        options.setAttributes = setAttributesWithoutAttributes_default();
-        options.insert = insertBySelector_default().bind(null, "head");
-        options.domAPI = styleDomAPI_default();
-        options.insertStyleElement = insertStyleElement_default();
-        var update = injectStylesIntoStyleTag_default()(findingteacher_user.Z, options);
-        const findteacherson51talk_findingteacher_user = findingteacher_user.Z && findingteacher_user.Z.locals ? findingteacher_user.Z.locals : undefined;
-        const propertiesCaseInsensitive = class {
-            has(target, prop) {
-                if (typeof prop === "symbol") {
-                    return prop in target;
-                }
-                prop = prop.toLowerCase();
-                if (prop in target) return true;
-                let keys = Object.keys(target);
-                let i = keys.length;
-                while (i--) {
-                    if (keys[i] && keys[i].toLowerCase() == prop) return true;
-                }
-                return false;
-            }
-            get(target, prop, receiver) {
-                if (typeof prop === "symbol") {
-                    return target[prop];
-                }
-                prop = prop.toLowerCase();
-                if (prop in target) return target[prop];
-                let keys = Object.keys(target);
-                let i = keys.length;
-                while (i--) {
-                    if (keys[i] && keys[i].toLowerCase() == prop) return target[keys[i]];
-                }
-                return undefined;
-            }
-            set(target, prop, value) {
-                if (typeof prop === "symbol") {
-                    target[prop] = value;
-                }
-                target[prop.toLowerCase()] = value;
-                return true;
-            }
-        };
-        let getPaddedComp = (comp, len = 2) => {
-            if (len < 1) len = 1;
-            comp = "" + comp;
-            let paddedLen = len - ("" + comp).length;
-            if (paddedLen > 0) {
-                return [ ...Array(paddedLen).fill("0"), ...comp ].join("");
-            } else return comp;
-        }, formatters = {
-            "[y|Y]{4}": date => date.getFullYear(),
-            "[y|Y]{2}": date => date.getFullYear().toString().slice(2),
-            MM: date => getPaddedComp(date.getMonth() + 1),
-            M: date => date.getMonth() + 1,
-            "[d|D]{2}": date => getPaddedComp(date.getDate()),
-            "[d|D]{1}": date => date.getDate(),
-            "h{2}": date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
-            "h{1}": date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
-            "H{2}": date => getPaddedComp(date.getHours()),
-            "H{1}": date => date.getHours(),
-            "m{2}": date => getPaddedComp(date.getMinutes()),
-            "m{1}": date => date.getMinutes(),
-            "s+": date => getPaddedComp(date.getSeconds()),
-            "f+": date => getPaddedComp(date.getMilliseconds(), 3),
-            "f{1}": date => getPaddedComp(date.getMilliseconds(), 0),
-            "b+": date => date.getHours() >= 12 ? "PM" : "AM"
-        }, formatters1 = {
-            [/([y|Y]{4})/]: date => date.getFullYear(),
-            [/([y|Y]{2})/]: date => date.getFullYear().toString().slice(2),
-            [/(MM)/]: date => getPaddedComp(date.getMonth() + 1),
-            [/(M)/]: date => date.getMonth() + 1,
-            [/([d|D]{2})/]: date => getPaddedComp(date.getDate()),
-            [/([d|D]{1})/]: date => date.getDate(),
-            [/(h{2})/]: date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
-            [/(h{1})/]: date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
-            [/(H{2})/]: date => getPaddedComp(date.getHours()),
-            [/(H{1})/]: date => date.getHours(),
-            [/(m{2})/]: date => getPaddedComp(date.getMinutes()),
-            [/(m{1})/]: date => date.getMinutes(),
-            [/(s+)/]: date => getPaddedComp(date.getSeconds()),
-            [/(f+)/]: date => getPaddedComp(date.getMilliseconds(), 3),
-            [/(f{1})/]: date => getPaddedComp(date.getMilliseconds(), 0),
-            [/(b+)/]: date => date.getHours() >= 12 ? "PM" : "AM"
-        };
-        Date.prototype._toString = Date.prototype.toString;
-        $.extend(Date.prototype, {
-            toString: function toString(format) {
-                if (!format) return this._toString();
-                var formattedDate = format;
-                for (var k in formatters) {
-                    if (new RegExp("(" + k + ")").test(format)) {
-                        formattedDate = formattedDate.replace(RegExp.$1, formatters[k](this));
-                    }
-                }
-                return formattedDate;
-            }
-        });
-        $.extend(Array.prototype, {
-            clean: function clean() {
-                for (var deleteValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "", i = 0; i < this.length; i++) {
-                    if (this[i] == deleteValue) {
-                        this.splice(i, 1);
-                        i--;
-                    }
-                }
-                return this;
-            }
-        });
-        $.extend(Number.prototype, {
-            toString: function toString(num) {
-                if (isNaN(num)) num = 2;
-                return this.toFixed(num);
-            }
-        });
-        $.extend(String.prototype, {
-            toFloat: function toFloat() {
-                return parseFloat(this);
-            },
-            toInt: function toInt() {
-                return parseInt(this);
-            },
-            includesAny: function includesAny() {
-                for (var _len = arguments.length, arr = new Array(_len), _key = 0; _key < _len; _key++) {
-                    arr[_key] = arguments[_key];
-                }
-                if (!Array.isArray(arr)) return false;
-                return new RegExp(arr.join("|")).test(this);
-            },
-            replaceAll: function replaceAll(search, replacement) {
-                var target = this;
-                return target.replace(new RegExp(search, "g"), replacement);
-            }
-        });
-        if (!String.prototype.startsWith) {
-            Object.defineProperty(String.prototype, "startsWith", {
-                value: function value(search, rawPos) {
-                    var pos = rawPos > 0 ? rawPos | 0 : 0;
-                    return this.substring(pos, pos + search.length) === search;
-                }
-            });
-        }
-        if (!String.prototype.endsWith) {
-            String.prototype.endsWith = function(search, this_len) {
-                if (this_len === undefined || this_len > this.length) {
-                    this_len = this.length;
-                }
-                return this.substring(this_len - search.length, this_len) === search;
-            };
-        }
-        if (!String.prototype.includes) {
-            String.prototype.includes = function(search, start) {
-                "use strict";
-                if (search instanceof RegExp) {
-                    throw TypeError("first argument must not be a RegExp");
-                }
-                if (start === undefined) {
-                    start = 0;
-                }
-                return this.indexOf(search, start) !== -1;
-            };
-        }
-        $.extend(window, {
-            parameters: function parameters(url) {
-                var queryString = url ? url.split("?")[1] : window.location.search.slice(1), cachedkey = "urlparameters" + queryString, obj = $(window).data(cachedkey);
-                if (obj == undefined) {
-                    obj = new Proxy({}, propertiesCaseInsensitive);
-                    $(window).data(cachedkey, obj);
-                } else return obj;
-                if (queryString) {
-                    queryString = queryString.split("#")[0];
-                    var arr = queryString.split("&");
-                    for (var i = 0; i < arr.length; i++) {
-                        var a = arr[i].split("="), paramName = a[0], paramValue = typeof a[1] === "undefined" ? true : a[1];
-                        if (paramName.match(/\[(\d+)?\]$/)) {
-                            var key = paramName.replace(/\[(\d+)?\]/, "");
-                            if (!obj[key]) obj[key] = [];
-                            if (paramName.match(/\[\d+\]$/)) {
-                                var index = /\[(\d+)\]/.exec(paramName)[1];
-                                obj[key][index] = paramValue;
-                            } else {
-                                obj[key].push(paramValue);
-                            }
-                        } else {
-                            if (!obj[paramName]) {
-                                obj[paramName] = paramValue;
-                            } else if (obj[paramName] && typeof obj[paramName] === "string") {
-                                obj[paramName] = [ obj[paramName] ];
-                                obj[paramName].push(paramValue);
-                            } else {
-                                obj[paramName].push(paramValue);
-                            }
-                        }
-                    }
-                }
-                return obj;
-            }
-        });
-        var pacesetup = __webpack_require__(564);
         function _slicedToArray(arr, i) {
             return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
         }
@@ -1039,6 +827,218 @@
                 next();
             }));
         }
+        var injectStylesIntoStyleTag = __webpack_require__(379);
+        var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
+        var styleDomAPI = __webpack_require__(795);
+        var styleDomAPI_default = __webpack_require__.n(styleDomAPI);
+        var insertBySelector = __webpack_require__(569);
+        var insertBySelector_default = __webpack_require__.n(insertBySelector);
+        var setAttributesWithoutAttributes = __webpack_require__(565);
+        var setAttributesWithoutAttributes_default = __webpack_require__.n(setAttributesWithoutAttributes);
+        var insertStyleElement = __webpack_require__(216);
+        var insertStyleElement_default = __webpack_require__.n(insertStyleElement);
+        var styleTagTransform = __webpack_require__(589);
+        var styleTagTransform_default = __webpack_require__.n(styleTagTransform);
+        var findingteacher_user = __webpack_require__(228);
+        var options = {};
+        options.styleTagTransform = styleTagTransform_default();
+        options.setAttributes = setAttributesWithoutAttributes_default();
+        options.insert = insertBySelector_default().bind(null, "head");
+        options.domAPI = styleDomAPI_default();
+        options.insertStyleElement = insertStyleElement_default();
+        var update = injectStylesIntoStyleTag_default()(findingteacher_user.Z, options);
+        const findteacherson51talk_findingteacher_user = findingteacher_user.Z && findingteacher_user.Z.locals ? findingteacher_user.Z.locals : undefined;
+        const propertiesCaseInsensitive = class {
+            has(target, prop) {
+                if (typeof prop === "symbol") {
+                    return prop in target;
+                }
+                prop = prop.toLowerCase();
+                if (prop in target) return true;
+                let keys = Object.keys(target);
+                let i = keys.length;
+                while (i--) {
+                    if (keys[i] && keys[i].toLowerCase() == prop) return true;
+                }
+                return false;
+            }
+            get(target, prop, receiver) {
+                if (typeof prop === "symbol") {
+                    return target[prop];
+                }
+                prop = prop.toLowerCase();
+                if (prop in target) return target[prop];
+                let keys = Object.keys(target);
+                let i = keys.length;
+                while (i--) {
+                    if (keys[i] && keys[i].toLowerCase() == prop) return target[keys[i]];
+                }
+                return undefined;
+            }
+            set(target, prop, value) {
+                if (typeof prop === "symbol") {
+                    target[prop] = value;
+                }
+                target[prop.toLowerCase()] = value;
+                return true;
+            }
+        };
+        let getPaddedComp = (comp, len = 2) => {
+            if (len < 1) len = 1;
+            comp = "" + comp;
+            let paddedLen = len - ("" + comp).length;
+            if (paddedLen > 0) {
+                return [ ...Array(paddedLen).fill("0"), ...comp ].join("");
+            } else return comp;
+        }, formatters = {
+            "[y|Y]{4}": date => date.getFullYear(),
+            "[y|Y]{2}": date => date.getFullYear().toString().slice(2),
+            MM: date => getPaddedComp(date.getMonth() + 1),
+            M: date => date.getMonth() + 1,
+            "[d|D]{2}": date => getPaddedComp(date.getDate()),
+            "[d|D]{1}": date => date.getDate(),
+            "h{2}": date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
+            "h{1}": date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
+            "H{2}": date => getPaddedComp(date.getHours()),
+            "H{1}": date => date.getHours(),
+            "m{2}": date => getPaddedComp(date.getMinutes()),
+            "m{1}": date => date.getMinutes(),
+            "s+": date => getPaddedComp(date.getSeconds()),
+            "f+": date => getPaddedComp(date.getMilliseconds(), 3),
+            "f{1}": date => getPaddedComp(date.getMilliseconds(), 0),
+            "b+": date => date.getHours() >= 12 ? "PM" : "AM"
+        }, formatters1 = {
+            [/([y|Y]{4})/]: date => date.getFullYear(),
+            [/([y|Y]{2})/]: date => date.getFullYear().toString().slice(2),
+            [/(MM)/]: date => getPaddedComp(date.getMonth() + 1),
+            [/(M)/]: date => date.getMonth() + 1,
+            [/([d|D]{2})/]: date => getPaddedComp(date.getDate()),
+            [/([d|D]{1})/]: date => date.getDate(),
+            [/(h{2})/]: date => getPaddedComp(date.getHours() > 12 ? date.getHours() % 12 : date.getHours()),
+            [/(h{1})/]: date => date.getHours() > 12 ? date.getHours() % 12 : date.getHours(),
+            [/(H{2})/]: date => getPaddedComp(date.getHours()),
+            [/(H{1})/]: date => date.getHours(),
+            [/(m{2})/]: date => getPaddedComp(date.getMinutes()),
+            [/(m{1})/]: date => date.getMinutes(),
+            [/(s+)/]: date => getPaddedComp(date.getSeconds()),
+            [/(f+)/]: date => getPaddedComp(date.getMilliseconds(), 3),
+            [/(f{1})/]: date => getPaddedComp(date.getMilliseconds(), 0),
+            [/(b+)/]: date => date.getHours() >= 12 ? "PM" : "AM"
+        };
+        Date.prototype._toString = Date.prototype.toString;
+        $.extend(Date.prototype, {
+            toString: function toString(format) {
+                if (!format) return this._toString();
+                var formattedDate = format;
+                for (var k in formatters) {
+                    if (new RegExp("(" + k + ")").test(format)) {
+                        formattedDate = formattedDate.replace(RegExp.$1, formatters[k](this));
+                    }
+                }
+                return formattedDate;
+            }
+        });
+        $.extend(Array.prototype, {
+            clean: function clean() {
+                for (var deleteValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "", i = 0; i < this.length; i++) {
+                    if (this[i] == deleteValue) {
+                        this.splice(i, 1);
+                        i--;
+                    }
+                }
+                return this;
+            }
+        });
+        $.extend(Number.prototype, {
+            toString: function toString(num) {
+                if (isNaN(num)) num = 2;
+                return this.toFixed(num);
+            }
+        });
+        $.extend(String.prototype, {
+            toFloat: function toFloat() {
+                return parseFloat(this);
+            },
+            toInt: function toInt() {
+                return parseInt(this);
+            },
+            includesAny: function includesAny() {
+                for (var _len = arguments.length, arr = new Array(_len), _key = 0; _key < _len; _key++) {
+                    arr[_key] = arguments[_key];
+                }
+                if (!Array.isArray(arr)) return false;
+                return new RegExp(arr.join("|")).test(this);
+            },
+            replaceAll: function replaceAll(search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, "g"), replacement);
+            }
+        });
+        if (!String.prototype.startsWith) {
+            Object.defineProperty(String.prototype, "startsWith", {
+                value: function value(search, rawPos) {
+                    var pos = rawPos > 0 ? rawPos | 0 : 0;
+                    return this.substring(pos, pos + search.length) === search;
+                }
+            });
+        }
+        if (!String.prototype.endsWith) {
+            String.prototype.endsWith = function(search, this_len) {
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
+        if (!String.prototype.includes) {
+            String.prototype.includes = function(search, start) {
+                "use strict";
+                if (search instanceof RegExp) {
+                    throw TypeError("first argument must not be a RegExp");
+                }
+                if (start === undefined) {
+                    start = 0;
+                }
+                return this.indexOf(search, start) !== -1;
+            };
+        }
+        $.extend(window, {
+            parameters: function parameters(url) {
+                var queryString = url ? url.split("?")[1] : window.location.search.slice(1), cachedkey = "urlparameters" + queryString, obj = $(window).data(cachedkey);
+                if (obj == undefined) {
+                    obj = new Proxy({}, propertiesCaseInsensitive);
+                    $(window).data(cachedkey, obj);
+                } else return obj;
+                if (queryString) {
+                    queryString = queryString.split("#")[0];
+                    var arr = queryString.split("&");
+                    for (var i = 0; i < arr.length; i++) {
+                        var a = arr[i].split("="), paramName = a[0], paramValue = typeof a[1] === "undefined" ? true : a[1];
+                        if (paramName.match(/\[(\d+)?\]$/)) {
+                            var key = paramName.replace(/\[(\d+)?\]/, "");
+                            if (!obj[key]) obj[key] = [];
+                            if (paramName.match(/\[\d+\]$/)) {
+                                var index = /\[(\d+)\]/.exec(paramName)[1];
+                                obj[key][index] = paramValue;
+                            } else {
+                                obj[key].push(paramValue);
+                            }
+                        } else {
+                            if (!obj[paramName]) {
+                                obj[paramName] = paramValue;
+                            } else if (obj[paramName] && typeof obj[paramName] === "string") {
+                                obj[paramName] = [ obj[paramName] ];
+                                obj[paramName].push(paramValue);
+                            } else {
+                                obj[paramName].push(paramValue);
+                            }
+                        }
+                    }
+                }
+                return obj;
+            }
+        });
+        var pacesetup = __webpack_require__(564);
         function _defineProperty(obj, key, value) {
             if (key in obj) {
                 Object.defineProperty(obj, key, {
@@ -1445,7 +1445,7 @@
                     }).prop("href", "https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=").prop("target", "_blank").end().eq(5).button({
                         icon: "ui-icon-help",
                         showLabel: true
-                    }).prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/hunttingteacheron51talk").prop("target", "_blank").end();
+                    }).prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk").prop("target", "_blank").end();
                     $("#buttons1>button").eq(0).button({
                         icon: "ui-icon-seek-next",
                         showLabel: true

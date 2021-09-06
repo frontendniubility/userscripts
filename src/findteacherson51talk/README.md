@@ -1,8 +1,8 @@
-# [51talk 选择最好最合适的老师-经验-好评率-年龄-收藏数](https://greasyfork.org/zh-CN/scripts/388276-51talk%E9%80%89%E6%8B%A9%E6%9C%80%E5%A5%BD%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E8%80%81%E5%B8%88-%E7%BB%8F%E9%AA%8C-%E5%A5%BD%E8%AF%84%E7%8E%87-%E5%B9%B4%E9%BE%84-%E6%94%B6%E8%97%8F%E6%95%B0)
+﻿# [51talk 选择最好最合适的老师-经验-好评率-年龄-收藏数](https://greasyfork.org/zh-CN/scripts/388276-51talk%E9%80%89%E6%8B%A9%E6%9C%80%E5%A5%BD%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E8%80%81%E5%B8%88-%E7%BB%8F%E9%AA%8C-%E5%A5%BD%E8%AF%84%E7%8E%87-%E5%B9%B4%E9%BE%84-%E6%94%B6%E8%97%8F%E6%95%B0)
 
 ## 快速开始
 
-![instructions](https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/hunttingteacheron51talk/quickstart.png)
+![instructions](https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/src/findteacherson51talk/quickstart.png)
 
 ## 功能 What
 
@@ -60,7 +60,7 @@
 
 - v1.1.8 2019-11-28 add feature - show the rank of teachers by teacher type
 - [v1.0.21](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744811) 2019-10-29 - Add feture: record the search batch and sorted teachers within this batch
-- [v1.0.20](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744806) 2019-10-29 - use ES6 andd add futrue stoping auto get next page[D[D
+- [v1.0.20](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744806) 2019-10-29 - use ES6 andd add futrue stoping auto get next page
 - [v1.0.19](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744800) 2019-10-29 - add feture ability to sort teacher by seach batch
 - [v1.0.19](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744580) 2019-10-28 - change cache time to 168 hours
 - [v1.0.19](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=744579) 2019-10-28 - show the second tab -list page as the default
@@ -74,7 +74,7 @@
 - [v1.0.14](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=740693) 2019-10-14 - fixed bug- update detailed info before show the list of teachers
 - [v1.0.13](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=739840) 2019-10-11 - fixed bug updating in detailed page, the type shouldn't proccess
 - [v1.0.12](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=736801) 2019-09-29 - JUST FORMATE CODE
-- [v1.0.12](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=736416) 2019-09-27 - add js to detail pages[D[D[D[D[D[D[D[D[D[D[D[Dteachers' detail pages
+- [v1.0.12](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=736416) 2019-09-27 - add js to detail - teachers' detail pages
 - [v1.0.11](https://greasyfork.org/zh-CN/scripts/388276-51talk选择最好最合适的老师-经验-好评率-年龄-收藏数?version=735823) 2019-09-25 - optimized the update time and link color
 - v1.0.2 2019-9-3 add system config for auto get next page's count
 - v1.0.1 2019-9-3 - Modified the up rate to permillage ‰

@@ -41,7 +41,7 @@ module.exports = {
 
 	overrides: [
 		{
-			files: ["**/*.ts", "**/*.tsx"],
+			files: ["src/**/*.ts", "src/**/*.tsx"],
 
 			extends: [
 				"eslint:recommended", //

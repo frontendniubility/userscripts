@@ -3,10 +3,10 @@ const path = require("path");
 const fs = require("fs");
 const extend = require("extend");
 const WebpackUserscript = require("./libs/webpackuserscript");
-const webpacktestplugin = require("./libs/webpackhookstest");
+// const webpacktestplugin = require("./libs/webpackhookstest");
 
 const logger = require("./log").loggers.get("webpack");
-const { entries } = require("./webpack.common");
+const { entries } = require("./webpack.common.entries");
 
 let parseMeta = script =>
 	script
@@ -108,5 +108,5 @@ let wpus = new WebpackUserscript({
 
 module.exports = {
 	plugins: [wpus /* , new webpacktestplugin() */],
-	t: new webpacktestplugin(),
+	// t: new webpacktestplugin(),
 };
