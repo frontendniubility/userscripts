@@ -23,16 +23,14 @@
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // ==/UserScript==
 
+import { conf } from "./bestteacher_gm_toolbar";
+import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
 import "./detailpage";
 import "./findingteacher.user.css";
 import "./jqueryextend";
-import "./pacesetup";
-
 import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage";
-import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
-
+import "./pacesetup";
 import UiHtmlTemplate from "./pluginUITemplate.html";
-import { conf } from "./bestteacher_gm_toolbar";
 
 let asc = function (a, b) {
 	let av = $(a).attr("indicator");
