@@ -1,0 +1,82 @@
+{
+    "src": {
+        "auto-close-youtube-ads": {
+            "auto-close-youtube-ads.user.js": {
+                "84eb86e754a8c820231200bfd1cbb0fc": "2021.9.522155711"
+            }
+        },
+        "crunchyroll-queue-times": {
+            "crunchyroll-queue-times.user.js": {
+                "2b7d9b432bdfeda335a67aea1a5f62e7": "2021.9.522155711"
+            }
+        },
+        "crunchyroll-video-utilities": {
+            "crunchyroll-video-utilties.user.js": {
+                "5fff0af66fc57e633f66d407ba9dcbd2": "2021.9.522155711"
+            }
+        },
+        "findteacherson51talk": {
+            "findingteacher.user.js": {
+                "e5616c6441cd6da903ff34a220702dd3": "2021.9.522155711"
+            },
+            "test.user.js": {
+                "cca8ea00ed8f80418d6744773af51be6": "2021.9.522155711"
+            }
+        },
+        "format-json": {
+            "format-json.user.js": {
+                "f58acd83b3d8cf4aa99d3c1617745014": "2021.9.522155711"
+            }
+        },
+        "gfycat-redirect-to-webm": {
+            "gfycat-redirect-to-webm.user.js": {
+                "72ee73a0a193e7873f3574ade37f0083": "2021.9.522155711"
+            }
+        },
+        "hangouts-notifier": {
+            "hangouts-notifier.user.js": {
+                "4f13c6bba2c49fd374735595f07ac36c": "2021.9.522155711"
+            }
+        },
+        "hummingbird-compatibility-hover": {
+            "hummingbird-compatibility-hover.user.js": {
+                "fd98f73a0063f9e48a3462cfed72a4d8": "2021.9.522155711"
+            }
+        },
+        "javascriptSnippets": {
+            "URLTest.user.es6": {
+                "f26b526b2b0070630bf76cbb8e9d7277": "2021.9.522155711"
+            }
+        },
+        "kijiji-middle-click": {
+            "kijiji-middle-click.user.js": {
+                "625d27b8ac77fd974909dc8a5d82d847": "2021.9.522155711"
+            }
+        },
+        "kitsu-mal-rating": {
+            "kitsu-mal-rating.user.js": {
+                "53ddf4c1bd94b583ac08c39999ebf9d3": "2021.9.522155711"
+            }
+        },
+        "prettier-anything": {
+            "prettier-anything.user.js": {
+                "5e06e88b5fbf2e56e4b9a541f9bdfb76": "2021.9.522155711"
+            }
+        },
+        "youtube-history-management": {
+            "youtube-history-management.user.js": {
+                "be4546c45109e5a39d30d307d1f3d6b9": "2021.9.522155711"
+            }
+        },
+        "youtube-playlist-search": {
+            "youtube-playlist-search.user.js": {
+                "53856ef859cc8267398e917cc7545220": "2021.9.522155711"
+            }
+        },
+        "youtube-playlist-time": {
+            "youtube-playlist-time.user.js": {
+                "37e8e040940d04d4ab45a087837590db": "2021.9.522155711"
+            }
+        }
+    }
+}

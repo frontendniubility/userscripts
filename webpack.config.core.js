@@ -72,13 +72,27 @@ module.exports = merge(rulesconfig, {
 	target: "web",
 
 	devServer: {
-		allowedHosts: ["localhost", "host.com", "subdomain.host.com", "subdomain2.host.com", "host2.com"],
-		publicPath: "/",
-		contentBase: path.join(__dirname, "dist"),
+		devMiddleware: {
+			index: true,
+			mimeTypes: { "text/html": ["html"] },
+			publicPath: "/",
+			serverSideRender: true,
+			writeToDisk: true,
+		},
+		bonjour: true,
+		compress: true,
+		allowedHosts: "all",
 
+		static: {
+			directory: path.join(__dirname, "dist"),
+		},
+		watchFiles: {
+			paths: ["dist/*.js", "public/**/*"],
+			options: {
+				usePolling: false,
+			},
+		},
 		port: 8080,
-		disableHostCheck: true,
-
-		public: "localhost:8080",
+		webSocketServer: "ws",
 	},
 });

@@ -15,7 +15,6 @@
 // @grant GM_listValues
 // @grant GM_deleteValue
 // @grant GM_registerMenuCommand
-// @require https://code.jquery.com/jquery-3.6.0.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
 // @require https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js
@@ -23,14 +22,15 @@
 // @require https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
 // ==/UserScript==
 
-import { conf } from "./bestteacher_gm_toolbar";
-import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
-import "./detailpage";
-import "./findingteacher.user.css";
-import "./jqueryextend";
-import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage";
-import "./pacesetup";
-import UiHtmlTemplate from "./pluginUITemplate.html";
+// @require https://code.jquery.com/jquery-3.6.0.min.js
+import { conf } from "./bestteacher_gm_toolbar"
+import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
+import "./detailpage"
+import "./findingteacher.user.css"
+import "./jqueryextend"
+import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage"
+import "./pacesetup"
+import UiHtmlTemplate from "./pluginUITemplate.html"
 
 let asc = function (a, b) {
 	let av = $(a).attr("indicator");

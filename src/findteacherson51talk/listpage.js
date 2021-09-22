@@ -1,10 +1,8 @@
+import { config } from "./bestteacher_gm_toolbar";
+import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTeacherInfoFromDetailPage, getTId, setSession, settings, submit } from "./common";
 import "./jqueryextend";
 
-import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTId, getTeacherInfoFromDetailPage, setSession, settings, submit } from "./common";
-
-import { config } from "./bestteacher_gm_toolbar";
-
-config.onsave = (cfg) => {
+config.onsave = cfg => {
 	// conf = cfg;
 	try {
 		new Function("t", `return ${cfg.load().calcIndicator}`)({});
@@ -146,7 +144,7 @@ if (settings.isListPage) {
 	});
 	// 自动获取时,显示停止按钮
 	submit(function (next) {
-		let totalPages = Number($(".s-t-page>a:eq(-2)").text()),
+		let totalPages = Number($(".s-t-page:last>a:last").text()),
 			curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
 			remainPages = totalPages - curPageId;
 		let autoNextPageCount = getSession("autoNextPageCount", 0);

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Who's the Best Teacher
-// @version     2021.9.506165451
+// @version     2021.9.522155711
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -16,7 +16,6 @@
 // @grant       GM_listValues
 // @grant       GM_deleteValue
 // @grant       GM_registerMenuCommand
-// @require     https://code.jquery.com/jquery-3.6.0.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js

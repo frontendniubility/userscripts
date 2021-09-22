@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Who's the Best Teacher
-// @version     2021.9.506165451
+// @version     2021.9.522155711
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -16,7 +16,6 @@
 // @grant       GM_listValues
 // @grant       GM_deleteValue
 // @grant       GM_registerMenuCommand
-// @require     https://code.jquery.com/jquery-3.6.0.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
 // @require     https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js
@@ -1158,7 +1157,7 @@
                 return val.replaceAll("<!--", "").replaceAll("-->", "");
             }));
             common_submit((function(next) {
-                var totalPages = Number($(".s-t-page>a:eq(-2)").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autoNextPageCount = getSession("autoNextPageCount", 0);
+                var totalPages = Number($(".s-t-page:last>a:last").text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autoNextPageCount = getSession("autoNextPageCount", 0);
                 if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
                     var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
                     dialog.appendTo("body");

@@ -5,6 +5,11 @@ const extend = require("extend");
 const WebpackUserscript = require("./libs/webpackuserscript");
 // const webpacktestplugin = require("./libs/webpackhookstest");
 
+const { JsonDB } = require("node-json-db");
+const { Config } = require("node-json-db/dist/lib/JsonDBConfig");
+
+const db = new JsonDB(new Config("versioncache.json", true, true, "/"));
+
 const logger = require("./log").loggers.get("webpack");
 const { entries } = require("./webpack.common.entries");
 
@@ -41,14 +46,11 @@ let wpus = new WebpackUserscript({
 	headers: function (data) {
 		let origionpath = entries[data.chunkName];
 		if (!fs.existsSync(origionpath)) {
-			logger.error(data);
-			logger.error(`--${data.chunkName}  --              
-    END-------------------------
-    `);
 			return {};
 		} else {
-			let header = parseMeta(fs.readFileSync(origionpath, "utf8"));
-			var versionpath = path.resolve(path.parse(origionpath).dir, data.chunkName + ".version.json");
+			let headers = parseMeta(fs.readFileSync(origionpath, "utf8"));
+			var versionKeyPath = "/" + path.relative(__dirname, origionpath).replaceAll("\\", "/");
+
 			var hash = data.chunkHash;
 
 			// 编译状态下（开发模式或者生产模式）
@@ -59,11 +61,11 @@ let wpus = new WebpackUserscript({
 			};
 
 			try {
-				let savedVersions = JSON.parse(fs.readFileSync(versionpath, "utf8"));
+				let savedVersions = db.getData(versionKeyPath) || {};
 				let savedVer = savedVersions[hash];
 				if (savedVer) {
 					// 存在此hashs
-					return extend(true, {}, header, {
+					return extend(true, {}, headers, {
 						version: savedVer,
 					});
 				} else {
@@ -79,20 +81,18 @@ let wpus = new WebpackUserscript({
 						},
 					);
 					logger.debug("hash不存在 newsavedvers：" + JSON.stringify(newsavedvers));
-					fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), "utf8");
-					return extend(true, {}, header, newheader);
+					// fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), "utf8");
+					db.push(versionKeyPath, newsavedvers, false);
+					return extend(true, {}, headers, newheader);
 				}
 			} catch (e) {
-				if (!fs.existsSync(versionpath)) {
-					logger.debug("文件不存在" + versionpath);
-				}
-				logger.error(`JSON parse error, file path :${versionpath},Errors:${e} `);
+				logger.info("此消息在第一次编译时出现，如果一直出现请，检查文件versioncache.json");
+
 				let curVersionJson = {
 					[hash]: newverstring,
 				};
-				logger.debug("文件不存在" + versionpath);
-				fs.writeFileSync(versionpath, JSON.stringify(curVersionJson));
-				return extend(true, {}, header, newheader);
+				db.push(versionKeyPath, curVersionJson, false);
+				return extend(true, {}, headers, newheader);
 			}
 		}
 	},
