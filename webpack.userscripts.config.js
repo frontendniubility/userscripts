@@ -69,20 +69,19 @@ let wpus = new WebpackUserscript({
 						version: savedVer,
 					});
 				} else {
-					//hash不存在
-					//keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
+					//hash不存在 					//keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
 					var newsavedvers = Object.entries(savedVersions).reduce(
 						(pre, [key, val], i) => {
-							if (i < 5) pre[key] = val;
+							if (i < 10) pre[key] = val;
 							return pre;
 						},
 						{
 							[hash]: newverstring,
 						},
 					);
-					logger.debug("hash不存在 newsavedvers：" + JSON.stringify(newsavedvers));
-					// fs.writeFileSync(versionpath, JSON.stringify(newsavedvers), "utf8");
-					db.push(versionKeyPath, newsavedvers, false);
+					logger.debug(`Created a new version：${newverstring} on file :${data.chunkName} `);
+					logger.debug("");
+					db.push(versionKeyPath, newsavedvers, true);
 					return extend(true, {}, headers, newheader);
 				}
 			} catch (e) {
@@ -99,11 +98,11 @@ let wpus = new WebpackUserscript({
 	pretty: true,
 	metajs: true,
 	updateBaseUrl: "https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/",
-	// proxyScript: {
-	//   baseUrl: 'https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/',
-	//   filename: '[chunkName].js',
-	//   enable: false
-	// },
+	proxyScript: {
+		baseUrl: "http://localhost:8080",
+		filename: "dev.[chunkName].js",
+		enable: false,
+	},
 });
 
 module.exports = {

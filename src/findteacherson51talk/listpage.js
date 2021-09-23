@@ -144,7 +144,7 @@ if (settings.isListPage) {
 	});
 	// 自动获取时,显示停止按钮
 	submit(function (next) {
-		let totalPages = Number($(".s-t-page:last>a:last").text()),
+		let totalPages = Number($(".s-t-page:last>a:last").prev().text()),
 			curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
 			remainPages = totalPages - curPageId;
 		let autoNextPageCount = getSession("autoNextPageCount", 0);

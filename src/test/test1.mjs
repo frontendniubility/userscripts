@@ -1,13 +1,13 @@
 const p = (...args) => (console.log(...args), args[0]);
-const _sym = 'abcdefghijklmnopqrstuvwxyz1234567890',
-    len = _sym.length;
-function generate(count, k) {
-    let str = [];
-    for (var i = 0; i < count; i++) {
-        str[i] = _sym[parseInt(Math.random() * len)];
-    }
+const _sym = "abcdefghijklmnopqrstuvwxyz1234567890",
+	len = _sym.length;
+export function generate(count, k) {
+	let str = [];
+	for (var i = 0; i < count; i++) {
+		str[i] = _sym[parseInt(Math.random() * len)];
+	}
 
-    return str.join('');
+	return str.join("");
 }
 
 /**
@@ -20,14 +20,14 @@ function generate(count, k) {
  * @private
  */
 function className(object, defaultName) {
-    if (!object) return '';
-    var result = '';
-    if (typeof object === 'function') {
-        result = object.name || object.toString().match(/^function\s?([^\s(]*)/)[1];
-    } else if (typeof object.constructor === 'function') {
-        result = className(object.constructor, defaultName);
-    }
-    return result || defaultName;
+	if (!object) return "";
+	var result = "";
+	if (typeof object === "function") {
+		result = object.name || object.toString().match(/^function\s?([^\s(]*)/)[1];
+	} else if (typeof object.constructor === "function") {
+		result = className(object.constructor, defaultName);
+	}
+	return result || defaultName;
 }
 
 var a = new Date();
@@ -42,7 +42,6 @@ p(f.constructor.name);
 
 var Bar = function () {};
 
-var b = Bar();
 // p(b.constructor.name);
 p(typeof Bar);
 let m = Bar();
