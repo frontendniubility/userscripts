@@ -58,7 +58,7 @@ module.exports = merge(rulesconfig, {
 	},
 	externals: {
 		jquery: "$",
-		vue: "Vue",
+		// vue: "Vue",
 		axios: "axios",
 		"axios-userscript-adapter": "axiosGmxhrAdapter",
 	},
@@ -86,13 +86,13 @@ module.exports = merge(rulesconfig, {
 		static: {
 			directory: path.join(__dirname, "dist"),
 		},
-		watchFiles: {
-			paths: ["dist/*.js", "public/**/*"],
-			options: {
-				usePolling: false,
-			},
-		},
-		port: 8080,
-		webSocketServer: "ws",
+		// watchFiles: {
+		// 	paths: ["dist/*.js", "public/**/*"],
+		// 	options: {
+		// 		usePolling: false,
+		// 	},
+		// },
+		// port: 8080,
+		// webSocketServer: "ws",
 	},
 });

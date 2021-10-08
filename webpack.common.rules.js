@@ -1,41 +1,90 @@
 var path = require("path");
+const Config = require("webpack-chain");
+const config = new Config();
 
-module.exports = {
-	module: {
-		rules: [
-			{
-				test: /\.m?js$|\.es6$|\.js$/i, //不能对js文件进行babel,有文件有问题
-				include: [path.resolve("./src")],
-				exclude: /node_modules/, //不需要对第三方模块进行转换，耗费性能
-				loader: "babel-loader", //bable-loader打通了webpack和bable  bable-core
-				options: {},
-			},
+config.module
+	.rule("babel-loader")
+	.test(/\.m?js$|\.es6$|\.js$/i)
+	.use("babel-loader")
+	.loader("babel-loader")
+	.end()
+	.exclude.add(/node_modules/)
+	.end()
+	.include.add(path.resolve("./src"))
+	.end();
 
-			{
-				//use数组中loader执行顺序：从右到左，从下到上，依次执行
-				test: /\.(sa|sc|le|c)ss$/i, // 针对 .scss 或者 .css 后缀的文件设置 loader
-				use: [
-					{
-						loader: "style-loader", // 用style标签将样式插入到head中
-					},
-					{
-						loader: "css-loader",
-						options: {
-							importLoaders: 1, // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
-							sourceMap: false, //如果改为true，会导致不通机器上chunkhash不同
-						},
-					},
-				],
-			},
-			{
-				test: /\.html$/i,
-				loader: "html-loader",
-			},
-			{
-				test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-				// More information here https://webpack.js.org/guides/asset-modules/
-				type: "asset",
-			},
-		],
+config.module
+	.rule("css")
+	.test(/\.(c)ss$/i)
+	.use("vue-style-loader")
+	.loader("vue-style-loader")
+	.end()
+	.use("css-loader")
+	.loader("css-loader")
+	.options({
+		importLoaders: 1, // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
+		sourceMap: false, //如果改为true，会导致不通机器上chunkhash不同
+	});
+config.module
+	.rule("sass") // css-loader 相关配置
+	.test(/\.(sa|sc|le)ss$/i)
+	.use("vue-style-loader")
+	.loader("vue-style-loader")
+	.end()
+	.use("css-loader")
+	.loader("css-loader")
+	.options({
+		importLoaders: 1, // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
+		sourceMap: false, //如果改为true，会导致不通机器上chunkhash不同
+	})
+	.end()
+	.use("sass-loader")
+	.loader("sass-loader")
+	.options({
+		implementation: require("sass"),
+		sassOptions: {
+			indentedSyntax: true, // optional
+		},
+	});
+config.module
+	.rule("html")
+	.test(/\.html$/i)
+
+	.use("html-loader")
+	.loader("html-loader");
+
+config.module
+	.rule("asset")
+	.test(/\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i)
+	.type("asset");
+
+config.module
+	.rule("vue") // vue-loader 相关配置
+	.test(/\.vue$/) // 匹配 .vue 文件
+	.use("vue-loader")
+	.loader("vue-loader")
+	.end()
+	.end();
+
+const { VuetifyLoaderPlugin } = require("vuetify-loader");
+config.plugin("VuetifyLoaderPlugin").use(VuetifyLoaderPlugin, [
+	{
+		/**
+		 * This function will be called for every tag used in each vue component
+		 * It should return an array, the first element will be inserted into the
+		 * components array, the second should be a corresponding import
+		 *
+		 * originalTag - the tag as it was originally used in the template
+		 * kebabTag    - the tag normalised to kebab-case
+		 * camelTag    - the tag normalised to PascalCase
+		 * path        - a relative path to the current .vue file
+		 * component   - a parsed representation of the current component
+		 */
+		match(originalTag, { kebabTag, camelTag, path, component }) {
+			if (kebabTag.startsWith("core-")) {
+				return [camelTag, `import ${camelTag} from '@/components/core/${camelTag.substring(4)}.vue'`];
+			}
+		},
 	},
-};
+]);
+module.exports = config.toConfig();

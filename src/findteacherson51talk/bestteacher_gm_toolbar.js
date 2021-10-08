@@ -67,7 +67,7 @@ function GetCalculatorIndicator() {
 		try {
 			f = new Function("t", `return ${conf.calcIndicator}`);
 		} catch (error) {
-			f = new Function("t", `return Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount`);
+			f = new Function("t", `return Math.ceil((t.label * t.thumbpRate) / 100) + t.favoritesCount`);
 			console.log(error);
 			alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`);
 		}

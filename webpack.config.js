@@ -1,6 +1,6 @@
 var { merge } = require("webpack-merge");
 
-var baseconfig = require("./webpack.config.core");
+var baseconfig = require("./webpack.base.config");
 
 var userscriptconfig = require("./webpack.userscripts.config");
 
