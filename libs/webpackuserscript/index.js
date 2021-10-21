@@ -98,7 +98,7 @@ module.exports = class WebpackUserscript {
 							// non-entry
 							continue;
 						}
-
+						
 						for (const file of chunk.files) {
 							const hash = compilation.hash;
 							const querySplit = file.indexOf("?");

@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name Who's the Best Teacher
+// @name Find Best Teacher(Jquery)
 // @version 2021.4.15001
 // @namespace https://github.com/niubilityfrontend
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
@@ -23,6 +23,7 @@
 // ==/UserScript==
 
 // @require https://code.jquery.com/jquery-3.6.0.min.js
+import dayjs from "dayjs"
 import { conf } from "./bestteacher_gm_toolbar"
 import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
 import "./detailpage"
@@ -31,6 +32,8 @@ import "./jqueryextend"
 import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage"
 import "./pacesetup"
 import UiHtmlTemplate from "./pluginUITemplate.html"
+
+dayjs.extend(import("dayjs/plugin/relativeTime"));
 
 let asc = function (a, b) {
 	let av = $(a).attr("indicator");
@@ -380,16 +383,17 @@ if (settings.isListPage || settings.isDetailPage) {
 									searchoptions: { sopt: ["cn"] },
 									formatter: function formatter(value, options, rData) {
 										if (value) {
-											let d = Date.now() - value;
-											if (d < 1000 * 60) {
-												return "刚刚";
-											} else if (d < 1000 * 60 * 60) {
-												return (d / 60000).toFixed(0) + "分";
-											} else if (d < 1000 * 60 * 60 * 24) {
-												return (d / 3600000).toFixed(0) + "时";
-											} else {
-												return (d / 86400000).toFixed(0) + "天";
-											}
+											return dayjs(value).fromNow(true);
+											// let d = Date.now() - value;
+											// if (d < 1000 * 60) {
+											// 	return "刚刚";
+											// } else if (d < 1000 * 60 * 60) {
+											// 	return (d / 60000).toFixed(0) + "分";
+											// } else if (d < 1000 * 60 * 60 * 24) {
+											// 	return (d / 3600000).toFixed(0) + "时";
+											// } else {
+											// 	return (d / 86400000).toFixed(0) + "天";
+											// }
 										} else return "na";
 									},
 								},

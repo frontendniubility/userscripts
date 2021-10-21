@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2021.9.527132430
+// @version     2021.10.521114345
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -54,7 +54,7 @@
     function _defineProperty(obj, key, value) {
         if (key in obj) {
             Object.defineProperty(obj, key, {
-                value,
+                value: value,
                 enumerable: true,
                 configurable: true,
                 writable: true
@@ -96,7 +96,7 @@
         return new Promise((function(resolve, reject) {
             GM_xmlhttpRequest({
                 method: "GET",
-                url,
+                url: url,
                 onload: function onload(res) {
                     return resolve(res.responseText);
                 },

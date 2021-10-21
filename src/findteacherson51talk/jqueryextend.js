@@ -1,19 +1,12 @@
-import PropertiesCaseInsensitive from "./../../libs/propertiesCaseInsensitive.mjs"
-import { formatters as o } from "./../../libs/dateFormat"
-
 ///date to string with formater
+import dayjs from "dayjs";
+import PropertiesCaseInsensitive from "./../../libs/propertiesCaseInsensitive.mjs";
 
 Date.prototype._toString = Date.prototype.toString;
 $.extend(Date.prototype, {
 	toString: function (format) {
 		if (!format) return this._toString();
-		let formattedDate = format;
-		for (let k in o) {
-			if (new RegExp("(" + k + ")").test(format)) {
-				formattedDate = formattedDate.replace(RegExp.$1, o[k](this));
-			}
-		}
-		return formattedDate;
+		return dayjs(this).format(format);
 	},
 });
 

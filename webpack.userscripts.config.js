@@ -4,7 +4,7 @@ const fs = require("fs");
 const extend = require("extend");
 const WebpackUserscript = require("./libs/webpackuserscript");
 // const webpacktestplugin = require("./libs/webpackhookstest");
-
+const dayjs = require("dayjs");
 const { JsonDB } = require("node-json-db");
 const { Config } = require("node-json-db/dist/lib/JsonDBConfig");
 
@@ -38,8 +38,9 @@ let parseMeta = script =>
  * @returns
  */
 function getVersionString(buildtime) {
-	if (typeof buildtime != Date) buildtime = new Date(buildtime);
-	return `${buildtime.toString("yyyy.M")}.5${buildtime.toString("DDHHmmss")}`;
+	let d = dayjs(buildtime);
+	//	if (typeof buildtime != Date) buildtime = new Date(buildtime);
+	return `${d.format("YYYY.M")}.5${d.format("DDHHmmss")}`;
 }
 
 let wpus = new WebpackUserscript({
@@ -49,8 +50,7 @@ let wpus = new WebpackUserscript({
 			return {};
 		} else {
 			let headers = parseMeta(fs.readFileSync(origionpath, "utf8"));
-			var versionKeyPath = "/" + path.relative(__dirname, origionpath).replaceAll("\\", "/");
-
+			var versionKeyPath = "/" + path.relative(__dirname, origionpath).replace(/\\/gi, "/");
 			var hash = data.chunkHash;
 
 			// 编译状态下（开发模式或者生产模式）

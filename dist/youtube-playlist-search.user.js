@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Search
-// @version     2021.9.527132430
+// @version     2021.10.521114345
 // @description Allows you to quickly search through youtube playlists
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -137,8 +137,8 @@
                 return document.body.appendChild(elem);
             }));
             return {
-                txtSearch,
-                resultCount
+                txtSearch: txtSearch,
+                resultCount: resultCount
             };
         },
         search: function search() {
@@ -172,7 +172,7 @@
                     sel: ITEM_SELECTOR,
                     onmatch: function onmatch(elem) {
                         yps._items.push({
-                            elem,
+                            elem: elem,
                             name: util.q(TEXT_SELECTOR, elem).textContent.toLowerCase(),
                             watched: false
                         });
