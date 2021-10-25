@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Find Best Teacher(Jquery)
-// @version     2021.10.521142520
+// @version     2021.10.5251402
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -469,6 +469,163 @@
                 }, w.en = v[D], w.Ls = v, w.p = {}, w;
             }));
         },
+        852: function(module, __unused_webpack_exports, __webpack_require__) {
+            !function(e, _) {
+                true ? module.exports = _(__webpack_require__(484)) : 0;
+            }(this, (function(e) {
+                "use strict";
+                function _(e) {
+                    return e && "object" == typeof e && "default" in e ? e : {
+                        default: e
+                    };
+                }
+                var t = _(e), d = {
+                    name: "zh-cn",
+                    weekdays: "星期日_星期一_星期二_星期三_星期四_星期五_星期六".split("_"),
+                    weekdaysShort: "周日_周一_周二_周三_周四_周五_周六".split("_"),
+                    weekdaysMin: "日_一_二_三_四_五_六".split("_"),
+                    months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_"),
+                    monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
+                    ordinal: function(e, _) {
+                        switch (_) {
+                          case "W":
+                            return e + "周";
+
+                          default:
+                            return e + "日";
+                        }
+                    },
+                    weekStart: 1,
+                    yearStart: 4,
+                    formats: {
+                        LT: "HH:mm",
+                        LTS: "HH:mm:ss",
+                        L: "YYYY/MM/DD",
+                        LL: "YYYY年M月D日",
+                        LLL: "YYYY年M月D日Ah点mm分",
+                        LLLL: "YYYY年M月D日ddddAh点mm分",
+                        l: "YYYY/M/D",
+                        ll: "YYYY年M月D日",
+                        lll: "YYYY年M月D日 HH:mm",
+                        llll: "YYYY年M月D日dddd HH:mm"
+                    },
+                    relativeTime: {
+                        future: "%s内",
+                        past: "%s前",
+                        s: "几秒",
+                        m: "1 分钟",
+                        mm: "%d 分钟",
+                        h: "1 小时",
+                        hh: "%d 小时",
+                        d: "1 天",
+                        dd: "%d 天",
+                        M: "1 个月",
+                        MM: "%d 个月",
+                        y: "1 年",
+                        yy: "%d 年"
+                    },
+                    meridiem: function(e, _) {
+                        var t = 100 * e + _;
+                        return t < 600 ? "凌晨" : t < 900 ? "早上" : t < 1100 ? "上午" : t < 1300 ? "中午" : t < 1800 ? "下午" : "晚上";
+                    }
+                };
+                return t.default.locale(d, null, !0), d;
+            }));
+        },
+        110: function(module) {
+            !function(r, e) {
+                true ? module.exports = e() : 0;
+            }(this, (function() {
+                "use strict";
+                return function(r, e, t) {
+                    r = r || {};
+                    var n = e.prototype, o = {
+                        future: "in %s",
+                        past: "%s ago",
+                        s: "a few seconds",
+                        m: "a minute",
+                        mm: "%d minutes",
+                        h: "an hour",
+                        hh: "%d hours",
+                        d: "a day",
+                        dd: "%d days",
+                        M: "a month",
+                        MM: "%d months",
+                        y: "a year",
+                        yy: "%d years"
+                    };
+                    function i(r, e, t, o) {
+                        return n.fromToBase(r, e, t, o);
+                    }
+                    t.en.relativeTime = o, n.fromToBase = function(e, n, i, d, u) {
+                        for (var f, a, s, l = i.$locale().relativeTime || o, h = r.thresholds || [ {
+                            l: "s",
+                            r: 44,
+                            d: "second"
+                        }, {
+                            l: "m",
+                            r: 89
+                        }, {
+                            l: "mm",
+                            r: 44,
+                            d: "minute"
+                        }, {
+                            l: "h",
+                            r: 89
+                        }, {
+                            l: "hh",
+                            r: 21,
+                            d: "hour"
+                        }, {
+                            l: "d",
+                            r: 35
+                        }, {
+                            l: "dd",
+                            r: 25,
+                            d: "day"
+                        }, {
+                            l: "M",
+                            r: 45
+                        }, {
+                            l: "MM",
+                            r: 10,
+                            d: "month"
+                        }, {
+                            l: "y",
+                            r: 17
+                        }, {
+                            l: "yy",
+                            d: "year"
+                        } ], m = h.length, c = 0; c < m; c += 1) {
+                            var y = h[c];
+                            y.d && (f = d ? t(e).diff(i, y.d, !0) : i.diff(e, y.d, !0));
+                            var p = (r.rounding || Math.round)(Math.abs(f));
+                            if (s = f > 0, p <= y.r || !y.r) {
+                                p <= 1 && c > 0 && (y = h[c - 1]);
+                                var v = l[y.l];
+                                u && (p = u("" + p)), a = "string" == typeof v ? v.replace("%d", p) : v(p, n, y.l, s);
+                                break;
+                            }
+                        }
+                        if (n) return a;
+                        var M = s ? l.future : l.past;
+                        return "function" == typeof M ? M(a) : M.replace("%s", a);
+                    }, n.to = function(r, e) {
+                        return i(r, e, this, !0);
+                    }, n.from = function(r, e) {
+                        return i(r, e, this);
+                    };
+                    var d = function(r) {
+                        return r.$u ? t.utc() : t();
+                    };
+                    n.toNow = function(r) {
+                        return this.to(d(this), r);
+                    }, n.fromNow = function(r) {
+                        return this.from(d(this), r);
+                    };
+                };
+            }));
+        },
         771: (module, __unused_webpack_exports, __webpack_require__) => {
             var content = __webpack_require__(228);
             if (content.__esModule) content = content.default;
@@ -725,28 +882,6 @@
         };
     })();
     (() => {
-        var getProto = Object.getPrototypeOf ? obj => Object.getPrototypeOf(obj) : obj => obj.__proto__;
-        var leafPrototypes;
-        __webpack_require__.t = function(value, mode) {
-            if (mode & 1) value = this(value);
-            if (mode & 8) return value;
-            if (typeof value === "object" && value) {
-                if (mode & 4 && value.__esModule) return value;
-                if (mode & 16 && typeof value.then === "function") return value;
-            }
-            var ns = Object.create(null);
-            __webpack_require__.r(ns);
-            var def = {};
-            leafPrototypes = leafPrototypes || [ null, getProto({}), getProto([]), getProto(getProto) ];
-            for (var current = mode & 2 && value; typeof current == "object" && !~leafPrototypes.indexOf(current); current = getProto(current)) {
-                Object.getOwnPropertyNames(current).forEach(key => def[key] = () => value[key]);
-            }
-            def["default"] = () => value;
-            __webpack_require__.d(ns, def);
-            return ns;
-        };
-    })();
-    (() => {
         __webpack_require__.d = (exports, definition) => {
             for (var key in definition) {
                 if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
@@ -759,66 +894,7 @@
         };
     })();
     (() => {
-        __webpack_require__.f = {};
-        __webpack_require__.e = chunkId => Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
-            __webpack_require__.f[key](chunkId, promises);
-            return promises;
-        }, []));
-    })();
-    (() => {
-        __webpack_require__.u = chunkId => "" + chunkId + ".js";
-    })();
-    (() => {
         __webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop);
-    })();
-    (() => {
-        var inProgress = {};
-        var dataWebpackPrefix = "userscripts:";
-        __webpack_require__.l = (url, done, key, chunkId) => {
-            if (inProgress[url]) {
-                inProgress[url].push(done);
-                return;
-            }
-            var script, needAttach;
-            if (key !== undefined) {
-                var scripts = document.getElementsByTagName("script");
-                for (var i = 0; i < scripts.length; i++) {
-                    var s = scripts[i];
-                    if (s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) {
-                        script = s;
-                        break;
-                    }
-                }
-            }
-            if (!script) {
-                needAttach = true;
-                script = document.createElement("script");
-                script.charset = "utf-8";
-                script.timeout = 120;
-                if (__webpack_require__.nc) {
-                    script.setAttribute("nonce", __webpack_require__.nc);
-                }
-                script.setAttribute("data-webpack", dataWebpackPrefix + key);
-                script.src = url;
-            }
-            inProgress[url] = [ done ];
-            var onScriptComplete = (prev, event) => {
-                script.onerror = script.onload = null;
-                clearTimeout(timeout);
-                var doneFns = inProgress[url];
-                delete inProgress[url];
-                script.parentNode && script.parentNode.removeChild(script);
-                doneFns && doneFns.forEach(fn => fn(event));
-                if (prev) return prev(event);
-            };
-            var timeout = setTimeout(onScriptComplete.bind(null, undefined, {
-                type: "timeout",
-                target: script
-            }), 12e4);
-            script.onerror = onScriptComplete.bind(null, script.onerror);
-            script.onload = onScriptComplete.bind(null, script.onload);
-            needAttach && document.head.appendChild(script);
-        };
     })();
     (() => {
         __webpack_require__.r = exports => {
@@ -833,73 +909,20 @@
         };
     })();
     (() => {
-        __webpack_require__.p = "/dist/";
-    })();
-    (() => {
         __webpack_require__.b = document.baseURI || self.location.href;
         var installedChunks = {
             607: 0
         };
-        __webpack_require__.f.j = (chunkId, promises) => {
-            var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
-            if (installedChunkData !== 0) {
-                if (installedChunkData) {
-                    promises.push(installedChunkData[2]);
-                } else {
-                    if (true) {
-                        var promise = new Promise((resolve, reject) => installedChunkData = installedChunks[chunkId] = [ resolve, reject ]);
-                        promises.push(installedChunkData[2] = promise);
-                        var url = __webpack_require__.p + __webpack_require__.u(chunkId);
-                        var error = new Error;
-                        var loadingEnded = event => {
-                            if (__webpack_require__.o(installedChunks, chunkId)) {
-                                installedChunkData = installedChunks[chunkId];
-                                if (installedChunkData !== 0) installedChunks[chunkId] = undefined;
-                                if (installedChunkData) {
-                                    var errorType = event && (event.type === "load" ? "missing" : event.type);
-                                    var realSrc = event && event.target && event.target.src;
-                                    error.message = "Loading chunk " + chunkId + " failed.\n(" + errorType + ": " + realSrc + ")";
-                                    error.name = "ChunkLoadError";
-                                    error.type = errorType;
-                                    error.request = realSrc;
-                                    installedChunkData[1](error);
-                                }
-                            }
-                        };
-                        __webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
-                    } else installedChunks[chunkId] = 0;
-                }
-            }
-        };
-        var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-            var [chunkIds, moreModules, runtime] = data;
-            var moduleId, chunkId, i = 0;
-            if (chunkIds.some(id => installedChunks[id] !== 0)) {
-                for (moduleId in moreModules) {
-                    if (__webpack_require__.o(moreModules, moduleId)) {
-                        __webpack_require__.m[moduleId] = moreModules[moduleId];
-                    }
-                }
-                if (runtime) var result = runtime(__webpack_require__);
-            }
-            if (parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-            for (;i < chunkIds.length; i++) {
-                chunkId = chunkIds[i];
-                if (__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-                    installedChunks[chunkId][0]();
-                }
-                installedChunks[chunkIds[i]] = 0;
-            }
-        };
-        var chunkLoadingGlobal = self["webpackChunkuserscripts"] = self["webpackChunkuserscripts"] || [];
-        chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-        chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
     })();
     var __webpack_exports__ = {};
     (() => {
         "use strict";
         var dayjs_min = __webpack_require__(484);
         var dayjs_min_default = __webpack_require__.n(dayjs_min);
+        var zh_cn = __webpack_require__(852);
+        var zh_cn_default = __webpack_require__.n(zh_cn);
+        var relativeTime = __webpack_require__(110);
+        var relativeTime_default = __webpack_require__.n(relativeTime);
         function _slicedToArray(arr, i) {
             return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
         }
@@ -1676,7 +1699,8 @@
         var pacesetup = __webpack_require__(895);
         var code = '<div id="filterdialog" title="Teacher Filter"> <div id="tabs"> <div> <ul> <li><a href="#tabs-1">Search Teachers</a></li> <li><a href="#tabs-2">Sorted Teachers</a></li> </ul> <br/> <div id="filterButtons"> <div id="buttons" style="text-align:center"> <button id="asc" title="当前为降序，点击后按升序排列">升序</button> <button id="desc" title="当前为升序，点击进行降序排列" style="display:none">降序</button> <input id="tInfoExprHours" title="缓存过期时间（小时）"/> <button title="清空缓存，并重新搜索">清除缓存</button> <a>报告BUG</a> <a>帮助</a> </div> <div id="buttons1" style="text-align:center"> <div id="timesmutipulecheck"></div> <button>反选时间段</button> <button id="autogettodaysteachers" title="自动获取上述选择时段的全部教师并缓存">获取选定时段老师</button> </div> </div> </div> <div id="tabs-1"> 当前可选 <span id="tcount"></span> 位,被折叠 <span id="thidecount"></span> 位。 <br/> 有效经验值 <span id="_tLabelCount"></span> <br/> <div id="tlabelslider"></div> 收藏数 <span id="_tfc"></span> <br/> <div id="fcSlider"></div> 好评率 <span id="_thumbupRate"></span> <br/> <div id="thumbupRateslider"></div> 年龄 <span id="_tAge"></span> <br/> <div id="tAgeSlider"></div> </div> <div id="tabs-2"> <table id="teachertab"> <caption></caption> <th id="vwswslwo"></th> </table> <div id="pager5"></div> </div> </div> </div> ';
         const pluginUITemplate = code;
-        dayjs_min_default().extend(__webpack_require__.e(110).then(__webpack_require__.t.bind(__webpack_require__, 110, 23)));
+        dayjs_min_default().extend(relativeTime_default());
+        dayjs_min_default().locale(zh_cn_default());
         var asc = function asc(a, b) {
             var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
             if (!av || !bv) return 0;

@@ -24,16 +24,19 @@
 
 // @require https://code.jquery.com/jquery-3.6.0.min.js
 import dayjs from "dayjs"
-import { conf } from "./bestteacher_gm_toolbar"
-import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
-import "./detailpage"
-import "./findingteacher.user.css"
-import "./jqueryextend"
-import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage"
-import "./pacesetup"
-import UiHtmlTemplate from "./pluginUITemplate.html"
+import zh_cn from "dayjs/locale/zh-cn";
+import relative from "dayjs/plugin/relativeTime";
+import { conf } from "./bestteacher_gm_toolbar";
+import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
+import "./detailpage";
+import "./findingteacher.user.css";
+import "./jqueryextend";
+import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage";
+import "./pacesetup";
+import UiHtmlTemplate from "./pluginUITemplate.html";
 
-dayjs.extend(import("dayjs/plugin/relativeTime"));
+dayjs.extend(relative);
+dayjs.locale(zh_cn);
 
 let asc = function (a, b) {
 	let av = $(a).attr("indicator");

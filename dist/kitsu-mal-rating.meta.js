@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kitsu MAL Rating
-// @version     2021.10.521114345
+// @version     2021.10.5251402
 // @author      synthtech / fuzetsu
 // @description Shows MyAnimeList.net rating on Kitsu.io
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
