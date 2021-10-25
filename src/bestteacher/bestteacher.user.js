@@ -25,6 +25,8 @@ import vuetify from "./plugins/vuetify"; // path to vuetify export
 $("body").append(`<div id="app"></div>`);
 $("body").append(`<div id="ee">xxxxxxxxxxxxxxx</div>`);
 window.Vue = Vue;
+x => x;
+
 new Vue({
 	vuetify,
 }).$mount("#app");

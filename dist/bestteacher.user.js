@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        BestTeachers(Vuetify)
-// @version     2021.10.521114345
+// @version     2021.10.5251114
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -7376,6 +7376,9 @@
         $("body").append('<div id="app"></div>');
         $("body").append('<div id="ee">xxxxxxxxxxxxxxx</div>');
         window.Vue = vue_runtime_esm;
+        (function(x) {
+            return x;
+        });
         new vue_runtime_esm({
             vuetify: vuetify
         }).$mount("#app");

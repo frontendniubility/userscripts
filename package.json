@@ -54,7 +54,6 @@
 		"@vue/compiler-sfc": "^3.2.20",
 		"ansi-html-community": "0.0.8",
 		"auto-changelog": "^2.3.0",
-		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.2.3",
 		"babel-plugin-minify-numeric-literals": "^0.4.3",
 		"babel-plugin-transform-merge-sibling-variables": "^6.9.4",

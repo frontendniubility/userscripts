@@ -2,6 +2,8 @@ const path = require("path");
 var { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
 
+
+
 var rulesconfig = require("./webpack.common.rules");
 
 const { entries } = require("./webpack.common.entries");
