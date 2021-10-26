@@ -3,7 +3,7 @@ module.exports = {
 
 	proseWrap: "preserve",
 	requireConfig: true,
-	semi: true,
+	semi: false, //结尾分号
 	singleQuote: false,
 
 	/*  prettier的配置 */

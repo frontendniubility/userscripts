@@ -1,13 +1,14 @@
-const path = require("path");
-var { merge } = require("webpack-merge");
+const path = require("path")
+var { merge } = require("webpack-merge")
 
-var rulesconfig = require("./webpack.common.rules");
+var rulesconfig = require("./webpack.common.rules")
 
-const { entries } = require("./webpack.common.entries");
+const { entries } = require("./webpack.common.entries")
 
 let terserPlugin = compiler => {
-	const TerserPlugin = require("terser-webpack-plugin");
+	const TerserPlugin = require("terser-webpack-plugin")
 	new TerserPlugin({
+		parallel: true,
 		test: /\.(js|es6|cjs|mjs)(\?.*)?$/i,
 		extractComments: false,
 		terserOptions: {
@@ -26,38 +27,78 @@ let terserPlugin = compiler => {
 			ie8: false,
 			keep_fnames: true,
 			keep_classnames: true,
+			// drop_debugger: true,
 		},
-	}).apply(compiler);
-};
+	}).apply(compiler)
+}
 let cssMinimizer = compiler => {
-	const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+	const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 	new CssMinimizerPlugin({
 		parallel: true,
-
+		test: /\.(sa|sc|le|c)ss$/i,
 		minimizerOptions: {
-			
 			preset: [
-				"default",
+				"advanced",
 				{
-					mergeLonghand: false,
-					cssDeclarationSorter: false,
+					//
+					cssDeclarationSorter: true,
+					calc: true,
+					colormin: true,
+					convertValues: true,
+					discardComments: { removeAll: true },
+					discardDuplicates: true,
+					discardEmpty: true,
+					discardOverridden: true,
+					discardUnused: true,
+					mergeIdents: true,
+					mergeLonghand: true,
+					mergeRules: true,
+					minifyFontValues: true,
+					minifyGradients: true,
+					minifyParams: true,
+					minifySelectors: true,
+					normalizeCharset: true,
+					normalizeDisplayValues: true,
+					normalizePositions: true,
+					normalizeRepeatStyle: true,
+					normalizeString: true,
+					normalizeTimingFunctions: true,
+					normalizeUnicode: true,
+					normalizeUrl: true,
+					normalizeWhitespace: true,
+					orderedValues: true,
+					reduceIdents: true,
+					reduceInitial: true,
+					reduceTransforms: true,
+					svgo: true,
+					uniqueSelectors: true,
+					zindex: true,
 				},
 			],
+			minify: [
+				"...",
+				//
+				CssMinimizerPlugin.cssnanoMinify, //
+				CssMinimizerPlugin.cleanCssMinify, //
+				CssMinimizerPlugin.cssoMinify, //
+				CssMinimizerPlugin.esbuildMinify,
+			],
 		},
-	}).apply(compiler);
-};
+	}).apply(compiler)
+}
 module.exports = merge(rulesconfig, {
 	mode: "production", //env.NODE_ENV === 'development' ? 'development' : 'production',
 	optimization: {
 		emitOnErrors: true,
 		minimize: true,
 		minimizer: [
+			// "...",
 			compiler => {
-				terserPlugin(compiler);
-				cssMinimizer(compiler);
+				terserPlugin(compiler)
+				cssMinimizer(compiler)
 			},
 		],
-		usedExports: true,
+		usedExports: "global",
 		//removeEmptyChunks: true
 	},
 
@@ -119,4 +160,4 @@ module.exports = merge(rulesconfig, {
 		// port: 8080,
 		// webSocketServer: "ws",
 	},
-});
+})
