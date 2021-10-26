@@ -24,16 +24,16 @@
 
 // @require https://code.jquery.com/jquery-3.6.0.min.js
 import dayjs from "dayjs"
-import zh_cn from "dayjs/locale/zh-cn";
-import relative from "dayjs/plugin/relativeTime";
-import { conf } from "./bestteacher_gm_toolbar";
-import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common";
-import "./detailpage";
-import "./findingteacher.user.css";
-import "./jqueryextend";
-import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage";
-import "./pacesetup";
-import UiHtmlTemplate from "./pluginUITemplate.html";
+import zh_cn from "dayjs/locale/zh-cn"
+import relative from "dayjs/plugin/relativeTime"
+import { conf } from "./bestteacher_gm_toolbar"
+import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
+import "./detailpage"
+import "./findingteacher.user.css"
+import "./jqueryextend"
+import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage"
+import "./pacesetup"
+import UiHtmlTemplate from "./pluginUITemplate.html"
 
 dayjs.extend(relative);
 dayjs.locale(zh_cn);
@@ -54,7 +54,14 @@ let sortByIndicator = function (sortBy) {
 	let sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
 	$(".s-t-content.f-cb").empty().append(sortEle);
 };
+/**
+ * @typedef {import('./global').TypeofTeacher} Teacher
+ * @param {JQuery<Element>} jqr
+ */
 function getCatchedTeachers() {
+	/**
+	 * @type Array<Teacher>
+	 */
 	let teachers = [];
 	$.each(GM_listValues(), function (i, item) {
 		if (item.startsWith("tinfo-")) {
