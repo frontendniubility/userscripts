@@ -50,9 +50,10 @@ let desc = function (a, b) {
 	if (!av || !bv) return 0;
 	return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
 };
-let sortByIndicator = function (sortBy) {
-	let sortEle = $(".s-t-content.f-cb .item").sort(sortBy);
-	$(".s-t-content.f-cb").empty().append(sortEle);
+let sortElementsByIndicator = function (sortBy) {
+	let container = $(".s-t-content.f-cb"),
+		sortedElements = container.find(".item").sort(sortBy);
+	container.detach().append(sortedElements);
 };
 /**
  * @typedef {import('./global').TypeofTeacher} Teacher
@@ -204,7 +205,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				.click(function () {
 					$("#desc").show();
 					$(this).hide();
-					sortByIndicator(asc);
+					sortElementsByIndicator(asc);
 				})
 				.end()
 				//降序
@@ -213,7 +214,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				.click(function () {
 					$("#asc").show();
 					$(this).hide();
-					sortByIndicator(desc);
+					sortElementsByIndicator(desc);
 				})
 				.end()
 				// 缓存过期时间（小时）
@@ -467,7 +468,7 @@ if (settings.isListPage || settings.isDetailPage) {
 	submit(function (next) {
 		$(".s-t-list").before($(".s-t-page").prop("outerHTML"));
 		$("#tabs>div:first").append($(".s-t-page").prop("outerHTML"));
-		sortByIndicator(desc);
+		sortElementsByIndicator(desc);
 		$("#tabs").tabs("option", "active", 1);
 		if (settings.isDetailPage) {
 			$("#tabs").tabs("option", "disabled", [0]);

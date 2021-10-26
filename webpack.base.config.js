@@ -1,39 +1,61 @@
 const path = require("path");
 var { merge } = require("webpack-merge");
-const TerserPlugin = require("terser-webpack-plugin");
-
-
 
 var rulesconfig = require("./webpack.common.rules");
 
 const { entries } = require("./webpack.common.entries");
+
+let terserPlugin = compiler => {
+	const TerserPlugin = require("terser-webpack-plugin");
+	new TerserPlugin({
+		test: /\.(js|es6|cjs|mjs)(\?.*)?$/i,
+		extractComments: false,
+		terserOptions: {
+			warnings: false,
+			parse: {},
+			compress: false,
+			// compress: {},
+			mangle: false, // Note `mangle.properties` is `false` by default.
+			output: {
+				comments: false,
+				beautify: true,
+				inline_script: false,
+			},
+			toplevel: false,
+			nameCache: null,
+			ie8: false,
+			keep_fnames: true,
+			keep_classnames: true,
+		},
+	}).apply(compiler);
+};
+let cssMinimizer = compiler => {
+	const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+	new CssMinimizerPlugin({
+		parallel: true,
+
+		minimizerOptions: {
+			
+			preset: [
+				"default",
+				{
+					mergeLonghand: false,
+					cssDeclarationSorter: false,
+				},
+			],
+		},
+	}).apply(compiler);
+};
 module.exports = merge(rulesconfig, {
 	mode: "production", //env.NODE_ENV === 'development' ? 'development' : 'production',
 	optimization: {
 		emitOnErrors: true,
 		minimize: true,
 		minimizer: [
-			new TerserPlugin({
-				test: /\.(js|es6|cjs|mjs)(\?.*)?$/i,
-				extractComments: false,
-				terserOptions: {
-					warnings: false,
-					parse: {},
-					compress: false,
-					// compress: {},
-					mangle: false, // Note `mangle.properties` is `false` by default.
-					output: {
-						comments: false,
-						beautify: true,
-						inline_script: false,
-					},
-					toplevel: false,
-					nameCache: null,
-					ie8: false,
-					keep_fnames: true,
-					keep_classnames: true,
-				},
-			}),
+			compiler => {
+				terserPlugin(compiler);
+				cssMinimizer(compiler);
+			},
 		],
 		usedExports: true,
 		//removeEmptyChunks: true

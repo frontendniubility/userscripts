@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hummingbird Compatibility Hover
-// @version     2021.10.5261038
+// @version     2021.10.5261438
 // @author      fuzetsu
 // @description Shows hummingbird user compatibility rating at the bottom right of the screen when a user link is hovered over
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
