@@ -33,57 +33,56 @@ let terserPlugin = compiler => {
 }
 let cssMinimizer = compiler => {
 	const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+	let opt = {
+		preset: [
+			"advanced",
+			{
+				//
+				cssDeclarationSorter: true,
+				calc: true,
+				colormin: true,
+				convertValues: true,
+				discardComments: { removeAll: true },
+				discardDuplicates: { removeAll: true },
+				discardEmpty: true,
+				discardOverridden: true,
+				discardUnused: true,
+				mergeIdents: true,
+				mergeLonghand: true,
+				mergeRules: true,
+				minifyFontValues: true,
+				minifyGradients: true,
+				minifyParams: true,
+				minifySelectors: true,
+				normalizeCharset: true,
+				normalizeDisplayValues: true,
+				normalizePositions: true,
+				normalizeRepeatStyle: true,
+				normalizeString: true,
+				normalizeTimingFunctions: true,
+				normalizeUnicode: true,
+				normalizeUrl: true,
+				normalizeWhitespace: true,
+				orderedValues: true,
+				reduceIdents: true,
+				reduceInitial: true,
+				reduceTransforms: true,
+				svgo: true,
+				uniqueSelectors: true,
+				zindex: true,
+			},
+		],
+	}
 	new CssMinimizerPlugin({
 		parallel: true,
 		test: /\.(sa|sc|le|c)ss$/i,
-		minimizerOptions: {
-			preset: [
-				"advanced",
-				{
-					//
-					cssDeclarationSorter: true,
-					calc: true,
-					colormin: true,
-					convertValues: true,
-					discardComments: { removeAll: true },
-					discardDuplicates: true,
-					discardEmpty: true,
-					discardOverridden: true,
-					discardUnused: true,
-					mergeIdents: true,
-					mergeLonghand: true,
-					mergeRules: true,
-					minifyFontValues: true,
-					minifyGradients: true,
-					minifyParams: true,
-					minifySelectors: true,
-					normalizeCharset: true,
-					normalizeDisplayValues: true,
-					normalizePositions: true,
-					normalizeRepeatStyle: true,
-					normalizeString: true,
-					normalizeTimingFunctions: true,
-					normalizeUnicode: true,
-					normalizeUrl: true,
-					normalizeWhitespace: true,
-					orderedValues: true,
-					reduceIdents: true,
-					reduceInitial: true,
-					reduceTransforms: true,
-					svgo: true,
-					uniqueSelectors: true,
-					zindex: true,
-				},
-			],
-			minify: [
-				"...",
-				//
-				CssMinimizerPlugin.cssnanoMinify, //
-				CssMinimizerPlugin.cleanCssMinify, //
-				CssMinimizerPlugin.cssoMinify, //
-				CssMinimizerPlugin.esbuildMinify,
-			],
-		},
+		minimizerOptions: [opt, opt, opt, opt],
+		minify: [
+			CssMinimizerPlugin.cssnanoMinify, //
+			CssMinimizerPlugin.cleanCssMinify, //
+			CssMinimizerPlugin.cssoMinify, //
+			CssMinimizerPlugin.esbuildMinify,
+		],
 	}).apply(compiler)
 }
 module.exports = merge(rulesconfig, {
