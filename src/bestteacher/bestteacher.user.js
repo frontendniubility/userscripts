@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name BestTeachers(Vuetify)
+// @name Best Teachers(Vuetify)
 // @version 2021.4.15001
 // @namespace https://github.com/niubilityfrontend
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
@@ -20,8 +20,8 @@
 // @require https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js
 // ==/UserScript==
 
-import Vue from "vue";
-import vuetify from "./plugins/vuetify"; // path to vuetify export
+import Vue from "vue"
+import vuetify from "./plugins/vuetify" // path to vuetify export
 $("body").append(`<div id="app"></div>`);
 $("body").append(`<div id="ee">xxxxxxxxxxxxxxx</div>`);
 window.Vue = Vue;

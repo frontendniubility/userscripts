@@ -14,8 +14,9 @@ View more information about a particular script by clicking on its name.
 |Name|Links||
 |-|:-:|:-:|
 |Auto Close YouTube Ads|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/auto-close-youtube-ads)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/auto-close-youtube-ads.user.js)|
+|BestTeachers(Vuetify)|_no readme_|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/bestteacher.user.js)|
 |Crunchyroll Video Utilities|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/crunchyroll-video-utilities)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/crunchyroll-video-utilties.user.js)|
-|Who's the Best Teacher|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/findteacherson51talk)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/findingteacher.user.js)|
+|Find Best Teacher(Jquery)|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/findteacherson51talk)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/findingteacher.user.js)|
 |Format JSON|_no readme_|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/format-json.user.js)|
 |URLTest|_no readme_|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/URLTest.user.js)|
 |Kitsu MAL Rating|[Info](https://github.com/niubilityfrontend/userscripts/tree/master/src/kitsu-mal-rating)|[Install](https://github.com/niubilityfrontend/userscripts/raw/master/dist/kitsu-mal-rating.user.js)|
