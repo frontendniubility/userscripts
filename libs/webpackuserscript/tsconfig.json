@@ -1,5 +1,9 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true
-  },
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
+		"removeComments": true
+	}
 }

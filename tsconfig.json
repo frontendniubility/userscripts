@@ -1,30 +1,23 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"removeComments": true,
-		"outDir": "./dist",
-		"moduleResolution": "node",
-		"watch": true,
 		"allowJs": true,
 		"checkJs": true,
-		"rootDir": "./",
-		"strict": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
 		"module": "CommonJS",
+		"moduleResolution": "node",
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
-		"esModuleInterop": true,
-		"declaration": true,
-		"sourceMap": true
+		"outDir": "./dist",
+		"removeComments": true,
+		"rootDir": "./",
+		"sourceMap": true,
+		"strict": true,
+		"target": "es5",
+		"watch": true
 	},
-	"include": [
-		"src/**/*.ts",
-		"libs/**/*.ts"
-	],
-	"exclude": [
-		"node_modules",
-		"**/__tests__/*",
-		"**/tests/*",
-		"**/dist/*",
-		"libs/jqGrid*"
-	]
+	"exclude": ["node_modules", "**/__tests__/*", "**/tests/*", "**/dist/*", "libs/jqGrid*"],
+	"include": ["src/**/*.ts", "libs/**/*.ts"]
 }
