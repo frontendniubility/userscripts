@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hangouts Notifier
-// @version     2021.10.5261438
+// @version     2021.11.5031711
 // @author      fuzetsu
 // @description Show desktop notifications for the Hangouts web app
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

@@ -2,7 +2,7 @@ import { TeacherInfo, TeacherInfoBase } from "./common";
 import "./jqueryextend";
 
 ///88
-export const maxrate: number, minrate: number, maxlabel: number, minlabel: number, maxfc: number, minfc: number, maxage: number, minage: number;
+export const maxRate: number, minRate: number, maxLabel: number, minLabel: number, maxFc: number, minFc: number, maxAge: number, minAge: number
 
 export function getLeftPageCount(): number;
 

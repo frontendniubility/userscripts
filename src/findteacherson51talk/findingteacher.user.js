@@ -28,33 +28,34 @@ import zh_cn from "dayjs/locale/zh-cn"
 import relative from "dayjs/plugin/relativeTime"
 import { conf } from "./bestteacher_gm_toolbar"
 import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
-import "./detailpage"
 import "./findingteacher.user.css"
-import "./jqueryextend"
-import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxage, maxfc, maxlabel, maxrate, minage, minfc, minlabel, minrate } from "./listpage"
+import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate } from "./listpage"
 import "./pacesetup"
 import UiHtmlTemplate from "./pluginUITemplate.html"
+import("./jqueryextend")
+import("./detailpage")
 
-dayjs.extend(relative);
-dayjs.locale(zh_cn);
+dayjs.extend(relative)
+dayjs.locale(zh_cn)
 
 let asc = function (a, b) {
-	let av = $(a).attr("indicator");
-	let bv = $(b).attr("indicator");
-	if (!av || !bv) return 0;
-	return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
-};
+	let av = $(a).attr("indicator")
+	let bv = $(b).attr("indicator")
+	if (!av || !bv) return 0
+	return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1
+}
 let desc = function (a, b) {
-	let av = $(a).attr("indicator");
-	let bv = $(b).attr("indicator");
-	if (!av || !bv) return 0;
-	return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
-};
+	let av = $(a).attr("indicator")
+	let bv = $(b).attr("indicator")
+	if (!av || !bv) return 0
+	return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1
+}
 let sortElementsByIndicator = function (sortBy) {
 	let container = $(".s-t-content.f-cb"),
-		sortedElements = container.find(".item").sort(sortBy);
-	container.detach().append(sortedElements);
-};
+		sortedElements = container.find(".item").detach().sort(sortBy)
+	container.append(sortedElements)
+}
+
 /**
  * @typedef {import('./global').TypeofTeacher} Teacher
  * @param {JQuery<Element>} jqr
@@ -63,38 +64,38 @@ function getCatchedTeachers() {
 	/**
 	 * @type Array<Teacher>
 	 */
-	let teachers = [];
+	let teachers = []
 	$.each(GM_listValues(), function (i, item) {
 		if (item.startsWith("tinfo-")) {
-			let t = GM_getValue(item);
-			t.tid = item.slice(6, item.length);
-			teachers.push(t);
+			let t = GM_getValue(item)
+			t.tid = item.slice(6, item.length)
+			teachers.push(t)
 		}
-	});
-	let indexs = {};
+	})
+	let indexs = {}
 	teachers = teachers
 		.sort(function (t1, t2) {
-			if (t1.indicator == t2.indicator) return t1.favoritesCount > t2.favoritesCount ? -1 : 1;
-			return t1.indicator > t2.indicator ? -1 : 1;
+			if (t1.indicator == t2.indicator) return t1.favoritesCount > t2.favoritesCount ? -1 : 1
+			return t1.indicator > t2.indicator ? -1 : 1
 		})
 		.map((val, idx) => {
 			if (isNaN(indexs[val.type])) {
-				indexs[val.type] = 1;
+				indexs[val.type] = 1
 			} else {
-				indexs[val.type] += 1;
+				indexs[val.type] += 1
 			}
-			val.rank = indexs[val.type];
-			return val;
-		});
-	return teachers;
+			val.rank = indexs[val.type]
+			return val
+		})
+	return teachers
 }
 function getRankHtml(t) {
 	if (t) {
-		let colorif = "";
+		let colorif = ""
 		if (t.rank <= conf.markRankRed) {
-			colorif = "style = 'color:red'";
+			colorif = "style = 'color:red'"
 		}
-		return `<label title='在同类别教师中的排名' ${colorif}> ${t.rank}名</label>`;
+		return `<label title='在同类别教师中的排名' ${colorif}> ${t.rank}名</label>`
 	}
 }
 if (settings.isListPage || settings.isDetailPage) {
@@ -103,118 +104,118 @@ if (settings.isListPage || settings.isDetailPage) {
 		try {
 			let config = GM_getValue("filterconfig", {
 				l1: 300,
-				l2: maxlabel,
+				l2: maxLabel,
 				rate1: 97,
-				rate2: maxrate,
-				age1: minage,
-				age2: maxage,
-			});
+				rate2: maxRate,
+				age1: minAge,
+				age2: maxAge,
+			})
 
-			$("body").append(UiHtmlTemplate);
+			$("body").append(UiHtmlTemplate)
 			if (!settings.isListPage) {
-				$("#filterButtons").hide();
+				$("#filterButtons").hide()
 			}
-			$("body").append("<div id='teachlistdialog' style='display:none;'></div>");
-			$("body").append("<div id='wwwww'>已加载选课辅助插件。</div>"); //这是一个奇怪的BUG on jqueryui. 如果不多额外添加一个，则dialog无法弹出。
+			$("body").append("<div id='teachlistdialog' style='display:none;'></div>")
+			$("body").append("<div id='wwwww'>已加载选课辅助插件。</div>") //这是一个奇怪的BUG on jqueryui. 如果不多额外添加一个，则dialog无法弹出。
 			$("#tlabelslider")
 				.slider({
 					range: true,
-					min: minlabel - 1,
-					max: maxlabel,
-					values: [config.l1 < minlabel - 1 ? minlabel - 1 : config.l1, maxlabel],
+					min: minLabel - 1,
+					max: maxLabel,
+					values: [config.l1 < minLabel - 1 ? minLabel - 1 : config.l1, maxLabel],
 					slide: function (event, ui) {
-						$("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1]);
+						$("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
 				.on("slidestop", function (event, ui) {
-					let l1 = $("#tlabelslider").slider("values", 0);
-					let l2 = $("#tlabelslider").slider("values", 1);
-					let uifilters = getUiFilters();
-					let filterconfig = GM_getValue("filterconfig", uifilters);
-					filterconfig.l1 = l1;
-					filterconfig.l2 = l2;
-					GM_setValue("filterconfig", filterconfig);
-					executeFilters(uifilters);
-				});
+					let l1 = $("#tlabelslider").slider("values", 0)
+					let l2 = $("#tlabelslider").slider("values", 1)
+					let uifilters = getUiFilters()
+					let filterconfig = GM_getValue("filterconfig", uifilters)
+					filterconfig.l1 = l1
+					filterconfig.l2 = l2
+					GM_setValue("filterconfig", filterconfig)
+					executeFilters(uifilters)
+				})
 			$("#fcSlider")
 				.slider({
 					range: true,
-					min: minfc,
-					max: maxfc,
-					values: [config.fc1 < minfc ? minfc : config.fc1, maxfc],
+					min: minFc,
+					max: maxFc,
+					values: [config.fc1 < minFc ? minFc : config.fc1, maxFc],
 					slide: function (event, ui) {
-						$("#_tfc").html(ui.values[0] + " - " + ui.values[1]);
+						$("#_tfc").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
 				.on("slidestop", function (event, ui) {
-					let fc1 = $("#fcSlider").slider("values", 0);
-					let fc2 = $("#fcSlider").slider("values", 1);
-					let uifilters = getUiFilters();
-					let filterconfig = GM_getValue("filterconfig", uifilters);
-					filterconfig.fc1 = fc1;
-					filterconfig.fc2 = fc2;
-					GM_setValue("filterconfig", filterconfig);
-					executeFilters(uifilters);
-				});
+					let fc1 = $("#fcSlider").slider("values", 0)
+					let fc2 = $("#fcSlider").slider("values", 1)
+					let uifilters = getUiFilters()
+					let filterconfig = GM_getValue("filterconfig", uifilters)
+					filterconfig.fc1 = fc1
+					filterconfig.fc2 = fc2
+					GM_setValue("filterconfig", filterconfig)
+					executeFilters(uifilters)
+				})
 			$("#thumbupRateslider")
 				.slider({
 					range: true,
-					min: minrate,
-					max: maxrate,
-					values: [config.rate1 < minrate ? minrate : config.rate1, maxrate],
+					min: minRate,
+					max: maxRate,
+					values: [config.rate1 < minRate ? minRate : config.rate1, maxRate],
 					slide: function (_event, ui) {
-						$("#_thumbupRate").html(ui.values[0] + "% - " + ui.values[1] + "%");
+						$("#_thumbupRate").html(ui.values[0] + "% - " + ui.values[1] + "%")
 					},
 				})
 				.on("slidestop", function (event, ui) {
-					let rate1 = $("#thumbupRateslider").slider("values", 0);
-					let rate2 = $("#thumbupRateslider").slider("values", 1);
-					let uifilters = getUiFilters();
-					let filterconfig = GM_getValue("filterconfig", uifilters);
-					filterconfig.rate1 = rate1;
-					filterconfig.rate2 = rate2;
-					GM_setValue("filterconfig", filterconfig);
-					executeFilters(uifilters);
-				});
+					let rate1 = $("#thumbupRateslider").slider("values", 0)
+					let rate2 = $("#thumbupRateslider").slider("values", 1)
+					let uifilters = getUiFilters()
+					let filterconfig = GM_getValue("filterconfig", uifilters)
+					filterconfig.rate1 = rate1
+					filterconfig.rate2 = rate2
+					GM_setValue("filterconfig", filterconfig)
+					executeFilters(uifilters)
+				})
 
 			$("#tAgeSlider")
 				.slider({
 					range: true,
-					min: minage,
-					max: maxage,
-					values: [config.age1 < minage ? minage : config.age1, config.age2 > maxage ? maxage : config.age2],
+					min: minAge,
+					max: maxAge,
+					values: [config.age1 < minAge ? minAge : config.age1, config.age2 > maxAge ? maxAge : config.age2],
 					slide: function (event, ui) {
-						$("#_tAge").html(ui.values[0] + " - " + ui.values[1]);
+						$("#_tAge").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
 				.on("slidestop", function (event, ui) {
-					let age1 = $("#tAgeSlider").slider("values", 0);
-					let age2 = $("#tAgeSlider").slider("values", 1);
-					let uifilters = getUiFilters();
-					let filterconfig = GM_getValue("filterconfig", uifilters);
-					filterconfig.age1 = age1;
-					filterconfig.age2 = age2;
+					let age1 = $("#tAgeSlider").slider("values", 0)
+					let age2 = $("#tAgeSlider").slider("values", 1)
+					let uifilters = getUiFilters()
+					let filterconfig = GM_getValue("filterconfig", uifilters)
+					filterconfig.age1 = age1
+					filterconfig.age2 = age2
 
-					GM_setValue("filterconfig", filterconfig);
-					executeFilters(uifilters);
-				});
+					GM_setValue("filterconfig", filterconfig)
+					executeFilters(uifilters)
+				})
 			$("#buttons>button,#buttons>input,#buttons>a")
 				//升序
 				.eq(0)
 				.button({ icon: "ui-icon-arrowthick-1-n", showLabel: true })
 				.click(function () {
-					$("#desc").show();
-					$(this).hide();
-					sortElementsByIndicator(asc);
+					$("#desc").show()
+					$(this).hide()
+					sortElementsByIndicator(asc)
 				})
 				.end()
 				//降序
 				.eq(1)
 				.button({ icon: "ui-icon-arrowthick-1-s", showLabel: true })
 				.click(function () {
-					$("#asc").show();
-					$(this).hide();
-					sortElementsByIndicator(desc);
+					$("#asc").show()
+					$(this).hide()
+					sortElementsByIndicator(desc)
 				})
 				.end()
 				// 缓存过期时间（小时）
@@ -222,7 +223,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				.spinner({
 					min: 0,
 					spin: function (event, ui) {
-						GM_setValue("tInfoExprHours", ui.value);
+						GM_setValue("tInfoExprHours", ui.value)
 					},
 				})
 				.css({ width: "45px" })
@@ -233,19 +234,19 @@ if (settings.isListPage || settings.isDetailPage) {
 				.eq(3)
 				.button({ icon: "uiicon-trash", showLabel: true })
 				.click(function () {
-					var keys = GM_listValues();
+					var keys = GM_listValues()
 					$.each(keys, function (i, item) {
-						let title = `正在删除第${i}个教师缓存`;
+						let title = `正在删除第${i}个教师缓存`
 						submit(function (next1) {
 							try {
-								$("title").html(title);
-								GM_deleteValue(item);
+								$("title").html(title)
+								GM_deleteValue(item)
 							} finally {
-								next1();
+								next1()
 							}
-						});
-					});
-					$(".go-search").click();
+						})
+					})
+					$(".go-search").click()
 				})
 				.end()
 				//submit suggestion
@@ -259,60 +260,60 @@ if (settings.isListPage || settings.isDetailPage) {
 				.button({ icon: "ui-icon-help", showLabel: true })
 				.prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk")
 				.prop("target", "_blank")
-				.end();
+				.end()
 			$("#buttons1>button")
 				//反选时间段
 				.eq(0)
 				.button({ icon: "ui-icon-seek-next", showLabel: true })
 				.click(function () {
 					$("#timesmutipulecheck>input").each(function (i, item) {
-						$(item).prop("checked", !$(item).is(":checked")).change();
-					});
+						$(item).prop("checked", !$(item).is(":checked")).change()
+					})
 				})
 				.end()
 				// 获取选定时段老师
 				.eq(1)
 				.button({ icon: "ui-icon-seek-next", showLabel: true })
 				.click(function () {
-					selectedTimeSlots = [];
+					selectedTimeSlots = []
 					$("#timesmutipulecheck>input").each(function (i, item) {
 						if ($(item).is(":checked")) {
-							selectedTimeSlots.push($(item).val());
+							selectedTimeSlots.push($(item).val())
 						}
-					});
-					setSession("selectedTimeSlots", selectedTimeSlots);
-					setSession("selectedTimeSlotsTotal", selectedTimeSlots.length);
-					isStopShowboxAndAutoGetNextTimeTeachers();
+					})
+					setSession("selectedTimeSlots", selectedTimeSlots)
+					setSession("selectedTimeSlotsTotal", selectedTimeSlots.length)
+					isStopShowboxAndAutoGetNextTimeTeachers()
 				})
-				.end();
+				.end()
 			//初始化时间选择按钮
 			$("div.condition-type:eq(0)>ul.condition-type-time>li").each(function (i, item) {
-				addCheckbox($(item).attr("data-val"), $(item).text());
-			});
+				addCheckbox($(item).attr("data-val"), $(item).text())
+			})
 			let timesstr = sessionStorage.getItem("selectedTimeSlots"),
-				selectedTimeSlots = [];
+				selectedTimeSlots = []
 			if (timesstr) {
-				selectedTimeSlots = JSON.parse(timesstr);
+				selectedTimeSlots = JSON.parse(timesstr)
 				if (selectedTimeSlots.length > 0) {
-					let i = selectedTimeSlots.length;
+					let i = selectedTimeSlots.length
 					while (i--) {
-						$("#timesmutipulecheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true);
+						$("#timesmutipulecheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true)
 					}
 				} else {
-					$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
+					$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
 				}
 			} else {
-				$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
+				$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
 			}
 			$("#timesmutipulecheck").find("input").checkboxradio({
 				icon: false,
-			});
+			})
 
 			$("#tabs").tabs({
 				active: "#tabs-2",
 				activate: function (event, ui) {
-					if (ui.newPanel.attr("id") != "tabs-2") return;
-					let teachers = getCatchedTeachers();
+					if (ui.newPanel.attr("id") != "tabs-2") return
+					let teachers = getCatchedTeachers()
 					$("#teachertab")
 						//searchoptions:{sopt:['eq','ne','le','lt','gt','ge','bw','bn','cn','nc','ew','en']}
 						.jqGrid({
@@ -332,11 +333,11 @@ if (settings.isListPage || settings.isDetailPage) {
 										sopt: ["cn"],
 									},
 									formatter: function formatter(value, options, rData) {
-										let date = new Date(Number(value));
+										let date = new Date(Number(value))
 										if (date instanceof Date && !isNaN(date.valueOf())) {
-											return date.toString("HHmmss");
+											return date.toString("HHmmss")
 										}
-										return value;
+										return value
 									},
 								}, //
 								{
@@ -350,8 +351,8 @@ if (settings.isListPage || settings.isDetailPage) {
 										defaultValue: $(".s-t-top-list .li-active").text() == "收藏外教" ? "" : $(".s-t-top-list .li-active").text(),
 									},
 									formatter: function formatter(value, options, rData) {
-										if (value) return value;
-										else return "na";
+										if (value) return value
+										else return "na"
 									},
 								}, //
 								{ name: "rank", index: "rank", width: 40, sorttype: "float", align: "right", searchoptions: { sopt: ["le"] } }, //
@@ -361,7 +362,7 @@ if (settings.isListPage || settings.isDetailPage) {
 									width: 125,
 									sorttype: "string",
 									formatter: function formatter(value, options, rData) {
-										return "<a href='http://www.51talk.com/TeacherNew/info/" + rData["tid"] + "' target='_blank' style='color:blue'>" + (value ? value : rData["tid"]) + "</a>";
+										return "<a href='http://www.51talk.com/TeacherNew/info/" + rData["tid"] + "' target='_blank' style='color:blue'>" + (value ? value : rData["tid"]) + "</a>"
 									},
 								}, //
 								{
@@ -372,8 +373,8 @@ if (settings.isListPage || settings.isDetailPage) {
 									align: "left",
 									searchoptions: { sopt: ["cn"] },
 									formatter: function formatter(value, options, rData) {
-										if (value) return "收藏";
-										else return "";
+										if (value) return "收藏"
+										else return ""
 									},
 								}, //
 								{ name: "indicator", index: "indicator", width: 50, sorttype: "float", align: "right", searchoptions: { sopt: ["ge"] } }, //
@@ -394,7 +395,7 @@ if (settings.isListPage || settings.isDetailPage) {
 									searchoptions: { sopt: ["cn"] },
 									formatter: function formatter(value, options, rData) {
 										if (value) {
-											return dayjs(value).fromNow(true);
+											return dayjs(value).fromNow(true)
 											// let d = Date.now() - value;
 											// if (d < 1000 * 60) {
 											// 	return "刚刚";
@@ -405,7 +406,7 @@ if (settings.isListPage || settings.isDetailPage) {
 											// } else {
 											// 	return (d / 86400000).toFixed(0) + "天";
 											// }
-										} else return "na";
+										} else return "na"
 									},
 								},
 							],
@@ -429,62 +430,62 @@ if (settings.isListPage || settings.isDetailPage) {
 						.jqGrid("filterToolbar", {
 							searchOperators: true,
 						})[0]
-						.triggerToolbar();
+						.triggerToolbar()
 					if (settings.isListPage) {
 						$.each($(".item"), function (i, item) {
-							let jqel = $(item);
-							let tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "");
+							let jqel = $(item)
+							let tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "")
 							let t = teachers.find((currentValue, index, arr) => {
-								return currentValue.tid == tid;
-							});
-							let lb = jqel.find(".teacher-name>label:eq(3)");
-							if (lb.length == 0) jqel.find(".teacher-name").html(`${jqel.find(".teacher-name").html()}| ${getRankHtml(t)}`);
-							else lb.replaceWith(getRankHtml(t));
-						});
+								return currentValue.tid == tid
+							})
+							let lb = jqel.find(".teacher-name>label:eq(3)")
+							if (lb.length == 0) jqel.find(".teacher-name").html(`${jqel.find(".teacher-name").html()}| ${getRankHtml(t)}`)
+							else lb.replaceWith(getRankHtml(t))
+						})
 					}
 					if (settings.isDetailPage) {
 						let t = teachers.find((currentValue, index, arr) => {
-							return currentValue.tid == getTId();
-						});
-						$("#teacherRank").html(getRankHtml(t));
+							return currentValue.tid == getTId()
+						})
+						$("#teacherRank").html(getRankHtml(t))
 					}
 				},
-			});
-			let uifilters_top = getUiFilters();
-			executeFilters(uifilters_top);
-			$("#_tAge").html(uifilters_top.age1 + " - " + uifilters_top.age2);
-			$("#_tLabelCount").html(uifilters_top.l1 + " - " + uifilters_top.l2);
-			$("#_tfc").html(uifilters_top.fc1 + " - " + uifilters_top.fc2 + "");
-			$("#_thumbupRate").html(uifilters_top.rate1 + "% - " + uifilters_top.rate2 + "%");
+			})
+			let uifilters_top = getUiFilters()
+			executeFilters(uifilters_top)
+			$("#_tAge").html(uifilters_top.age1 + " - " + uifilters_top.age2)
+			$("#_tLabelCount").html(uifilters_top.l1 + " - " + uifilters_top.l2)
+			$("#_tfc").html(uifilters_top.fc1 + " - " + uifilters_top.fc2 + "")
+			$("#_thumbupRate").html(uifilters_top.rate1 + "% - " + uifilters_top.rate2 + "%")
 		} catch (ex) {
-			console.log(ex + "");
-			throw ex;
+			console.log(ex + "")
+			throw ex
 		} finally {
-			next();
+			next()
 		}
-	});
+	})
 
 	//弹出信息框
 	submit(function (next) {
-		$(".s-t-list").before($(".s-t-page").prop("outerHTML"));
-		$("#tabs>div:first").append($(".s-t-page").prop("outerHTML"));
-		sortElementsByIndicator(desc);
-		$("#tabs").tabs("option", "active", 1);
+		$(".s-t-list").before($(".s-t-page").prop("outerHTML"))
+		$("#tabs>div:first").append($(".s-t-page").prop("outerHTML"))
+		sortElementsByIndicator(desc)
+		$("#tabs").tabs("option", "active", 1)
 		if (settings.isDetailPage) {
-			$("#tabs").tabs("option", "disabled", [0]);
+			$("#tabs").tabs("option", "disabled", [0])
 		}
 		$("#filterdialog").dialog({
 			width: "850",
-		});
-		$("#filterdialog").parent().scrollFix();
-		$("#filterdialog").dialog("open");
-		next();
-	});
+		})
+		$("#filterdialog").parent().scrollFix()
+		$("#filterdialog").dialog("open")
+		next()
+	})
 }
 if (settings.isCoursePage) {
 	submit(function (next) {
-		$(".course_lock").removeClass("course_lock").addClass("course_unlock");
-		$("img.course_mask").removeClass("course_mask").attr("src", "");
-		next();
-	});
+		$(".course_lock").removeClass("course_lock").addClass("course_unlock")
+		$("img.course_mask").removeClass("course_mask").attr("src", "")
+		next()
+	})
 }

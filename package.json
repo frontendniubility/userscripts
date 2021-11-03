@@ -97,6 +97,7 @@
 		"prettier-eslint": "^13.0.0",
 		"prettier-eslint-cli": "^5.0.1",
 		"prettier-stylelint": "^0.4.2",
+		"progress-bar-webpack-plugin": "^2.1.0",
 		"sass": "~1.32.6",
 		"sass-loader": "^12.2.0",
 		"scriptjs": "^2.5.9",

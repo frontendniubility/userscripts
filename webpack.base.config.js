@@ -2,6 +2,10 @@ const path = require("path")
 var { merge } = require("webpack-merge")
 
 var rulesconfig = require("./webpack.common.rules")
+const chalk = require("chalk")
+const ProgressBarPlugin = require("progress-bar-webpack-plugin")
+
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 const { entries } = require("./webpack.common.entries")
 
@@ -85,9 +89,16 @@ let cssMinimizer = compiler => {
 		],
 	}).apply(compiler)
 }
+
 module.exports = merge(rulesconfig, {
+	cache: {
+		type: "filesystem", // 使用文件缓存
+	},
 	mode: "production", //env.NODE_ENV === 'development' ? 'development' : 'production',
 	optimization: {
+		realContentHash: true,
+		removeAvailableModules: true,
+		// removeEmptyChunks: true,
 		emitOnErrors: true,
 		minimize: true,
 		minimizer: [
@@ -117,7 +128,7 @@ module.exports = merge(rulesconfig, {
 		path: path.join(__dirname, "dist"),
 		publicPath: "/dist/",
 		filename: "[name].js",
-		clean: true,
+		// clean: true,
 		chunkFilename: "[name].js",
 	},
 	externals: {
@@ -141,7 +152,7 @@ module.exports = merge(rulesconfig, {
 			mimeTypes: { "text/html": ["html"] },
 			publicPath: "/",
 			serverSideRender: true,
-			writeToDisk: true,
+			// writeToDisk: true,
 		},
 		bonjour: true,
 		compress: true,
@@ -159,4 +170,12 @@ module.exports = merge(rulesconfig, {
 		// port: 8080,
 		// webSocketServer: "ws",
 	},
+
+	plugins: [
+		// 进度条
+		new ProgressBarPlugin({
+			format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
+		}),
+		// new BundleAnalyzerPlugin(),
+	],
 })
