@@ -74,7 +74,7 @@ let wpus = new WebpackUserscript({
 					//hash不存在 					//keep  需要读取上次hash的版本，以及判断如果没有设置版本号，则需要生成
 					var newsavedvers = Object.entries(savedVersions).reduce(
 						(pre, [key, val], i) => {
-							if (i < 10) pre[key] = val
+							if (i < 100) pre[key] = val
 							return pre
 						},
 						{

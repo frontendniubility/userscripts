@@ -3,7 +3,7 @@
 import PropertiesCaseInsensitive from "./../../libs/propertiesCaseInsensitive.mjs"
 
 //扩展基本类型方法 array.clean(val), Number.toString(len),String.toFloat, String.toInt,String.startsWtih,String.endsWith, ** String.replaceAll区别育默认的string.replace
-alert(1)
+
 $.extend(Array.prototype, {
 	clean: function (deleteValue = "") {
 		for (let i = 0; i < this.length; i++) {
@@ -128,5 +128,4 @@ $.extend(window, {
 	},
 })
 
-export { }
-
+export {}

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2021.11.5031711
+// @version     2021.11.5041055
 // @description seek video with hotkeys and set default quality
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -130,3 +130,4 @@
     }
     GM_registerMenuCommand("Crunchyroll Video Utilities - Config", config.setup);
 })();
+//# sourceMappingURL=crunchyroll-video-utilties.user.js.map

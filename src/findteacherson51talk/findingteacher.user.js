@@ -23,17 +23,31 @@
 // ==/UserScript==
 
 // @require https://code.jquery.com/jquery-3.6.0.min.js
+
 import dayjs from "dayjs"
 import zh_cn from "dayjs/locale/zh-cn"
 import relative from "dayjs/plugin/relativeTime"
 import { conf } from "./bestteacher_gm_toolbar"
 import { configExprMilliseconds, getTId, setSession, settings, submit } from "./common"
+
 import "./findingteacher.user.css"
+
 import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate } from "./listpage"
+
+import "./jqueryextend"
+import "./detailpage"
 import "./pacesetup"
 import UiHtmlTemplate from "./pluginUITemplate.html"
-import("./jqueryextend")
-import("./detailpage")
+
+
+
+
+
+
+
+
+
+
 
 dayjs.extend(relative)
 dayjs.locale(zh_cn)

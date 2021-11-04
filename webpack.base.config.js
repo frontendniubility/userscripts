@@ -178,4 +178,5 @@ module.exports = merge(rulesconfig, {
 		}),
 		// new BundleAnalyzerPlugin(),
 	],
+	devtool: "source-map",
 })

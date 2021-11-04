@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Time
-// @version     2021.11.5031711
+// @version     2021.11.5041056
 // @description Shows the total time it would take to watch all the videos in a YouTube playlist
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -119,3 +119,4 @@
         });
     }));
 })();
+//# sourceMappingURL=youtube-playlist-time.user.js.map

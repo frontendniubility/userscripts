@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2021.11.5031711
+// @version     2021.11.5041056
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

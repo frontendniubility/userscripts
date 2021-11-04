@@ -191,8 +191,20 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 	}
 
 	if (jqr.find(".evaluate-content-left span").length >= 3) {
-		tinfo.thumbup = Number(jqr.find(".evaluate-content-left span:eq(1)").text().match(num).clean("")[0])
-		tinfo.thumbdown = Number(jqr.find(".evaluate-content-left span:eq(2)").text().match(num).clean("")[0])
+		tinfo.thumbup = Number(
+			jqr
+				.find(".evaluate-content-left span:eq(1)")
+				.text()
+				.match(num)
+				.filter(x => x !== "")[0],
+		)
+		tinfo.thumbdown = Number(
+			jqr
+				.find(".evaluate-content-left span:eq(2)")
+				.text()
+				.match(num)
+				.filter(x => x !== "")[0],
+		)
 		tinfo.thumbupRate = calcThumbRate(tinfo)
 
 		tinfo.thumbupRate = calcThumbRate(tinfo)
@@ -200,11 +212,21 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 
 		tinfo.slevel = jqr.find(".sui-students").text()
 	}
-	tinfo.favoritesCount = Number(jqr.find(".clear-search").text().match(num).clean("")[0])
+	tinfo.favoritesCount = Number(
+		jqr
+			.find(".clear-search")
+			.text()
+			.match(num)
+			.filter(x => x !== "")[0],
+	)
 	tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0
 
 	tinfo.name = jqr.find(".t-name").text().trim()
-	var agesstr = jqr.find(".teacher-name-tit > .age.age-line").text().match(num).clean("")
+	var agesstr = jqr
+		.find(".teacher-name-tit > .age.age-line")
+		.text()
+		.match(num)
+		.filter(x => x !== "")
 	tinfo.tage = Number(agesstr[1])
 	tinfo.age = Number(agesstr[0])
 	tinfo.batchNumber = getBatchNumber()
