@@ -4,8 +4,9 @@ import "./jqueryextend"
 
 config.onsave = cfg => {
 	// conf = cfg;
+	console.log(cfg)
 	try {
-		new Function("t", `return ${cfg.load().calcIndicator}`)({})
+		new Function("t", `return ${cfg.calcIndicator}`)({})
 	} catch (error) {
 		console.log(error)
 		alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`)
