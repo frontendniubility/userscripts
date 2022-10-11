@@ -2,6 +2,7 @@
     "src": {
         "auto-close-youtube-ads": {
             "auto-close-youtube-ads.user.js": {
+                "b2abdf1f89acf20cbd0d63715b412a20": "2022.10.5111142",
                 "6f09f1ca9bd2267bdec53394181396bc": "2021.11.5081030",
                 "2c6ad04c0ddd77836f8d37e4d372e67b": "2021.11.5080918",
                 "3debc5295154ae07256abd3bcb7c84aa": "2021.11.5080906",
@@ -21,6 +22,7 @@
         },
         "bestteacher": {
             "bestteacher.user.js": {
+                "6a3eb901f4da01d719d63b16c22590fe": "2022.10.5111142",
                 "7f156581de280d7c5b873d67583cf265": "2021.11.5081030",
                 "af0b663e993d270f7140350e8d3b8485": "2021.11.5080918",
                 "ebdd2848a6f9a594b53bcab989d49753": "2021.11.5080906",
@@ -40,6 +42,7 @@
         },
         "crunchyroll-queue-times": {
             "crunchyroll-queue-times.user.js": {
+                "97a8ae995794f74251c9bb9797c89eed": "2022.10.5111142",
                 "76d72dfeebce33594dc9bf1b7674c8b7": "2021.11.5081030",
                 "efc494222f8e03e6d076cce5d640e979": "2021.11.5080918",
                 "30ffeab0a6c97df1f6a7d83cb784a374": "2021.11.5080906",
@@ -59,6 +62,7 @@
         },
         "crunchyroll-video-utilities": {
             "crunchyroll-video-utilties.user.js": {
+                "fee5ee163796f4a53fc22b58f82342b7": "2022.10.5111142",
                 "dcc4db21c6a558496475b264b952663c": "2021.11.5081030",
                 "06b10eb0cbcda25919df2996097b8dee": "2021.11.5080918",
                 "6b77dc40ef31fc854e496c7155f2316a": "2021.11.5080906",
@@ -78,6 +82,7 @@
         },
         "findteacherson51talk": {
             "findingteacher.user.js": {
+                "4d3b21edc1a565295f4f7df36c59a34d": "2022.10.5111142",
                 "990a47091a5834593f3a8582d1198625": "2021.11.5081030",
                 "7a1d20c252fa267bdc9e5fe36a5b0e8a": "2021.11.5080918",
                 "813b0da50742f295a053988084dde095": "2021.11.5080906",
@@ -95,6 +100,7 @@
                 "bfbc4fbcac742d0e85e03fb140e33695": "2021.11.5031559"
             },
             "test.user.js": {
+                "4469fc8939336377e4fc539e5f21b50f": "2022.10.5111142",
                 "d89efbcd8907dfca569e9bd14ad7c446": "2021.11.5081030",
                 "14b445c1e01244f29637a7c19cbe2ee1": "2021.11.5080918",
                 "949cf66a49bcc2bd6d9a65b0996a58cf": "2021.11.5080906",
@@ -114,6 +120,7 @@
         },
         "format-json": {
             "format-json.user.js": {
+                "8600df758e34eb3d8a0fe49574570fb6": "2022.10.5111142",
                 "ab0944abe96c42b8317ca04e20ec0a31": "2021.11.5081030",
                 "4a64e70378c5be90312f2710cac960f5": "2021.11.5080918",
                 "fb81a6d9d4d22fd96086b26b7dc7ccb9": "2021.11.5080906",
@@ -133,6 +140,7 @@
         },
         "gfycat-redirect-to-webm": {
             "gfycat-redirect-to-webm.user.js": {
+                "bfe560fcb600748b923a719a49f6af66": "2022.10.5111142",
                 "23d58c4e6e78d17287adba953083ce76": "2021.11.5081030",
                 "7cd71c4cf0b7ce8b93215ea75f4f39c1": "2021.11.5080918",
                 "fe5f13586c7bddcc714b30253e3d04e6": "2021.11.5080906",
@@ -152,6 +160,7 @@
         },
         "hangouts-notifier": {
             "hangouts-notifier.user.js": {
+                "ebbe6435b682db95e126873790e9dc1d": "2022.10.5111142",
                 "e1d4bc002e3fd9eaacc78bab8b42422c": "2021.11.5081030",
                 "4097c1e9770f21c944b65bb7733ff0eb": "2021.11.5080918",
                 "ae5bec22d923849c4ce1aa031a52b8e4": "2021.11.5080906",
@@ -171,6 +180,7 @@
         },
         "hummingbird-compatibility-hover": {
             "hummingbird-compatibility-hover.user.js": {
+                "ed59af045529036147ec29235366423c": "2022.10.5111142",
                 "a3782214cf4c16d1d66ad080b02de253": "2021.11.5081030",
                 "dc94f6ccd4b24dd954ab6a421f2ac6f3": "2021.11.5080918",
                 "d65c1cb84ce557fff99f757a4b2ae376": "2021.11.5080906",
@@ -190,6 +200,7 @@
         },
         "javascriptSnippets": {
             "URLTest.user.es6": {
+                "b931e80de9e90b9f4297377cc7ffca61": "2022.10.5111142",
                 "f4e822dbe9604fad559c55f2cdea4abf": "2021.11.5081030",
                 "b9440823c7794fa7e83092e5c68229cb": "2021.11.5080918",
                 "59d456a44eefebb48eb39aadaeabdcb4": "2021.11.5080906",
@@ -209,6 +220,7 @@
         },
         "kijiji-middle-click": {
             "kijiji-middle-click.user.js": {
+                "8b8db02df2d8353777b744e20d5d538c": "2022.10.5111142",
                 "c4b3c64391449ebf9d894c3fc8b10cad": "2021.11.5081030",
                 "cef4febb7f3723ce4c5bcf6bff86df33": "2021.11.5080918",
                 "992a3a1a18f5e7f335e9096f063ac1a7": "2021.11.5080906",
@@ -228,6 +240,7 @@
         },
         "kitsu-mal-rating": {
             "kitsu-mal-rating.user.js": {
+                "53f2dfa5ac337a4a39546c09ad759051": "2022.10.5111142",
                 "4e9d8475a6c38393e992311c8cd0c2e6": "2021.11.5081030",
                 "439811bea31938f2d78e44b6099b280f": "2021.11.5080918",
                 "21db1fdc644b0e49d678da9931cba692": "2021.11.5080906",
@@ -247,6 +260,7 @@
         },
         "prettier-anything": {
             "prettier-anything.user.js": {
+                "e410e5fd0e72e26f91c86b143e6f4419": "2022.10.5111142",
                 "272818f7bb534e4c47213ed4fa80057d": "2021.11.5081030",
                 "6332fabb160d072f99715b32cf7b1897": "2021.11.5080918",
                 "ef8fed0233379805a95b1c0ce8ad3aba": "2021.11.5080906",
@@ -266,6 +280,7 @@
         },
         "youtube-history-management": {
             "youtube-history-management.user.js": {
+                "09035ad130825f99a53c809b6adc3cae": "2022.10.5111142",
                 "d1159788fe9591d3d8c151d2d9fe5963": "2021.11.5081030",
                 "3c0a3efefabaa0d0aa392f703a31d80a": "2021.11.5080918",
                 "e57d3c00ee48ccfc9d17bba4068711e4": "2021.11.5080906",
@@ -285,6 +300,7 @@
         },
         "youtube-playlist-search": {
             "youtube-playlist-search.user.js": {
+                "76111b640b99f4d3e64f76a0c9ab6ad0": "2022.10.5111142",
                 "addab9ed01c5d52117eddd5563b3c0b2": "2021.11.5081030",
                 "501f317e4de902c3b6a6ffb90601b3d0": "2021.11.5080918",
                 "b0f39c1b1418e4a42226e0d0697cf5cb": "2021.11.5080906",
@@ -304,6 +320,7 @@
         },
         "youtube-playlist-time": {
             "youtube-playlist-time.user.js": {
+                "324aa9d7f98480db023b6161004e42d2": "2022.10.5111142",
                 "3fb51fab56ba3341b90c13549372d7f5": "2021.11.5081030",
                 "c33493b07b2a9cc97f67337364712ca5": "2021.11.5080918",
                 "49a82450292a5226376af95024d624f7": "2021.11.5080906",
