@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2022.10.511141514
+// @version     2022.10.511144657
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -1932,9 +1932,9 @@
                                         sopt: [ "cn" ]
                                     },
                                     formatter: function formatter(value, options, rData) {
-                                        var date = new Date(Number(value));
-                                        if (date instanceof Date && !isNaN(date.valueOf())) {
-                                            return dayjs_min_default()(date).format("HHmmss");
+                                        var date = dayjs_min_default()(value);
+                                        if (date.isValid()) {
+                                            return "<span title='".concat(date.format("YY-M-D H:m:s"), "'>").concat(date.format("HHmmss"), "</span>");
                                         }
                                         return value;
                                     }

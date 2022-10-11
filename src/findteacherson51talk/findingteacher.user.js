@@ -337,9 +337,9 @@ if (settings.isListPage || settings.isDetailPage) {
 										sopt: ["cn"],
 									},
 									formatter: function formatter(value, options, rData) {
-										let date = new Date(Number(value))
-										if (date instanceof Date && !isNaN(date.valueOf())) {
-											return dayjs(date).format("HHmmss")
+									 let date = dayjs(value)
+										if (date.isValid()) {
+											return `<span title='${date.format("YY-M-D H:m:s")}'>${date.format("HHmmss")}</span>`
 										}
 										return value
 									},
