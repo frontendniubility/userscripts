@@ -251,19 +251,19 @@ if (settings.isListPage) {
 			setSession("autoNextPageCount", autoNextPageCount - 1)
 			if ($(".s-t-page>.next-page").length == 0) {
 				setSession("autoNextPageCount", 0)
-				if (isStopShowboxAndAutoGetNextTimeTeachers()) return
+				if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
 			} else {
 				$(".s-t-page .next-page")[0].click()
 				return false
 			}
 		} else {
-			if (isStopShowboxAndAutoGetNextTimeTeachers()) return
+			if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
 		}
 		next()
 	})
 }
 
-function isStopShowboxAndAutoGetNextTimeTeachers() {
+function isStopShowBoxAndAutoGetNextTimeTeachers() {
 	let str = sessionStorage.getItem("selectedTimeSlots")
 	if (!str) return false
 	let selectedTimeSlots = JSON.parse(str)
@@ -296,4 +296,4 @@ function addCheckbox(val, lbl, group) {
 	}).appendTo(container)
 }
 
-export { addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherinfoToUI }
+export { addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherinfoToUI }

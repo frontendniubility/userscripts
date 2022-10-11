@@ -32,22 +32,12 @@ import { configExprMilliseconds, getTId, setSession, settings, submit } from "./
 
 import "./findingteacher.user.css"
 
-import { addCheckbox, executeFilters, getUiFilters, isStopShowboxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate } from "./listpage"
+import { addCheckbox, executeFilters, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate } from "./listpage"
 
 import "./jqueryextend"
 import "./detailpage"
 import "./pacesetup"
 import UiHtmlTemplate from "./pluginUITemplate.html"
-
-
-
-
-
-
-
-
-
-
 
 dayjs.extend(relative)
 dayjs.locale(zh_cn)
@@ -74,7 +64,7 @@ let sortElementsByIndicator = function (sortBy) {
  * @typedef {import('./global').TypeofTeacher} Teacher
  * @param {JQuery<Element>} jqr
  */
-function getCatchedTeachers() {
+function getCachedTeachers() {
 	/**
 	 * @type Array<Teacher>
 	 */
@@ -297,7 +287,7 @@ if (settings.isListPage || settings.isDetailPage) {
 					})
 					setSession("selectedTimeSlots", selectedTimeSlots)
 					setSession("selectedTimeSlotsTotal", selectedTimeSlots.length)
-					isStopShowboxAndAutoGetNextTimeTeachers()
+					isStopShowBoxAndAutoGetNextTimeTeachers()
 				})
 				.end()
 			//初始化时间选择按钮
@@ -327,7 +317,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				active: "#tabs-2",
 				activate: function (event, ui) {
 					if (ui.newPanel.attr("id") != "tabs-2") return
-					let teachers = getCatchedTeachers()
+					let teachers = getCachedTeachers()
 					$("#teachertab")
 						//searchoptions:{sopt:['eq','ne','le','lt','gt','ge','bw','bn','cn','nc','ew','en']}
 						.jqGrid({

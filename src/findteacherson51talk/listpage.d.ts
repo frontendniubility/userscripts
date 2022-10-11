@@ -29,6 +29,6 @@ declare interface TypeOfUiFilter {
  */
 export function getTeacherInfoFromListPageUI(jqel: JQuery<HTMLDivElement>): TeacherInfoBase;
 
-export function isStopShowboxAndAutoGetNextTimeTeachers(): boolean;
+export function isStopShowBoxAndAutoGetNextTimeTeachers(): boolean
 
 export function addCheckbox(val: string, lbl: string, group: string): void;

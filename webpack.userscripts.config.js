@@ -42,7 +42,7 @@ function getVersionString(buildtime) {
 	//	if (typeof buildtime != Date) buildtime = new Date(buildtime);
 	// return `${d.format("YYYY.M")}.5${d.format("DDHHmmss")}`;
 
-	return dayjs(buildtime).format("YYYY.M.5DDHHss")
+	return dayjs(buildtime).format("YYYY.M.5DDHHmmss")
 }
 
 let wpus = new WebpackUserscript({
