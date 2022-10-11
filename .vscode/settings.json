@@ -7,5 +7,8 @@
 	"compile-hero.disable-compile-files-on-did-save-code": true,
 	"git.ignoreLimitWarning": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"cSpell.words": ["bestteacher", "detailpage", "findingteacher", "indexs", "jimbo", "listpage", "tinfo", "xmlhttp"]
+	"cSpell.words": ["bestteacher", "detailpage", "findingteacher", "indexs", "jimbo", "listpage", "tinfo", "xmlhttp"],
+	"css.validate": false,
+	"less.validate": false,
+	"scss.validate": false
 }

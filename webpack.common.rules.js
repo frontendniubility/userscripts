@@ -39,6 +39,7 @@ config.module
 	.loader("css-loader")
 	.options({
 		importLoaders: 1, // 一个css中引入了另一个css，也会执行之前两个loader，即postcss-loader和sass-loader
+
 		sourceMap: false, //如果改为true，会导致不通机器上chunkhash不同
 	})
 	.end()
@@ -51,6 +52,7 @@ config.module
 		},
 	})
 	.end()
+	
 // .use("postcss-loader")
 // .loader("postcss-loader")
 

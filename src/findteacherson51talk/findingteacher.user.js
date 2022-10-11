@@ -339,7 +339,7 @@ if (settings.isListPage || settings.isDetailPage) {
 									formatter: function formatter(value, options, rData) {
 										let date = new Date(Number(value))
 										if (date instanceof Date && !isNaN(date.valueOf())) {
-											return date.toString("HHmmss")
+											return dayjs(date).format("HHmmss")
 										}
 										return value
 									},
