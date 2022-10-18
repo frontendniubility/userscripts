@@ -9,6 +9,9 @@
 // @match *://www.51talk.com/ReserveNew/index*
 // @match *://www.51talk.com/TeacherNew/*
 // @match *://www.51talk.com/user/*
+// @match *://51talk.com/ReserveNew/index*
+// @match *://51talk.com/TeacherNew/*
+// @match *://51talk.com/user/*
 // @grant GM_xmlhttpRequest
 // @grant GM_getValue
 // @grant GM_setValue
@@ -95,18 +98,18 @@ function getCachedTeachers() {
 }
 function getRankHtml(t) {
 	if (t) {
-		let colorif = ""
+		let colorIf = ""
 		if (t.rank <= conf.markRankRed) {
-			colorif = "style = 'color:red'"
+			colorIf = "style = 'color:red'"
 		}
-		return `<label title='在同类别教师中的排名' ${colorif}> ${t.rank}名</label>`
+		return `<label title='在同类别教师中的排名' ${colorIf}> ${t.rank}名</label>`
 	}
 }
 if (settings.isListPage || settings.isDetailPage) {
 	//构建插件信息
 	submit(function (next) {
 		try {
-			let config = GM_getValue("filterconfig", {
+			let config = GM_getValue("filterConfig", {
 				l1: 300,
 				l2: maxLabel,
 				rate1: 97,
@@ -119,9 +122,9 @@ if (settings.isListPage || settings.isDetailPage) {
 			if (!settings.isListPage) {
 				$("#filterButtons").hide()
 			}
-			$("body").append("<div id='teachlistdialog' style='display:none;'></div>")
+			$("body").append("<div id='teacherListDialog' style='display:none;'></div>")
 			$("body").append("<div id='wwwww'>已加载选课辅助插件。</div>") //这是一个奇怪的BUG on jqueryui. 如果不多额外添加一个，则dialog无法弹出。
-			$("#tlabelslider")
+			$("#tableSlider")
 				.slider({
 					range: true,
 					min: minLabel - 1,
@@ -131,15 +134,15 @@ if (settings.isListPage || settings.isDetailPage) {
 						$("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slidestop", function (event, ui) {
-					let l1 = $("#tlabelslider").slider("values", 0)
-					let l2 = $("#tlabelslider").slider("values", 1)
-					let uifilters = getUiFilters()
-					let filterconfig = GM_getValue("filterconfig", uifilters)
-					filterconfig.l1 = l1
-					filterconfig.l2 = l2
-					GM_setValue("filterconfig", filterconfig)
-					executeFilters(uifilters)
+				.on("slideStop", function (event, ui) {
+					let l1 = $("#tableSlider").slider("values", 0)
+					let l2 = $("#tableSlider").slider("values", 1)
+					let uiFilters = getUiFilters()
+					let filterConfig = GM_getValue("filterConfig", uiFilters)
+					filterConfig.l1 = l1
+					filterConfig.l2 = l2
+					GM_setValue("filterConfig", filterConfig)
+					executeFilters(uiFilters)
 				})
 			$("#fcSlider")
 				.slider({
@@ -151,35 +154,35 @@ if (settings.isListPage || settings.isDetailPage) {
 						$("#_tfc").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slidestop", function (event, ui) {
+				.on("slideStop", function (event, ui) {
 					let fc1 = $("#fcSlider").slider("values", 0)
 					let fc2 = $("#fcSlider").slider("values", 1)
-					let uifilters = getUiFilters()
-					let filterconfig = GM_getValue("filterconfig", uifilters)
-					filterconfig.fc1 = fc1
-					filterconfig.fc2 = fc2
-					GM_setValue("filterconfig", filterconfig)
-					executeFilters(uifilters)
+					let uiFilters = getUiFilters()
+					let filterConfig = GM_getValue("filterConfig", uiFilters)
+					filterConfig.fc1 = fc1
+					filterConfig.fc2 = fc2
+					GM_setValue("filterConfig", filterConfig)
+					executeFilters(uiFilters)
 				})
-			$("#thumbupRateslider")
+			$("#thumbUpRateSlider")
 				.slider({
 					range: true,
 					min: minRate,
 					max: maxRate,
 					values: [config.rate1 < minRate ? minRate : config.rate1, maxRate],
 					slide: function (_event, ui) {
-						$("#_thumbupRate").html(ui.values[0] + "% - " + ui.values[1] + "%")
+						$("#_thumbUpRate").html(ui.values[0] + "% - " + ui.values[1] + "%")
 					},
 				})
-				.on("slidestop", function (event, ui) {
-					let rate1 = $("#thumbupRateslider").slider("values", 0)
-					let rate2 = $("#thumbupRateslider").slider("values", 1)
-					let uifilters = getUiFilters()
-					let filterconfig = GM_getValue("filterconfig", uifilters)
-					filterconfig.rate1 = rate1
-					filterconfig.rate2 = rate2
-					GM_setValue("filterconfig", filterconfig)
-					executeFilters(uifilters)
+				.on("slideStop", function (event, ui) {
+					let rate1 = $("#thumbUpRateSlider").slider("values", 0)
+					let rate2 = $("#thumbUpRateSlider").slider("values", 1)
+					let uiFilters = getUiFilters()
+					let filterConfig = GM_getValue("filterConfig", uiFilters)
+					filterConfig.rate1 = rate1
+					filterConfig.rate2 = rate2
+					GM_setValue("filterConfig", filterConfig)
+					executeFilters(uiFilters)
 				})
 
 			$("#tAgeSlider")
@@ -192,16 +195,16 @@ if (settings.isListPage || settings.isDetailPage) {
 						$("#_tAge").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slidestop", function (event, ui) {
+				.on("slideStop", function (event, ui) {
 					let age1 = $("#tAgeSlider").slider("values", 0)
 					let age2 = $("#tAgeSlider").slider("values", 1)
-					let uifilters = getUiFilters()
-					let filterconfig = GM_getValue("filterconfig", uifilters)
-					filterconfig.age1 = age1
-					filterconfig.age2 = age2
+					let uiFilters = getUiFilters()
+					let filterConfig = GM_getValue("filterConfig", uiFilters)
+					filterConfig.age1 = age1
+					filterConfig.age2 = age2
 
-					GM_setValue("filterconfig", filterconfig)
-					executeFilters(uifilters)
+					GM_setValue("filterConfig", filterConfig)
+					executeFilters(uiFilters)
 				})
 			$("#buttons>button,#buttons>input,#buttons>a")
 				//升序
@@ -270,7 +273,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				.eq(0)
 				.button({ icon: "ui-icon-seek-next", showLabel: true })
 				.click(function () {
-					$("#timesmutipulecheck>input").each(function (i, item) {
+					$("#timesMultipleCheck>input").each(function (i, item) {
 						$(item).prop("checked", !$(item).is(":checked")).change()
 					})
 				})
@@ -280,7 +283,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				.button({ icon: "ui-icon-seek-next", showLabel: true })
 				.click(function () {
 					selectedTimeSlots = []
-					$("#timesmutipulecheck>input").each(function (i, item) {
+					$("#timesMultipleCheck>input").each(function (i, item) {
 						if ($(item).is(":checked")) {
 							selectedTimeSlots.push($(item).val())
 						}
@@ -294,22 +297,22 @@ if (settings.isListPage || settings.isDetailPage) {
 			$("div.condition-type:eq(0)>ul.condition-type-time>li").each(function (i, item) {
 				addCheckbox($(item).attr("data-val"), $(item).text())
 			})
-			let timesstr = sessionStorage.getItem("selectedTimeSlots"),
+			let timesStr = sessionStorage.getItem("selectedTimeSlots"),
 				selectedTimeSlots = []
-			if (timesstr) {
-				selectedTimeSlots = JSON.parse(timesstr)
+			if (timesStr) {
+				selectedTimeSlots = JSON.parse(timesStr)
 				if (selectedTimeSlots.length > 0) {
 					let i = selectedTimeSlots.length
 					while (i--) {
-						$("#timesmutipulecheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true)
+						$("#timesMultipleCheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true)
 					}
 				} else {
-					$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
+					$("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
 				}
 			} else {
-				$("#timesmutipulecheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
+				$("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true)
 			}
-			$("#timesmutipulecheck").find("input").checkboxradio({
+			$("#timesMultipleCheck").find("input").checkboxradio({
 				icon: false,
 			})
 
@@ -318,7 +321,7 @@ if (settings.isListPage || settings.isDetailPage) {
 				activate: function (event, ui) {
 					if (ui.newPanel.attr("id") != "tabs-2") return
 					let teachers = getCachedTeachers()
-					$("#teachertab")
+					$("#teacherTab")
 						//searchoptions:{sopt:['eq','ne','le','lt','gt','ge','bw','bn','cn','nc','ew','en']}
 						.jqGrid({
 							data: teachers,
@@ -337,7 +340,7 @@ if (settings.isListPage || settings.isDetailPage) {
 										sopt: ["cn"],
 									},
 									formatter: function formatter(value, options, rData) {
-									 let date = dayjs(value)
+										let date = dayjs(value)
 										if (date.isValid()) {
 											return `<span title='${date.format("YY-M-D H:m:s")}'>${date.format("HHmmss")}</span>`
 										}
@@ -370,8 +373,8 @@ if (settings.isListPage || settings.isDetailPage) {
 									},
 								}, //
 								{
-									name: "isfavorite",
-									index: "isfavorite",
+									name: "isFavorite",
+									index: "isFavorite",
 									width: 39,
 									sorttype: "string",
 									align: "left",
@@ -383,12 +386,12 @@ if (settings.isListPage || settings.isDetailPage) {
 								}, //
 								{ name: "indicator", index: "indicator", width: 50, sorttype: "float", align: "right", searchoptions: { sopt: ["ge"] } }, //
 								{ name: "label", index: "label", width: 45, align: "right", searchoptions: { sopt: ["ge"] } }, //
-								{ name: "thumbupRate", index: "thumbupRate", width: 35, align: "right", sorttype: "float", searchoptions: { sopt: ["ge"] } }, //
+								{ name: "thumbUpRate", index: "thumbUpRate", width: 35, align: "right", sorttype: "float", searchoptions: { sopt: ["ge"] } }, //
 								{ name: "favoritesCount", index: "favoritesCount", width: 35, align: "right", sorttype: "float", searchoptions: { sopt: ["ge"] } }, //
-								{ name: "slevel", index: "slevel", width: 85, sorttype: "string", align: "left", searchoptions: { sopt: ["cn", "nc"] } }, //
-								{ name: "tage", index: "tage", width: 25, sorttype: "float", align: "right", searchoptions: { sopt: ["ge"] } }, //
-								{ name: "thumbup", index: "thumbup", width: 45, align: "right", sorttype: "float", searchoptions: { sopt: ["ge"] } }, //
-								{ name: "thumbdown", index: "thumbdown", width: 30, sorttype: "float", align: "right" }, //
+								{ name: "sLevel", index: "sLevel", width: 85, sorttype: "string", align: "left", searchoptions: { sopt: ["cn", "nc"] } }, //
+								{ name: "tAge", index: "tAge", width: 25, sorttype: "float", align: "right", searchoptions: { sopt: ["ge"] } }, //
+								{ name: "thumbUp", index: "thumbUp", width: 45, align: "right", sorttype: "float", searchoptions: { sopt: ["ge"] } }, //
+								{ name: "thumbDown", index: "thumbDown", width: 30, sorttype: "float", align: "right" }, //
 								{ name: "age", index: "age", width: 30, sorttype: "float", align: "right", searchoptions: { sopt: ["le", "ge", "eq"] } }, //
 								{
 									name: "updateTime",
@@ -437,13 +440,13 @@ if (settings.isListPage || settings.isDetailPage) {
 						.triggerToolbar()
 					if (settings.isListPage) {
 						$.each($(".item"), function (i, item) {
-							let jqel = $(item)
-							let tid = jqel.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "")
+							let jqEl = $(item)
+							let tid = jqEl.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "")
 							let t = teachers.find((currentValue, index, arr) => {
 								return currentValue.tid == tid
 							})
-							let lb = jqel.find(".teacher-name>label:eq(3)")
-							if (lb.length == 0) jqel.find(".teacher-name").html(`${jqel.find(".teacher-name").html()}| ${getRankHtml(t)}`)
+							let lb = jqEl.find(".teacher-name>label:eq(3)")
+							if (lb.length == 0) jqEl.find(".teacher-name").html(`${jqEl.find(".teacher-name").html()}| ${getRankHtml(t)}`)
 							else lb.replaceWith(getRankHtml(t))
 						})
 					}
@@ -455,12 +458,12 @@ if (settings.isListPage || settings.isDetailPage) {
 					}
 				},
 			})
-			let uifilters_top = getUiFilters()
-			executeFilters(uifilters_top)
-			$("#_tAge").html(uifilters_top.age1 + " - " + uifilters_top.age2)
-			$("#_tLabelCount").html(uifilters_top.l1 + " - " + uifilters_top.l2)
-			$("#_tfc").html(uifilters_top.fc1 + " - " + uifilters_top.fc2 + "")
-			$("#_thumbupRate").html(uifilters_top.rate1 + "% - " + uifilters_top.rate2 + "%")
+			let uiFilters_top = getUiFilters()
+			executeFilters(uiFilters_top)
+			$("#_tAge").html(uiFilters_top.age1 + " - " + uiFilters_top.age2)
+			$("#_tLabelCount").html(uiFilters_top.l1 + " - " + uiFilters_top.l2)
+			$("#_tfc").html(uiFilters_top.fc1 + " - " + uiFilters_top.fc2 + "")
+			$("#_thumbUpRate").html(uiFilters_top.rate1 + "% - " + uiFilters_top.rate2 + "%")
 		} catch (ex) {
 			console.log(ex + "")
 			throw ex
@@ -478,11 +481,11 @@ if (settings.isListPage || settings.isDetailPage) {
 		if (settings.isDetailPage) {
 			$("#tabs").tabs("option", "disabled", [0])
 		}
-		$("#filterdialog").dialog({
+		$("#filterDialog").dialog({
 			width: "850",
 		})
-		$("#filterdialog").parent().scrollFix()
-		$("#filterdialog").dialog("open")
+		$("#filterDialog").parent().scrollFix()
+		$("#filterDialog").dialog("open")
 		next()
 	})
 }

@@ -8,26 +8,26 @@ export function getLeftPageCount(): number;
 
 export function getAutoNextPagesCount(): number;
 
-export function updateTeacherinfoToUI(jqel: JQuery<HTMLDivElement>, tinfo: TeacherInfo): void;
+export function updateTeacherInfoToUI(jqEl: JQuery<HTMLDivElement>, tinfo: TeacherInfo): void
 
-export function executeFilters(uifilters: TypeOfUiFilter): void;
+export function executeFilters(uiFilters: TypeOfUiFilter): void
 
-export function getUiFilters(): TypeOfUiFilter;
+export function getUiFilters(): TypeOfUiFilter
 declare interface TypeOfUiFilter {
-	l1: number;
-	l2: number;
-	rate1: number;
-	rate2: number;
-	age1: number;
-	age2: number;
-	fc1: number;
-	fc2: number;
+	l1: number
+	l2: number
+	rate1: number
+	rate2: number
+	age1: number
+	age2: number
+	fc1: number
+	fc2: number
 }
 /**
- * @param {JQuery<Element>} jqel
+ * @param {JQuery<Element>} jqEl
  * @returns {TeacherInfoList}
  */
-export function getTeacherInfoFromListPageUI(jqel: JQuery<HTMLDivElement>): TeacherInfoBase;
+export function getTeacherInfoFromListPageUI(jqEl: JQuery<HTMLDivElement>): TeacherInfoBase
 
 export function isStopShowBoxAndAutoGetNextTimeTeachers(): boolean
 

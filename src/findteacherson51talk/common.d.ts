@@ -56,7 +56,7 @@ export function getBatchNumber(): number;
 /**
  * 获取教师信息存储标识 tinfo- + gettid()
  */
-export function getinfokey(): string;
+export function getInfoKey(): string
 
 /**
  * 获取标签的汇总总数
@@ -105,26 +105,26 @@ declare interface TypeOfLabels {
  *
  */
 declare interface TeacherInfoBase {
-	label: number;
-	labels: TypeOfLabels;
-	name: string;
-	type: "收藏外教" | "优选外教" | "全球外教";
-	batchNumber: number;
-	isfavorite: true | false | null;
-	updateTime: number;
+	label: number
+	labels: TypeOfLabels
+	name: string
+	type: "收藏外教" | "优选外教" | "全球外教"
+	batchNumber: number
+	isFavorite: true | false | null
+	updateTime: number
 }
 
 declare interface TeacherInfo extends TeacherInfoBase {
-	teacherStar: number;
-	certificaties: string;
-	suitables: Array<string>;
-	thumbup: number;
-	thumbdown: number;
-	thumbupRate: number;
-	indicator: number;
-	slevel: string;
-	favoritesCount: number;
-	tage: number;
-	age: number;
-	rank: number;
+	teacherStar: number
+	certificaties: string
+	suitables: Array<string>
+	thumbUp: number
+	thumbDown: number
+	thumbUpRate: number
+	indicator: number
+	sLevel: string
+	favoritesCount: number
+	tAge: number
+	age: number
+	rank: number
 }

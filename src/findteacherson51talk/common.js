@@ -64,7 +64,7 @@ export function getBatchNumber() {
  *
  * @return {string}
  */
-export function getinfokey() {
+export function getInfoKey() {
 	return "tinfo-" + getTId()
 }
 
@@ -76,7 +76,7 @@ export function getinfokey() {
  */
 function calcIndicator(tinfo) {
 	if (isNaN(tinfo.label)) tinfo.label = 0
-	if (isNaN(tinfo.thumbupRate)) tinfo.thumbupRate = 0
+	if (isNaN(tinfo.thumbUpRate)) tinfo.thumbUpRate = 0
 	if (isNaN(tinfo.favoritesCount)) tinfo.favoritesCount = 0
 
 	return indicatorCalculator(tinfo)
@@ -89,12 +89,12 @@ function calcIndicator(tinfo) {
  * @return {Number}
  */
 function calcThumbRate(tinfo) {
-	if (isNaN(tinfo.thumbdown)) tinfo.thumbdown = 0
-	if (isNaN(tinfo.thumbup)) tinfo.thumbup = 0
+	if (isNaN(tinfo.thumbDown)) tinfo.thumbDown = 0
+	if (isNaN(tinfo.thumbUp)) tinfo.thumbUp = 0
 
-	let all = tinfo.thumbdown + tinfo.thumbup
+	let all = tinfo.thumbDown + tinfo.thumbUp
 	if (all < 1) all = 1
-	return ((tinfo.thumbup + Number.EPSILON) / all).toFixed(2) * 100
+	return ((tinfo.thumbUp + Number.EPSILON) / all).toFixed(2) * 100
 }
 
 /**
@@ -191,26 +191,26 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 	}
 
 	if (jqr.find(".evaluate-content-left span").length >= 3) {
-		tinfo.thumbup = Number(
+		tinfo.thumbUp = Number(
 			jqr
 				.find(".evaluate-content-left span:eq(1)")
 				.text()
 				.match(num)
 				.filter(x => x !== "")[0],
 		)
-		tinfo.thumbdown = Number(
+		tinfo.thumbDown = Number(
 			jqr
 				.find(".evaluate-content-left span:eq(2)")
 				.text()
 				.match(num)
 				.filter(x => x !== "")[0],
 		)
-		tinfo.thumbupRate = calcThumbRate(tinfo)
+		tinfo.thumbUpRate = calcThumbRate(tinfo)
 
-		tinfo.thumbupRate = calcThumbRate(tinfo)
+		tinfo.thumbUpRate = calcThumbRate(tinfo)
 		tinfo.indicator = calcIndicator(tinfo)
 
-		tinfo.slevel = jqr.find(".sui-students").text()
+		tinfo.sLevel = jqr.find(".sui-students").text()
 	}
 	tinfo.favoritesCount = Number(
 		jqr
@@ -219,7 +219,7 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 			.match(num)
 			.filter(x => x !== "")[0],
 	)
-	tinfo.isfavorite = jqr.find(".go-search.cancel-collection").length > 0
+	tinfo.isFavorite = jqr.find(".go-search.cancel-collection").length > 0
 
 	tinfo.name = jqr.find(".t-name").text().trim()
 	var agesstr = jqr
@@ -227,7 +227,7 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 		.text()
 		.match(num)
 		.filter(x => x !== "")
-	tinfo.tage = Number(agesstr[1])
+	tinfo.tAge = Number(agesstr[1])
 	tinfo.age = Number(agesstr[0])
 	tinfo.batchNumber = getBatchNumber()
 	tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest)
@@ -235,9 +235,9 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 	jqr.find(".teacher-name-tit").prop("innerHTML", function (i, val) {
 		return `${val}
 <span class="age age-line"><label title='指标'>${tinfo_saved.indicator}</label></span>
-<span class="age age-line"><label title='好评率'>${tinfo_saved.thumbupRate}%</label></span>
-<span class="age age-line"><label title='被赞数量'>${tinfo_saved.thumbup}</label></span>
-<span class="age age-line"><label title='被踩数量'>${tinfo_saved.thumbdown}</label></span>
+<span class="age age-line"><label title='好评率'>${tinfo_saved.thumbUpRate}%</label></span>
+<span class="age age-line"><label title='被赞数量'>${tinfo_saved.thumbUp}</label></span>
+<span class="age age-line"><label title='被踩数量'>${tinfo_saved.thumbDown}</label></span>
 <span class="age age-line"><label title='评论标签数量'>${tinfo_saved.label}</label></span>
 <span class="age age-line"><label title='在同类别教师中的排名'><span id="teacherRank"></span></label></span>
   `

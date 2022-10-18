@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2021.11.5041056
+// @version     2022.10.518161706
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -37,14 +37,14 @@
         }));
     }
     myFunction();
-    $("#timesmutipulecheck").find("input").checkboxradio({
+    $("#timesMultipleCheck").find("input").checkboxradio({
         icon: false
     });
     $("#btns").eq(0).button({
         icon: "ui-icon-seek-next",
         showLabel: true
     }).click((function() {
-        $("#timesmutipulecheck>input").each((function(i, item) {
+        $("#timesMultipleCheck>input").each((function(i, item) {
             $(item).prop("checked", !$(item).is(":checked")).change();
         }));
     })).end();

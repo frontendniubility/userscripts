@@ -43,7 +43,7 @@ const config = GM_config([
 		// What type of setting it is.
 		type: "text",
 		// Optional. Placeholder text for the textbox.
-		placeholder: "Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount",
+		placeholder: "Math.ceil((t.label * t.thumbUpRate) / 100) + t.favoritesCount",
 
 		// Optional. If true, shows a textarea instead of a text input. Defaults to false.
 		multiline: true,
@@ -56,25 +56,25 @@ const config = GM_config([
 		type: "hidden",
 		default: 1,
 	},
-]);
-let conf = config.load();
+])
+let conf = config.load()
 
-GM_registerMenuCommand("设置", config.setup);
+GM_registerMenuCommand("设置", config.setup)
 
 function GetCalculatorIndicator() {
-	let f;
+	let f
 	if (conf.calcIndicator) {
 		try {
-			f = new Function("t", `return ${conf.calcIndicator}`);
+			f = new Function("t", `return ${conf.calcIndicator}`)
 		} catch (error) {
-			f = new Function("t", `return Math.ceil((t.label * t.thumbpRate) / 100) + t.favoritesCount`);
-			console.log(error);
-			alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`);
+			f = new Function("t", `return Math.ceil((t.label * t.thumbUpRate) / 100) + t.favoritesCount`)
+			console.log(error)
+			alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`)
 		}
 	} else {
-		f = new Function("t", `return Math.ceil((t.label * t.thumbupRate) / 100) + t.favoritesCount`);
+		f = new Function("t", `return Math.ceil((t.label * t.thumbUpRate) / 100) + t.favoritesCount`)
 	}
-	return f;
+	return f
 }
 
 export const indicatorCalculator = GetCalculatorIndicator();

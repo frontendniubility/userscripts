@@ -34,63 +34,63 @@ declare interface TypeofTeacher {
 	/**
 	 * 查询批次
 	 */
-	batchNumber: number;
+	batchNumber: number
 	/**
 	 * 教师类型
 	 */
-	type: string;
+	type: string
 	/**
 	 * 排名 根据indicator计算，并且按类型分类的排名
 	 */
-	rank: number;
+	rank: number
 	/**
 	 * 姓名
 	 */
-	name: string;
+	name: string
 	/**
 	 * 是否被自己收藏
 	 */
-	isfavorite: string;
+	isFavorite: string
 	/**
 	 * 根据配置的公式进行计算分值
 	 */
-	indicator: number;
+	indicator: number
 	/**
 	 * 被评价标签
 	 */
-	label: string;
+	label: string
 	/**
 	 * 好评率
 	 */
-	thumbupRate: number;
+	thumbUpRate: number
 	/**
 	 * 被收藏的次数
 	 */
-	favoritesCount: number;
+	favoritesCount: number
 	/**
 	 * 教学登记
 	 */
-	slevel: string;
+	sLevel: string
 	/**
 	 * 教书年龄
 	 */
-	tage: number;
+	tAge: number
 	/**
 	 *差评数
 	 */
-	thumbup: number;
+	thumbUp: number
 	/**
 	 * 好评率
 	 */
-	thumbdown: number;
+	thumbDown: number
 	/**
 	 * 教师年龄
 	 */
-	age: number;
+	age: number
 	/**
 	 * 数据刷新时间
 	 */
-	updateTime: Date;
+	updateTime: Date
 }
 export { TypeofTeacher };
 

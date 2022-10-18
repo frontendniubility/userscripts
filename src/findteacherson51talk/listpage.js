@@ -6,13 +6,14 @@ config.onsave = cfg => {
 	// conf = cfg;
 	console.log(cfg)
 	try {
+		// test it
 		new Function("t", `return ${cfg.calcIndicator}`)({})
 	} catch (error) {
 		console.log(error)
 		alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`)
 		return false
 	}
-	$("#autogetnextpage").text("自动获取" + getAutoNextPagesCount() + "页")
+	$("#autoGetNextPage").text("自动获取" + getAutoNextPagesCount() + "页")
 }
 let maxRate = 0,
 	minRate = 99999,
@@ -36,7 +37,7 @@ function getAutoNextPagesCount() {
 	else return settings.pageMaxCount
 }
 
-function updateTeacherinfoToUI(jqel, tinfo) {
+function updateTeacherInfoToUI(jqEl, tinfo) {
 	if (!isNaN(tinfo.label)) {
 		if (tinfo.label > maxLabel) maxLabel = tinfo.label
 		if (tinfo.label < minLabel) minLabel = tinfo.label
@@ -45,40 +46,40 @@ function updateTeacherinfoToUI(jqel, tinfo) {
 		if (tinfo.favoritesCount > maxFc) maxFc = tinfo.favoritesCount
 		if (tinfo.favoritesCount < minFc) minFc = tinfo.favoritesCount
 	}
-	if (!isNaN(tinfo.thumbupRate)) {
-		if (tinfo.thumbupRate > maxRate) maxRate = tinfo.thumbupRate
-		if (tinfo.thumbupRate < minRate) minRate = tinfo.thumbupRate
+	if (!isNaN(tinfo.thumbUpRate)) {
+		if (tinfo.thumbUpRate > maxRate) maxRate = tinfo.thumbUpRate
+		if (tinfo.thumbUpRate < minRate) minRate = tinfo.thumbUpRate
 	}
 	if (!isNaN(tinfo.age)) {
 		if (tinfo.age > maxAge) maxAge = tinfo.age
 		if (tinfo.age < minAge) minAge = tinfo.age
 	}
 
-	jqel.attr("teacherinfo", JSON.stringify(tinfo))
-	jqel.find(".teacher-name").html(
-		jqel.find(".teacher-name").html() +
-			`<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbupRate}%</label>
+	jqEl.attr("teacherInfo", JSON.stringify(tinfo))
+	jqEl.find(".teacher-name").html(
+		jqEl.find(".teacher-name").html() +
+			`<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbUpRate}%</label>
       | <label title='收藏数量'>${tinfo.favoritesCount} </label> `,
 	)
-	// jqel.find(".teacher-age").html(jqel.find(".teacher-age").html() + " | <label title='收藏数量'>" + tinfo.favoritesCount + "</label>");
-	jqel.attr("indicator", tinfo.indicator)
+	// jqEl.find(".teacher-age").html(jqEl.find(".teacher-age").html() + " | <label title='收藏数量'>" + tinfo.favoritesCount + "</label>");
+	jqEl.attr("indicator", tinfo.indicator)
 }
 
-function executeFilters(uifilters) {
-	let tcount = 0,
-		hidecount = 0
+function executeFilters(uiFilters) {
+	let tCount = 0,
+		hideCount = 0
 	$.each($(".item"), function (i, item) {
 		let node = $(item)
-		let tinfojson = node.attr("teacherinfo")
-		if (!tinfojson) {
+		let tInfoJson = node.attr("teacherInfo")
+		if (!tInfoJson) {
 			return true
 		}
-		let tinfo = JSON.parse(tinfojson)
+		let tinfo = JSON.parse(tInfoJson)
 		var ret = true
-		if (!isNaN(tinfo.thumbupRate)) ret = tinfo.thumbupRate >= uifilters.rate1 && tinfo.thumbupRate <= uifilters.rate2
-		if (!isNaN(tinfo.label)) ret = tinfo.label >= uifilters.l1 && tinfo.label <= uifilters.l2 && ret
-		if (!isNaN(tinfo.age)) ret = tinfo.age >= uifilters.age1 && tinfo.age <= uifilters.age2 && ret
-		if (!isNaN(tinfo.favoritesCount)) ret = tinfo.favoritesCount >= uifilters.fc1 && tinfo.favoritesCount <= uifilters.fc2 && ret
+		if (!isNaN(tinfo.thumbUpRate)) ret = tinfo.thumbUpRate >= uiFilters.rate1 && tinfo.thumbUpRate <= uiFilters.rate2
+		if (!isNaN(tinfo.label)) ret = tinfo.label >= uiFilters.l1 && tinfo.label <= uiFilters.l2 && ret
+		if (!isNaN(tinfo.age)) ret = tinfo.age >= uiFilters.age1 && tinfo.age <= uiFilters.age2 && ret
+		if (!isNaN(tinfo.favoritesCount)) ret = tinfo.favoritesCount >= uiFilters.fc1 && tinfo.favoritesCount <= uiFilters.fc2 && ret
 		if (ret) {
 			if (node.is(":hidden")) {
 				//如果node是隐藏的则显示node元素，否则隐藏
@@ -86,21 +87,21 @@ function executeFilters(uifilters) {
 			} else {
 				//nothing todo
 			}
-			tcount++
+			tCount++
 		} else {
 			node.css("color", "white").hide(500)
-			hidecount++
+			hideCount++
 		}
 	})
-	$("#tcount").text(tcount)
-	$("#thidecount").text(hidecount)
+	$("#tCount").text(tCount)
+	$("#tHideCount").text(hideCount)
 }
 
 function getUiFilters() {
-	let l1 = $("#tlabelslider").slider("values", 0)
-	let l2 = $("#tlabelslider").slider("values", 1)
-	let rate1 = $("#thumbupRateslider").slider("values", 0)
-	let rate2 = $("#thumbupRateslider").slider("values", 1)
+	let l1 = $("#tableSlider").slider("values", 0)
+	let l2 = $("#tableSlider").slider("values", 1)
+	let rate1 = $("#thumbUpRateSlider").slider("values", 0)
+	let rate2 = $("#thumbUpRateSlider").slider("values", 1)
 	let age1 = $("#tAgeSlider").slider("values", 0)
 	let age2 = $("#tAgeSlider").slider("values", 1)
 	let fc1 = $("#fcSlider").slider("values", 0)
@@ -110,22 +111,22 @@ function getUiFilters() {
 }
 
 /**
- * @param {JQuery<Element>} jqel
+ * @param {JQuery<Element>} jqEl
  * @returns {TeacherInfoList}
  */
-function getTeacherInfoFromListPageUI(jqel) {
-	let label = getLabelCount(jqel.find(".label")),
-		labels = getLabelByItems(jqel.find(".label>span")),
-		name = jqel.find(".teacher-name").text(),
+function getTeacherInfoFromListPageUI(jqEl) {
+	let label = getLabelCount(jqEl.find(".label")),
+		labels = getLabelByItems(jqEl.find(".label>span")),
+		name = jqEl.find(".teacher-name").text(),
 		type = $(".s-t-top-list .li-active").text(),
 		batchNumber = getBatchNumber()
 	if (type == "收藏外教") {
-		let isfavorite = true
+		let isFavorite = true
 		return {
 			label,
 			name,
 			batchNumber,
-			isfavorite,
+			isFavorite,
 			labels,
 		}
 	} else
@@ -195,15 +196,15 @@ if (settings.isListPage) {
 	$(".item").each(function (index, el) {
 		submit(function (next) {
 			Pace.track(function () {
-				let jqel = $(el)
-				let tid = getTId(jqel.find(".teacher-details-link a").attr("href"))
-				let tinfokey = "tinfo-" + tid
+				let jqEl = $(el)
+				let tid = getTId(jqEl.find(".teacher-details-link a").attr("href"))
+				let tInfoKey = "tinfo-" + tid
 
 				/** @type {TeacherInfoList|TeacherInfo} */
-				let tinfo = getTeacherInfoFromListPageUI(jqel)
+				let tinfo = getTeacherInfoFromListPageUI(jqEl)
 
 				/** @type {TeacherInfo} */
-				let tinfo_saved = GM_getValue(tinfokey)
+				let tinfo_saved = GM_getValue(tInfoKey)
 				if (tinfo_saved) {
 					let now = Date.now()
 					if (!tinfo_saved.updateTime) {
@@ -212,8 +213,8 @@ if (settings.isListPage) {
 					tinfo = $.extend({}, tinfo_saved, tinfo)
 
 					if (now - tinfo_saved.updateTime < configExprMilliseconds) {
-						updateTeacherinfoToUI(jqel, tinfo)
-						GM_setValue(tinfokey, tinfo)
+						updateTeacherInfoToUI(jqEl, tinfo)
+						GM_setValue(tInfoKey, tinfo)
 						next()
 						return true
 					}
@@ -221,18 +222,18 @@ if (settings.isListPage) {
 				// ajax 请求一定要包含在一个函数中
 				let start = Date.now()
 				$.ajax({
-					url: window.location.protocol + "//www.51talk.com/TeacherNew/teacherComment?tid=" + tid + "&type=bad&has_msg=1",
+					url: `${window.location.protocol}//${window.location.host}/TeacherNew/teacherComment?tid=${tid}&type=bad&has_msg=1`,
 					type: "GET",
 					dateType: "html",
 					success: function (r) {
 						let jqr = $(r)
 						tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {})
 						jqr.remove()
-						updateTeacherinfoToUI(jqel, tinfo)
-						GM_setValue(tinfokey, tinfo)
+						updateTeacherInfoToUI(jqEl, tinfo)
+						GM_setValue(tInfoKey, tinfo)
 					},
 					error: function (data) {
-						console.log("xhr error when getting teacher " + JSON.stringify(jqel) + ",error msg:" + JSON.stringify(data))
+						console.log("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
 					},
 				}).always(function () {
 					while (Date.now() - start < 600) {
@@ -281,7 +282,7 @@ function isStopShowBoxAndAutoGetNextTimeTeachers() {
 }
 
 function addCheckbox(val, lbl, group) {
-	let container = $("#timesmutipulecheck")
+	let container = $("#timesMultipleCheck")
 	let inputs = container.find("input")
 	let id = inputs.length + 1
 	$("<input />", {
@@ -296,4 +297,4 @@ function addCheckbox(val, lbl, group) {
 	}).appendTo(container)
 }
 
-export { addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherinfoToUI }
+export { addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherInfoToUI }
