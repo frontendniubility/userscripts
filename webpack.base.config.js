@@ -1,7 +1,7 @@
 const path = require("path")
 var { merge } = require("webpack-merge")
 
-var rulesconfig = require("./webpack.common.rules")
+var rulesConfig = require("./webpack.common.rules")
 const chalk = require("chalk")
 const ProgressBarPlugin = require("progress-bar-webpack-plugin")
 
@@ -90,7 +90,7 @@ let cssMinimizer = compiler => {
 	}).apply(compiler)
 }
 
-module.exports = merge(rulesconfig, {
+module.exports = merge(rulesConfig, {
 	cache: {
 		type: "filesystem", // 使用文件缓存
 	},
@@ -161,6 +161,7 @@ module.exports = merge(rulesconfig, {
 		static: {
 			directory: path.join(__dirname, "dist"),
 		},
+
 		// watchFiles: {
 		// 	paths: ["dist/*.js", "public/**/*"],
 		// 	options: {

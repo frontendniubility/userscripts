@@ -4,12 +4,12 @@ import "./jqueryextend"
 
 config.onsave = cfg => {
 	// conf = cfg;
-	console.log(cfg)
+	console.debug(cfg)
 	try {
 		// test it
 		new Function("t", `return ${cfg.calcIndicator}`)({})
 	} catch (error) {
-		console.log(error)
+		console.debug(error)
 		alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`)
 		return false
 	}
@@ -42,7 +42,7 @@ function updateTeacherInfoToUI(jqEl, tinfo) {
 		if (tinfo.label > maxLabel) maxLabel = tinfo.label
 		if (tinfo.label < minLabel) minLabel = tinfo.label
 	}
-	if (!isNaN(tinfo.favoritesCount)) {
+	if (tinfo.favoritesCount && !isNaN(tinfo.favoritesCount)) {
 		if (tinfo.favoritesCount > maxFc) maxFc = tinfo.favoritesCount
 		if (tinfo.favoritesCount < minFc) minFc = tinfo.favoritesCount
 	}
@@ -68,6 +68,7 @@ function updateTeacherInfoToUI(jqEl, tinfo) {
 function executeFilters(uiFilters) {
 	let tCount = 0,
 		hideCount = 0
+	console.debug("-----uiFilters", uiFilters)
 	$.each($(".item"), function (i, item) {
 		let node = $(item)
 		let tInfoJson = node.attr("teacherInfo")
@@ -75,12 +76,13 @@ function executeFilters(uiFilters) {
 			return true
 		}
 		let tinfo = JSON.parse(tInfoJson)
-		var ret = true
-		if (!isNaN(tinfo.thumbUpRate)) ret = tinfo.thumbUpRate >= uiFilters.rate1 && tinfo.thumbUpRate <= uiFilters.rate2
-		if (!isNaN(tinfo.label)) ret = tinfo.label >= uiFilters.l1 && tinfo.label <= uiFilters.l2 && ret
-		if (!isNaN(tinfo.age)) ret = tinfo.age >= uiFilters.age1 && tinfo.age <= uiFilters.age2 && ret
-		if (!isNaN(tinfo.favoritesCount)) ret = tinfo.favoritesCount >= uiFilters.fc1 && tinfo.favoritesCount <= uiFilters.fc2 && ret
-		if (ret) {
+		var isShown = true
+		if (!isNaN(tinfo.thumbUpRate)) isShown = tinfo.thumbUpRate >= uiFilters.rate1 && tinfo.thumbUpRate <= uiFilters.rate2 && isShown
+		if (!isNaN(tinfo.label)) isShown = tinfo.label >= uiFilters.l1 && tinfo.label <= uiFilters.l2 && isShown
+		if (!isNaN(tinfo.age)) isShown = tinfo.age >= uiFilters.age1 && tinfo.age <= uiFilters.age2 && isShown
+		if (!isNaN(tinfo.favoritesCount)) isShown = tinfo.favoritesCount >= uiFilters.fc1 && tinfo.favoritesCount <= uiFilters.fc2 && isShown
+
+		if (isShown) {
 			if (node.is(":hidden")) {
 				//如果node是隐藏的则显示node元素，否则隐藏
 				node.show().animate({ left: "+=50" }, 3500).animate({ left: "-=50" }, 3500)
@@ -89,6 +91,7 @@ function executeFilters(uiFilters) {
 			}
 			tCount++
 		} else {
+			console.debug("Hide---------------", tinfo)
 			node.css("color", "white").hide(500)
 			hideCount++
 		}
@@ -98,14 +101,10 @@ function executeFilters(uiFilters) {
 }
 
 function getUiFilters() {
-	let l1 = $("#tableSlider").slider("values", 0)
-	let l2 = $("#tableSlider").slider("values", 1)
-	let rate1 = $("#thumbUpRateSlider").slider("values", 0)
-	let rate2 = $("#thumbUpRateSlider").slider("values", 1)
-	let age1 = $("#tAgeSlider").slider("values", 0)
-	let age2 = $("#tAgeSlider").slider("values", 1)
-	let fc1 = $("#fcSlider").slider("values", 0)
-	let fc2 = $("#fcSlider").slider("values", 1)
+	let [l1, l2] = $("#labelSlider").slider("values")
+	let [rate1, rate2] = $("#thumbUpRateSlider").slider("values")
+	let [age1, age2] = $("#tAgeSlider").slider("values")
+	let [fc1, fc2] = $("#fcSlider").slider("values")
 
 	return { l1, l2, rate1, rate2, age1, age2, fc1, fc2 }
 }
@@ -233,7 +232,7 @@ if (settings.isListPage) {
 						GM_setValue(tInfoKey, tinfo)
 					},
 					error: function (data) {
-						console.log("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
+						console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
 					},
 				}).always(function () {
 					while (Date.now() - start < 600) {

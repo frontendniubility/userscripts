@@ -103,6 +103,8 @@ function getRankHtml(t) {
 			colorIf = "style = 'color:red'"
 		}
 		return `<label title='在同类别教师中的排名' ${colorIf}> ${t.rank}名</label>`
+	} else {
+		return `<label title='未找到该教师' > N名</label>`
 	}
 }
 if (settings.isListPage || settings.isDetailPage) {
@@ -110,12 +112,14 @@ if (settings.isListPage || settings.isDetailPage) {
 	submit(function (next) {
 		try {
 			let config = GM_getValue("filterConfig", {
-				l1: 300,
-				l2: maxLabel,
-				rate1: 97,
-				rate2: maxRate,
-				age1: minAge,
-				age2: maxAge,
+				l1: minLabel ?? 300,
+				l2: maxLabel ?? 200,
+				rate1: minRate ?? 97,
+				rate2: maxRate ?? 100,
+				age1: minAge ?? 0,
+				age2: maxAge ?? 100,
+				fc1: minFc ?? 0,
+				fc2: maxFc ?? 999999,
 			})
 
 			$("body").append(UiHtmlTemplate)
@@ -124,43 +128,41 @@ if (settings.isListPage || settings.isDetailPage) {
 			}
 			$("body").append("<div id='teacherListDialog' style='display:none;'></div>")
 			$("body").append("<div id='wwwww'>已加载选课辅助插件。</div>") //这是一个奇怪的BUG on jqueryui. 如果不多额外添加一个，则dialog无法弹出。
-			$("#tableSlider")
+			$("#labelSlider")
 				.slider({
 					range: true,
 					min: minLabel - 1,
-					max: maxLabel,
+					max: maxLabel + 1,
 					values: [config.l1 < minLabel - 1 ? minLabel - 1 : config.l1, maxLabel],
 					slide: function (event, ui) {
 						$("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slideStop", function (event, ui) {
-					let l1 = $("#tableSlider").slider("values", 0)
-					let l2 = $("#tableSlider").slider("values", 1)
+				.on("slidestop", function (event, ui) {
+					let l = $(this).slider("values")
 					let uiFilters = getUiFilters()
 					let filterConfig = GM_getValue("filterConfig", uiFilters)
-					filterConfig.l1 = l1
-					filterConfig.l2 = l2
+					filterConfig.l1 = l[0]
+					filterConfig.l2 = l[1]
 					GM_setValue("filterConfig", filterConfig)
 					executeFilters(uiFilters)
 				})
 			$("#fcSlider")
 				.slider({
 					range: true,
-					min: minFc,
-					max: maxFc,
-					values: [config.fc1 < minFc ? minFc : config.fc1, maxFc],
+					min: minFc - 1,
+					max: maxFc + 1,
+					values: [config.fc1, config.fc2],
 					slide: function (event, ui) {
 						$("#_tfc").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slideStop", function (event, ui) {
-					let fc1 = $("#fcSlider").slider("values", 0)
-					let fc2 = $("#fcSlider").slider("values", 1)
+				.on("slidestop", function (event, ui) {
+					let fc = $(this).slider("values")
 					let uiFilters = getUiFilters()
 					let filterConfig = GM_getValue("filterConfig", uiFilters)
-					filterConfig.fc1 = fc1
-					filterConfig.fc2 = fc2
+					filterConfig.fc1 = fc[0]
+					filterConfig.fc2 = fc[1]
 					GM_setValue("filterConfig", filterConfig)
 					executeFilters(uiFilters)
 				})
@@ -169,18 +171,17 @@ if (settings.isListPage || settings.isDetailPage) {
 					range: true,
 					min: minRate,
 					max: maxRate,
-					values: [config.rate1 < minRate ? minRate : config.rate1, maxRate],
+					values: [config.rate1, config.rate2],
 					slide: function (_event, ui) {
 						$("#_thumbUpRate").html(ui.values[0] + "% - " + ui.values[1] + "%")
 					},
 				})
-				.on("slideStop", function (event, ui) {
-					let rate1 = $("#thumbUpRateSlider").slider("values", 0)
-					let rate2 = $("#thumbUpRateSlider").slider("values", 1)
+				.on("slidestop", function (event, ui) {
+					let rate = $("#thumbUpRateSlider").slider("values")
 					let uiFilters = getUiFilters()
 					let filterConfig = GM_getValue("filterConfig", uiFilters)
-					filterConfig.rate1 = rate1
-					filterConfig.rate2 = rate2
+					filterConfig.rate1 = rate[0]
+					filterConfig.rate2 = rate[1]
 					GM_setValue("filterConfig", filterConfig)
 					executeFilters(uiFilters)
 				})
@@ -195,13 +196,12 @@ if (settings.isListPage || settings.isDetailPage) {
 						$("#_tAge").html(ui.values[0] + " - " + ui.values[1])
 					},
 				})
-				.on("slideStop", function (event, ui) {
-					let age1 = $("#tAgeSlider").slider("values", 0)
-					let age2 = $("#tAgeSlider").slider("values", 1)
+				.on("slidestop", function (event, ui) {
+					let age = $(this).slider("values")
 					let uiFilters = getUiFilters()
 					let filterConfig = GM_getValue("filterConfig", uiFilters)
-					filterConfig.age1 = age1
-					filterConfig.age2 = age2
+					filterConfig.age1 = age[0]
+					filterConfig.age2 = age[1]
 
 					GM_setValue("filterConfig", filterConfig)
 					executeFilters(uiFilters)
@@ -441,7 +441,7 @@ if (settings.isListPage || settings.isDetailPage) {
 					if (settings.isListPage) {
 						$.each($(".item"), function (i, item) {
 							let jqEl = $(item)
-							let tid = jqEl.find(".teacher-details-link a").attr("href").replace("https://www.51talk.com/TeacherNew/info/", "").replace("http://www.51talk.com/TeacherNew/info/", "")
+							let tid = jqEl.find(".teacher-details-link a").attr("href").replace(`${window.location.protocol}//${window.location.host}/TeacherNew/info/`, "")
 							let t = teachers.find((currentValue, index, arr) => {
 								return currentValue.tid == tid
 							})
@@ -465,7 +465,7 @@ if (settings.isListPage || settings.isDetailPage) {
 			$("#_tfc").html(uiFilters_top.fc1 + " - " + uiFilters_top.fc2 + "")
 			$("#_thumbUpRate").html(uiFilters_top.rate1 + "% - " + uiFilters_top.rate2 + "%")
 		} catch (ex) {
-			console.log(ex + "")
+			console.debug(ex + "")
 			throw ex
 		} finally {
 			next()

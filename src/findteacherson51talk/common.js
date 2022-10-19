@@ -177,8 +177,8 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 		updateTime: Date.now(),
 		labels: getLabelByItems(jqr.find(".t-d-label>span")),
 		teacherStar: Number(jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-star").text()),
-		certificaties: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-icon-tag>span:eq(0)").text(),
-		suitables: jqr
+		certificates: jqr.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.teacher-icon-tag>span:eq(0)").text(),
+		suitable: jqr
 			.find(".s-t-top>.s-t-top-details.f-cb>.s-t-top-left>.teacher-left-right>.suitable>span:not(:first)")
 			.map(function (i, v) {
 				return $(v).text()
@@ -217,18 +217,18 @@ export function getTeacherInfoFromDetailPage(tinfo_saved, jqr, tinfo_latest = {}
 			.find(".clear-search")
 			.text()
 			.match(num)
-			.filter(x => x !== "")[0],
+			.filter(x => x !== "")[0] ?? 0,
 	)
 	tinfo.isFavorite = jqr.find(".go-search.cancel-collection").length > 0
 
 	tinfo.name = jqr.find(".t-name").text().trim()
-	var agesstr = jqr
+	var agesStr = jqr
 		.find(".teacher-name-tit > .age.age-line")
 		.text()
 		.match(num)
 		.filter(x => x !== "")
-	tinfo.tAge = Number(agesstr[1])
-	tinfo.age = Number(agesstr[0])
+	tinfo.tAge = Number(agesStr[1])
+	tinfo.age = Number(agesStr[0])
 	tinfo.batchNumber = getBatchNumber()
 	tinfo = $.extend({}, tinfo_saved, tinfo, tinfo_latest)
 

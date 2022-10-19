@@ -116,8 +116,8 @@ declare interface TeacherInfoBase {
 
 declare interface TeacherInfo extends TeacherInfoBase {
 	teacherStar: number
-	certificaties: string
-	suitables: Array<string>
+	certificates: string
+	suitable: Array<string>
 	thumbUp: number
 	thumbDown: number
 	thumbUpRate: number
