@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Search
-// @version     2022.10.519125402
+// @version     2022.10.521151026
 // @description Allows you to quickly search through youtube playlists
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -166,8 +166,7 @@
             waitForUrl(/^https:\/\/www\.youtube\.com\/(playlist\?list=|(user|channel)\/[^\/]+\/videos|feed\/subscriptions).*/, (function() {
                 util.log("Reached playlist, adding search box");
                 var playlistUrl = location.href, _yps$render = yps.render(), txtSearch = _yps$render.txtSearch, resultCount = _yps$render.resultCount, refresh = util.debounce((function() {
-                    var _resultCount3;
-                    return (_resultCount3 = resultCount).render.apply(_resultCount3, _toConsumableArray(yps.search(txtSearch.value)));
+                    return resultCount.render.apply(resultCount, _toConsumableArray(yps.search(txtSearch.value)));
                 }), 50), itemWait = waitForElems({
                     sel: ITEM_SELECTOR,
                     onmatch: function onmatch(elem) {
