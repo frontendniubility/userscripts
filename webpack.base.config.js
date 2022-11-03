@@ -1,13 +1,13 @@
 const path = require("path")
 var { merge } = require("webpack-merge")
 
-var rulesConfig = require("./webpack.common.rules")
+var rulesConfig = require("./webpack.common.rules.js")
 const chalk = require("chalk")
 const ProgressBarPlugin = require("progress-bar-webpack-plugin")
 
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
-const { entries } = require("./webpack.common.entries")
+const { entries } = require("./webpack.common.entries.js")
 
 let terserPlugin = compiler => {
 	const TerserPlugin = require("terser-webpack-plugin")

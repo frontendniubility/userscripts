@@ -5,8 +5,7 @@ const { validate } = require("schema-utils")
 const { ConcatSource /* , RawSource */ } = require("webpack-sources")
 const userscriptMeta = require("@tkausl/userscript-meta")
 const _pick = require("lodash.pick")
-const pkgUp = require("pkg-up")
-
+const pkgUpReader = require("read-package-json")
 const loadHeaderFile = require("./loadHeaderFile")
 const createHeaderProvider = require("./createHeaderProvider")
 const interpolate = require("./interpolate")
@@ -70,9 +69,7 @@ module.exports = class WebpackUserscript {
 	 * @param {Compiler} compiler
 	 */
 	apply(compiler) {
-		const packageJsonFile = pkgUp.sync({
-			cwd: compiler.options.context,
-		})
+		let packageJsonFile = path.join(compiler.options.context, "package.json")
 		const packageJson = typeof packageJsonFile === "string" ? JSON.parse(fs.readFileSync(packageJsonFile, "utf8")) : {}
 		const packageInfoObj = {
 			name: packageJson.name || "",

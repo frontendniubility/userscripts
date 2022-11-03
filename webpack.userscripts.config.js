@@ -11,7 +11,7 @@ const { Config } = require("node-json-db/dist/lib/JsonDBConfig")
 const db = new JsonDB(new Config("versioncache.json", true, true, "/"))
 
 const logger = require("./log").loggers.get("webpack")
-const { entries } = require("./webpack.common.entries")
+const { entries } = require("./webpack.common.entries.js")
 
 let parseMeta = script =>
 	script

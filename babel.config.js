@@ -1,6 +1,6 @@
 module.exports = function (api) {
-  //api.cache(true);
-  return {
+	//api.cache(true);
+	return {
 		minified: false,
 		// "only": ["**/*.mjs", "*/*.mjs", "**/*.es6", "*/*.es6"],  //此处如果不注释（限制对.js的解析），则需要在调用处 排除 *.js, 否则 js文件babel-loader出错
 		presets: [
@@ -88,5 +88,5 @@ module.exports = function (api) {
 			//   "useESModules": true
 			// }]
 		],
-  };
+	}
 }

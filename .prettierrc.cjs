@@ -23,4 +23,4 @@ module.exports = {
 	useTabs: true, // 缩进不使用tab，使用空格
 	vueIndentScriptAndStyle: true,
 	withNodeModules: true,
-};
+}

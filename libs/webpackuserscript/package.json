@@ -1,3 +1,4 @@
 {
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "type": "commonjs"
 }
