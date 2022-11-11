@@ -174,9 +174,9 @@ module.exports = merge(rulesConfig, {
 
 	plugins: [
 		// 进度条
-		new ProgressBarPlugin({
-			format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
-		}),
+		// new ProgressBarPlugin({
+		// 	format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
+		// }),
 		// new BundleAnalyzerPlugin(),
 	],
 	devtool: "source-map",

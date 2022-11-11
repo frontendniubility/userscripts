@@ -1,9 +1,6 @@
-let a = a => a;
-let c = c => c;
 
-let r = a(c(1));
+let m = async function test() {
+  return Promise.resolve()
+}
 
-c(r);
-
-n => n;
-m => m;
+console.log(typeof m)

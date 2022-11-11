@@ -89,7 +89,7 @@ let logopt = {
 	transports: [
 		new transports.Stream({
 			stream: process.stderr,
-			level: "all",
+			level: "cnrun",
 		}),
 		// new transports.Console({
 
@@ -101,19 +101,19 @@ let optTest = Object.assign({}, logopt, {
 	transports: [
 		new transports.Stream({
 			stream: process.stderr,
-			level: "all",
+			level: "cnrun",
 		}),
 
-		new transports.DailyRotateFile({
-			filename: "logs/%DATE%/webpacktest-%DATE%.log",
-			datePattern: "YYYY-MMM-DD",
-			// datePattern: 'YYYY-MM-DD-HH',
-			zippedArchive: true,
-			maxSize: "20m",
-			maxFiles: "14d",
-			level: "all",
-			format: format.combine(format.uncolorize()),
-		}),
+		// new transports.DailyRotateFile({
+		// 	filename: "logs/%DATE%/webpacktest-%DATE%.log",
+		// 	datePattern: "YYYY-MMM-DD",
+		// 	// datePattern: 'YYYY-MM-DD-HH',
+		// 	zippedArchive: true,
+		// 	maxSize: "20m",
+		// 	maxFiles: "14d",
+		// 	level: "all",
+		// 	format: format.combine(format.uncolorize()),
+		// }),
 		// new transports.DailyRotateFile({
 		//     filename: 'logs/server/%DATE%/errors.log',
 		//     datePattern: 'DD-MMM-YYYY',
