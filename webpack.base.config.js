@@ -2,8 +2,8 @@ const path = require("path")
 var { merge } = require("webpack-merge")
 
 var rulesConfig = require("./webpack.common.rules.js")
-const chalk = require("chalk")
-const ProgressBarPlugin = require("progress-bar-webpack-plugin")
+// const chalk = require("chalk")
+// const ProgressBarPlugin = require("progress-bar-webpack-plugin")
 
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
