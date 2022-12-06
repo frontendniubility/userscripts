@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2022.12.506153721
+// @version     2022.12.506160108
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -1524,6 +1524,7 @@
                 alert("计算公式错误，排名计算方式使用默认公式。Error:".concat(error));
                 return false;
             }
+            GM_setValue("_getBatchNumber", 0);
             $("#autoGetNextPage").text("自动获取" + getAutoNextPagesCount() + "页");
         };
         var maxRate = 0, minRate = 99999, maxLabel = 0, minLabel = 9999999, maxFc = 0, minFc = 999999, maxAge = 0, minAge = 99999;

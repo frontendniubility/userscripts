@@ -13,6 +13,9 @@ config.onsave = cfg => {
 		alert(`计算公式错误，排名计算方式使用默认公式。Error:${error}`)
 		return false
 	}
+
+	GM_setValue("_getBatchNumber", 0)
+
 	$("#autoGetNextPage").text("自动获取" + getAutoNextPagesCount() + "页")
 }
 let maxRate = 0,
@@ -58,7 +61,7 @@ function updateTeacherInfoToUI(jqEl, tinfo) {
 	jqEl.attr("teacherInfo", JSON.stringify(tinfo))
 	jqEl.find(".teacher-name").html(
 		jqEl.find(".teacher-name").html() +
-			`<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbUpRate}%</label>
+		`<br /><label title='评论标签数量'>${tinfo.label}</label>|<label title='好评率'>${tinfo.thumbUpRate}%</label>
       | <label title='收藏数量'>${tinfo.favoritesCount} </label> `,
 	)
 	// jqEl.find(".teacher-age").html(jqEl.find(".teacher-age").html() + " | <label title='收藏数量'>" + tinfo.favoritesCount + "</label>");
