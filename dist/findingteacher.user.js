@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2022.11.503160143
+// @version     2022.12.506153721
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -13,6 +13,7 @@
 // @match       *://51talk.com/user/*
 // @namespace   https://github.com/niubilityfrontend
 // @license     OSL-3.0
+// @include     *51talk*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -2023,7 +2024,7 @@
                                     width: 125,
                                     sorttype: "string",
                                     formatter: function formatter(value, options, rData) {
-                                        return "<a href='http://www.51talk.com/TeacherNew/info/" + rData["tid"] + "' target='_blank' style='color:blue'>" + (value ? value : rData["tid"]) + "</a>";
+                                        return "<a href='".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/info/").concat(rData["tid"], "' target='_blank' style='color:blue'>").concat(value ? value : rData["tid"], "</a>");
                                     }
                                 }, {
                                     name: "isFavorite",

@@ -12,6 +12,7 @@
 // @match *://51talk.com/ReserveNew/index*
 // @match *://51talk.com/TeacherNew/*
 // @match *://51talk.com/user/*
+// @include       *51talk*
 // @grant GM_xmlhttpRequest
 // @grant GM_getValue
 // @grant GM_setValue
@@ -369,7 +370,9 @@ if (settings.isListPage || settings.isDetailPage) {
 									width: 125,
 									sorttype: "string",
 									formatter: function formatter(value, options, rData) {
-										return "<a href='http://www.51talk.com/TeacherNew/info/" + rData["tid"] + "' target='_blank' style='color:blue'>" + (value ? value : rData["tid"]) + "</a>"
+
+										return `<a href='${window.location.protocol}//${window.location.host}/TeacherNew/info/${rData["tid"]}' target='_blank' style='color:blue'>${value ? value : rData["tid"]}</a>`
+										// return "<a href='http://www.51talk.com/TeacherNew/info/" + rData["tid"] + "' target='_blank' style='color:blue'>" + (value ? value : rData["tid"]) + "</a>"
 									},
 								}, //
 								{
