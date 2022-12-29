@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2022.12.529172232
+// @version     2022.12.529172412
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
