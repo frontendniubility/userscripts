@@ -18,6 +18,15 @@
 		"target": "es5",
 		"watch": true
 	},
-	"exclude": ["node_modules", "**/__tests__/*", "**/tests/*", "**/dist/*", "libs/jqGrid*"],
-	"include": ["src/**/*.ts", "libs/**/*.ts"]
+	"exclude": [
+		"node_modules",
+		"**/__tests__/*",
+		"**/tests/*",
+		"**/dist/*",
+		"libs/jqGrid*"
+	],
+	"include": [
+		"src/**/*.ts",
+		"libs/**/*.ts"
+	]
 }

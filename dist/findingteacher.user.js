@@ -1544,6 +1544,7 @@
                 alert("计算公式错误，排名计算方式使用默认公式。Error:".concat(error));
                 return false;
             }
+            GM_setValue("_getBatchNumber", 0);
             $("#autoGetNextPage").text("自动获取" + getAutoNextPagesCount() + "页");
         };
         var maxRate = 0, minRate = 99999, maxLabel = 0, minLabel = 9999999, maxFc = 0, minFc = 999999, maxAge = 0, minAge = 99999;
