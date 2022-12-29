@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Queue Real Times
-// @version     2022.12.529163018
+// @version     2022.12.529171553
 // @description Display countdown until next episode in the Crunchyroll Queue page
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
