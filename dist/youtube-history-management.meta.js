@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube History Management
-// @version     2022.12.529172412
+// @version     2023.104.5101320
 // @author      fuzetsu
 // @description Select and remove YouTube history items quickly
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
