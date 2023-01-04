@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2022.11.503160143
+// @version     2023.104.5101320
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

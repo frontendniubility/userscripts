@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2022.11.503160143
+// @version     2023.104.5101320
 // @description seek video with hotkeys and set default quality
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -34,7 +34,8 @@
         type: "dropdown",
         values: [ "auto", 360, 480, 720, 1080 ],
         default: "auto"
-    } ]), cfg = config.load();
+    } ]);
+    var cfg = config.load();
     config.onsave = function(newCfg) {
         cfg = newCfg;
         player.setQuality(cfg.quality);
@@ -42,7 +43,9 @@
     var p = function p() {
         var _console;
         return (_console = console).log.apply(_console, arguments), arguments.length <= 0 ? undefined : arguments[0];
-    }, isFullscreen = false, player = {
+    };
+    var isFullscreen = false;
+    var player = {
         setQuality: function setQuality(quality) {
             var btn = quality !== "auto" ? qq(CSS.quality).slice(2).find((function(item) {
                 return quality >= parseInt(item.textContent);
