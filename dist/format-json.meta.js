@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2022.11.503160143
+// @version     2023.104.5101911
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

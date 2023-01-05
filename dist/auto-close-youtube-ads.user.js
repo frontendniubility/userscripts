@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Auto Close YouTube Ads
-// @version     2022.11.503160143
+// @version     2023.104.5101911
 // @author      fuzetsu
 // @description Close and/or Mute YouTube ads automatically!
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -36,31 +36,29 @@
     }
     function _arrayLikeToArray(arr, len) {
         if (len == null || len > arr.length) len = arr.length;
-        for (var i = 0, arr2 = new Array(len); i < len; i++) {
-            arr2[i] = arr[i];
-        }
+        for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
         return arr2;
     }
     function _iterableToArrayLimit(arr, i) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null) return;
-        var _arr = [], _n = true, _d = false, _s, _e;
-        try {
-            for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-                _arr.push(_s.value);
-                if (i && _arr.length === i) break;
-            }
-        } catch (err) {
-            _d = true;
-            _e = err;
-        } finally {
+        var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+        if (null != _i) {
+            var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
             try {
-                if (!_n && _i["return"] != null) _i["return"]();
+                if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                    if (Object(_i) !== _i) return;
+                    _n = !1;
+                } else for (;!(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) ;
+            } catch (err) {
+                _d = !0, _e = err;
             } finally {
-                if (_d) throw _e;
+                try {
+                    if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+                } finally {
+                    if (_d) throw _e;
+                }
             }
+            return _arr;
         }
-        return _arr;
     }
     function _arrayWithHoles(arr) {
         if (Array.isArray(arr)) return arr;
@@ -118,7 +116,9 @@
         getPath: function getPath(obj, path) {
             return obj == null ? null : path.length > 0 ? util.getPath(obj[path.pop()], path) : obj;
         }
-    }, SCRIPT_NAME = "Auto Close YouTube Ads", SHORT_AD_MSG_LENGTH = 12e3, TICKS = [], DONT_SKIP = false, config = GM_config([ {
+    }, SCRIPT_NAME = "Auto Close YouTube Ads", SHORT_AD_MSG_LENGTH = 12e3, TICKS = [];
+    var DONT_SKIP = false;
+    var config = GM_config([ {
         key: "muteAd",
         label: "Mute ads?",
         type: "bool",
@@ -160,7 +160,8 @@
         key: "version",
         type: "hidden",
         default: 1
-    } ]), configVersion = 2, conf = config.load();
+    } ]), configVersion = 2;
+    var conf = config.load();
     config.onsave = function(cfg) {
         return conf = cfg;
     };
@@ -208,7 +209,8 @@
         if (skipText && ![ "will begin", "will play" ].some((function(snip) {
             return skipText.includes(snip);
         }))) {
-            var cancelClass = "acya-cancel-skip", cancelDiv = util.q("." + cancelClass);
+            var cancelClass = "acya-cancel-skip";
+            var cancelDiv = util.q("." + cancelClass);
             if (cancelDiv) cancelDiv.remove();
             cancelDiv = createMessageElement();
             cancelDiv.className = cancelClass;

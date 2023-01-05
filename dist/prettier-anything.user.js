@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2022.11.503160143
+// @version     2023.104.5101911
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -34,7 +34,9 @@
         _regeneratorRuntime = function _regeneratorRuntime() {
             return exports;
         };
-        var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+        var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function(obj, key, desc) {
+            obj[key] = desc.value;
+        }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
         function define(obj, key, value) {
             return Object.defineProperty(obj, key, {
                 value,
@@ -52,40 +54,9 @@
         }
         function wrap(innerFn, outerFn, self, tryLocsList) {
             var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []);
-            return generator._invoke = function(innerFn, self, context) {
-                var state = "suspendedStart";
-                return function(method, arg) {
-                    if ("executing" === state) throw new Error("Generator is already running");
-                    if ("completed" === state) {
-                        if ("throw" === method) throw arg;
-                        return doneResult();
-                    }
-                    for (context.method = method, context.arg = arg; ;) {
-                        var delegate = context.delegate;
-                        if (delegate) {
-                            var delegateResult = maybeInvokeDelegate(delegate, context);
-                            if (delegateResult) {
-                                if (delegateResult === ContinueSentinel) continue;
-                                return delegateResult;
-                            }
-                        }
-                        if ("next" === context.method) context.sent = context._sent = context.arg; else if ("throw" === context.method) {
-                            if ("suspendedStart" === state) throw state = "completed", context.arg;
-                            context.dispatchException(context.arg);
-                        } else "return" === context.method && context.abrupt("return", context.arg);
-                        state = "executing";
-                        var record = tryCatch(innerFn, self, context);
-                        if ("normal" === record.type) {
-                            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-                            return {
-                                value: record.arg,
-                                done: context.done
-                            };
-                        }
-                        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-                    }
-                };
-            }(innerFn, self, context), generator;
+            return defineProperty(generator, "_invoke", {
+                value: makeInvokeMethod(innerFn, self, context)
+            }), generator;
         }
         function tryCatch(fn, obj, arg) {
             try {
@@ -137,25 +108,57 @@
                 reject(record.arg);
             }
             var previousPromise;
-            this._invoke = function(method, arg) {
-                function callInvokeWithMethodAndArg() {
-                    return new PromiseImpl((function(resolve, reject) {
-                        invoke(method, arg, resolve, reject);
-                    }));
+            defineProperty(this, "_invoke", {
+                value: function value(method, arg) {
+                    function callInvokeWithMethodAndArg() {
+                        return new PromiseImpl((function(resolve, reject) {
+                            invoke(method, arg, resolve, reject);
+                        }));
+                    }
+                    return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
                 }
-                return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+            });
+        }
+        function makeInvokeMethod(innerFn, self, context) {
+            var state = "suspendedStart";
+            return function(method, arg) {
+                if ("executing" === state) throw new Error("Generator is already running");
+                if ("completed" === state) {
+                    if ("throw" === method) throw arg;
+                    return doneResult();
+                }
+                for (context.method = method, context.arg = arg; ;) {
+                    var delegate = context.delegate;
+                    if (delegate) {
+                        var delegateResult = maybeInvokeDelegate(delegate, context);
+                        if (delegateResult) {
+                            if (delegateResult === ContinueSentinel) continue;
+                            return delegateResult;
+                        }
+                    }
+                    if ("next" === context.method) context.sent = context._sent = context.arg; else if ("throw" === context.method) {
+                        if ("suspendedStart" === state) throw state = "completed", context.arg;
+                        context.dispatchException(context.arg);
+                    } else "return" === context.method && context.abrupt("return", context.arg);
+                    state = "executing";
+                    var record = tryCatch(innerFn, self, context);
+                    if ("normal" === record.type) {
+                        if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+                        return {
+                            value: record.arg,
+                            done: context.done
+                        };
+                    }
+                    "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+                }
             };
         }
         function maybeInvokeDelegate(delegate, context) {
-            var method = delegate.iterator[context.method];
-            if (undefined === method) {
-                if (context.delegate = null, "throw" === context.method) {
-                    if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, 
-                    maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
-                    context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
-                }
-                return ContinueSentinel;
-            }
+            var methodName = context.method, method = delegate.iterator[methodName];
+            if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", 
+            context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", 
+            context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), 
+            ContinueSentinel;
             var record = tryCatch(method, delegate.iterator, context.arg);
             if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, 
             context.delegate = null, ContinueSentinel;
@@ -188,9 +191,8 @@
                 if ("function" == typeof iterable.next) return iterable;
                 if (!isNaN(iterable.length)) {
                     var i = -1, next = function next() {
-                        for (;++i < iterable.length; ) {
-                            if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
-                        }
+                        for (;++i < iterable.length; ) if (hasOwn.call(iterable, i)) return next.value = iterable[i], 
+                        next.done = !1, next;
                         return next.value = undefined, next.done = !0, next;
                     };
                     return next.next = next;
@@ -206,8 +208,13 @@
                 done: !0
             };
         }
-        return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), 
-        define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), 
+        return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+            value: GeneratorFunctionPrototype,
+            configurable: !0
+        }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+            value: GeneratorFunction,
+            configurable: !0
+        }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), 
         exports.isGeneratorFunction = function(genFun) {
             var ctor = "function" == typeof genFun && genFun.constructor;
             return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
@@ -231,11 +238,9 @@
             return this;
         })), define(Gp, "toString", (function() {
             return "[object Generator]";
-        })), exports.keys = function(object) {
-            var keys = [];
-            for (var key in object) {
-                keys.push(key);
-            }
+        })), exports.keys = function(val) {
+            var object = Object(val), keys = [];
+            for (var key in object) keys.push(key);
             return keys.reverse(), function next() {
                 for (;keys.length; ) {
                     var key = keys.pop();
@@ -248,9 +253,7 @@
             reset: function reset(skipTempReset) {
                 if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, 
                 this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), 
-                !skipTempReset) for (var name in this) {
-                    "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
-                }
+                !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
             },
             stop: function stop() {
                 this.done = !0;
@@ -353,6 +356,7 @@
         return target;
     }
     function _defineProperty(obj, key, value) {
+        key = _toPropertyKey(key);
         if (key in obj) {
             Object.defineProperty(obj, key, {
                 value,
@@ -364,6 +368,20 @@
             obj[key] = value;
         }
         return obj;
+    }
+    function _toPropertyKey(arg) {
+        var key = _toPrimitive(arg, "string");
+        return _typeof(key) === "symbol" ? key : String(key);
+    }
+    function _toPrimitive(input, hint) {
+        if (_typeof(input) !== "object" || input === null) return input;
+        var prim = input[Symbol.toPrimitive];
+        if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if (_typeof(res) !== "object") return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+        }
+        return (hint === "string" ? String : Number)(input);
     }
     function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
         try {
@@ -447,7 +465,9 @@
     var p = function p() {
         var _console;
         return (_console = console).log.apply(_console, arguments), arguments.length <= 0 ? undefined : arguments[0];
-    }, loaded = false, load = function load() {
+    };
+    var loaded = false;
+    var load = function load() {
         if (loaded) return;
         loaded = true;
         return Promise.all(deps.map(loadDep)).then((function(scripts) {
@@ -473,42 +493,40 @@
         var _ref = _asyncToGenerator(_regeneratorRuntime().mark((function _callee(clip) {
             var code, loadStart, conf, formatted;
             return _regeneratorRuntime().wrap((function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        code = getSelection();
-                        p("key combo HIT, selection = ", code, "; clip = ", clip);
-                        if (code) {
-                            _context.next = 4;
-                            break;
-                        }
-                        return _context.abrupt("return", p("no selection, so nothing to do"));
-
-                      case 4:
-                        p("--- PRETTIER START ---");
-                        p("Loading Prettier");
-                        loadStart = Date.now();
-                        _context.next = 9;
-                        return load();
-
-                      case 9:
-                        p("Loaded, delta = ", Date.now() - loadStart);
-                        conf = _objectSpread(_objectSpread({}, JSON.parse(config.prettierrc || "{}")), {}, {
-                            parser: "babel",
-                            plugins: prettierPlugins
-                        });
-                        p("formatting using conf:", conf);
-                        formatted = prettier.format(code, conf);
-                        if (clip) GM_setClipboard(formatted); else insertText(formatted);
-                        document.getSelection().empty();
-                        p("BEFORE:\n", code);
-                        p("AFTER:\n", formatted);
-                        p("--- PRETTIER END ---");
-
-                      case 18:
-                      case "end":
-                        return _context.stop();
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    code = getSelection();
+                    p("key combo HIT, selection = ", code, "; clip = ", clip);
+                    if (code) {
+                        _context.next = 4;
+                        break;
                     }
+                    return _context.abrupt("return", p("no selection, so nothing to do"));
+
+                  case 4:
+                    p("--- PRETTIER START ---");
+                    p("Loading Prettier");
+                    loadStart = Date.now();
+                    _context.next = 9;
+                    return load();
+
+                  case 9:
+                    p("Loaded, delta = ", Date.now() - loadStart);
+                    conf = _objectSpread(_objectSpread({}, JSON.parse(config.prettierrc || "{}")), {}, {
+                        parser: "babel",
+                        plugins: prettierPlugins
+                    });
+                    p("formatting using conf:", conf);
+                    formatted = prettier.format(code, conf);
+                    if (clip) GM_setClipboard(formatted); else insertText(formatted);
+                    document.getSelection().empty();
+                    p("BEFORE:\n", code);
+                    p("AFTER:\n", formatted);
+                    p("--- PRETTIER END ---");
+
+                  case 18:
+                  case "end":
+                    return _context.stop();
                 }
             }), _callee);
         })));
