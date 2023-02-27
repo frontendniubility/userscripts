@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Best Teacher(JQuery)
 // @version 2021.4.15001
-// @namespace https://gitee.com/tsharp/userscripts
+// @namespace https://github.com/niubilityfrontend
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @author jimbo
 // @license OSL-3.0
