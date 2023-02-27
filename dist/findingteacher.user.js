@@ -1,37 +1,31 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2023.104.5101911
+// @version     2023.227.5163256
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/findteacherson51talk
-// @match       *://www.51talk.com/ReserveNew/index*
-// @match       *://www.51talk.com/TeacherNew/*
-// @match       *://www.51talk.com/user/*
-// @match       *://51talk.com/ReserveNew/index*
-// @match       *://51talk.com/TeacherNew/*
-// @match       *://51talk.com/user/*
-// @namespace   https://github.com/niubilityfrontend
+// @supportURL  https://gitee.com/tsharp/userscripts/findteacherson51talk
+// @namespace   https://gitee.com/tsharp/userscripts
 // @license     OSL-3.0
-// @include     *51talk*
+// @include     *51talk.com/ReserveNew/index*
+// @include     *51talk.com/TeacherNew/*
+// @include     *51talk.com/user/*
+// @include     *51talk.cn/ReserveNew/index*
+// @include     *51talk.cn/TeacherNew/*
+// @include     *51talk.cn/user/*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_listValues
 // @grant       GM_deleteValue
 // @grant       GM_registerMenuCommand
-// @require     https://raw.githubusercontent.com/niubilityfrontend/jquery.ui/1.12.1/jquery-ui.min.js
-// @require     https://raw.githubusercontent.com/niubilityfrontend/pace/v1.2.4/pace.min.js
-// @require     https://raw.githubusercontent.com/niubilityfrontend/jquery-scrollfix/master/src/scrollfix.js
-// @require     https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/i18n/grid.locale-cn.js
-// @require     https://raw.githubusercontent.com/free-jqgrid/jqGrid/v4.15.5/dist/jquery.jqgrid.min.js
-// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/findingteacher.user.js
-// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/findingteacher.meta.js
+// @downloadURL https://gitee.com/tsharp/userscripts/raw/master/dist/findingteacher.user.js
+// @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/findingteacher.meta.js
 // ==/UserScript==
 
 (() => {
     var __webpack_modules__ = {
-        867: () => {
+        895: () => {
             Pace.Options = {
                 ajax: false,
                 document: false,
@@ -41,30 +35,30 @@
                 }
             };
         },
-        547: (module, __webpack_exports__, __webpack_require__) => {
+        980: (module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Z: () => __WEBPACK_DEFAULT_EXPORT__
             });
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(499);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-            var ___CSS_LOADER_EXPORT___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(645);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+            var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
             ___CSS_LOADER_EXPORT___.push([ module.id, '/*!\r\n * jqGrid 4.15.5-pre - free jqGrid: https://github.com/free-jqgrid/jqGrid\r\n * Date: 2018-08-12\r\n */\r\n\r\n/* Grid */\r\n.ui-jqgrid {\r\n\tposition: relative;\r\n\t-moz-box-sizing: content-box;\r\n\t-webkit-box-sizing: content-box;\r\n\tbox-sizing: content-box;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: manipulation;\r\n}\r\n\r\n.ui-jqgrid div {\r\n\tline-height: normal;\r\n}\r\n\r\n.ui-jqgrid table {\r\n\tborder-collapse: separate;\r\n\tborder-spacing: 0;\r\n\tborder-width: 0;\r\n\tborder-style: none;\r\n}\r\n\r\n.ui-jqgrid table td {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-view {\r\n\tposition: relative;\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\tpadding: 0;\r\n\tfont-size: 11px;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-view *,\r\n.ui-jqgrid > .ui-jqgrid-view *::before,\r\n.ui-jqgrid > .ui-jqgrid-view *::after {\r\n\t-webkit-box-sizing: inherit;\r\n\t-moz-box-sizing: inherit;\r\n\tbox-sizing: inherit;\r\n}\r\n\r\n/* Caption of grid and title of ui-jqdialog */\r\n.ui-jqgrid .ui-jqgrid-titlebar,\r\n.ui-jqgrid .ui-jqgrid-errorbar,\r\n.ui-jqdialog .ui-jqdialog-titlebar {\r\n\tpadding: 0.3em 0.3em 0.3em 0.3em;\r\n\tposition: relative;\r\n\tfont-size: 12px;\r\n\tborder-left: 0 none;\r\n\tborder-right: 0 none;\r\n\tborder-top: 0 none;\r\n}\r\n\r\n.ui-jqgrid-errorbar {\r\n\tmax-height: 100px;\r\n\tmargin-bottom: 0;\r\n\toverflow: auto;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption,\r\n.ui-jqgrid .ui-jqgrid-errorbar-ltr {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption-rtl,\r\n.ui-jqgrid .ui-jqgrid-errorbar-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\n/* Close/Hide button */\r\n.ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close,\r\n.ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close {\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n\ttext-decoration: none;\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\twidth: 1.4em;\r\n\tline-height: 1.5em;\r\n\tfont-size: 12px;\r\n\tmargin: -0.7em 0 0 0;\r\n\tpadding: 0.2em;\r\n\tborder: 1px solid transparent;\r\n\theight: 1.4em;\r\n\tcursor: pointer;\r\n\t-webkit-box-sizing: border-box;\r\n\t-moz-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\t-ms-touch-action: manipulation;\r\n\ttouch-action: manipulation;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui .ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close {\r\n\tmargin: -8px 0 0 0;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption .ui-jqgrid-titlebar-close {\r\n\tright: 0.1em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption-rtl .ui-jqgrid-titlebar-close {\r\n\tleft: 0.1em;\r\n}\r\n\r\n.ui-jqdialog .ui-jqdialog-titlebar-ltr .ui-jqdialog-titlebar-close {\r\n\tright: 0.3em;\r\n}\r\n\r\n.ui-jqdialog .ui-jqdialog-titlebar-rtl .ui-jqdialog-titlebar-close {\r\n\tleft: 0.3em;\r\n}\r\n\r\n.ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close,\r\n.ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close {\r\n\t-ms-border-radius: 0.5em;\r\n\tborder-radius: 0.5em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption .ui-jqgrid-title,\r\n.ui-jqgrid .ui-jqgrid-errorbar-ltr .ui-jqgrid-error,\r\n.ui-jqdialog .ui-jqdialog-titlebar-ltr .ui-jqdialog-title {\r\n\tposition: relative;\r\n\tleft: 0.1em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption-rtl .ui-jqgrid-title,\r\n.ui-jqgrid .ui-jqgrid-errorbar-rtl .ui-jqgrid-error,\r\n.ui-jqdialog .ui-jqdialog-titlebar-rtl .ui-jqdialog-title {\r\n\tposition: relative;\r\n\tright: 0.1em;\r\n}\r\n\r\n.ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close span {\r\n\tmargin-top: 0;\r\n\tmargin-left: 0;\r\n}\r\n\r\n.ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close span,\r\n.ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close span {\r\n\tdisplay: block;\r\n}\r\n\r\n.ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close span.ui-icon,\r\n.ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close span.ui-icon {\r\n\tposition: relative;\r\n\ttop: -2px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-caption .ui-jqgrid-titlebar-close span.ui-icon,\r\n.ui-jqdialog-titlebar-ltr .ui-jqdialog-titlebar-close span.ui-icon {\r\n\tright: 3.5px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.ui-icon {\r\n\tmargin-top: -1px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.fa,\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.fa,\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.glyphicon {\r\n\t/*  the values below are based on the difference between the\r\n\t\tfont-size of fa-icon and the font size of the parent element */\r\n\tfont-size: 14px;\r\n\tmargin-top: -2px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > .svg-inline--fa {\r\n\tfont-size: 14px;\r\n\tdisplay: block;\r\n\tmargin-top: -0.125em;\r\n\tmargin-left: -0.125em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.fa {\r\n\tmargin-left: -1px;\r\n}\r\n\r\n.ui-jqdialog-titlebar-close > .svg-inline--fa {\r\n\tdisplay: block;\r\n\tmargin-left: 0.0625em;\r\n\tmargin-top: -0.0625em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.glyphicon {\r\n\tmargin-left: -2px;\r\n}\r\n\r\n.ui-jqdialog-titlebar .ui-jqdialog-titlebar-close > span {\r\n\tmargin-top: -1px;\r\n}\r\n\r\n.ui-jqdialog-titlebar .ui-jqdialog-titlebar-close > span.glyphicon {\r\n\tmargin-top: -0.05em;\r\n\tmargin-left: -0.05em;\r\n}\r\n\r\n/* Resizer */\r\n\r\n/* .ui-jqdialog .ui-resizable-handle {\r\n\tright: -3px;\r\n\tbottom: -3px;\r\n} */\r\n.ui-jqdialog .ui-resizable-handle > .ui-icon {\r\n\tright: -1px;\r\n\tbottom: -1px;\r\n}\r\n\r\n.ui-jqdialog .ui-resizable-handle > .fa {\r\n\tfont-size: 12px;\r\n\tright: -2px;\r\n\tposition: relative;\r\n}\r\n\r\n.ui-jqdialog .ui-resizable-handle > .svg-inline--fa {\r\n\tfont-size: 12px;\r\n\tright: -1px;\r\n\r\n\t/* right: -2px;\r\n    bottom: -1px; */\r\n\tposition: relative;\r\n}\r\n\r\n.ui-jqdialog .ui-resizable-handle > .glyphicon {\r\n\tfont-size: 12px;\r\n\tright: -1px;\r\n\tbottom: -2.8px;\r\n}\r\n\r\n/* Header */\r\n.ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-hdiv {\r\n\tposition: relative;\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\toverflow: hidden;\r\n\tborder-left: 0 none;\r\n\tborder-top: 0 none;\r\n\tborder-right: 0 none;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hbox {\r\n\tfloat: left;\r\n\tpadding-right: 20px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable {\r\n\ttable-layout: fixed;\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable th {\r\n\theight: auto;\r\n\tpadding: 0 2px 0 2px;\r\n}\r\n\r\n.ui-jqgrid-htable > thead > .jqg-first-row-header > th {\r\n\tpadding-top: 0;\r\n\tpadding-bottom: 0;\r\n\tborder-bottom: 0 none;\r\n\tborder-top: 0 none;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable th.jqgh_cbox {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels th div {\r\n\toverflow: hidden;\r\n\tposition: relative;\r\n\theight: auto;\r\n\tmargin: 2px 2px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels > th.jqgh_cbox {\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels .jqgh_cbox > div {\r\n\ttext-align: center;\r\n\tvertical-align: baseline;\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid-labels .ui-th-column-header,\r\n.ui-jqgrid .ui-jqgrid-labels th.ui-th-column,\r\n.ui-jqgrid .ui-jqgrid-legacy-subgrid .ui-th-subgrid {\r\n\toverflow: hidden;\r\n\twhite-space: nowrap;\r\n\ttext-align: center;\r\n}\r\n\r\n.ui-jqgrid-labels .ui-th-column-header {\r\n\tvertical-align: middle;\r\n\theight: auto;\r\n\tvertical-align: middle;\r\n\tborder-top: 0 none;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-labels th.ui-th-column {\r\n\tposition: relative;\r\n\tvertical-align: middle;\r\n\tborder-top: 0 none;\r\n\tborder-bottom: 0 none;\r\n}\r\n\r\n.ui-th-ltr,\r\n.ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {\r\n\tborder-left: 0 none;\r\n}\r\n\r\n.ui-th-rtl,\r\n.ui-jqgrid .ui-jqgrid-htable th.ui-th-rtl {\r\n\tborder-right: 0 none;\r\n}\r\n\r\n.ui-first-th-ltr {\r\n\tborder-right: 1px solid;\r\n}\r\n\r\n.ui-first-th-rtl {\r\n\tborder-left: 1px solid;\r\n}\r\n\r\n.ui-jqgrid .ui-th-div-ie {\r\n\twhite-space: nowrap;\r\n\tzoom: 1;\r\n\theight: 17px;\r\n}\r\n\r\n.ui-jqgrid .ui-th-column > .jqgh_cbox {\r\n\tmargin: 3px 0;\r\n}\r\n\r\n.ui-jqgrid .ui-th-column .cbox {\r\n\tmargin: 0.1em;\r\n\tcursor: pointer;\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-th-column .cbox {\r\n\theight: 18px;\r\n\twidth: 18px;\r\n}\r\n\r\n.ui-jqgrid .ui-th-column .ui-th-div-ie > .cbox {\r\n\tmargin-left: -1px;\r\n\tmargin-right: -1px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-labels > .ui-th-column > .ui-jqgrid-resize {\r\n\ttop: 0;\r\n\theight: 100%;\r\n\twidth: 0.3em;\r\n\tposition: absolute;\r\n\tcursor: col-resize;\r\n\t-webkit-touch-callout: none;\r\n\t-ms-user-select: none;\r\n\t-moz-user-select: -moz-none;\r\n\t-webkit-user-select: none;\r\n\tuser-select: none;\r\n\tdisplay: inline;\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels th div.ui-jqgrid-rotate {\r\n\t-webkit-transform: translateX(-50%) translateY(0) rotate(-90deg);\r\n\t-moz-transform: translateX(-50%) translateY(0) (-90deg);\r\n\t-o-transform: translateX(-50%) translateY(0) rotate(-90deg);\r\n\t-ms-transform: translateX(-50%) translateY(0) rotate(-90deg);\r\n\ttransform: translateX(-50%) translateY(0) rotate(-90deg);\r\n\ttransform-origin: center center;\r\n\tmargin: 0;\r\n\tleft: 50%;\r\n}\r\n\r\n.ui-jqgrid .ui-grid-ico-sort {\r\n\toverflow: hidden;\r\n\tposition: absolute;\r\n\tdisplay: inline;\r\n}\r\n\r\n.ui-grid-ico-sort {\r\n\t/* use pointer cursor over all visible icons. It can be important if\r\n\t\tviewsortcols: [true, "vertical", false] or viewsortcols: [true, "horizontal", false]\r\n\t\tmode are used. The viewsortcols[2] element means that sorting are made only on clicking\r\n\t\ton the sorting icon. So the class ui-jqgrid-sortable will be not added to the div of\r\n\t\tthe column header. It informs the user that clicking on the text of the column header\r\n\t\twill do nothing. One still need to have the cursor over the icon which inform about sorting.\r\n\t*/\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-state-disabled.ui-grid-ico-sort {\r\n\tcursor: pointer !important; /* to overwrite .ui-state-disabled { cursor: default !important; } from jQuery UI */\r\n}\r\n\r\n.ui-jqgrid .s-ico {\r\n\tposition: relative;\r\n\twidth: 0.87em;\r\n\theight: 1.125em;\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\tmargin: 0 0.1em;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-grid-ico-sort {\r\n\tdisplay: block;\r\n\tposition: relative;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-grid-ico-sort.ui-icon {\r\n\twidth: 12px;\r\n\tmargin-top: 0;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-asc.ui-icon {\r\n\ttop: -6px;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-desc.ui-icon {\r\n\ttop: -16px;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-triangle-1-s {\r\n\tbackground-position: -65px -16px;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon.ui-sort-ltr {\r\n\tmargin-left: -3px;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon.ui-sort-rtl {\r\n\tmargin-right: 0;\r\n}\r\n\r\n.ui-jqgrid-sortable > .ui-jqgrid-sort-order {\r\n\tposition: relative;\r\n\tleft: -0.1em;\r\n\ttop: 0;\r\n\tfont-size: 75%;\r\n\tvertical-align: super;\r\n}\r\n\r\n.ui-jqgrid .ui-th-column > div {\r\n\tcursor: default;\r\n}\r\n\r\n.ui-jqgrid .ui-th-column > div.ui-jqgrid-sortable {\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hdiv .ui-search-toolbar {\r\n\tborder-top-width: 1px;\r\n\tborder-top-style: solid;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hdiv .ui-search-toolbar .ui-th-column {\r\n\tborder-top-width: 1px;\r\n\tborder-top-style: solid;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hdiv .ui-search-toolbar input {\r\n\tmargin: 1px 0 0 0;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hdiv .ui-search-toolbar select {\r\n\tmargin: 1px 0 0 0;\r\n}\r\n\r\n/* Grig body */\r\n.ui-jqgrid .ui-jqgrid-bdiv {\r\n\tmin-height: 1px;\r\n\tposition: relative;\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\toverflow: auto;\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-btable {\r\n\ttable-layout: fixed;\r\n\tmargin: 0;\r\n\toutline-style: none;\r\n\theight: 1px;\r\n}\r\n\r\n.ui-jqgrid tr.jqgrow,\r\n.ui-jqgrid tr.jqgroup {\r\n\toutline-style: none;\r\n}\r\n\r\n.ui-jqgrid tr.jqgrow > td,\r\n.ui-jqgrid tr.jqgroup > td,\r\n.ui-jqgrid tr.jqfoot > td,\r\n.ui-jqgrid tr.ui-subgrid > td,\r\n.ui-jqgrid tr.ui-subtblcell > td {\r\n\toverflow: hidden;\r\n\twhite-space: pre;\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n\theight: 22px;\r\n\tborder-top: 0 none;\r\n\tborder-bottom-width: 1px;\r\n\tborder-bottom-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.jqgrow > td,\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.jqgroup > td,\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.jqfoot > td,\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.ui-subgrid > td {\r\n\tborder-bottom-color: inherit;\r\n}\r\n\r\n.ui-jqgrid tr.jqgrow > td,\r\n.ui-jqgrid tr.jqgroup > td,\r\n.ui-jqgrid tr.jqfoot > td {\r\n\tpadding: 0 2px 0 2px;\r\n}\r\n\r\n.ui-jqgrid tr.ui-subgrid > td {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid tr.jqgfirstrow > td {\r\n\tpadding: 0 2px 0 2px;\r\n\tborder-top: 0 none;\r\n\tborder-left: 0 none;\r\n\theight: 0;\r\n\tborder-right-width: 1px;\r\n\tborder-right-style: solid;\r\n\tborder-bottom: 0 none;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.jqgfirstrow > td {\r\n\tborder-right-color: inherit;\r\n}\r\n\r\n.ui-jqgrid tr.jqgfirstrow > td.td_cbox {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid tr.jqgrow > td,\r\n.ui-jqgrid tr.jqgroup > td,\r\n.ui-jqgrid tr.jqfoot > td {\r\n\tfont-weight: normal;\r\n}\r\n\r\n.ui-jqgrid tr.jqfoot > td {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-ltr > td {\r\n\ttext-align: left;\r\n\tborder-left-width: 0;\r\n\tborder-left-style: none;\r\n\tborder-right-width: 1px;\r\n\tborder-right-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-ltr > td {\r\n\tborder-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-rtl > td {\r\n\ttext-align: right;\r\n\tborder-right-width: 0;\r\n\tborder-right-style: none;\r\n\tborder-left-width: 1px;\r\n\tborder-left-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-rtl > td {\r\n\tborder-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-btable td.jqgrid-rownum {\r\n\tpadding: 0 2px 0 2px;\r\n\tmargin: 0;\r\n\tborder-width: 0;\r\n\tborder-style: none;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-btable td.jqgrid-rownum {\r\n\tborder-bottom-width: 1px;\r\n\tborder-bottom-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid .ui-jqgrid-btable td.jqgrid-rownum {\r\n\tborder-bottom-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .jqgrow > td.td_cbox {\r\n\tpadding: 0;\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid .jqgrow > td.ui-sgcollapsed {\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid tr.jqgrow > td.td_cbox {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid .jqgrow > td > .cbox {\r\n\theight: 14px;\r\n\twidth: 14px;\r\n\tcursor: pointer;\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-resize-mark,\r\nbody > .ui-jqgrid-resize-mark {\r\n\twidth: 0;\r\n\tleft: 0;\r\n\tcursor: col-resize;\r\n\t-webkit-touch-callout: none;\r\n\t-ms-user-select: none;\r\n\t-moz-user-select: -moz-none;\r\n\t-webkit-user-select: none;\r\n\tuser-select: none;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\toverflow: hidden;\r\n\tdisplay: none;\r\n\tborder-left-width: 1px;\r\n\tborder-right-width: 1px;\r\n\tz-index: 99999;\r\n}\r\n\r\nspan.ui-jqgrid-cell-wrapper {\r\n\tmargin: 0 !important;\r\n\tpadding: 0 !important;\r\n}\r\n\r\n/* Footer */\r\n.ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-sdiv {\r\n\tposition: relative;\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\toverflow: hidden;\r\n\tborder-left: 0 none;\r\n\tborder-top: 0 none;\r\n\tborder-right: 0 none;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-ftable {\r\n\ttable-layout: fixed;\r\n\tmargin-bottom: 0;\r\n}\r\n\r\n.ui-jqgrid tr.footrow td {\r\n\tfont-weight: bold;\r\n\toverflow: hidden;\r\n\twhite-space: nowrap;\r\n\theight: 21px;\r\n\tpadding: 0 2px 0 2px;\r\n\tborder-top-width: 1px;\r\n\tborder-top-style: solid;\r\n\tborder-bottom-width: 1px;\r\n\tborder-bottom-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.footrow td {\r\n\tborder-top-color: inherit;\r\n\tborder-bottom-color: inherit;\r\n}\r\n\r\n.ui-jqgrid tr.footrow-ltr td {\r\n\ttext-align: left;\r\n\tborder-left-width: 0;\r\n\tborder-left-style: none;\r\n\tborder-right-width: 1px;\r\n\tborder-right-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.footrow-ltr td {\r\n\tborder-color: inherit;\r\n}\r\n\r\n.ui-jqgrid tr.footrow-rtl td {\r\n\ttext-align: right;\r\n\tborder-left-width: 1px;\r\n\tborder-left-style: solid;\r\n\tborder-right-width: 0;\r\n\tborder-right-style: none;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid tr.footrow-rtl td {\r\n\tborder-color: inherit;\r\n}\r\n\r\n/* Pager */\r\n.ui-jqgrid > .ui-jqgrid-pager {\r\n\tborder: 0 none;\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tposition: relative;\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\theight: auto;\r\n\tmin-height: 22px;\r\n\toverflow: hidden;\r\n\tfont-size: 11px;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-pager *,\r\n.ui-jqgrid > .ui-jqgrid-pager *::before,\r\n.ui-jqgrid > .ui-jqgrid-pager *::after {\r\n\t-webkit-box-sizing: inherit;\r\n\t-moz-box-sizing: inherit;\r\n\tbox-sizing: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-toppager .ui-pager-control,\r\n.ui-jqgrid .ui-jqgrid-pager .ui-pager-control {\r\n\tposition: relative;\r\n\tborder-left: 0;\r\n\tborder-bottom: 0;\r\n\tborder-top: 0;\r\n}\r\n\r\n.ui-pager-control .ui-jqgrid-pg-left {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-pager-control .ui-jqgrid-pg-center {\r\n\ttext-align: center;\r\n\twhite-space: pre;\r\n}\r\n\r\n.ui-pager-control .ui-jqgrid-pg-right {\r\n\ttext-align: right;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-table {\r\n\tposition: relative;\r\n\tpadding: 0;\r\n\twidth: auto;\r\n\tmargin: 0;\r\n}\r\n\r\n.jqgrow .ui-jqgrid-actions {\r\n\tbackground: inherit;\r\n\tborder-style: none;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-button:not(.ui-state-hover),\r\n.ui-jqgrid-jquery-ui .jqgrow .ui-jqgrid-actions .ui-pg-div:not(.ui-state-hover) {\r\n\tborder: 1px solid transparent;\r\n}\r\n\r\n.ui-pager-control .ui-pg-table {\r\n\tborder-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-button:hover,\r\n.ui-jqgrid .ui-pg-button.ui-state-hover,\r\n.ui-jqgrid .ui-pg-button:focus,\r\n.jqgrow .ui-jqgrid-actions .ui-pg-div:hover,\r\n.jqgrow .ui-jqgrid-actions .ui-pg-div.ui-state-hover,\r\n.jqgrow .ui-jqgrid-actions .ui-pg-div:focus {\r\n\tborder-style: solid;\r\n\tborder-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-table td {\r\n\tfont-weight: normal;\r\n\tvertical-align: middle;\r\n\tpadding: 1px;\r\n}\r\n\r\n.ui-jqgrid .ui-pager-control .ui-pg-button {\r\n\tdisplay: inline-block;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-button span {\r\n\tdisplay: block;\r\n\tmargin: 1px;\r\n\tfloat: left;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-table .ui-pg-input,\r\n.ui-jqgrid .ui-pg-table .ui-pg-selbox {\r\n\theight: auto;\r\n\twidth: auto;\r\n\tmargin: 0;\r\n\tline-height: inherit;\r\n}\r\n\r\nselect.form-control.ui-pg-selbox:not([size]):not([multiple]) {\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-table .ui-pg-selbox {\r\n\tdisplay: block;\r\n\tpadding: 1px;\r\n}\r\n\r\n.ui-jqgrid .ui-separator {\r\n\theight: 12px;\r\n\tborder-left: 1px solid #ccc;\r\n\tborder-right: 1px solid #ccc;\r\n\tmargin: -1px;\r\n\tfloat: right;\r\n}\r\n\r\n.ui-jqgrid .ui-paging-info {\r\n\tfont-weight: normal;\r\n\theight: auto;\r\n\tmargin: 0 0.2em 0 0.2em;\r\n\tdisplay: inline;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-pager .ui-pg-div {\r\n\tpadding: 1px 0;\r\n\tfloat: left;\r\n\tposition: relative;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-pager .ui-pg-button {\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-pager .ui-pg-div span.ui-icon {\r\n\tfloat: left;\r\n\tmargin: 0 2px;\r\n}\r\n\r\n.ui-jqgrid td input,\r\n.ui-jqgrid td select,\r\n.ui-jqgrid td textarea {\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid td textarea {\r\n\twidth: auto;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-toppager {\r\n\tborder-left: 0 none;\r\n\tborder-right: 0 none;\r\n\tborder-top: 0 none;\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tposition: relative;\r\n\theight: auto;\r\n\tmin-height: 22px;\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-toppager .ui-pg-div {\r\n\tpadding: 1px 0;\r\n\tfloat: left;\r\n\tposition: relative;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-toppager .ui-pg-button {\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-toppager .ui-pg-div span.ui-icon {\r\n\tfloat: left;\r\n\tmargin: 0 2px;\r\n}\r\n\r\n/* Navigator buttons */\r\n.ui-jqgrid .ui-pg-table .ui-pg-button {\r\n\tmargin: 2px;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid .navtable .ui-pg-div span.ui-pg-button-text {\r\n\tpadding-left: 0.2em;\r\n\tpadding-right: 0.2em;\r\n}\r\n\r\n.ui-pg-button:hover > .ui-pg-div > .ui-pg-button-text,\r\n.ui-pg-button.ui-state-hover > .ui-pg-div > .ui-pg-button-text {\r\n\tfont-weight: normal;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-div {\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.ui-jqgrid .navtable .ui-pg-div > span.ui-pg-button-icon-over-text {\r\n\tmargin-left: auto;\r\n\tmargin-right: auto;\r\n\tfloat: none;\r\n}\r\n\r\n/* Subgrid */\r\n.subgrid-data > .tablediv > .ui-jqgrid {\r\n\t-moz-box-sizing: content-box;\r\n\t-webkit-box-sizing: content-box;\r\n\tbox-sizing: content-box;\r\n}\r\n\r\n.subgrid-data > .tablediv > .ui-jqgrid > .ui-jqgrid-view {\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-btable .jqgrow > .ui-sgcollapsed {\r\n\ttext-align: center;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-btable .ui-sgcollapsed span {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.ui-jqgrid .ui-subgrid {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\twidth: 100%;\r\n}\r\n\r\n.sgbutton {\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-jqgrid .ui-subgrid table {\r\n\ttable-layout: fixed;\r\n}\r\n\r\n.ui-jqgrid .ui-subgrid tr.ui-subtblcell td {\r\n\theight: 18px;\r\n\tborder-top: 0 none;\r\n\tborder-bottom-width: 1px;\r\n\tborder-bottom-style: solid;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqgrid .ui-subgrid tr.ui-subtblcell td {\r\n\tborder-bottom-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-th-subgrid {\r\n\theight: 20px;\r\n}\r\n\r\n.ui-jqgrid .ui-row-ltr.ui-subgrid > .subgrid-cell > span {\r\n\tfloat: right;\r\n}\r\n\r\n.ui-jqgrid .ui-row-rtl.ui-subgrid > .subgrid-cell > span {\r\n\tfloat: left;\r\n}\r\n\r\n/* Loading */\r\n.ui-jqgrid > .loading {\r\n\tposition: absolute;\r\n\ttop: 45%;\r\n\tleft: 45%;\r\n\twidth: auto;\r\n\tz-index: 101;\r\n\tpadding: 6px;\r\n\tmargin: 5px;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n\tdisplay: none;\r\n\tborder-width: 2px;\r\n\tfont-size: 11px;\r\n}\r\n\r\n.ui-jqgrid .jqgrid-overlay {\r\n\tdisplay: none;\r\n\tz-index: 100;\r\n}\r\n\r\n* .jqgrid-overlay iframe {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tz-index: -1;\r\n}\r\n\r\n/* Toolbar */\r\n.ui-jqgrid > .ui-jqgrid-view > .ui-userdata {\r\n\tborder-left: 0 none;\r\n\tborder-right: 0 none;\r\n\theight: 21px;\r\n\toverflow: hidden;\r\n}\r\n\r\n/* Modal Window */\r\n.ui-jqgrid .ui-jqdialog {\r\n\tfont-size: 11px;\r\n}\r\n\r\n.ui-jqdialog {\r\n\tdisplay: none;\r\n\twidth: 300px;\r\n\tposition: absolute;\r\n\tfont-size: 11px;\r\n\toverflow: visible;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-jquery-ui {\r\n\tpadding: 0.2em;\r\n}\r\n\r\n.ui-jqgrid-bootstrap.modal {\r\n\tright: auto;\r\n\tleft: auto;\r\n}\r\n\r\n.ui-jqgrid-bootstrap.modal > .modal-dialog {\r\n\tmax-width: none;\r\n}\r\n\r\n.ui-jqdialog-content,\r\n.ui-jqdialog .ui-jqdialog-content {\r\n\tborder: 0;\r\n\tpadding: 0.3em 0.2em;\r\n\tbackground: none;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqdialog .ui-jqconfirm {\r\n\tpadding: 0.4em 1em;\r\n\tborder-width: 3px;\r\n\tposition: absolute;\r\n\tbottom: 10px;\r\n\tright: 10px;\r\n\toverflow: visible;\r\n\tdisplay: none;\r\n\theight: 80px;\r\n\twidth: 220px;\r\n\ttext-align: center;\r\n}\r\n\r\n.ui-jqgrid > .ui-resizable-se,\r\n.ui-jqdialog > .ui-resizable-se {\r\n\tbottom: -3px;\r\n\tright: -3px;\r\n}\r\n\r\n/* Form edit */\r\n.ui-jqdialog-content .FormGrid {\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqdialog-content .EditTable {\r\n\twidth: 100%;\r\n\tmargin-bottom: 0;\r\n}\r\n\r\n.ui-jqdialog-content .DelTable {\r\n\twidth: 100%;\r\n\tmargin-bottom: 0;\r\n}\r\n\r\n.EditTable td input,\r\n.EditTable td select,\r\n.EditTable td textarea {\r\n\tmargin: 0;\r\n}\r\n\r\n.EditTable td textarea {\r\n\twidth: auto;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqdialog-content td.EditButton {\r\n\tborder-top: 0 none;\r\n\tborder-left: 0 none;\r\n\tborder-right: 0 none;\r\n\tpadding: 5px 0;\r\n}\r\n\r\n.ui-jqdialog-content td.EditButton-ltr {\r\n\ttext-align: right;\r\n}\r\n\r\n.ui-jqdialog-content td.EditButton-rtl {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-jqdialog-content td.navButton {\r\n\ttext-align: left;\r\n\tborder-left: 0 none;\r\n\tborder-top: 0 none;\r\n\tborder-right: 0 none;\r\n\tpadding: 5px 0;\r\n}\r\n\r\n.ui-jqdialog-content td.navButton-ltr {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-jqdialog-content td.navButton-ltr > .fm-button {\r\n\tfloat: left;\r\n}\r\n\r\n.ui-jqdialog-content td.navButton-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\n.ui-jqdialog-content td.navButton-rtl > .fm-button {\r\n\tfloat: right;\r\n}\r\n\r\n.ui-jqdialog-content .FormElement {\r\n\twidth: 100%;\r\n\tbox-sizing: border-box;\r\n}\r\n\r\n.ui-jqdialog-content input.FormElement,\r\n.ui-jqdialog-content select.FormElement {\r\n\tpadding: 0.3em;\r\n}\r\n\r\n.ui-jqdialog-content .data-line {\r\n\tpadding-top: 0.1em;\r\n\tborder: 0 none;\r\n}\r\n\r\n.ui-jqdialog-content .CaptionTD {\r\n\tvertical-align: middle;\r\n\tborder: 0 none;\r\n\tpadding: 2px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.ui-jqdialog-content .DataTD {\r\n\tpadding: 2px;\r\n\tborder-width: 0;\r\n\tborder-style: none;\r\n\tvertical-align: top;\r\n}\r\n\r\n/* .ui-jqdialog-content .form-view-data {\r\n\twhite-space: pre;\r\n} */\r\n.ui-jqgrid-jquery-ui.ui-jqdialog .form-view-data > span {\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n\tborder-color: inherit;\r\n\tborder-radius: 3px;\r\n\tdisplay: block;\r\n\tpadding: 0.2em;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui.ui-jqdialog .form-view-label > label {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.ui-jqgrid-bootstrap.ui-jqdialog .ui-jqdialog-content .form-view-data > span {\r\n\theight: 100%;\r\n\twidth: auto;\r\n}\r\n\r\n.ui-jqdialog .fm-button {\r\n\tdisplay: inline-block;\r\n\tpadding: 0.4em 0.5em;\r\n\ttext-decoration: none;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n\ttext-align: center;\r\n\tzoom: 1;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .navButton .fm-button {\r\n\tpadding: 0.375em 0.75em;\r\n\tmargin-left: 0.125em;\r\n}\r\n\r\n.ui-jqdialog .fm-button > span {\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqdialog .fm-button .fm-button-text {\r\n\tpadding: 0 0.2em;\r\n}\r\n\r\n.ui-jqdialog .EditButton-ltr .fm-button-icon-left .fm-button-icon {\r\n\tmargin-right: 0.2em;\r\n}\r\n\r\n.ui-jqdialog .EditButton-ltr .fm-button-icon-right .fm-button-icon {\r\n\tmargin-left: 0.2em;\r\n}\r\n\r\n.ui-jqdialog .EditButton-rtl .fm-button-icon-right .fm-button-icon {\r\n\tmargin-right: 0.2em;\r\n}\r\n\r\n.ui-jqdialog .EditButton-rtl .fm-button-icon-left .fm-button-icon {\r\n\tmargin-left: 0.2em;\r\n}\r\n\r\n.delmsg {\r\n\tpadding: 0.5em;\r\n}\r\n\r\n.ui-jqgrid .selected-row,\r\n.ui-jqgrid .selected-row td {\r\n\tfont-style: normal;\r\n\tborder-left: 0 none;\r\n}\r\n\r\n/* Inline edit actions button */\r\n.ui-jqgrid .jqgrow .ui-jqgrid-actions {\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\tmargin: 0;\r\n}\r\n\r\n.jqgrow .ui-jqgrid-actions .ui-pg-div {\r\n\tcursor: pointer;\r\n\tfloat: left;\r\n\tmargin: 0 1px;\r\n}\r\n\r\n/* Tree Grid */\r\n.ui-jqgrid .tree-wrap {\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqgrid .treeclick {\r\n\tcursor: pointer;\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\twidth: 18px;\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-bdiv .jqgroup .tree-wrap {\r\n\ttext-align: center;\r\n\tpadding-left: 0.1em;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-bdiv .jqgroup .tree-wrap.glyphicon {\r\n\tmargin-top: -0.18em;\r\n}\r\n\r\n/* Modal dialog */\r\n* iframe.jqm {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tz-index: -1;\r\n}\r\n\r\n.ui-jqgrid-dnd tr td {\r\n\tborder-right-width: 1px;\r\n\tborder-right-color: inherit;\r\n\tborder-right-style: solid;\r\n\theight: 20px;\r\n}\r\n\r\n/* RTL Support */\r\n.ui-jqgrid .ui-jqgrid-caption-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-hbox-rtl {\r\n\tfloat: right;\r\n\tpadding-left: 20px;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-resize-ltr {\r\n\tright: 0;\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-resize-rtl {\r\n\tleft: 0;\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid .ui-sort-rtl {\r\n\tleft: 0;\r\n}\r\n\r\n.ui-jqgrid .cell-wrapperleaf,\r\n.ui-jqgrid .cell-wrapper {\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid .ui-ellipsis {\r\n\t-moz-text-overflow: ellipsis;\r\n\ttext-overflow: ellipsis;\r\n}\r\n\r\n/* Toolbar Search Menu */\r\n.ui-search-menu {\r\n\tposition: absolute;\r\n\tpadding: 0.2em;\r\n}\r\n\r\n.ui-search-menu.ui-menu .ui-jqgrid-menu-item {\r\n\tlist-style-image: none;\r\n\tpadding-right: 0;\r\n\tpadding-left: 0;\r\n}\r\n\r\n.ui-search-menu.ui-menu .ui-jqgrid-menu-item a {\r\n\ttext-decoration: none;\r\n\tdisplay: block;\r\n}\r\n\r\n.ui-search-toolbar > .ui-th-column > div {\r\n\tposition: relative;\r\n\theight: auto;\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-search-toolbar .ui-search-table {\r\n\tpadding: 0;\r\n\tborder: 0 none;\r\n\theight: 20px;\r\n\twidth: 100%;\r\n}\r\n\r\n.table-hover .ui-search-table tbody tr:hover {\r\n\tbackground-color: inherit;\r\n}\r\n\r\n.ui-jqgrid .ui-jqgrid-htable .ui-search-toolbar th {\r\n\tpadding: 0 0.1em;\r\n}\r\n\r\n.ui-search-toolbar .ui-search-table .ui-search-oper {\r\n\twidth: 20px;\r\n\ttext-align: center;\r\n}\r\n\r\n.ui-search-toolbar .ui-th-column .ui-search-table .ui-search-input {\r\n\tpadding: 0 0.1em;\r\n}\r\n\r\n.ui-search-input input[type="text"] {\r\n\twidth: 100%;\r\n}\r\n\r\na.g-menu-item,\r\na.soptclass,\r\na.clearsearchclass {\r\n\ttext-decoration: none;\r\n\tcursor: pointer;\r\n}\r\n\r\n.ui-search-menu .ui-jqgrid-menu-item .g-menu-item {\r\n\tpadding: 0.2em;\r\n}\r\n\r\n.ui-menu-jqueryui .ui-jqgrid-menu-item .g-menu-item:not(.ui-state-hover) {\r\n\tborder: 1px solid transparent;\r\n}\r\n\r\n.ui-menu-jqueryui .ui-jqgrid-menu-item .g-menu-item:hover {\r\n\tfont-weight: normal;\r\n}\r\n\r\n.ui-search-oper {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-search-clear {\r\n\ttext-align: center;\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-search-oper .soptclass,\r\n.ui-search-clear .clearsearchclass {\r\n\tpadding: 0.1em;\r\n\tline-height: 1em;\r\n}\r\n\r\n.ui-jqgrid-jquery-ui .ui-search-oper .soptclass:not(.ui-state-hover),\r\n.ui-jqgrid-jquery-ui .ui-search-clear .clearsearchclass:not(.ui-state-hover) {\r\n\tborder: 1px solid transparent;\r\n}\r\n\r\n.ui-search-clear .clearsearchclass span {\r\n\tposition: relative;\r\n}\r\n\r\n.ui-search-input {\r\n\ttext-align: center;\r\n}\r\n\r\n.ui-jqgrid .ui-search-table .ui-search-input > input[type="text"],\r\n.ui-jqgrid .ui-search-table .ui-search-input > select {\r\n\tdisplay: block;\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n}\r\n\r\n.ui-jqgrid > .ui-jqgrid-view input,\r\n.ui-jqgrid > .ui-jqgrid-view select,\r\n.ui-jqgrid > .ui-jqgrid-view textarea,\r\n.ui-jqgrid > .ui-jqgrid-view button {\r\n\tfont-size: inherit;\r\n\ttext-align: inherit;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-grid-ico-sort.glyphicon {\r\n\tfont-size: 10px;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-asc.glyphicon {\r\n\tmargin-top: -0.23em;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-desc.glyphicon {\r\n\tmargin-top: -0.34em;\r\n}\r\n\r\n/* Support of Font Awesome */\r\n.ui-jqgrid .s-ico > .ui-grid-ico-sort.fa {\r\n\twidth: 0.63em;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-asc.fa {\r\n\tline-height: 0.81em;\r\n\ttop: 0.07em;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-desc.fa {\r\n\tline-height: 0.81em;\r\n\ttop: -0.81em;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-asc.fa.ui-sort-ltr,\r\n.ui-jqgrid .s-ico > .ui-icon-desc.fa.ui-sort-ltr {\r\n\tleft: 0;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-icon-asc.fa.ui-sort-rtl,\r\n.ui-jqgrid .s-ico > .ui-icon-desc.fa.ui-sort-rtl {\r\n\tright: 0;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .ui-state-disabled.fa {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid .s-ico > .svg-inline--fa.fa-sort-down {\r\n\tmargin-top: -1.05em;\r\n}\r\n\r\n.jqgrow .ui-pg-div > span.fa {\r\n\tfont-weight: normal;\r\n\tfont-size: 12px;\r\n\tvertical-align: baseline;\r\n\tbackground: none;\r\n\tborder: 0 none;\r\n}\r\n\r\n.ui-subgrid > .subgrid-cell span.fa {\r\n\tfont-weight: normal;\r\n\tfont-size: 12px;\r\n\ttext-indent: 0;\r\n\tbackground: none;\r\n\tborder: 0 none;\r\n\tmargin-bottom: 4px;\r\n}\r\n\r\n.jqgrow > .ui-sgcollapsed span.fa {\r\n\tfont-weight: normal;\r\n\tfont-size: 12px;\r\n\ttext-indent: 0;\r\n\tbackground: none;\r\n\tborder: 0 none;\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid .ui-resizable-se.fa {\r\n\t-webkit-filter: alpha(opacity=40);\r\n\t-moz-filter: alpha(opacity=40);\r\n\t-o-filter: alpha(opacity=40);\r\n\tfilter: alpha(opacity=40);\r\n\t-ms-opacity: 0.4;\r\n\topacity: 0.4;\r\n\tbackground: none;\r\n\tborder-style: none;\r\n\tright: -3px;\r\n\tfont-weight: normal;\r\n}\r\n\r\n.ui-jqgrid-ltr .ui-resizable-se.fa {\r\n\tright: -3px;\r\n\tbottom: 0;\r\n}\r\n\r\n.ui-jqgrid-rtl .ui-resizable-se.fa {\r\n\tleft: 0;\r\n\tbottom: 1px;\r\n}\r\n\r\n/* Classes for jquery.contextmenu-ui.js plugin we included here */\r\n.jqContextMenu .ui-menu .ui-jqgrid-menu-item a.ui-state-hover {\r\n\tfont-weight: normal;\r\n\tmargin: -1px;\r\n}\r\n\r\n.jqContextMenu .ui-menu .ui-jqgrid-menu-item.ui-state-hover {\r\n\tfont-weight: normal;\r\n\tmargin: -1px;\r\n}\r\n\r\n.jqContextMenu .ui-menu-icons > .ui-jqgrid-menu-item {\r\n\tfont-size: 11px;\r\n}\r\n\r\n/* Classes for jQuery.jqGrid.showHideColumnMenu.js plugin */\r\n.ui-jqgrid-showHideColumnMenu .ui-jqgrid-menu-item:hover {\r\n\tfont-weight: normal;\r\n}\r\n\r\n.ui-jqgrid-disablePointerEvents {\r\n\tpointer-events: none;\r\n}\r\n\r\n/* Bootstrap style support */\r\n.ui-jqgrid.ui-jqgrid-bootstrap {\r\n\tborder: 1px solid #ddd;\r\n\t-ms-border-radius: 6px;\r\n\tborder-radius: 6px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view > .ui-jqgrid-toppager {\r\n\tborder-bottom-left-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view > .ui-userdata {\r\n\tbackground-color: #f0f0f0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-hdiv,\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-legacy-subgrid > thead {\r\n\tbackground-color: #e5e5e5;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view > .ui-jqgrid-sdiv td {\r\n\tbackground-color: #f9f9f9;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap > .modal-dialog {\r\n\tmargin-top: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-titlebar .ui-jqgrid-title,\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-errorbar .ui-jqgrid-error,\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar .ui-jqdialog-title {\r\n\tfont-size: 16px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view {\r\n\tfont-size: 12px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view .btn,\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-pager .btn {\r\n\tfont-size: 12px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view .fa,\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-pager .fa {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-content .CaptionTD {\r\n\tpadding: 0.5em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .frozen-bdiv.ui-jqgrid-bdiv .ui-jqgrid-btable {\r\n\tbackground-color: white;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgfirstrow > td,\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgrow > td,\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgroup > td,\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqfoot > td {\r\n\tpadding: 0.2em 0.3em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgfirstrow > td {\r\n\tpadding: 0 0.3em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgfirstrow > td.td_cbox,\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgrow > td.td_cbox {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .jqgrow > td > .cbox {\r\n\theight: 18px;\r\n\twidth: 18px;\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-btable td.jqgrid-rownum {\r\n\tpadding: 0.2em 0.3em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-caption,\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar {\r\n\tbackground-color: #cacaca;\r\n\t-ms-border-top-left-radius: 6px;\r\n\tborder-top-left-radius: 6px;\r\n\t-ms-border-top-right-radius: 6px;\r\n\tborder-top-right-radius: 6px;\r\n}\r\n\r\n.modal-backdrop.jqgrid-overlay {\r\n\t-ms-opacity: 0.35;\r\n\topacity: 0.35;\r\n\t-webkit-filter: alpha(opacity=35);\r\n\t-moz-filter: alpha(opacity=35);\r\n\t-o-filter: alpha(opacity=35);\r\n\tfilter: alpha(opacity=35);\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-content {\r\n\tborder: 0;\r\n\tpadding: 0.3em 0.2em;\r\n\tbackground: white;\r\n\theight: auto;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .modal-dialog {\r\n\twidth: auto;\r\n}\r\n\r\n.ui-jqdialog.ui-widget {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqdialog .ui-resizable-handle {\r\n\tcursor: se-resize;\r\n\tposition: absolute;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .modal-content {\r\n\toverflow: hidden;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .modal-content > .ui-resizable-handle.fa {\r\n\tbottom: 1px;\r\n\tright: 1px;\r\n\theight: 12px;\r\n\twidth: 12px;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .modal-content > .ui-resizable-handle.glyphicon {\r\n\tright: -0.4em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .disabled {\r\n\topacity: 0.35;\r\n\tfilter: alpha(opacity=35);\r\n}\r\n\r\n.ui-jqgrid-bootstrap.ui-jqgrid-resize-mark {\r\n\tborder: 1px solid #aaa;\r\n\tbackground-color: #ccc;\r\n\tcolor: #222;\r\n\tfont-weight: bold;\r\n}\r\n\r\n.ui-jqgrid .jqgfirstrow {\r\n\tborder-bottom: 0 none;\r\n\tborder-top: 0 none;\r\n\theight: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .jqgfirstrow td {\r\n\tborder-bottom: 0 none;\r\n\tborder-top: 0 none;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-pg-table .ui-pg-button.ui-state-disabled:hover {\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .navtable .ui-pg-button.ui-state-disabled:hover {\r\n\tmargin: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-pg-table .ui-pg-button {\r\n\tmargin: 0.2em 0;\r\n\tpadding: 0.2em 0;\r\n\tborder-radius: 0.4em;\r\n}\r\n\r\n.ui-search-input .form-control:not([size]):not([multiple]) {\r\n\theight: auto;\r\n\tmin-height: 18px;\r\n}\r\n\r\n.ui-search-input input[type="text"] {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-search-input input[type="text"].form-control {\r\n\tpadding: 0 0.3em;\r\n}\r\n\r\n.ui-search-input select.form-control {\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-search-input input[type="checkbox"].form-control {\r\n\twidth: auto;\r\n\tmargin-left: auto;\r\n\tmargin-right: auto;\r\n\tborder-radius: 0;\r\n\tbackground: 0 transparent;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-actions .ui-pg-div.btn {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tbox-shadow: none;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-actions .ui-pg-div.btn:not(:first-child) {\r\n\tmargin-left: 0.125em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-actions .ui-pg-div.btn.ui-inline-save {\r\n\tmargin-left: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap tr.jqgrow .sgbutton-div .sgbutton.btn {\r\n\tpadding: 0;\r\n\tcursor: pointer;\r\n\tborder: 1px solid transparent;\r\n\tmargin: -0.3em -0.3em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .sgbutton-div .sgbutton.btn:focus,\r\n.ui-jqgrid.ui-jqgrid-bootstrap .sgbutton-div .sgbutton.btn:hover {\r\n\tborder: 1px solid #333;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-content {\r\n\tborder-top-left-radius: 0;\r\n\tborder-top-right-radius: 0;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-pager-control .ui-pg-input {\r\n\tdisplay: inline-block;\r\n\tfont-size: 12px;\r\n\tpadding: 0.3em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-pager {\r\n\tfont-size: 12px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-bootstrap-corner-top {\r\n\tborder-top-left-radius: 6px;\r\n\tborder-top-right-radius: 6px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-bootstrap-corner-bottom {\r\n\tborder-bottom-left-radius: 6px;\r\n\tborder-bottom-right-radius: 6px;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-pager-control .ui-pg-selbox {\r\n\tfont-size: 12px;\r\n\tpadding: 0;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .FormData .CaptionTD {\r\n\tfont-size: 14px;\r\n}\r\n\r\n.FormData .DataTD {\r\n\tvertical-align: middle;\r\n}\r\n\r\n.FormData .DataTD input[type="checkbox"] {\r\n\twidth: auto;\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .FormData .DataTD input.form-control[type="checkbox"] {\r\n\twidth: 2.193em;\r\n\theight: 2.193em;\r\n}\r\n\r\n.DelTable .delmsg {\r\n\tpadding: 0.2em;\r\n}\r\n\r\n.queryresult {\r\n\tmargin-bottom: 0.5em;\r\n\tpadding: 0.25em;\r\n}\r\n\r\n.group.modal-content tr td {\r\n\tpadding: 0.2em 0.1em;\r\n}\r\n\r\n.searchFilter .form-control {\r\n\tpadding: 0.1em;\r\n}\r\n\r\n.searchFilter .form-control:not([size]):not([multiple]) {\r\n\theight: 2em;\r\n}\r\n\r\n.searchFilter .btn {\r\n\tmargin-left: 0.125em;\r\n\tpadding: 0.2em 0.375em;\r\n}\r\n\r\n.ui-jqgrid .searchFilter table.group td {\r\n\tpadding: 1px;\r\n}\r\n\r\n.ui-jqgrid .searchFilter table {\r\n\tborder-spacing: 2px;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .modal-header .close {\r\n\tmargin-top: -0.7em;\r\n}\r\n\r\n.ui-jqdialog .glyphicon,\r\n.ui-jqgrid .glyphicon {\r\n\tfont-size: 12px;\r\n\ttop: auto;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .glyphicon,\r\n.ui-jqgrid.ui-jqgrid-bootstrap .glyphicon {\r\n\tfont-size: 14px;\r\n\ttop: auto;\r\n\theight: 1em;\r\n\twidth: 1.28em;\r\n}\r\n\r\n.ui-jqgrid .ui-pg-button span.glyphicon {\r\n\tdisplay: inline-block;\r\n\ttext-align: center;\r\n\r\n\t/* margin-left: auto;\r\n\tmargin-right: auto;\r\n\tpadding: 0 .1em; */\r\n\tvertical-align: middle;\r\n}\r\n\r\n.ui-jqgrid-actions .glyphicon {\r\n\tpadding: 0.1em;\r\n}\r\n\r\n.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-titlebar > .ui-jqgrid-titlebar-close > span.glyphicon {\r\n\tmargin-top: -0.125em;\r\n\tmargin-left: -0.275em;\r\n}\r\n\r\n.ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar > .ui-jqdialog-titlebar-close > span.glyphicon {\r\n\tmargin-top: -0.1em;\r\n\tmargin-left: -0.28em;\r\n}\r\n\r\n.tree-wrap > .treeclick {\r\n\tline-height: 1;\r\n}\r\n\r\n.tree-wrap > .treeclick.glyphicon {\r\n\tmargin-top: -0.2em;\r\n\tfont-size: 12px;\r\n}\r\n\r\n.subgrid-data .ui-jqgrid-bootstrap .ui-jqgrid-hdiv .ui-jqgrid-htable,\r\n.subgrid-data .ui-jqgrid-bootstrap .ui-jqgrid-bdiv .ui-jqgrid-btable {\r\n\tbackground-color: transparent;\r\n}\r\n\r\n.subgrid-data .ui-jqgrid-legacy-subgrid {\r\n\tmargin: 0;\r\n}\r\n', "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
-        932: (module, __webpack_exports__, __webpack_require__) => {
+        40: (module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Z: () => __WEBPACK_DEFAULT_EXPORT__
             });
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(499);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(888);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(645);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+            var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(667);
+            var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
             var ___CSS_LOADER_URL_IMPORT_0___ = new URL(__webpack_require__(811), __webpack_require__.b);
             var ___CSS_LOADER_URL_IMPORT_1___ = new URL(__webpack_require__(373), __webpack_require__.b);
             var ___CSS_LOADER_URL_IMPORT_2___ = new URL(__webpack_require__(920), __webpack_require__.b);
@@ -73,52 +67,52 @@
             var ___CSS_LOADER_URL_IMPORT_5___ = new URL(__webpack_require__(397), __webpack_require__.b);
             var ___CSS_LOADER_URL_IMPORT_6___ = new URL(__webpack_require__(28), __webpack_require__.b);
             var ___CSS_LOADER_URL_IMPORT_7___ = new URL(__webpack_require__(222), __webpack_require__.b);
-            var ___CSS_LOADER_EXPORT___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
-            var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
-            var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
-            var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
-            var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
-            var ___CSS_LOADER_URL_REPLACEMENT_4___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_4___);
-            var ___CSS_LOADER_URL_REPLACEMENT_5___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_5___);
-            var ___CSS_LOADER_URL_REPLACEMENT_6___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_6___);
-            var ___CSS_LOADER_URL_REPLACEMENT_7___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_7___);
+            var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+            var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+            var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+            var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
+            var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_3___);
+            var ___CSS_LOADER_URL_REPLACEMENT_4___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_4___);
+            var ___CSS_LOADER_URL_REPLACEMENT_5___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_5___);
+            var ___CSS_LOADER_URL_REPLACEMENT_6___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_6___);
+            var ___CSS_LOADER_URL_REPLACEMENT_7___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_7___);
             ___CSS_LOADER_EXPORT___.push([ module.id, '/*! jQuery UI - v1.12.1 - 2016-09-14\r\n* http://jqueryui.com\r\n* Includes: core.css, accordion.css, autocomplete.css, menu.css, button.css, controlgroup.css, checkboxradio.css, datepicker.css, dialog.css, draggable.css, resizable.css, progressbar.css, selectable.css, selectmenu.css, slider.css, sortable.css, spinner.css, tabs.css, tooltip.css, theme.css\r\n* To view and modify this theme, visit http://jqueryui.com/themeroller/?bgShadowXPos=&bgOverlayXPos=&bgErrorXPos=&bgHighlightXPos=&bgContentXPos=&bgHeaderXPos=&bgActiveXPos=&bgHoverXPos=&bgDefaultXPos=&bgShadowYPos=&bgOverlayYPos=&bgErrorYPos=&bgHighlightYPos=&bgContentYPos=&bgHeaderYPos=&bgActiveYPos=&bgHoverYPos=&bgDefaultYPos=&bgShadowRepeat=&bgOverlayRepeat=&bgErrorRepeat=&bgHighlightRepeat=&bgContentRepeat=&bgHeaderRepeat=&bgActiveRepeat=&bgHoverRepeat=&bgDefaultRepeat=&iconsHover=url(%22images%2Fui-icons_555555_256x240.png%22)&iconsHighlight=url(%22images%2Fui-icons_777620_256x240.png%22)&iconsHeader=url(%22images%2Fui-icons_444444_256x240.png%22)&iconsError=url(%22images%2Fui-icons_cc0000_256x240.png%22)&iconsDefault=url(%22images%2Fui-icons_777777_256x240.png%22)&iconsContent=url(%22images%2Fui-icons_444444_256x240.png%22)&iconsActive=url(%22images%2Fui-icons_ffffff_256x240.png%22)&bgImgUrlShadow=&bgImgUrlOverlay=&bgImgUrlHover=&bgImgUrlHighlight=&bgImgUrlHeader=&bgImgUrlError=&bgImgUrlDefault=&bgImgUrlContent=&bgImgUrlActive=&opacityFilterShadow=Alpha(Opacity%3D30)&opacityFilterOverlay=Alpha(Opacity%3D30)&opacityShadowPerc=30&opacityOverlayPerc=30&iconColorHover=%23555555&iconColorHighlight=%23777620&iconColorHeader=%23444444&iconColorError=%23cc0000&iconColorDefault=%23777777&iconColorContent=%23444444&iconColorActive=%23ffffff&bgImgOpacityShadow=0&bgImgOpacityOverlay=0&bgImgOpacityError=95&bgImgOpacityHighlight=55&bgImgOpacityContent=75&bgImgOpacityHeader=75&bgImgOpacityActive=65&bgImgOpacityHover=75&bgImgOpacityDefault=75&bgTextureShadow=flat&bgTextureOverlay=flat&bgTextureError=flat&bgTextureHighlight=flat&bgTextureContent=flat&bgTextureHeader=flat&bgTextureActive=flat&bgTextureHover=flat&bgTextureDefault=flat&cornerRadius=3px&fwDefault=normal&ffDefault=Arial%2CHelvetica%2Csans-serif&fsDefault=1em&cornerRadiusShadow=8px&thicknessShadow=5px&offsetLeftShadow=0px&offsetTopShadow=0px&opacityShadow=.3&bgColorShadow=%23666666&opacityOverlay=.3&bgColorOverlay=%23aaaaaa&fcError=%235f3f3f&borderColorError=%23f1a899&bgColorError=%23fddfdf&fcHighlight=%23777620&borderColorHighlight=%23dad55e&bgColorHighlight=%23fffa90&fcContent=%23333333&borderColorContent=%23dddddd&bgColorContent=%23ffffff&fcHeader=%23333333&borderColorHeader=%23dddddd&bgColorHeader=%23e9e9e9&fcActive=%23ffffff&borderColorActive=%23003eff&bgColorActive=%23007fff&fcHover=%232b2b2b&borderColorHover=%23cccccc&bgColorHover=%23ededed&fcDefault=%23454545&borderColorDefault=%23c5c5c5&bgColorDefault=%23f6f6f6\r\n* Copyright jQuery Foundation and other contributors; Licensed MIT */\r\n\r\n/* Layout helpers\r\n----------------------------------*/\r\n.ui-helper-hidden {\r\n\tdisplay: none;\r\n}\r\n.ui-helper-hidden-accessible {\r\n\tborder: 0;\r\n\tclip: rect(0 0 0 0);\r\n\theight: 1px;\r\n\tmargin: -1px;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tposition: absolute;\r\n\twidth: 1px;\r\n}\r\n.ui-helper-reset {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tborder: 0;\r\n\toutline: 0;\r\n\tline-height: 1.3;\r\n\ttext-decoration: none;\r\n\tfont-size: 100%;\r\n\tlist-style: none;\r\n}\r\n.ui-helper-clearfix:before,\r\n.ui-helper-clearfix:after {\r\n\tcontent: "";\r\n\tdisplay: table;\r\n\tborder-collapse: collapse;\r\n}\r\n.ui-helper-clearfix:after {\r\n\tclear: both;\r\n}\r\n.ui-helper-zfix {\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tposition: absolute;\r\n\topacity: 0;\r\n\tfilter: Alpha(Opacity=0); /* support: IE8 */\r\n}\r\n\r\n.ui-front {\r\n\tz-index: 100;\r\n}\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-disabled {\r\n\tcursor: default !important;\r\n\tpointer-events: none;\r\n}\r\n\r\n/* Icons\r\n----------------------------------*/\r\n.ui-icon {\r\n\tdisplay: inline-block;\r\n\tvertical-align: middle;\r\n\tmargin-top: -0.25em;\r\n\tposition: relative;\r\n\ttext-indent: -99999px;\r\n\toverflow: hidden;\r\n\tbackground-repeat: no-repeat;\r\n}\r\n\r\n.ui-widget-icon-block {\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n\tdisplay: block;\r\n}\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n}\r\n.ui-accordion .ui-accordion-header {\r\n\tdisplay: block;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n\tmargin: 2px 0 0 0;\r\n\tpadding: 0.5em 0.5em 0.5em 0.7em;\r\n\tfont-size: 100%;\r\n}\r\n.ui-accordion .ui-accordion-content {\r\n\tpadding: 1em 2.2em;\r\n\tborder-top: 0;\r\n\toverflow: auto;\r\n}\r\n.ui-autocomplete {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tcursor: default;\r\n}\r\n.ui-menu {\r\n\tlist-style: none;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tdisplay: block;\r\n\toutline: 0;\r\n}\r\n.ui-menu .ui-menu {\r\n\tposition: absolute;\r\n}\r\n.ui-menu .ui-menu-item {\r\n\tmargin: 0;\r\n\tcursor: pointer;\r\n\t/* support: IE10, see #8844 */\r\n\tlist-style-image: url(' + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n}\r\n.ui-menu .ui-menu-item-wrapper {\r\n\tposition: relative;\r\n\tpadding: 3px 1em 3px 0.4em;\r\n}\r\n.ui-menu .ui-menu-divider {\r\n\tmargin: 5px 0;\r\n\theight: 0;\r\n\tfont-size: 0;\r\n\tline-height: 0;\r\n\tborder-width: 1px 0 0 0;\r\n}\r\n.ui-menu .ui-state-focus,\r\n.ui-menu .ui-state-active {\r\n\tmargin: -1px;\r\n}\r\n\r\n/* icon support */\r\n.ui-menu-icons {\r\n\tposition: relative;\r\n}\r\n.ui-menu-icons .ui-menu-item-wrapper {\r\n\tpadding-left: 2em;\r\n}\r\n\r\n/* left-aligned */\r\n.ui-menu .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tleft: 0.2em;\r\n\tmargin: auto 0;\r\n}\r\n\r\n/* right-aligned */\r\n.ui-menu .ui-menu-icon {\r\n\tleft: auto;\r\n\tright: 0;\r\n}\r\n.ui-button {\r\n\tpadding: 0.4em 1em;\r\n\tdisplay: inline-block;\r\n\tposition: relative;\r\n\tline-height: normal;\r\n\tmargin-right: 0.1em;\r\n\tcursor: pointer;\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\r\n\t/* Support: IE <= 11 */\r\n\toverflow: visible;\r\n}\r\n\r\n.ui-button,\r\n.ui-button:link,\r\n.ui-button:visited,\r\n.ui-button:hover,\r\n.ui-button:active {\r\n\ttext-decoration: none;\r\n}\r\n\r\n/* to make room for the icon, a width needs to be set here */\r\n.ui-button-icon-only {\r\n\twidth: 2em;\r\n\tbox-sizing: border-box;\r\n\ttext-indent: -9999px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n/* no icon support for input elements */\r\ninput.ui-button.ui-button-icon-only {\r\n\ttext-indent: 0;\r\n}\r\n\r\n/* button icon element(s) */\r\n.ui-button-icon-only .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tleft: 50%;\r\n\tmargin-top: -8px;\r\n\tmargin-left: -8px;\r\n}\r\n\r\n.ui-button.ui-icon-notext .ui-icon {\r\n\tpadding: 0;\r\n\twidth: 2.1em;\r\n\theight: 2.1em;\r\n\ttext-indent: -9999px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\ninput.ui-button.ui-icon-notext .ui-icon {\r\n\twidth: auto;\r\n\theight: auto;\r\n\ttext-indent: 0;\r\n\twhite-space: normal;\r\n\tpadding: 0.4em 1em;\r\n}\r\n\r\n/* workarounds */\r\n/* Support: Firefox 5 - 40 */\r\ninput.ui-button::-moz-focus-inner,\r\nbutton.ui-button::-moz-focus-inner {\r\n\tborder: 0;\r\n\tpadding: 0;\r\n}\r\n.ui-controlgroup {\r\n\tvertical-align: middle;\r\n\tdisplay: inline-block;\r\n}\r\n.ui-controlgroup > .ui-controlgroup-item {\r\n\tfloat: left;\r\n\tmargin-left: 0;\r\n\tmargin-right: 0;\r\n}\r\n.ui-controlgroup > .ui-controlgroup-item:focus,\r\n.ui-controlgroup > .ui-controlgroup-item.ui-visual-focus {\r\n\tz-index: 9999;\r\n}\r\n.ui-controlgroup-vertical > .ui-controlgroup-item {\r\n\tdisplay: block;\r\n\tfloat: none;\r\n\twidth: 100%;\r\n\tmargin-top: 0;\r\n\tmargin-bottom: 0;\r\n\ttext-align: left;\r\n}\r\n.ui-controlgroup-vertical .ui-controlgroup-item {\r\n\tbox-sizing: border-box;\r\n}\r\n.ui-controlgroup .ui-controlgroup-label {\r\n\tpadding: 0.4em 1em;\r\n}\r\n.ui-controlgroup .ui-controlgroup-label span {\r\n\tfont-size: 80%;\r\n}\r\n.ui-controlgroup-horizontal .ui-controlgroup-label + .ui-controlgroup-item {\r\n\tborder-left: none;\r\n}\r\n.ui-controlgroup-vertical .ui-controlgroup-label + .ui-controlgroup-item {\r\n\tborder-top: none;\r\n}\r\n.ui-controlgroup-horizontal .ui-controlgroup-label.ui-widget-content {\r\n\tborder-right: none;\r\n}\r\n.ui-controlgroup-vertical .ui-controlgroup-label.ui-widget-content {\r\n\tborder-bottom: none;\r\n}\r\n\r\n/* Spinner specific style fixes */\r\n.ui-controlgroup-vertical .ui-spinner-input {\r\n\t/* Support: IE8 only, Android < 4.4 only */\r\n\twidth: 75%;\r\n\twidth: calc(100% - 2.4em);\r\n}\r\n.ui-controlgroup-vertical .ui-spinner .ui-spinner-up {\r\n\tborder-top-style: solid;\r\n}\r\n\r\n.ui-checkboxradio-label .ui-icon-background {\r\n\tbox-shadow: inset 1px 1px 1px #ccc;\r\n\tborder-radius: 0.12em;\r\n\tborder: none;\r\n}\r\n.ui-checkboxradio-radio-label .ui-icon-background {\r\n\twidth: 16px;\r\n\theight: 16px;\r\n\tborder-radius: 1em;\r\n\toverflow: visible;\r\n\tborder: none;\r\n}\r\n.ui-checkboxradio-radio-label.ui-checkboxradio-checked .ui-icon,\r\n.ui-checkboxradio-radio-label.ui-checkboxradio-checked:hover .ui-icon {\r\n\tbackground-image: none;\r\n\twidth: 8px;\r\n\theight: 8px;\r\n\tborder-width: 4px;\r\n\tborder-style: solid;\r\n}\r\n.ui-checkboxradio-disabled {\r\n\tpointer-events: none;\r\n}\r\n.ui-datepicker {\r\n\twidth: 17em;\r\n\tpadding: 0.2em 0.2em 0;\r\n\tdisplay: none;\r\n}\r\n.ui-datepicker .ui-datepicker-header {\r\n\tposition: relative;\r\n\tpadding: 0.2em 0;\r\n}\r\n.ui-datepicker .ui-datepicker-prev,\r\n.ui-datepicker .ui-datepicker-next {\r\n\tposition: absolute;\r\n\ttop: 2px;\r\n\twidth: 1.8em;\r\n\theight: 1.8em;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover,\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\ttop: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev {\r\n\tleft: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-next {\r\n\tright: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover {\r\n\tleft: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\tright: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev span,\r\n.ui-datepicker .ui-datepicker-next span {\r\n\tdisplay: block;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-datepicker .ui-datepicker-title {\r\n\tmargin: 0 2.3em;\r\n\tline-height: 1.8em;\r\n\ttext-align: center;\r\n}\r\n.ui-datepicker .ui-datepicker-title select {\r\n\tfont-size: 1em;\r\n\tmargin: 1px 0;\r\n}\r\n.ui-datepicker select.ui-datepicker-month,\r\n.ui-datepicker select.ui-datepicker-year {\r\n\twidth: 45%;\r\n}\r\n.ui-datepicker table {\r\n\twidth: 100%;\r\n\tfont-size: 0.9em;\r\n\tborder-collapse: collapse;\r\n\tmargin: 0 0 0.4em;\r\n}\r\n.ui-datepicker th {\r\n\tpadding: 0.7em 0.3em;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n\tborder: 0;\r\n}\r\n.ui-datepicker td {\r\n\tborder: 0;\r\n\tpadding: 1px;\r\n}\r\n.ui-datepicker td span,\r\n.ui-datepicker td a {\r\n\tdisplay: block;\r\n\tpadding: 0.2em;\r\n\ttext-align: right;\r\n\ttext-decoration: none;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane {\r\n\tbackground-image: none;\r\n\tmargin: 0.7em 0 0 0;\r\n\tpadding: 0 0.2em;\r\n\tborder-left: 0;\r\n\tborder-right: 0;\r\n\tborder-bottom: 0;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button {\r\n\tfloat: right;\r\n\tmargin: 0.5em 0.2em 0.4em;\r\n\tcursor: pointer;\r\n\tpadding: 0.2em 0.6em 0.3em 0.6em;\r\n\twidth: auto;\r\n\toverflow: visible;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {\r\n\tfloat: left;\r\n}\r\n\r\n/* with multiple calendars */\r\n.ui-datepicker.ui-datepicker-multi {\r\n\twidth: auto;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group table {\r\n\twidth: 95%;\r\n\tmargin: 0 auto 0.4em;\r\n}\r\n.ui-datepicker-multi-2 .ui-datepicker-group {\r\n\twidth: 50%;\r\n}\r\n.ui-datepicker-multi-3 .ui-datepicker-group {\r\n\twidth: 33.3%;\r\n}\r\n.ui-datepicker-multi-4 .ui-datepicker-group {\r\n\twidth: 25%;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-left-width: 0;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-buttonpane {\r\n\tclear: left;\r\n}\r\n.ui-datepicker-row-break {\r\n\tclear: both;\r\n\twidth: 100%;\r\n\tfont-size: 0;\r\n}\r\n\r\n/* RTL support */\r\n.ui-datepicker-rtl {\r\n\tdirection: rtl;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev {\r\n\tright: 2px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next {\r\n\tleft: 2px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev:hover {\r\n\tright: 1px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next:hover {\r\n\tleft: 1px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane {\r\n\tclear: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,\r\n.ui-datepicker-rtl .ui-datepicker-group {\r\n\tfloat: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-right-width: 0;\r\n\tborder-left-width: 1px;\r\n}\r\n\r\n/* Icons */\r\n.ui-datepicker .ui-icon {\r\n\tdisplay: block;\r\n\ttext-indent: -99999px;\r\n\toverflow: hidden;\r\n\tbackground-repeat: no-repeat;\r\n\tleft: 0.5em;\r\n\ttop: 0.3em;\r\n}\r\n.ui-dialog {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tpadding: 0.2em;\r\n\toutline: 0;\r\n}\r\n.ui-dialog .ui-dialog-titlebar {\r\n\tpadding: 0.4em 1em;\r\n\tposition: relative;\r\n}\r\n.ui-dialog .ui-dialog-title {\r\n\tfloat: left;\r\n\tmargin: 0.1em 0;\r\n\twhite-space: nowrap;\r\n\twidth: 90%;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n}\r\n.ui-dialog .ui-dialog-titlebar-close {\r\n\tposition: absolute;\r\n\tright: 0.3em;\r\n\ttop: 50%;\r\n\twidth: 20px;\r\n\tmargin: -10px 0 0 0;\r\n\tpadding: 1px;\r\n\theight: 20px;\r\n}\r\n.ui-dialog .ui-dialog-content {\r\n\tposition: relative;\r\n\tborder: 0;\r\n\tpadding: 0.5em 1em;\r\n\tbackground: none;\r\n\toverflow: auto;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane {\r\n\ttext-align: left;\r\n\tborder-width: 1px 0 0 0;\r\n\tbackground-image: none;\r\n\tmargin-top: 0.5em;\r\n\tpadding: 0.3em 1em 0.5em 0.4em;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {\r\n\tfloat: right;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane button {\r\n\tmargin: 0.5em 0.4em 0.5em 0;\r\n\tcursor: pointer;\r\n}\r\n.ui-dialog .ui-resizable-n {\r\n\theight: 2px;\r\n\ttop: 0;\r\n}\r\n.ui-dialog .ui-resizable-e {\r\n\twidth: 2px;\r\n\tright: 0;\r\n}\r\n.ui-dialog .ui-resizable-s {\r\n\theight: 2px;\r\n\tbottom: 0;\r\n}\r\n.ui-dialog .ui-resizable-w {\r\n\twidth: 2px;\r\n\tleft: 0;\r\n}\r\n.ui-dialog .ui-resizable-se,\r\n.ui-dialog .ui-resizable-sw,\r\n.ui-dialog .ui-resizable-ne,\r\n.ui-dialog .ui-resizable-nw {\r\n\twidth: 7px;\r\n\theight: 7px;\r\n}\r\n.ui-dialog .ui-resizable-se {\r\n\tright: 0;\r\n\tbottom: 0;\r\n}\r\n.ui-dialog .ui-resizable-sw {\r\n\tleft: 0;\r\n\tbottom: 0;\r\n}\r\n.ui-dialog .ui-resizable-ne {\r\n\tright: 0;\r\n\ttop: 0;\r\n}\r\n.ui-dialog .ui-resizable-nw {\r\n\tleft: 0;\r\n\ttop: 0;\r\n}\r\n.ui-draggable .ui-dialog-titlebar {\r\n\tcursor: move;\r\n}\r\n.ui-draggable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-resizable {\r\n\tposition: relative;\r\n}\r\n.ui-resizable-handle {\r\n\tposition: absolute;\r\n\tfont-size: 0.1px;\r\n\tdisplay: block;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-resizable-disabled .ui-resizable-handle,\r\n.ui-resizable-autohide .ui-resizable-handle {\r\n\tdisplay: none;\r\n}\r\n.ui-resizable-n {\r\n\tcursor: n-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\ttop: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-s {\r\n\tcursor: s-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\tbottom: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-e {\r\n\tcursor: e-resize;\r\n\twidth: 7px;\r\n\tright: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-w {\r\n\tcursor: w-resize;\r\n\twidth: 7px;\r\n\tleft: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-se {\r\n\tcursor: se-resize;\r\n\twidth: 12px;\r\n\theight: 12px;\r\n\tright: 1px;\r\n\tbottom: 1px;\r\n}\r\n.ui-resizable-sw {\r\n\tcursor: sw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\tbottom: -5px;\r\n}\r\n.ui-resizable-nw {\r\n\tcursor: nw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-resizable-ne {\r\n\tcursor: ne-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tright: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-progressbar {\r\n\theight: 2em;\r\n\ttext-align: left;\r\n\toverflow: hidden;\r\n}\r\n.ui-progressbar .ui-progressbar-value {\r\n\tmargin: -1px;\r\n\theight: 100%;\r\n}\r\n.ui-progressbar .ui-progressbar-overlay {\r\n\tbackground: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ');\r\n\theight: 100%;\r\n\tfilter: alpha(opacity=25); /* support: IE8 */\r\n\topacity: 0.25;\r\n}\r\n.ui-progressbar-indeterminate .ui-progressbar-value {\r\n\tbackground-image: none;\r\n}\r\n.ui-selectable {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-selectable-helper {\r\n\tposition: absolute;\r\n\tz-index: 100;\r\n\tborder: 1px dotted black;\r\n}\r\n.ui-selectmenu-menu {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tdisplay: none;\r\n}\r\n.ui-selectmenu-menu .ui-menu {\r\n\toverflow: auto;\r\n\toverflow-x: hidden;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {\r\n\tfont-size: 1em;\r\n\tfont-weight: bold;\r\n\tline-height: 1.5;\r\n\tpadding: 2px 0.4em;\r\n\tmargin: 0.5em 0 0 0;\r\n\theight: auto;\r\n\tborder: 0;\r\n}\r\n.ui-selectmenu-open {\r\n\tdisplay: block;\r\n}\r\n.ui-selectmenu-text {\r\n\tdisplay: block;\r\n\tmargin-right: 20px;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n}\r\n.ui-selectmenu-button.ui-button {\r\n\ttext-align: left;\r\n\twhite-space: nowrap;\r\n\twidth: 14em;\r\n}\r\n.ui-selectmenu-icon.ui-icon {\r\n\tfloat: right;\r\n\tmargin-top: 0;\r\n}\r\n.ui-slider {\r\n\tposition: relative;\r\n\ttext-align: left;\r\n}\r\n.ui-slider .ui-slider-handle {\r\n\tposition: absolute;\r\n\tz-index: 2;\r\n\twidth: 1.2em;\r\n\theight: 1.2em;\r\n\tcursor: default;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-slider .ui-slider-range {\r\n\tposition: absolute;\r\n\tz-index: 1;\r\n\tfont-size: 0.7em;\r\n\tdisplay: block;\r\n\tborder: 0;\r\n\tbackground-position: 0 0;\r\n}\r\n\r\n/* support: IE8 - See #6727 */\r\n.ui-slider.ui-state-disabled .ui-slider-handle,\r\n.ui-slider.ui-state-disabled .ui-slider-range {\r\n\tfilter: inherit;\r\n}\r\n\r\n.ui-slider-horizontal {\r\n\theight: 0.8em;\r\n}\r\n.ui-slider-horizontal .ui-slider-handle {\r\n\ttop: -0.3em;\r\n\tmargin-left: -0.6em;\r\n}\r\n.ui-slider-horizontal .ui-slider-range {\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-min {\r\n\tleft: 0;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-max {\r\n\tright: 0;\r\n}\r\n\r\n.ui-slider-vertical {\r\n\twidth: 0.8em;\r\n\theight: 100px;\r\n}\r\n.ui-slider-vertical .ui-slider-handle {\r\n\tleft: -0.3em;\r\n\tmargin-left: 0;\r\n\tmargin-bottom: -0.6em;\r\n}\r\n.ui-slider-vertical .ui-slider-range {\r\n\tleft: 0;\r\n\twidth: 100%;\r\n}\r\n.ui-slider-vertical .ui-slider-range-min {\r\n\tbottom: 0;\r\n}\r\n.ui-slider-vertical .ui-slider-range-max {\r\n\ttop: 0;\r\n}\r\n.ui-sortable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-spinner {\r\n\tposition: relative;\r\n\tdisplay: inline-block;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tvertical-align: middle;\r\n}\r\n.ui-spinner-input {\r\n\tborder: none;\r\n\tbackground: none;\r\n\tcolor: inherit;\r\n\tpadding: 0.222em 0;\r\n\tmargin: 0.2em 0;\r\n\tvertical-align: middle;\r\n\tmargin-left: 0.4em;\r\n\tmargin-right: 2em;\r\n}\r\n.ui-spinner-button {\r\n\twidth: 1.6em;\r\n\theight: 50%;\r\n\tfont-size: 0.5em;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\ttext-align: center;\r\n\tposition: absolute;\r\n\tcursor: default;\r\n\tdisplay: block;\r\n\toverflow: hidden;\r\n\tright: 0;\r\n}\r\n/* more specificity required here to override default borders */\r\n.ui-spinner a.ui-spinner-button {\r\n\tborder-top-style: none;\r\n\tborder-bottom-style: none;\r\n\tborder-right-style: none;\r\n}\r\n.ui-spinner-up {\r\n\ttop: 0;\r\n}\r\n.ui-spinner-down {\r\n\tbottom: 0;\r\n}\r\n.ui-tabs {\r\n\tposition: relative; /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */\r\n\tpadding: 0.2em;\r\n}\r\n.ui-tabs .ui-tabs-nav {\r\n\tmargin: 0;\r\n\tpadding: 0.2em 0.2em 0;\r\n}\r\n.ui-tabs .ui-tabs-nav li {\r\n\tlist-style: none;\r\n\tfloat: left;\r\n\tposition: relative;\r\n\ttop: 0;\r\n\tmargin: 1px 0.2em 0 0;\r\n\tborder-bottom-width: 0;\r\n\tpadding: 0;\r\n\twhite-space: nowrap;\r\n}\r\n.ui-tabs .ui-tabs-nav .ui-tabs-anchor {\r\n\tfloat: left;\r\n\tpadding: 0.5em 1em;\r\n\ttext-decoration: none;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active {\r\n\tmargin-bottom: -1px;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {\r\n\tcursor: text;\r\n}\r\n.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {\r\n\tcursor: pointer;\r\n}\r\n.ui-tabs .ui-tabs-panel {\r\n\tdisplay: block;\r\n\tborder-width: 0;\r\n\tpadding: 1em 1.4em;\r\n\tbackground: none;\r\n}\r\n.ui-tooltip {\r\n\tpadding: 8px;\r\n\tposition: absolute;\r\n\tz-index: 9999;\r\n\tmax-width: 300px;\r\n}\r\nbody .ui-tooltip {\r\n\tborder-width: 2px;\r\n}\r\n\r\n/* Component containers\r\n----------------------------------*/\r\n.ui-widget {\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget .ui-widget {\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget input,\r\n.ui-widget select,\r\n.ui-widget textarea,\r\n.ui-widget button {\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget.ui-widget-content {\r\n\tborder: 1px solid #c5c5c5;\r\n}\r\n.ui-widget-content {\r\n\tborder: 1px solid #dddddd;\r\n\tbackground: #ffffff;\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-content a {\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-header {\r\n\tborder: 1px solid #dddddd;\r\n\tbackground: #e9e9e9;\r\n\tcolor: #333333;\r\n\tfont-weight: bold;\r\n}\r\n.ui-widget-header a {\r\n\tcolor: #333333;\r\n}\r\n\r\n/* Interaction states\r\n----------------------------------*/\r\n.ui-state-default,\r\n.ui-widget-content .ui-state-default,\r\n.ui-widget-header .ui-state-default,\r\n.ui-button,\r\n\r\n/* We use html here because we need a greater specificity to make sure disabled\r\nworks properly when clicked or hovered */\r\nhtml .ui-button.ui-state-disabled:hover,\r\nhtml .ui-button.ui-state-disabled:active {\r\n\tborder: 1px solid #c5c5c5;\r\n\tbackground: #f6f6f6;\r\n\tfont-weight: normal;\r\n\tcolor: #454545;\r\n}\r\n.ui-state-default a,\r\n.ui-state-default a:link,\r\n.ui-state-default a:visited,\r\na.ui-button,\r\na:link.ui-button,\r\na:visited.ui-button,\r\n.ui-button {\r\n\tcolor: #454545;\r\n\ttext-decoration: none;\r\n}\r\n.ui-state-hover,\r\n.ui-widget-content .ui-state-hover,\r\n.ui-widget-header .ui-state-hover,\r\n.ui-state-focus,\r\n.ui-widget-content .ui-state-focus,\r\n.ui-widget-header .ui-state-focus,\r\n.ui-button:hover,\r\n.ui-button:focus {\r\n\tborder: 1px solid #cccccc;\r\n\tbackground: #ededed;\r\n\tfont-weight: normal;\r\n\tcolor: #2b2b2b;\r\n}\r\n.ui-state-hover a,\r\n.ui-state-hover a:hover,\r\n.ui-state-hover a:link,\r\n.ui-state-hover a:visited,\r\n.ui-state-focus a,\r\n.ui-state-focus a:hover,\r\n.ui-state-focus a:link,\r\n.ui-state-focus a:visited,\r\na.ui-button:hover,\r\na.ui-button:focus {\r\n\tcolor: #2b2b2b;\r\n\ttext-decoration: none;\r\n}\r\n\r\n.ui-visual-focus {\r\n\tbox-shadow: 0 0 3px 1px rgb(94, 158, 214);\r\n}\r\n.ui-state-active,\r\n.ui-widget-content .ui-state-active,\r\n.ui-widget-header .ui-state-active,\r\na.ui-button:active,\r\n.ui-button:active,\r\n.ui-button.ui-state-active:hover {\r\n\tborder: 1px solid #003eff;\r\n\tbackground: #007fff;\r\n\tfont-weight: normal;\r\n\tcolor: #ffffff;\r\n}\r\n.ui-icon-background,\r\n.ui-state-active .ui-icon-background {\r\n\tborder: #003eff;\r\n\tbackground-color: #ffffff;\r\n}\r\n.ui-state-active a,\r\n.ui-state-active a:link,\r\n.ui-state-active a:visited {\r\n\tcolor: #ffffff;\r\n\ttext-decoration: none;\r\n}\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-highlight,\r\n.ui-widget-content .ui-state-highlight,\r\n.ui-widget-header .ui-state-highlight {\r\n\tborder: 1px solid #dad55e;\r\n\tbackground: #fffa90;\r\n\tcolor: #777620;\r\n}\r\n.ui-state-checked {\r\n\tborder: 1px solid #dad55e;\r\n\tbackground: #fffa90;\r\n}\r\n.ui-state-highlight a,\r\n.ui-widget-content .ui-state-highlight a,\r\n.ui-widget-header .ui-state-highlight a {\r\n\tcolor: #777620;\r\n}\r\n.ui-state-error,\r\n.ui-widget-content .ui-state-error,\r\n.ui-widget-header .ui-state-error {\r\n\tborder: 1px solid #f1a899;\r\n\tbackground: #fddfdf;\r\n\tcolor: #5f3f3f;\r\n}\r\n.ui-state-error a,\r\n.ui-widget-content .ui-state-error a,\r\n.ui-widget-header .ui-state-error a {\r\n\tcolor: #5f3f3f;\r\n}\r\n.ui-state-error-text,\r\n.ui-widget-content .ui-state-error-text,\r\n.ui-widget-header .ui-state-error-text {\r\n\tcolor: #5f3f3f;\r\n}\r\n.ui-priority-primary,\r\n.ui-widget-content .ui-priority-primary,\r\n.ui-widget-header .ui-priority-primary {\r\n\tfont-weight: bold;\r\n}\r\n.ui-priority-secondary,\r\n.ui-widget-content .ui-priority-secondary,\r\n.ui-widget-header .ui-priority-secondary {\r\n\topacity: 0.7;\r\n\tfilter: Alpha(Opacity=70); /* support: IE8 */\r\n\tfont-weight: normal;\r\n}\r\n.ui-state-disabled,\r\n.ui-widget-content .ui-state-disabled,\r\n.ui-widget-header .ui-state-disabled {\r\n\topacity: 0.35;\r\n\tfilter: Alpha(Opacity=35); /* support: IE8 */\r\n\tbackground-image: none;\r\n}\r\n.ui-state-disabled .ui-icon {\r\n\tfilter: Alpha(Opacity=35); /* support: IE8 - See #6059 */\r\n}\r\n\r\n/* Icons\r\n----------------------------------*/\r\n\r\n/* states and images */\r\n.ui-icon {\r\n\twidth: 16px;\r\n\theight: 16px;\r\n}\r\n.ui-icon,\r\n.ui-widget-content .ui-icon {\r\n\tbackground-image: url(' + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\r\n}\r\n.ui-widget-header .ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\r\n}\r\n.ui-state-hover .ui-icon,\r\n.ui-state-focus .ui-icon,\r\n.ui-button:hover .ui-icon,\r\n.ui-button:focus .ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");\r\n}\r\n.ui-state-active .ui-icon,\r\n.ui-button:active .ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");\r\n}\r\n.ui-state-highlight .ui-icon,\r\n.ui-button .ui-state-highlight.ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");\r\n}\r\n.ui-state-error .ui-icon,\r\n.ui-state-error-text .ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");\r\n}\r\n.ui-button .ui-icon {\r\n\tbackground-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ");\r\n}\r\n\r\n/* positioning */\r\n.ui-icon-blank {\r\n\tbackground-position: 16px 16px;\r\n}\r\n.ui-icon-caret-1-n {\r\n\tbackground-position: 0 0;\r\n}\r\n.ui-icon-caret-1-ne {\r\n\tbackground-position: -16px 0;\r\n}\r\n.ui-icon-caret-1-e {\r\n\tbackground-position: -32px 0;\r\n}\r\n.ui-icon-caret-1-se {\r\n\tbackground-position: -48px 0;\r\n}\r\n.ui-icon-caret-1-s {\r\n\tbackground-position: -65px 0;\r\n}\r\n.ui-icon-caret-1-sw {\r\n\tbackground-position: -80px 0;\r\n}\r\n.ui-icon-caret-1-w {\r\n\tbackground-position: -96px 0;\r\n}\r\n.ui-icon-caret-1-nw {\r\n\tbackground-position: -112px 0;\r\n}\r\n.ui-icon-caret-2-n-s {\r\n\tbackground-position: -128px 0;\r\n}\r\n.ui-icon-caret-2-e-w {\r\n\tbackground-position: -144px 0;\r\n}\r\n.ui-icon-triangle-1-n {\r\n\tbackground-position: 0 -16px;\r\n}\r\n.ui-icon-triangle-1-ne {\r\n\tbackground-position: -16px -16px;\r\n}\r\n.ui-icon-triangle-1-e {\r\n\tbackground-position: -32px -16px;\r\n}\r\n.ui-icon-triangle-1-se {\r\n\tbackground-position: -48px -16px;\r\n}\r\n.ui-icon-triangle-1-s {\r\n\tbackground-position: -65px -16px;\r\n}\r\n.ui-icon-triangle-1-sw {\r\n\tbackground-position: -80px -16px;\r\n}\r\n.ui-icon-triangle-1-w {\r\n\tbackground-position: -96px -16px;\r\n}\r\n.ui-icon-triangle-1-nw {\r\n\tbackground-position: -112px -16px;\r\n}\r\n.ui-icon-triangle-2-n-s {\r\n\tbackground-position: -128px -16px;\r\n}\r\n.ui-icon-triangle-2-e-w {\r\n\tbackground-position: -144px -16px;\r\n}\r\n.ui-icon-arrow-1-n {\r\n\tbackground-position: 0 -32px;\r\n}\r\n.ui-icon-arrow-1-ne {\r\n\tbackground-position: -16px -32px;\r\n}\r\n.ui-icon-arrow-1-e {\r\n\tbackground-position: -32px -32px;\r\n}\r\n.ui-icon-arrow-1-se {\r\n\tbackground-position: -48px -32px;\r\n}\r\n.ui-icon-arrow-1-s {\r\n\tbackground-position: -65px -32px;\r\n}\r\n.ui-icon-arrow-1-sw {\r\n\tbackground-position: -80px -32px;\r\n}\r\n.ui-icon-arrow-1-w {\r\n\tbackground-position: -96px -32px;\r\n}\r\n.ui-icon-arrow-1-nw {\r\n\tbackground-position: -112px -32px;\r\n}\r\n.ui-icon-arrow-2-n-s {\r\n\tbackground-position: -128px -32px;\r\n}\r\n.ui-icon-arrow-2-ne-sw {\r\n\tbackground-position: -144px -32px;\r\n}\r\n.ui-icon-arrow-2-e-w {\r\n\tbackground-position: -160px -32px;\r\n}\r\n.ui-icon-arrow-2-se-nw {\r\n\tbackground-position: -176px -32px;\r\n}\r\n.ui-icon-arrowstop-1-n {\r\n\tbackground-position: -192px -32px;\r\n}\r\n.ui-icon-arrowstop-1-e {\r\n\tbackground-position: -208px -32px;\r\n}\r\n.ui-icon-arrowstop-1-s {\r\n\tbackground-position: -224px -32px;\r\n}\r\n.ui-icon-arrowstop-1-w {\r\n\tbackground-position: -240px -32px;\r\n}\r\n.ui-icon-arrowthick-1-n {\r\n\tbackground-position: 1px -48px;\r\n}\r\n.ui-icon-arrowthick-1-ne {\r\n\tbackground-position: -16px -48px;\r\n}\r\n.ui-icon-arrowthick-1-e {\r\n\tbackground-position: -32px -48px;\r\n}\r\n.ui-icon-arrowthick-1-se {\r\n\tbackground-position: -48px -48px;\r\n}\r\n.ui-icon-arrowthick-1-s {\r\n\tbackground-position: -64px -48px;\r\n}\r\n.ui-icon-arrowthick-1-sw {\r\n\tbackground-position: -80px -48px;\r\n}\r\n.ui-icon-arrowthick-1-w {\r\n\tbackground-position: -96px -48px;\r\n}\r\n.ui-icon-arrowthick-1-nw {\r\n\tbackground-position: -112px -48px;\r\n}\r\n.ui-icon-arrowthick-2-n-s {\r\n\tbackground-position: -128px -48px;\r\n}\r\n.ui-icon-arrowthick-2-ne-sw {\r\n\tbackground-position: -144px -48px;\r\n}\r\n.ui-icon-arrowthick-2-e-w {\r\n\tbackground-position: -160px -48px;\r\n}\r\n.ui-icon-arrowthick-2-se-nw {\r\n\tbackground-position: -176px -48px;\r\n}\r\n.ui-icon-arrowthickstop-1-n {\r\n\tbackground-position: -192px -48px;\r\n}\r\n.ui-icon-arrowthickstop-1-e {\r\n\tbackground-position: -208px -48px;\r\n}\r\n.ui-icon-arrowthickstop-1-s {\r\n\tbackground-position: -224px -48px;\r\n}\r\n.ui-icon-arrowthickstop-1-w {\r\n\tbackground-position: -240px -48px;\r\n}\r\n.ui-icon-arrowreturnthick-1-w {\r\n\tbackground-position: 0 -64px;\r\n}\r\n.ui-icon-arrowreturnthick-1-n {\r\n\tbackground-position: -16px -64px;\r\n}\r\n.ui-icon-arrowreturnthick-1-e {\r\n\tbackground-position: -32px -64px;\r\n}\r\n.ui-icon-arrowreturnthick-1-s {\r\n\tbackground-position: -48px -64px;\r\n}\r\n.ui-icon-arrowreturn-1-w {\r\n\tbackground-position: -64px -64px;\r\n}\r\n.ui-icon-arrowreturn-1-n {\r\n\tbackground-position: -80px -64px;\r\n}\r\n.ui-icon-arrowreturn-1-e {\r\n\tbackground-position: -96px -64px;\r\n}\r\n.ui-icon-arrowreturn-1-s {\r\n\tbackground-position: -112px -64px;\r\n}\r\n.ui-icon-arrowrefresh-1-w {\r\n\tbackground-position: -128px -64px;\r\n}\r\n.ui-icon-arrowrefresh-1-n {\r\n\tbackground-position: -144px -64px;\r\n}\r\n.ui-icon-arrowrefresh-1-e {\r\n\tbackground-position: -160px -64px;\r\n}\r\n.ui-icon-arrowrefresh-1-s {\r\n\tbackground-position: -176px -64px;\r\n}\r\n.ui-icon-arrow-4 {\r\n\tbackground-position: 0 -80px;\r\n}\r\n.ui-icon-arrow-4-diag {\r\n\tbackground-position: -16px -80px;\r\n}\r\n.ui-icon-extlink {\r\n\tbackground-position: -32px -80px;\r\n}\r\n.ui-icon-newwin {\r\n\tbackground-position: -48px -80px;\r\n}\r\n.ui-icon-refresh {\r\n\tbackground-position: -64px -80px;\r\n}\r\n.ui-icon-shuffle {\r\n\tbackground-position: -80px -80px;\r\n}\r\n.ui-icon-transfer-e-w {\r\n\tbackground-position: -96px -80px;\r\n}\r\n.ui-icon-transferthick-e-w {\r\n\tbackground-position: -112px -80px;\r\n}\r\n.ui-icon-folder-collapsed {\r\n\tbackground-position: 0 -96px;\r\n}\r\n.ui-icon-folder-open {\r\n\tbackground-position: -16px -96px;\r\n}\r\n.ui-icon-document {\r\n\tbackground-position: -32px -96px;\r\n}\r\n.ui-icon-document-b {\r\n\tbackground-position: -48px -96px;\r\n}\r\n.ui-icon-note {\r\n\tbackground-position: -64px -96px;\r\n}\r\n.ui-icon-mail-closed {\r\n\tbackground-position: -80px -96px;\r\n}\r\n.ui-icon-mail-open {\r\n\tbackground-position: -96px -96px;\r\n}\r\n.ui-icon-suitcase {\r\n\tbackground-position: -112px -96px;\r\n}\r\n.ui-icon-comment {\r\n\tbackground-position: -128px -96px;\r\n}\r\n.ui-icon-person {\r\n\tbackground-position: -144px -96px;\r\n}\r\n.ui-icon-print {\r\n\tbackground-position: -160px -96px;\r\n}\r\n.ui-icon-trash {\r\n\tbackground-position: -176px -96px;\r\n}\r\n.ui-icon-locked {\r\n\tbackground-position: -192px -96px;\r\n}\r\n.ui-icon-unlocked {\r\n\tbackground-position: -208px -96px;\r\n}\r\n.ui-icon-bookmark {\r\n\tbackground-position: -224px -96px;\r\n}\r\n.ui-icon-tag {\r\n\tbackground-position: -240px -96px;\r\n}\r\n.ui-icon-home {\r\n\tbackground-position: 0 -112px;\r\n}\r\n.ui-icon-flag {\r\n\tbackground-position: -16px -112px;\r\n}\r\n.ui-icon-calendar {\r\n\tbackground-position: -32px -112px;\r\n}\r\n.ui-icon-cart {\r\n\tbackground-position: -48px -112px;\r\n}\r\n.ui-icon-pencil {\r\n\tbackground-position: -64px -112px;\r\n}\r\n.ui-icon-clock {\r\n\tbackground-position: -80px -112px;\r\n}\r\n.ui-icon-disk {\r\n\tbackground-position: -96px -112px;\r\n}\r\n.ui-icon-calculator {\r\n\tbackground-position: -112px -112px;\r\n}\r\n.ui-icon-zoomin {\r\n\tbackground-position: -128px -112px;\r\n}\r\n.ui-icon-zoomout {\r\n\tbackground-position: -144px -112px;\r\n}\r\n.ui-icon-search {\r\n\tbackground-position: -160px -112px;\r\n}\r\n.ui-icon-wrench {\r\n\tbackground-position: -176px -112px;\r\n}\r\n.ui-icon-gear {\r\n\tbackground-position: -192px -112px;\r\n}\r\n.ui-icon-heart {\r\n\tbackground-position: -208px -112px;\r\n}\r\n.ui-icon-star {\r\n\tbackground-position: -224px -112px;\r\n}\r\n.ui-icon-link {\r\n\tbackground-position: -240px -112px;\r\n}\r\n.ui-icon-cancel {\r\n\tbackground-position: 0 -128px;\r\n}\r\n.ui-icon-plus {\r\n\tbackground-position: -16px -128px;\r\n}\r\n.ui-icon-plusthick {\r\n\tbackground-position: -32px -128px;\r\n}\r\n.ui-icon-minus {\r\n\tbackground-position: -48px -128px;\r\n}\r\n.ui-icon-minusthick {\r\n\tbackground-position: -64px -128px;\r\n}\r\n.ui-icon-close {\r\n\tbackground-position: -80px -128px;\r\n}\r\n.ui-icon-closethick {\r\n\tbackground-position: -96px -128px;\r\n}\r\n.ui-icon-key {\r\n\tbackground-position: -112px -128px;\r\n}\r\n.ui-icon-lightbulb {\r\n\tbackground-position: -128px -128px;\r\n}\r\n.ui-icon-scissors {\r\n\tbackground-position: -144px -128px;\r\n}\r\n.ui-icon-clipboard {\r\n\tbackground-position: -160px -128px;\r\n}\r\n.ui-icon-copy {\r\n\tbackground-position: -176px -128px;\r\n}\r\n.ui-icon-contact {\r\n\tbackground-position: -192px -128px;\r\n}\r\n.ui-icon-image {\r\n\tbackground-position: -208px -128px;\r\n}\r\n.ui-icon-video {\r\n\tbackground-position: -224px -128px;\r\n}\r\n.ui-icon-script {\r\n\tbackground-position: -240px -128px;\r\n}\r\n.ui-icon-alert {\r\n\tbackground-position: 0 -144px;\r\n}\r\n.ui-icon-info {\r\n\tbackground-position: -16px -144px;\r\n}\r\n.ui-icon-notice {\r\n\tbackground-position: -32px -144px;\r\n}\r\n.ui-icon-help {\r\n\tbackground-position: -48px -144px;\r\n}\r\n.ui-icon-check {\r\n\tbackground-position: -64px -144px;\r\n}\r\n.ui-icon-bullet {\r\n\tbackground-position: -80px -144px;\r\n}\r\n.ui-icon-radio-on {\r\n\tbackground-position: -96px -144px;\r\n}\r\n.ui-icon-radio-off {\r\n\tbackground-position: -112px -144px;\r\n}\r\n.ui-icon-pin-w {\r\n\tbackground-position: -128px -144px;\r\n}\r\n.ui-icon-pin-s {\r\n\tbackground-position: -144px -144px;\r\n}\r\n.ui-icon-play {\r\n\tbackground-position: 0 -160px;\r\n}\r\n.ui-icon-pause {\r\n\tbackground-position: -16px -160px;\r\n}\r\n.ui-icon-seek-next {\r\n\tbackground-position: -32px -160px;\r\n}\r\n.ui-icon-seek-prev {\r\n\tbackground-position: -48px -160px;\r\n}\r\n.ui-icon-seek-end {\r\n\tbackground-position: -64px -160px;\r\n}\r\n.ui-icon-seek-start {\r\n\tbackground-position: -80px -160px;\r\n}\r\n/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */\r\n.ui-icon-seek-first {\r\n\tbackground-position: -80px -160px;\r\n}\r\n.ui-icon-stop {\r\n\tbackground-position: -96px -160px;\r\n}\r\n.ui-icon-eject {\r\n\tbackground-position: -112px -160px;\r\n}\r\n.ui-icon-volume-off {\r\n\tbackground-position: -128px -160px;\r\n}\r\n.ui-icon-volume-on {\r\n\tbackground-position: -144px -160px;\r\n}\r\n.ui-icon-power {\r\n\tbackground-position: 0 -176px;\r\n}\r\n.ui-icon-signal-diag {\r\n\tbackground-position: -16px -176px;\r\n}\r\n.ui-icon-signal {\r\n\tbackground-position: -32px -176px;\r\n}\r\n.ui-icon-battery-0 {\r\n\tbackground-position: -48px -176px;\r\n}\r\n.ui-icon-battery-1 {\r\n\tbackground-position: -64px -176px;\r\n}\r\n.ui-icon-battery-2 {\r\n\tbackground-position: -80px -176px;\r\n}\r\n.ui-icon-battery-3 {\r\n\tbackground-position: -96px -176px;\r\n}\r\n.ui-icon-circle-plus {\r\n\tbackground-position: 0 -192px;\r\n}\r\n.ui-icon-circle-minus {\r\n\tbackground-position: -16px -192px;\r\n}\r\n.ui-icon-circle-close {\r\n\tbackground-position: -32px -192px;\r\n}\r\n.ui-icon-circle-triangle-e {\r\n\tbackground-position: -48px -192px;\r\n}\r\n.ui-icon-circle-triangle-s {\r\n\tbackground-position: -64px -192px;\r\n}\r\n.ui-icon-circle-triangle-w {\r\n\tbackground-position: -80px -192px;\r\n}\r\n.ui-icon-circle-triangle-n {\r\n\tbackground-position: -96px -192px;\r\n}\r\n.ui-icon-circle-arrow-e {\r\n\tbackground-position: -112px -192px;\r\n}\r\n.ui-icon-circle-arrow-s {\r\n\tbackground-position: -128px -192px;\r\n}\r\n.ui-icon-circle-arrow-w {\r\n\tbackground-position: -144px -192px;\r\n}\r\n.ui-icon-circle-arrow-n {\r\n\tbackground-position: -160px -192px;\r\n}\r\n.ui-icon-circle-zoomin {\r\n\tbackground-position: -176px -192px;\r\n}\r\n.ui-icon-circle-zoomout {\r\n\tbackground-position: -192px -192px;\r\n}\r\n.ui-icon-circle-check {\r\n\tbackground-position: -208px -192px;\r\n}\r\n.ui-icon-circlesmall-plus {\r\n\tbackground-position: 0 -208px;\r\n}\r\n.ui-icon-circlesmall-minus {\r\n\tbackground-position: -16px -208px;\r\n}\r\n.ui-icon-circlesmall-close {\r\n\tbackground-position: -32px -208px;\r\n}\r\n.ui-icon-squaresmall-plus {\r\n\tbackground-position: -48px -208px;\r\n}\r\n.ui-icon-squaresmall-minus {\r\n\tbackground-position: -64px -208px;\r\n}\r\n.ui-icon-squaresmall-close {\r\n\tbackground-position: -80px -208px;\r\n}\r\n.ui-icon-grip-dotted-vertical {\r\n\tbackground-position: 0 -224px;\r\n}\r\n.ui-icon-grip-dotted-horizontal {\r\n\tbackground-position: -16px -224px;\r\n}\r\n.ui-icon-grip-solid-vertical {\r\n\tbackground-position: -32px -224px;\r\n}\r\n.ui-icon-grip-solid-horizontal {\r\n\tbackground-position: -48px -224px;\r\n}\r\n.ui-icon-gripsmall-diagonal-se {\r\n\tbackground-position: -64px -224px;\r\n}\r\n.ui-icon-grip-diagonal-se {\r\n\tbackground-position: -80px -224px;\r\n}\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Corner radius */\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-left,\r\n.ui-corner-tl {\r\n\tborder-top-left-radius: 3px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-right,\r\n.ui-corner-tr {\r\n\tborder-top-right-radius: 3px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-left,\r\n.ui-corner-bl {\r\n\tborder-bottom-left-radius: 3px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-right,\r\n.ui-corner-br {\r\n\tborder-bottom-right-radius: 3px;\r\n}\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tbackground: #aaaaaa;\r\n\topacity: 0.003;\r\n\tfilter: Alpha(Opacity=.3); /* support: IE8 */\r\n}\r\n.ui-widget-shadow {\r\n\t-webkit-box-shadow: 0px 0px 5px #666666;\r\n\tbox-shadow: 0px 0px 5px #666666;\r\n}\r\n", "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
-        665: (module, __webpack_exports__, __webpack_require__) => {
+        96: (module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Z: () => __WEBPACK_DEFAULT_EXPORT__
             });
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(499);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-            var ___CSS_LOADER_EXPORT___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(645);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+            var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
             ___CSS_LOADER_EXPORT___.push([ module.id, '/* This is a compiled file, you should be editing the file in the templates directory */\r\n\r\n.pace {\r\n  -webkit-pointer-events: none;\r\n  pointer-events: none;\r\n  -webkit-user-select: none;\r\n  -moz-user-select: none;\r\n  user-select: none;\r\n}\r\n\r\n.pace .pace-progress {\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 0;\r\n  height: 5rem;\r\n  width: 5rem;\r\n  -webkit-transform: translate3d(0, 0, 0) !important;\r\n  -ms-transform: translate3d(0, 0, 0) !important;\r\n  transform: translate3d(0, 0, 0) !important;\r\n}\r\n\r\n.pace .pace-inactive .pace-progress {\r\n  display: none;\r\n}\r\n\r\n.pace .pace-progress::after {\r\n  display: block;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0.5rem;\r\n  content: attr(data-progress-text);\r\n  font-family: "Helvetica Neue", sans-serif;\r\n  font-weight: 100;\r\n  font-size: 5rem;\r\n  line-height: 1;\r\n  text-align: right;\r\n  color: rgba(238, 49, 72, 0.19999999999999996);\r\n}\r\n', "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
-        163: (module, __webpack_exports__, __webpack_require__) => {
+        228: (module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             __webpack_require__.d(__webpack_exports__, {
                 default: () => __WEBPACK_DEFAULT_EXPORT__
             });
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(499);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(932);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(547);
-            var _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(665);
-            var ___CSS_LOADER_EXPORT___ = _node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
-            ___CSS_LOADER_EXPORT___.i(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_2__.Z);
-            ___CSS_LOADER_EXPORT___.i(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_3__.Z);
-            ___CSS_LOADER_EXPORT___.i(_node_modules_pnpm_css_loader_6_7_3_webpack_5_75_0_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_4__.Z);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81);
+            var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(645);
+            var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+            var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
+            var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(980);
+            var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(96);
+            var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default());
+            ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jquery_ui_1_12_1_jquery_ui_css__WEBPACK_IMPORTED_MODULE_2__.Z);
+            ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_jqGrid_4_15_5_dist_css_ui_jqgrid_css__WEBPACK_IMPORTED_MODULE_3__.Z);
+            ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_libs_pace_1_2_4_themes_red_pace_theme_big_counter_css__WEBPACK_IMPORTED_MODULE_4__.Z);
             ___CSS_LOADER_EXPORT___.push([ module.id, ".search-teachers .s-t-list .item-time-list {\r\n\tmargin-top: 315px;\r\n}\r\n\r\n.search-teachers .s-t-list .item {\r\n\theight: 679px;\r\n\twidth: 233px;\r\n\tmargin-right: 5px;\r\n\tmargin-bottom: 5px;\r\n}\r\n\r\n.search-teachers .s-t-list .s-t-content {\r\n\tmargin-right: 0;\r\n}\r\n\r\n.search-teachers {\r\n\twidth: 100%;\r\n}\r\n\r\n.search-teachers .s-t-list .item .item-top .teacher-name {\r\n\tline-height: 15px;\r\n}\r\n\r\n.ui-tabs .ui-tabs-panel {\r\n\tpadding: 0.5em 0.2em;\r\n}\r\n\r\n.ui-dialog .ui-dialog-content {\r\n\tpadding: 0.5em 0.2em;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-days .s-t-days-list li {\r\n\tfloat: left;\r\n\twidth: 118px;\r\n\theight: 34px;\r\n\tline-height: 34px;\r\n\tmargin-right: 5px;\r\n\tmargin-bottom: 5px;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-details {\r\n\tpadding: 2px 0 2px 30px;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-right {\r\n\theight: auto;\r\n}\r\n\r\n.search-teachers .s-t-top .s-t-top-left .condition-item {\r\n\tmargin-bottom: 2px;\r\n}\r\n\r\n.s-t-page {\r\n\tpadding-top: 2px;\r\n}\r\n\r\n#buttons input,\r\n#buttons button {\r\n\tmargin-right: 3px;\r\n}\r\n\r\n/*\r\n.pace .pace-progress {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 2000;\r\n  top: 0;\r\n  right: 100%;\r\n  width: 100%;\r\n  height: 2px;\r\n} */\r\n", "" ]);
             const __WEBPACK_DEFAULT_EXPORT__ = ___CSS_LOADER_EXPORT___;
         },
-        499: module => {
+        645: module => {
             "use strict";
             module.exports = function(cssWithMappingToString) {
                 var list = [];
@@ -196,7 +190,7 @@
                 return list;
             };
         },
-        888: module => {
+        667: module => {
             "use strict";
             module.exports = function(url, options) {
                 if (!options) {
@@ -218,13 +212,13 @@
                 return url;
             };
         },
-        39: module => {
+        81: module => {
             "use strict";
             module.exports = function(i) {
                 return i[1];
             };
         },
-        637: function(module) {
+        484: function(module) {
             !function(t, e) {
                 true ? module.exports = e() : 0;
             }(this, (function() {
@@ -482,9 +476,9 @@
                 }, w.en = D[g], w.Ls = D, w.p = {}, w;
             }));
         },
-        393: function(module, __unused_webpack_exports, __webpack_require__) {
+        852: function(module, __unused_webpack_exports, __webpack_require__) {
             !function(e, _) {
-                true ? module.exports = _(__webpack_require__(637)) : 0;
+                true ? module.exports = _(__webpack_require__(484)) : 0;
             }(this, (function(e) {
                 "use strict";
                 function _(e) {
@@ -539,7 +533,7 @@
                 return t.default.locale(d, null, !0), d;
             }));
         },
-        498: function(module) {
+        110: function(module) {
             !function(r, e) {
                 true ? module.exports = e() : 0;
             }(this, (function() {
@@ -633,16 +627,16 @@
                 };
             }));
         },
-        439: (module, __unused_webpack_exports, __webpack_require__) => {
-            var content = __webpack_require__(163);
+        771: (module, __unused_webpack_exports, __webpack_require__) => {
+            var content = __webpack_require__(228);
             if (content.__esModule) content = content.default;
             if (typeof content === "string") content = [ [ module.id, content, "" ] ];
             if (content.locals) module.exports = content.locals;
-            var add = __webpack_require__(950).Z;
-            var update = add("580bf414", content, false, {});
+            var add = __webpack_require__(346).Z;
+            var update = add("a5bac4b6", content, false, {});
             if (false) {}
         },
-        950: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+        346: (__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
                 Z: () => addStylesClient
@@ -924,11 +918,11 @@
     var __webpack_exports__ = {};
     (() => {
         "use strict";
-        var dayjs_min = __webpack_require__(637);
+        var dayjs_min = __webpack_require__(484);
         var dayjs_min_default = __webpack_require__.n(dayjs_min);
-        var zh_cn = __webpack_require__(393);
+        var zh_cn = __webpack_require__(852);
         var zh_cn_default = __webpack_require__.n(zh_cn);
-        var relativeTime = __webpack_require__(498);
+        var relativeTime = __webpack_require__(110);
         var relativeTime_default = __webpack_require__.n(relativeTime);
         function _slicedToArray(arr, i) {
             return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -1320,7 +1314,7 @@
             }));
             return tinfo;
         }
-        var findingteacher_user = __webpack_require__(439);
+        var findingteacher_user = __webpack_require__(771);
         const propertiesCaseInsensitive = class {
             has(target, prop) {
                 if (typeof prop === "symbol") {
@@ -1775,23 +1769,453 @@
                 next();
             }));
         }
-        var pacesetup = __webpack_require__(867);
+        var pacesetup = __webpack_require__(895);
         var code = '<div id="filterDialog" title="Teacher Filter"> <div id="tabs"> <div> <ul> <li><a href="#tabs-1">Search Teachers</a></li> <li><a href="#tabs-2">Sorted Teachers</a></li> </ul> <br/> <div id="filterButtons"> <div id="buttons" style="text-align:center"> <button id="asc" title="当前为降序，点击后按升序排列">升序</button> <button id="desc" title="当前为升序，点击进行降序排列" style="display:none">降序</button> <input id="tInfoExprHours" title="缓存过期时间（小时）"/> <button title="清空缓存，并重新搜索">清除缓存</button> <a>报告BUG</a> <a>帮助</a> </div> <div id="buttons1" style="text-align:center"> <div id="timesMultipleCheck"></div> <button>反选时间段</button> <button id="autogettodaysteachers" title="自动获取上述选择时段的全部教师并缓存">获取选定时段老师</button> </div> </div> </div> <div id="tabs-1"> 当前可选 <span id="tCount"></span> 位,被折叠 <span id="tHideCount"></span> 位。 <br/> 有效经验值 <span id="_tLabelCount"></span> <br/> <div id="labelSlider"></div> 收藏数 <span id="_tfc"></span> <br/> <div id="fcSlider"></div> 好评率 <span id="_thumbUpRate"></span> <br/> <div id="thumbUpRateSlider"></div> 年龄 <span id="_tAge"></span> <br/> <div id="tAgeSlider"></div> </div> <div id="tabs-2"> <table id="teacherTab"> <caption></caption> <th id="vwswslwo"></th> </table> <div id="pager5"></div> </div> </div> </div> ';
         const pluginUITemplate = code;
-        dayjs_min_default().extend(relativeTime_default());
-        dayjs_min_default().locale(zh_cn_default());
-        var asc = function asc(a, b) {
+        function main() {
+            if (settings.isListPage || settings.isDetailPage) {
+                common_submit((function(next) {
+                    try {
+                        var config = GM_getValue("filterConfig", {
+                            l1: minLabel !== null && minLabel !== void 0 ? minLabel : 300,
+                            l2: maxLabel !== null && maxLabel !== void 0 ? maxLabel : 200,
+                            rate1: minRate !== null && minRate !== void 0 ? minRate : 97,
+                            rate2: maxRate !== null && maxRate !== void 0 ? maxRate : 100,
+                            age1: minAge !== null && minAge !== void 0 ? minAge : 0,
+                            age2: maxAge !== null && maxAge !== void 0 ? maxAge : 100,
+                            fc1: minFc !== null && minFc !== void 0 ? minFc : 0,
+                            fc2: maxFc !== null && maxFc !== void 0 ? maxFc : 999999
+                        });
+                        $("body").append(pluginUITemplate);
+                        if (!settings.isListPage) {
+                            $("#filterButtons").hide();
+                        }
+                        $("body").append("<div id='teacherListDialog' style='display:none;'></div>");
+                        $("body").append("<div id='wwwww'>已加载选课辅助插件。</div>");
+                        $("#labelSlider").slider({
+                            range: true,
+                            min: minLabel - 1,
+                            max: maxLabel + 1,
+                            values: [ config.l1 < minLabel - 1 ? minLabel - 1 : config.l1, maxLabel ],
+                            slide: function slide(event, ui) {
+                                $("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1]);
+                            }
+                        }).on("slidestop", (function(event, ui) {
+                            var l = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
+                            filterConfig.l1 = l[0];
+                            filterConfig.l2 = l[1];
+                            GM_setValue("filterConfig", filterConfig);
+                            executeFilters(uiFilters);
+                        }));
+                        $("#fcSlider").slider({
+                            range: true,
+                            min: minFc - 1,
+                            max: maxFc + 1,
+                            values: [ config.fc1, config.fc2 ],
+                            slide: function slide(event, ui) {
+                                $("#_tfc").html(ui.values[0] + " - " + ui.values[1]);
+                            }
+                        }).on("slidestop", (function(event, ui) {
+                            var fc = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
+                            filterConfig.fc1 = fc[0];
+                            filterConfig.fc2 = fc[1];
+                            GM_setValue("filterConfig", filterConfig);
+                            executeFilters(uiFilters);
+                        }));
+                        $("#thumbUpRateSlider").slider({
+                            range: true,
+                            min: minRate,
+                            max: maxRate,
+                            values: [ config.rate1, config.rate2 ],
+                            slide: function slide(_event, ui) {
+                                $("#_thumbUpRate").html(ui.values[0] + "% - " + ui.values[1] + "%");
+                            }
+                        }).on("slidestop", (function(event, ui) {
+                            var rate = $("#thumbUpRateSlider").slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
+                            filterConfig.rate1 = rate[0];
+                            filterConfig.rate2 = rate[1];
+                            GM_setValue("filterConfig", filterConfig);
+                            executeFilters(uiFilters);
+                        }));
+                        $("#tAgeSlider").slider({
+                            range: true,
+                            min: minAge,
+                            max: maxAge,
+                            values: [ config.age1 < minAge ? minAge : config.age1, config.age2 > maxAge ? maxAge : config.age2 ],
+                            slide: function slide(event, ui) {
+                                $("#_tAge").html(ui.values[0] + " - " + ui.values[1]);
+                            }
+                        }).on("slidestop", (function(event, ui) {
+                            var age = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
+                            filterConfig.age1 = age[0];
+                            filterConfig.age2 = age[1];
+                            GM_setValue("filterConfig", filterConfig);
+                            executeFilters(uiFilters);
+                        }));
+                        $("#buttons>button,#buttons>input,#buttons>a").eq(0).button({
+                            icon: "ui-icon-arrowthick-1-n",
+                            showLabel: true
+                        }).click((function() {
+                            $("#desc").show();
+                            $(this).hide();
+                            sortElementsByIndicator(asc);
+                        })).end().eq(1).button({
+                            icon: "ui-icon-arrowthick-1-s",
+                            showLabel: true
+                        }).click((function() {
+                            $("#asc").show();
+                            $(this).hide();
+                            sortElementsByIndicator(desc);
+                        })).end().eq(2).spinner({
+                            min: 0,
+                            spin: function spin(event, ui) {
+                                GM_setValue("tInfoExprHours", ui.value);
+                            }
+                        }).css({
+                            width: "45px"
+                        }).val(GM_getValue("tInfoExprHours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
+                            icon: "uiicon-trash",
+                            showLabel: true
+                        }).click((function() {
+                            var keys = GM_listValues();
+                            $.each(keys, (function(i, item) {
+                                var title = "正在删除第".concat(i, "个教师缓存");
+                                common_submit((function(next1) {
+                                    try {
+                                        $("title").html(title);
+                                        GM_deleteValue(item);
+                                    } finally {
+                                        next1();
+                                    }
+                                }));
+                            }));
+                            $(".go-search").click();
+                        })).end().eq(4).button({
+                            icon: "ui-icon-comment",
+                            showLabel: true
+                        }).prop("href", "https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=").prop("target", "_blank").end().eq(5).button({
+                            icon: "ui-icon-help",
+                            showLabel: true
+                        }).prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk").prop("target", "_blank").end();
+                        $("#buttons1>button").eq(0).button({
+                            icon: "ui-icon-seek-next",
+                            showLabel: true
+                        }).click((function() {
+                            $("#timesMultipleCheck>input").each((function(i, item) {
+                                $(item).prop("checked", !$(item).is(":checked")).change();
+                            }));
+                        })).end().eq(1).button({
+                            icon: "ui-icon-seek-next",
+                            showLabel: true
+                        }).click((function() {
+                            selectedTimeSlots = [];
+                            $("#timesMultipleCheck>input").each((function(i, item) {
+                                if ($(item).is(":checked")) {
+                                    selectedTimeSlots.push($(item).val());
+                                }
+                            }));
+                            setSession("selectedTimeSlots", selectedTimeSlots);
+                            setSession("selectedTimeSlotsTotal", selectedTimeSlots.length);
+                            isStopShowBoxAndAutoGetNextTimeTeachers();
+                        })).end();
+                        $("div.condition-type:eq(0)>ul.condition-type-time>li").each((function(i, item) {
+                            addCheckbox($(item).attr("data-val"), $(item).text());
+                        }));
+                        var timesStr = sessionStorage.getItem("selectedTimeSlots"), selectedTimeSlots = [];
+                        if (timesStr) {
+                            selectedTimeSlots = JSON.parse(timesStr);
+                            if (selectedTimeSlots.length > 0) {
+                                var i = selectedTimeSlots.length;
+                                while (i--) {
+                                    $("#timesMultipleCheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true);
+                                }
+                            } else {
+                                $("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
+                            }
+                        } else {
+                            $("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
+                        }
+                        $("#timesMultipleCheck").find("input").checkboxradio({
+                            icon: false
+                        });
+                        $("#tabs").tabs({
+                            active: "#tabs-2",
+                            activate: function activate(event, ui) {
+                                if (ui.newPanel.attr("id") != "tabs-2") return;
+                                var teachers = getCachedTeachers();
+                                $("#teacherTab").jqGrid({
+                                    data: teachers,
+                                    datatype: "local",
+                                    height: 240,
+                                    colNames: [ "查", "类型", "排名", "Name", "爱", "分", "标", "率%", "收藏数", "学", "教龄", "好", "差", "龄", "更新" ],
+                                    colModel: [ {
+                                        name: "batchNumber",
+                                        index: "batchNumber",
+                                        width: 45,
+                                        sorttype: "float",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "cn" ]
+                                        },
+                                        formatter: function formatter(value, options, rData) {
+                                            var date = dayjs_min_default()(value);
+                                            if (date.isValid()) {
+                                                return "<span title='".concat(date.format("YY-M-D H:m:s"), "'>").concat(date.format("HHmmss"), "</span>");
+                                            }
+                                            return value;
+                                        }
+                                    }, {
+                                        name: "type",
+                                        index: "type",
+                                        width: 55,
+                                        sorttype: "string",
+                                        align: "left",
+                                        searchoptions: {
+                                            sopt: [ "cn" ],
+                                            defaultValue: $(".s-t-top-list .li-active").text() == "收藏外教" ? "" : $(".s-t-top-list .li-active").text()
+                                        },
+                                        formatter: function formatter(value, options, rData) {
+                                            if (value) return value; else return "na";
+                                        }
+                                    }, {
+                                        name: "rank",
+                                        index: "rank",
+                                        width: 40,
+                                        sorttype: "float",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "le" ]
+                                        }
+                                    }, {
+                                        name: "name",
+                                        index: "name",
+                                        width: 125,
+                                        sorttype: "string",
+                                        formatter: function formatter(value, options, rData) {
+                                            return "<a href='".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/info/").concat(rData["tid"], "' target='_blank' style='color:blue'>").concat(value ? value : rData["tid"], "</a>");
+                                        }
+                                    }, {
+                                        name: "isFavorite",
+                                        index: "isFavorite",
+                                        width: 39,
+                                        sorttype: "string",
+                                        align: "left",
+                                        searchoptions: {
+                                            sopt: [ "cn" ]
+                                        },
+                                        formatter: function formatter(value, options, rData) {
+                                            if (value) return "收藏"; else return "";
+                                        }
+                                    }, {
+                                        name: "indicator",
+                                        index: "indicator",
+                                        width: 50,
+                                        sorttype: "float",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "label",
+                                        index: "label",
+                                        width: 45,
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "thumbUpRate",
+                                        index: "thumbUpRate",
+                                        width: 35,
+                                        align: "right",
+                                        sorttype: "float",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "favoritesCount",
+                                        index: "favoritesCount",
+                                        width: 35,
+                                        align: "right",
+                                        sorttype: "float",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "sLevel",
+                                        index: "sLevel",
+                                        width: 85,
+                                        sorttype: "string",
+                                        align: "left",
+                                        searchoptions: {
+                                            sopt: [ "cn", "nc" ]
+                                        }
+                                    }, {
+                                        name: "tAge",
+                                        index: "tAge",
+                                        width: 25,
+                                        sorttype: "float",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "thumbUp",
+                                        index: "thumbUp",
+                                        width: 45,
+                                        align: "right",
+                                        sorttype: "float",
+                                        searchoptions: {
+                                            sopt: [ "ge" ]
+                                        }
+                                    }, {
+                                        name: "thumbDown",
+                                        index: "thumbDown",
+                                        width: 30,
+                                        sorttype: "float",
+                                        align: "right"
+                                    }, {
+                                        name: "age",
+                                        index: "age",
+                                        width: 30,
+                                        sorttype: "float",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "le", "ge", "eq" ]
+                                        }
+                                    }, {
+                                        name: "updateTime",
+                                        index: "updateTime",
+                                        width: 35,
+                                        sorttype: "Date",
+                                        align: "right",
+                                        searchoptions: {
+                                            sopt: [ "cn" ]
+                                        },
+                                        formatter: function formatter(value, options, rData) {
+                                            if (value) {
+                                                return dayjs_min_default()(value).fromNow(true);
+                                            } else return "na";
+                                        }
+                                    } ],
+                                    multiselect: false,
+                                    rowNum: 10,
+                                    rowList: [ 5, 10, 20, 30 ],
+                                    pager: "#pager5",
+                                    sortname: "batchNumber desc,indicator desc",
+                                    viewrecords: true,
+                                    multiSort: true,
+                                    sortorder: "desc",
+                                    grouping: false,
+                                    responsive: true,
+                                    del: true,
+                                    width: 830
+                                }).jqGrid("filterToolbar", {
+                                    searchOperators: true
+                                })[0].triggerToolbar();
+                                if (settings.isListPage) {
+                                    $.each($(".item"), (function(i, item) {
+                                        var jqEl = $(item), tid = jqEl.find(".teacher-details-link a").attr("href").replace("".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/info/"), ""), t = teachers.find((function(currentValue, index, arr) {
+                                            return currentValue.tid == tid;
+                                        })), lb = jqEl.find(".teacher-name>label:eq(3)");
+                                        if (lb.length == 0) jqEl.find(".teacher-name").html("".concat(jqEl.find(".teacher-name").html(), "| ").concat(getRankHtml(t))); else lb.replaceWith(getRankHtml(t));
+                                    }));
+                                }
+                                if (settings.isDetailPage) {
+                                    var t = teachers.find((function(currentValue, index, arr) {
+                                        return currentValue.tid == getTId();
+                                    }));
+                                    $("#teacherRank").html(getRankHtml(t));
+                                }
+                            }
+                        });
+                        var uiFilters_top = getUiFilters();
+                        executeFilters(uiFilters_top);
+                        $("#_tAge").html(uiFilters_top.age1 + " - " + uiFilters_top.age2);
+                        $("#_tLabelCount").html(uiFilters_top.l1 + " - " + uiFilters_top.l2);
+                        $("#_tfc").html(uiFilters_top.fc1 + " - " + uiFilters_top.fc2 + "");
+                        $("#_thumbUpRate").html(uiFilters_top.rate1 + "% - " + uiFilters_top.rate2 + "%");
+                    } catch (ex) {
+                        console.debug(ex + "");
+                        throw ex;
+                    } finally {
+                        next();
+                    }
+                }));
+                common_submit((function(next) {
+                    $(".s-t-list").before($(".s-t-page").prop("outerHTML"));
+                    $("#tabs>div:first").append($(".s-t-page").prop("outerHTML"));
+                    sortElementsByIndicator(desc);
+                    $("#tabs").tabs("option", "active", 1);
+                    if (settings.isDetailPage) {
+                        $("#tabs").tabs("option", "disabled", [ 0 ]);
+                    }
+                    $("#filterDialog").dialog({
+                        width: "850"
+                    });
+                    $("#filterDialog").parent().scrollFix();
+                    $("#filterDialog").dialog("open");
+                    next();
+                }));
+            }
+            if (settings.isCoursePage) {
+                common_submit((function(next) {
+                    $(".course_lock").removeClass("course_lock").addClass("course_unlock");
+                    $("img.course_mask").removeClass("course_mask").attr("src", "");
+                    next();
+                }));
+            }
+        }
+        (function(loadScript) {
+            var _jqui = loadScript("https://gitee.com/tsharp/jquery.ui/raw/1.12.1/jquery-ui.min.js"), _pace = loadScript("https://gitee.com/tsharp/pace/raw/v1.2.4/pace.min.js"), _scro = loadScript("https://gitee.com/tsharp/jquery-scrollfix/raw/master/src/scrollfix.js"), _grla = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/i18n/grid.locale-cn.js"), _jqgr = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/jquery.jqgrid.min.js");
+            Promise.allSettled([ _jqui, _pace, _scro, _grla, _jqgr ]).then((function(ok) {
+                dayjs_min_default().extend(relativeTime_default());
+                dayjs_min_default().locale(zh_cn_default());
+                main();
+            }))["catch"]((function(e) {
+                alert("Erron on loading script >>:" + e);
+            }));
+        })((function(src) {
+            var async = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true, type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "text/javascript";
+            return new Promise((function(resolve, reject) {
+                try {
+                    var tag = document.createElement("script"), container = document.head || document.body;
+                    tag.type = type;
+                    tag.async = async;
+                    tag.src = src;
+                    tag.addEventListener("load", (function() {
+                        resolve({
+                            loaded: true,
+                            error: false
+                        });
+                    }));
+                    tag.addEventListener("error", (function() {
+                        reject({
+                            loaded: false,
+                            error: true,
+                            message: "Failed to load script with src ".concat(src)
+                        });
+                    }));
+                    container.appendChild(tag);
+                } catch (error) {
+                    reject(error);
+                }
+            }));
+        }));
+        function asc(a, b) {
             var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
             if (!av || !bv) return 0;
             return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? 1 : -1;
-        }, desc = function desc(a, b) {
+        }
+        function desc(a, b) {
             var av = $(a).attr("indicator"), bv = $(b).attr("indicator");
             if (!av || !bv) return 0;
             return $(a).attr("indicator").toFloat() > $(b).attr("indicator").toFloat() ? -1 : 1;
-        }, sortElementsByIndicator = function sortElementsByIndicator(sortBy) {
+        }
+        function sortElementsByIndicator(sortBy) {
             var container = $(".s-t-content.f-cb"), sortedElements = container.find(".item").detach().sort(sortBy);
             container.append(sortedElements);
-        };
+        }
         function getCachedTeachers() {
             var teachers = [];
             $.each(GM_listValues(), (function(i, item) {
@@ -1826,398 +2250,6 @@
             } else {
                 return "<label title='未找到该教师' > N名</label>";
             }
-        }
-        if (settings.isListPage || settings.isDetailPage) {
-            common_submit((function(next) {
-                try {
-                    var config = GM_getValue("filterConfig", {
-                        l1: minLabel !== null && minLabel !== void 0 ? minLabel : 300,
-                        l2: maxLabel !== null && maxLabel !== void 0 ? maxLabel : 200,
-                        rate1: minRate !== null && minRate !== void 0 ? minRate : 97,
-                        rate2: maxRate !== null && maxRate !== void 0 ? maxRate : 100,
-                        age1: minAge !== null && minAge !== void 0 ? minAge : 0,
-                        age2: maxAge !== null && maxAge !== void 0 ? maxAge : 100,
-                        fc1: minFc !== null && minFc !== void 0 ? minFc : 0,
-                        fc2: maxFc !== null && maxFc !== void 0 ? maxFc : 999999
-                    });
-                    $("body").append(pluginUITemplate);
-                    if (!settings.isListPage) {
-                        $("#filterButtons").hide();
-                    }
-                    $("body").append("<div id='teacherListDialog' style='display:none;'></div>");
-                    $("body").append("<div id='wwwww'>已加载选课辅助插件。</div>");
-                    $("#labelSlider").slider({
-                        range: true,
-                        min: minLabel - 1,
-                        max: maxLabel + 1,
-                        values: [ config.l1 < minLabel - 1 ? minLabel - 1 : config.l1, maxLabel ],
-                        slide: function slide(event, ui) {
-                            $("#_tLabelCount").html(ui.values[0] + " - " + ui.values[1]);
-                        }
-                    }).on("slidestop", (function(event, ui) {
-                        var l = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
-                        filterConfig.l1 = l[0];
-                        filterConfig.l2 = l[1];
-                        GM_setValue("filterConfig", filterConfig);
-                        executeFilters(uiFilters);
-                    }));
-                    $("#fcSlider").slider({
-                        range: true,
-                        min: minFc - 1,
-                        max: maxFc + 1,
-                        values: [ config.fc1, config.fc2 ],
-                        slide: function slide(event, ui) {
-                            $("#_tfc").html(ui.values[0] + " - " + ui.values[1]);
-                        }
-                    }).on("slidestop", (function(event, ui) {
-                        var fc = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
-                        filterConfig.fc1 = fc[0];
-                        filterConfig.fc2 = fc[1];
-                        GM_setValue("filterConfig", filterConfig);
-                        executeFilters(uiFilters);
-                    }));
-                    $("#thumbUpRateSlider").slider({
-                        range: true,
-                        min: minRate,
-                        max: maxRate,
-                        values: [ config.rate1, config.rate2 ],
-                        slide: function slide(_event, ui) {
-                            $("#_thumbUpRate").html(ui.values[0] + "% - " + ui.values[1] + "%");
-                        }
-                    }).on("slidestop", (function(event, ui) {
-                        var rate = $("#thumbUpRateSlider").slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
-                        filterConfig.rate1 = rate[0];
-                        filterConfig.rate2 = rate[1];
-                        GM_setValue("filterConfig", filterConfig);
-                        executeFilters(uiFilters);
-                    }));
-                    $("#tAgeSlider").slider({
-                        range: true,
-                        min: minAge,
-                        max: maxAge,
-                        values: [ config.age1 < minAge ? minAge : config.age1, config.age2 > maxAge ? maxAge : config.age2 ],
-                        slide: function slide(event, ui) {
-                            $("#_tAge").html(ui.values[0] + " - " + ui.values[1]);
-                        }
-                    }).on("slidestop", (function(event, ui) {
-                        var age = $(this).slider("values"), uiFilters = getUiFilters(), filterConfig = GM_getValue("filterConfig", uiFilters);
-                        filterConfig.age1 = age[0];
-                        filterConfig.age2 = age[1];
-                        GM_setValue("filterConfig", filterConfig);
-                        executeFilters(uiFilters);
-                    }));
-                    $("#buttons>button,#buttons>input,#buttons>a").eq(0).button({
-                        icon: "ui-icon-arrowthick-1-n",
-                        showLabel: true
-                    }).click((function() {
-                        $("#desc").show();
-                        $(this).hide();
-                        sortElementsByIndicator(asc);
-                    })).end().eq(1).button({
-                        icon: "ui-icon-arrowthick-1-s",
-                        showLabel: true
-                    }).click((function() {
-                        $("#asc").show();
-                        $(this).hide();
-                        sortElementsByIndicator(desc);
-                    })).end().eq(2).spinner({
-                        min: 0,
-                        spin: function spin(event, ui) {
-                            GM_setValue("tInfoExprHours", ui.value);
-                        }
-                    }).css({
-                        width: "45px"
-                    }).val(GM_getValue("tInfoExprHours", configExprMilliseconds / 36e5)).hide().end().eq(3).button({
-                        icon: "uiicon-trash",
-                        showLabel: true
-                    }).click((function() {
-                        var keys = GM_listValues();
-                        $.each(keys, (function(i, item) {
-                            var title = "正在删除第".concat(i, "个教师缓存");
-                            common_submit((function(next1) {
-                                try {
-                                    $("title").html(title);
-                                    GM_deleteValue(item);
-                                } finally {
-                                    next1();
-                                }
-                            }));
-                        }));
-                        $(".go-search").click();
-                    })).end().eq(4).button({
-                        icon: "ui-icon-comment",
-                        showLabel: true
-                    }).prop("href", "https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=").prop("target", "_blank").end().eq(5).button({
-                        icon: "ui-icon-help",
-                        showLabel: true
-                    }).prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk").prop("target", "_blank").end();
-                    $("#buttons1>button").eq(0).button({
-                        icon: "ui-icon-seek-next",
-                        showLabel: true
-                    }).click((function() {
-                        $("#timesMultipleCheck>input").each((function(i, item) {
-                            $(item).prop("checked", !$(item).is(":checked")).change();
-                        }));
-                    })).end().eq(1).button({
-                        icon: "ui-icon-seek-next",
-                        showLabel: true
-                    }).click((function() {
-                        selectedTimeSlots = [];
-                        $("#timesMultipleCheck>input").each((function(i, item) {
-                            if ($(item).is(":checked")) {
-                                selectedTimeSlots.push($(item).val());
-                            }
-                        }));
-                        setSession("selectedTimeSlots", selectedTimeSlots);
-                        setSession("selectedTimeSlotsTotal", selectedTimeSlots.length);
-                        isStopShowBoxAndAutoGetNextTimeTeachers();
-                    })).end();
-                    $("div.condition-type:eq(0)>ul.condition-type-time>li").each((function(i, item) {
-                        addCheckbox($(item).attr("data-val"), $(item).text());
-                    }));
-                    var timesStr = sessionStorage.getItem("selectedTimeSlots"), selectedTimeSlots = [];
-                    if (timesStr) {
-                        selectedTimeSlots = JSON.parse(timesStr);
-                        if (selectedTimeSlots.length > 0) {
-                            var i = selectedTimeSlots.length;
-                            while (i--) {
-                                $("#timesMultipleCheck>input[value='" + selectedTimeSlots[i] + "']").attr("checked", true);
-                            }
-                        } else {
-                            $("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
-                        }
-                    } else {
-                        $("#timesMultipleCheck>input[value='" + $("input[name='selectTime']").val() + "']").attr("checked", true);
-                    }
-                    $("#timesMultipleCheck").find("input").checkboxradio({
-                        icon: false
-                    });
-                    $("#tabs").tabs({
-                        active: "#tabs-2",
-                        activate: function activate(event, ui) {
-                            if (ui.newPanel.attr("id") != "tabs-2") return;
-                            var teachers = getCachedTeachers();
-                            $("#teacherTab").jqGrid({
-                                data: teachers,
-                                datatype: "local",
-                                height: 240,
-                                colNames: [ "查", "类型", "排名", "Name", "爱", "分", "标", "率%", "收藏数", "学", "教龄", "好", "差", "龄", "更新" ],
-                                colModel: [ {
-                                    name: "batchNumber",
-                                    index: "batchNumber",
-                                    width: 45,
-                                    sorttype: "float",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "cn" ]
-                                    },
-                                    formatter: function formatter(value, options, rData) {
-                                        var date = dayjs_min_default()(value);
-                                        if (date.isValid()) {
-                                            return "<span title='".concat(date.format("YY-M-D H:m:s"), "'>").concat(date.format("HHmmss"), "</span>");
-                                        }
-                                        return value;
-                                    }
-                                }, {
-                                    name: "type",
-                                    index: "type",
-                                    width: 55,
-                                    sorttype: "string",
-                                    align: "left",
-                                    searchoptions: {
-                                        sopt: [ "cn" ],
-                                        defaultValue: $(".s-t-top-list .li-active").text() == "收藏外教" ? "" : $(".s-t-top-list .li-active").text()
-                                    },
-                                    formatter: function formatter(value, options, rData) {
-                                        if (value) return value; else return "na";
-                                    }
-                                }, {
-                                    name: "rank",
-                                    index: "rank",
-                                    width: 40,
-                                    sorttype: "float",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "le" ]
-                                    }
-                                }, {
-                                    name: "name",
-                                    index: "name",
-                                    width: 125,
-                                    sorttype: "string",
-                                    formatter: function formatter(value, options, rData) {
-                                        return "<a href='".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/info/").concat(rData["tid"], "' target='_blank' style='color:blue'>").concat(value ? value : rData["tid"], "</a>");
-                                    }
-                                }, {
-                                    name: "isFavorite",
-                                    index: "isFavorite",
-                                    width: 39,
-                                    sorttype: "string",
-                                    align: "left",
-                                    searchoptions: {
-                                        sopt: [ "cn" ]
-                                    },
-                                    formatter: function formatter(value, options, rData) {
-                                        if (value) return "收藏"; else return "";
-                                    }
-                                }, {
-                                    name: "indicator",
-                                    index: "indicator",
-                                    width: 50,
-                                    sorttype: "float",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "label",
-                                    index: "label",
-                                    width: 45,
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "thumbUpRate",
-                                    index: "thumbUpRate",
-                                    width: 35,
-                                    align: "right",
-                                    sorttype: "float",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "favoritesCount",
-                                    index: "favoritesCount",
-                                    width: 35,
-                                    align: "right",
-                                    sorttype: "float",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "sLevel",
-                                    index: "sLevel",
-                                    width: 85,
-                                    sorttype: "string",
-                                    align: "left",
-                                    searchoptions: {
-                                        sopt: [ "cn", "nc" ]
-                                    }
-                                }, {
-                                    name: "tAge",
-                                    index: "tAge",
-                                    width: 25,
-                                    sorttype: "float",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "thumbUp",
-                                    index: "thumbUp",
-                                    width: 45,
-                                    align: "right",
-                                    sorttype: "float",
-                                    searchoptions: {
-                                        sopt: [ "ge" ]
-                                    }
-                                }, {
-                                    name: "thumbDown",
-                                    index: "thumbDown",
-                                    width: 30,
-                                    sorttype: "float",
-                                    align: "right"
-                                }, {
-                                    name: "age",
-                                    index: "age",
-                                    width: 30,
-                                    sorttype: "float",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "le", "ge", "eq" ]
-                                    }
-                                }, {
-                                    name: "updateTime",
-                                    index: "updateTime",
-                                    width: 35,
-                                    sorttype: "Date",
-                                    align: "right",
-                                    searchoptions: {
-                                        sopt: [ "cn" ]
-                                    },
-                                    formatter: function formatter(value, options, rData) {
-                                        if (value) {
-                                            return dayjs_min_default()(value).fromNow(true);
-                                        } else return "na";
-                                    }
-                                } ],
-                                multiselect: false,
-                                rowNum: 10,
-                                rowList: [ 5, 10, 20, 30 ],
-                                pager: "#pager5",
-                                sortname: "batchNumber desc,indicator desc",
-                                viewrecords: true,
-                                multiSort: true,
-                                sortorder: "desc",
-                                grouping: false,
-                                responsive: true,
-                                del: true,
-                                width: 830
-                            }).jqGrid("filterToolbar", {
-                                searchOperators: true
-                            })[0].triggerToolbar();
-                            if (settings.isListPage) {
-                                $.each($(".item"), (function(i, item) {
-                                    var jqEl = $(item), tid = jqEl.find(".teacher-details-link a").attr("href").replace("".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/info/"), ""), t = teachers.find((function(currentValue, index, arr) {
-                                        return currentValue.tid == tid;
-                                    })), lb = jqEl.find(".teacher-name>label:eq(3)");
-                                    if (lb.length == 0) jqEl.find(".teacher-name").html("".concat(jqEl.find(".teacher-name").html(), "| ").concat(getRankHtml(t))); else lb.replaceWith(getRankHtml(t));
-                                }));
-                            }
-                            if (settings.isDetailPage) {
-                                var t = teachers.find((function(currentValue, index, arr) {
-                                    return currentValue.tid == getTId();
-                                }));
-                                $("#teacherRank").html(getRankHtml(t));
-                            }
-                        }
-                    });
-                    var uiFilters_top = getUiFilters();
-                    executeFilters(uiFilters_top);
-                    $("#_tAge").html(uiFilters_top.age1 + " - " + uiFilters_top.age2);
-                    $("#_tLabelCount").html(uiFilters_top.l1 + " - " + uiFilters_top.l2);
-                    $("#_tfc").html(uiFilters_top.fc1 + " - " + uiFilters_top.fc2 + "");
-                    $("#_thumbUpRate").html(uiFilters_top.rate1 + "% - " + uiFilters_top.rate2 + "%");
-                } catch (ex) {
-                    console.debug(ex + "");
-                    throw ex;
-                } finally {
-                    next();
-                }
-            }));
-            common_submit((function(next) {
-                $(".s-t-list").before($(".s-t-page").prop("outerHTML"));
-                $("#tabs>div:first").append($(".s-t-page").prop("outerHTML"));
-                sortElementsByIndicator(desc);
-                $("#tabs").tabs("option", "active", 1);
-                if (settings.isDetailPage) {
-                    $("#tabs").tabs("option", "disabled", [ 0 ]);
-                }
-                $("#filterDialog").dialog({
-                    width: "850"
-                });
-                $("#filterDialog").parent().scrollFix();
-                $("#filterDialog").dialog("open");
-                next();
-            }));
-        }
-        if (settings.isCoursePage) {
-            common_submit((function(next) {
-                $(".course_lock").removeClass("course_lock").addClass("course_unlock");
-                $("img.course_mask").removeClass("course_mask").attr("src", "");
-                next();
-            }));
         }
     })();
 })();

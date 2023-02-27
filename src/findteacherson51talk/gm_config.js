@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         gm_config_toolbar
 // @version      2020.4.20
-// @namespace    https://github.com/niubilityfrontend
+// @namespace    https://gitee.com/tsharp/userscripts
 // @description  greasyfork configuration toolbar on the script addins
 // @author       kufii
 // @license      OSL-3.0
 // @match *
 // @include *
-// @supportURL   https://github.com/kufii/My-UserScripts
+// @supportURL   https://gitee.com/tsharp/userscripts
 // @grant        GM_xmlhttpRequest
 // @grant        GM_getValue
 // @grant        GM_setValue
