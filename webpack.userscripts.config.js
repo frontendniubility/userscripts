@@ -99,7 +99,7 @@ let wpus = new WebpackUserscript({
 	},
 	pretty: true,
 	metajs: true,
-	updateBaseUrl: "https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/",
+	updateBaseUrl: "https://gitee.com/tsharp/userscripts/raw/master/dist/",
 	proxyScript: {
 		baseUrl: "http://localhost:8080",
 		filename: "dev.[chunkName].js",

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hangouts Notifier
-// @version     2023.104.5101320
+// @version     2023.227.5163256
 // @author      fuzetsu
 // @description Show desktop notifications for the Hangouts web app
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -9,6 +9,6 @@
 // @namespace   fuzetsu.com/HangoutsNotifier
 // @grant       none
 // @deprecated  true
-// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hangouts-notifier.user.js
-// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/hangouts-notifier.meta.js
+// @downloadURL https://gitee.com/tsharp/userscripts/raw/master/dist/hangouts-notifier.user.js
+// @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/hangouts-notifier.meta.js
 // ==/UserScript==

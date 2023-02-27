@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2023.104.5101320
+// @version     2023.227.5163256
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -23,6 +23,6 @@
 // @require     https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js
 // @require     https://greasyfork.org/scripts/388372-scrollfix/code/scrollfix.js?version=726657
 // @require     https://greasyfork.org/scripts/389774-gm-config-toolbar/code/gm_config_toolbar.js?version=730739
-// @downloadURL https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/URLTest.user.js
-// @updateURL   https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/dist/URLTest.meta.js
+// @downloadURL https://gitee.com/tsharp/userscripts/raw/master/dist/URLTest.user.js
+// @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/URLTest.meta.js
 // ==/UserScript==
