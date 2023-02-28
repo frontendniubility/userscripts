@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -27,32 +27,6 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/URLTest.meta.js
 // ==/UserScript==
 
-(() => {
-    var __webpack_exports__ = {};
-    function myFunction() {
-        var uri = "https://www.w3schools.com/jsref/tryit.asp?Filename=tryjsref_decodeuri&color[0]=red&color[1]=green&selection=1&selection=2&selection=3#testhashzhong中文", enc = encodeURI(uri), dec = decodeURI(enc), params = new URL(uri).searchParams, res = "Encoded URI: " + enc + "<br>" + "Decoded URI: " + dec + "<br> JSON" + JSON.stringify(params);
-        $("<div></div>").appendTo("body").html(res);
-        params.forEach((function(val, k, arr) {
-            console.log("".concat(val, " ").concat(k, " "));
-        }));
-    }
-    myFunction();
-    $("#timesMultipleCheck").find("input").checkboxradio({
-        icon: false
-    });
-    $("#btns").eq(0).button({
-        icon: "ui-icon-seek-next",
-        showLabel: true
-    }).click((function() {
-        $("#timesMultipleCheck>input").each((function(i, item) {
-            $(item).prop("checked", !$(item).is(":checked")).change();
-        }));
-    })).end();
-    function test() {
-        for (var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "hello", _ref = arguments.length > 1 ? arguments[1] : undefined, a = _ref.a, b = _ref.b, _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-            args[_key - 2] = arguments[_key];
-        }
-        console.log(x, a, b, args);
-    }
-})();
+/*! For license information please see URLTest.user.js.LICENSE.txt */
+(()=>{var e,c,o,n,i;e="https://www.w3schools.com/jsref/tryit.asp?Filename=tryjsref_decodeuri&color[0]=red&color[1]=green&selection=1&selection=2&selection=3#testhashzhong中文",c=encodeURI(e),o=decodeURI(c),n=new URL(e).searchParams,i="Encoded URI: "+c+"<br>Decoded URI: "+o+"<br> JSON"+JSON.stringify(n),$("<div></div>").appendTo("body").html(i),n.forEach((function(e,c,o){console.log("".concat(e," ").concat(c," "))})),$("#timesMultipleCheck").find("input").checkboxradio({icon:!1}),$("#btns").eq(0).button({icon:"ui-icon-seek-next",showLabel:!0}).click((function(){$("#timesMultipleCheck>input").each((function(e,c){$(c).prop("checked",!$(c).is(":checked")).change()}))})).end()})();
 //# sourceMappingURL=URLTest.user.js.map

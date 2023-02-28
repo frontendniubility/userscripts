@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @description seek video with hotkeys and set default quality
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues

@@ -18,7 +18,7 @@ let terserPlugin = compiler => {
 		terserOptions: {
 			warnings: false,
 			parse: {},
-			compress: false,
+			compress: true,
 			// compress: {},
 			mangle: false, // Note `mangle.properties` is `false` by default.
 			output: {
@@ -32,6 +32,7 @@ let terserPlugin = compiler => {
 			keep_fnames: true,
 			keep_classnames: true,
 			// drop_debugger: true,
+
 		},
 	}).apply(compiler)
 }
@@ -102,7 +103,7 @@ module.exports = merge(rulesConfig, {
 		emitOnErrors: true,
 		minimize: true,
 		minimizer: [
-			// "...",
+			"...",
 			compiler => {
 				terserPlugin(compiler)
 				cssMinimizer(compiler)
@@ -169,7 +170,7 @@ module.exports = merge(rulesConfig, {
 		// 	},
 		// },
 		// port: 8080,
-		// webSocketServer: "ws",
+		webSocketServer: false,
 	},
 
 	plugins: [

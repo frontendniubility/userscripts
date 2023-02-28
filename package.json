@@ -176,5 +176,9 @@
 	"bugs": {
 		"url": "https://github.com/niubilityfrontend/userscripts/issues"
 	},
-	"homepage": "https://github.com/niubilityfrontend/userscripts#readme"
+	"homepage": "https://github.com/niubilityfrontend/userscripts#readme",
+	"volta": {
+		"node": "18.12.1",
+		"pnpm":"7.21.0"
+	}
 }

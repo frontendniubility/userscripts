@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -12,10 +12,5 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/format-json.meta.js
 // ==/UserScript==
 
-(() => {
-    var __webpack_exports__ = {};
-    var json = JSON.parse(document.body.textContent), formatted = JSON.stringify(json, null, 2);
-    document.body.innerHTML = '<code><pre style="white-space:pre-wrap;word-break:break-word" id="jsonArea"></pre></code>';
-    document.getElementById("jsonArea").textContent = formatted;
-})();
+(()=>{var e=JSON.parse(document.body.textContent),t=JSON.stringify(e,null,2);document.body.innerHTML='<code><pre style="white-space:pre-wrap;word-break:break-word" id="jsonArea"></pre></code>',document.getElementById("jsonArea").textContent=t})();
 //# sourceMappingURL=format-json.user.js.map

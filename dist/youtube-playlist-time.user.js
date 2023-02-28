@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Time
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @description Shows the total time it would take to watch all the videos in a YouTube playlist
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -13,110 +13,5 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/youtube-playlist-time.meta.js
 // ==/UserScript==
 
-(() => {
-    var __webpack_exports__ = {};
-    var SCRIPT_NAME = "YouTube Playlist Time", HOLDER_SELECTOR = "#stats", TIMESTAMP_SELECTOR = "ytd-browse:not([hidden]) .ytd-thumbnail-overlay-time-status-renderer", EL_ID = "us-total-time", EL_TYPE = "yt-formatted-string", EL_CLASS = "style-scope ytd-playlist-sidebar-primary-info-renderer", util = {
-        log: function log() {
-            var args = [].slice.call(arguments);
-            args.unshift("%c" + SCRIPT_NAME + ":", "font-weight: bold;color: #233c7b;");
-            console.log.apply(console, args);
-        },
-        q: function q(query, context) {
-            return (context || document).querySelector(query);
-        },
-        qq: function qq(query, context) {
-            return [].slice.call((context || document).querySelectorAll(query));
-        },
-        bindEvt: function bindEvt(target, events) {
-            events.forEach((function(evt) {
-                target.addEventListener(evt[0], evt[1]);
-            }));
-        },
-        unbindEvt: function unbindEvt(target, events) {
-            events.forEach((function(evt) {
-                target.removeEventListener(evt[0], evt[1]);
-            }));
-        },
-        throttle: function throttle(callback, limit) {
-            var wait = false;
-            return function() {
-                if (!wait) {
-                    callback.apply(this, arguments);
-                    wait = true;
-                    setTimeout((function() {
-                        wait = false;
-                    }), limit);
-                }
-            };
-        }
-    }, calcTimeString = function calcTimeString(str) {
-        return str.split(":").reverse().reduce((function(last, cur, idx) {
-            cur = parseInt(cur, 10);
-            switch (idx) {
-              case 0:
-                return last + cur;
-
-              case 1:
-                return last + cur * 60;
-
-              case 2:
-                return last + cur * 60 * 60;
-
-              default:
-                return 0;
-            }
-        }), 0);
-    }, padTime = function padTime(time) {
-        return ("0" + time).slice(-2);
-    }, setTime = function setTime(seconds) {
-        var loc = getTimeLoc(), hours = Math.floor(seconds / 60 / 60);
-        seconds = seconds % (60 * 60);
-        var minutes = Math.floor(seconds / 60);
-        seconds = seconds % 60;
-        loc.innerHTML = (((hours || "") && hours + " hours ") + ((minutes || "") && minutes + " minutes ") + ((seconds || "") && seconds + " seconds")).trim();
-    }, getTimeLoc = function getTimeLoc() {
-        var loc = util.q("#" + EL_ID);
-        if (!loc) {
-            loc = util.q(HOLDER_SELECTOR).appendChild(document.createElement(EL_TYPE));
-            loc.id = EL_ID;
-            loc.className = EL_CLASS;
-        }
-        return loc;
-    }, timeLocExists = function timeLocExists() {
-        return !!util.q("#" + EL_ID);
-    }, lastLength = 0, calcTotalTime = function calcTotalTime(force) {
-        var timestamps = util.qq(TIMESTAMP_SELECTOR);
-        if (!force && timestamps.length === lastLength && timeLocExists()) return;
-        lastLength = timestamps.length;
-        var totalSeconds = timestamps.reduce((function(total, ts) {
-            return total + calcTimeString(ts.textContent.trim());
-        }), 0);
-        setTime(totalSeconds);
-    }, events = [ [ "mousemove", util.throttle(calcTotalTime.bind(null, false), 500) ] ];
-    util.log("Started, waiting for playlist");
-    waitForUrl(/^https:\/\/www\.youtube\.com\/playlist\?list=.+/, (function() {
-        var playlistUrl = location.href, urlWaitId, oid, seconds = 0;
-        util.log("Reached playlist, waiting for display area to load");
-        waitForElems({
-            sel: HOLDER_SELECTOR,
-            stop: true,
-            onmatch: function onmatch(holder) {
-                clearTimeout(oid);
-                util.log("display area loaded, calculating time.");
-                oid = setTimeout((function() {
-                    util.bindEvt(window, events);
-                    calcTotalTime(true);
-                    urlWaitId = waitForUrl((function(url) {
-                        return url !== playlistUrl;
-                    }), (function() {
-                        util.log("Leaving playlist, removing listeners");
-                        util.unbindEvt(window, events);
-                        var loc = getTimeLoc();
-                        if (loc) loc.remove();
-                    }), true);
-                }), 500);
-            }
-        });
-    }));
-})();
+(()=>{var t,e,n,r="YouTube Playlist Time",o="#stats",i="us-total-time",a=function(){var t=[].slice.call(arguments);t.unshift("%c"+r+":","font-weight: bold;color: #233c7b;"),console.log.apply(console,t)},l=function(t,e){return(e||document).querySelector(t)},c=function(){var t=l("#"+i);return t||((t=l(o).appendChild(document.createElement("yt-formatted-string"))).id=i,t.className="style-scope ytd-playlist-sidebar-primary-info-renderer"),t},u=0,s=function(t){var e,n,r=(e="ytd-browse:not([hidden]) .ytd-thumbnail-overlay-time-status-renderer",[].slice.call((n||document).querySelectorAll(e)));!t&&r.length===u&&l("#"+i)||(u=r.length,function(t){var e=c(),n=Math.floor(t/60/60);t%=3600;var r=Math.floor(t/60);t%=60,e.innerHTML=((n?n+" hours ":"")+(r?r+" minutes ":"")+(t?t+" seconds":"")).trim()}(r.reduce((function(t,e){return t+e.textContent.trim().split(":").reverse().reduce((function(t,e,n){switch(e=parseInt(e,10),n){case 0:return t+e;case 1:return t+60*e;case 2:return t+60*e*60;default:return 0}}),0)}),0)))},d=[["mousemove",(t=s.bind(null,!1),e=500,n=!1,function(){n||(t.apply(this,arguments),n=!0,setTimeout((function(){n=!1}),e))})]];a("Started, waiting for playlist"),waitForUrl(/^https:\/\/www\.youtube\.com\/playlist\?list=.+/,(function(){var t,e=location.href;a("Reached playlist, waiting for display area to load"),waitForElems({sel:o,stop:!0,onmatch:function(n){clearTimeout(t),a("display area loaded, calculating time."),t=setTimeout((function(){(function(t,e){e.forEach((function(e){t.addEventListener(e[0],e[1])}))})(window,d),s(!0),waitForUrl((function(t){return t!==e}),(function(){a("Leaving playlist, removing listeners"),function(t,e){e.forEach((function(e){t.removeEventListener(e[0],e[1])}))}(window,d);var t=c();t&&t.remove()}),!0)}),500)}})}))})();
 //# sourceMappingURL=youtube-playlist-time.user.js.map

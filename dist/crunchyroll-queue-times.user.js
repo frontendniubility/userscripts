@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Queue Real Times
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @description Display countdown until next episode in the Crunchyroll Queue page
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/userscripts/issues
@@ -12,112 +12,5 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/crunchyroll-queue-times.meta.js
 // ==/UserScript==
 
-(() => {
-    var __webpack_exports__ = {};
-    var PREMIUM = "rgb(255, 251, 223)", REGULAR = "rgb(232, 244, 248)", COMING_SOON_IMG = "http://static.ak.crunchyroll.com/i/coming_soon_beta_wide.jpg", SECOND = 1e3, MINUTE = SECOND * 60, HOUR = MINUTE * 60, DAY = HOUR * 24, CURYEAR = (new Date).getFullYear(), qq = function qq(q, c) {
-        return [].slice.call((c || document).querySelectorAll(q));
-    }, storeGet = function storeGet(key) {
-        if (typeof GM_getValue === "undefined") {
-            var value = localStorage.getItem(key);
-            if (value === "true" || value === "false") {
-                return value === "true" ? true : false;
-            }
-            return value;
-        }
-        return GM_getValue(key);
-    }, storeSet = function storeSet(key, value) {
-        if (typeof GM_setValue === "undefined") {
-            return localStorage.setItem(key, value);
-        }
-        return GM_setValue(key, value);
-    }, storeDel = function storeDel(key) {
-        if (typeof GM_deleteValue === "undefined") {
-            return localStorage.removeItem(key);
-        }
-        return GM_deleteValue(key);
-    }, findEpByTitle = function findEpByTitle(shows, title) {
-        var found;
-        shows.some((function(show) {
-            if (show.name.indexOf(title) === 0) {
-                found = show;
-                return true;
-            }
-        }));
-        return found;
-    }, getTimes = function getTimes(total) {
-        var days = Math.floor(total / DAY);
-        total -= days * DAY;
-        var hours = Math.floor(total / HOUR);
-        total -= hours * HOUR;
-        var minutes = Math.floor(total / MINUTE);
-        total -= minutes * MINUTE;
-        var seconds = Math.floor(total / SECOND);
-        total -= seconds * SECOND;
-        return {
-            days,
-            hours,
-            minutes,
-            seconds,
-            isDone: function isDone() {
-                return days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0;
-            },
-            toTimeStr: function toTimeStr() {
-                return (this.days > 0 ? this.days + " days " : "") + (this.hours > 0 ? this.hours + " hours " : "") + (this.minutes > 0 ? this.minutes + " minutes " : "") + this.seconds + " seconds";
-            }
-        };
-    }, insertCountDown = function insertCountDown(loc, ep) {
-        var countDown = document.createElement("span"), last = Date.now(), totalTime = ep.date.valueOf() - last, tick = setInterval((function() {
-            var times = getTimes(totalTime);
-            if (times.isDone()) {
-                countDown.innerHTML = "<strong>A new episode has been released! Refresh the page to see it.</strong>";
-                return clearInterval(tick);
-            }
-            countDown.textContent = times.toTimeStr();
-            totalTime -= Date.now() - last;
-            last = Date.now();
-        }), 1e3);
-        loc.innerHTML = "";
-        loc.appendChild(countDown);
-    }, extractDataFromScript = function extractDataFromScript(text) {
-        var obj = JSON.parse(text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1)), dateStr = text.slice(text.lastIndexOf("}") + 4, text.lastIndexOf('"'));
-        obj.date = new Date(dateStr.slice(0, -1) + " " + (dateStr.slice(-1) === "a" ? "am" : "pm") + " " + CURYEAR);
-        return obj;
-    }, getLaunchCalendar = function getLaunchCalendar(cb) {
-        var xhr = new XMLHttpRequest;
-        xhr.open("get", "/launchcalendar", true);
-        xhr.responseType = "document";
-        xhr.onload = cb;
-        xhr.send();
-    }, main = function main(userColor) {
-        console.log(userColor);
-        getLaunchCalendar((function(evt) {
-            var xhr = evt.target, animeData = [];
-            qq("td > div > script", xhr.response).forEach((function(script) {
-                if (script.previousSibling.previousSibling.style.backgroundColor !== userColor) return;
-                animeData.push(extractDataFromScript(script.textContent.trim()));
-            }));
-            var now = Date.now();
-            animeData = animeData.filter((function(anime) {
-                return anime.date.valueOf() >= now;
-            }));
-            qq(".queue-wrapper").forEach((function(queueItem) {
-                if (qq(".episode-img img", queueItem)[0].src !== COMING_SOON_IMG) {
-                    return;
-                }
-                var title = qq(".series-title", queueItem)[0].textContent, episode = findEpByTitle(animeData, title);
-                if (episode) {
-                    insertCountDown(qq(".short-desc", queueItem)[0], episode);
-                }
-            }));
-        }));
-    }, user_premium = storeGet("CQRT_user_premium");
-    if (user_premium === undefined) {
-        user_premium = true;
-    }
-    typeof GM_registerMenuCommand === "function" && GM_registerMenuCommand("CR Queue countdown: show schedule for " + (user_premium ? "PREMIUM" : "REGULAR") + " users", (function() {
-        storeSet("CQRT_user_premium", !user_premium);
-        window.location.reload();
-    }));
-    main(user_premium && PREMIUM || REGULAR);
-})();
+(()=>{var e,t,n,r=36e5,o=24*r,s=(new Date).getFullYear(),a=function(e,t){return[].slice.call((t||document).querySelectorAll(e))},i=function(e){if("undefined"==typeof GM_getValue){var t=localStorage.getItem(e);return"true"===t||"false"===t?"true"===t:t}return GM_getValue(e)}("CQRT_user_premium");void 0===i&&(i=!0),"function"==typeof GM_registerMenuCommand&&GM_registerMenuCommand("CR Queue countdown: show schedule for "+(i?"PREMIUM":"REGULAR")+" users",(function(){var e,t;e="CQRT_user_premium",t=!i,"undefined"==typeof GM_setValue?localStorage.setItem(e,t):GM_setValue(e,t),window.location.reload()})),e=i?"rgb(255, 251, 223)":"rgb(232, 244, 248)",console.log(e),t=function(t){var n=t.target,i=[];a("td > div > script",n.response).forEach((function(t){var n,r,o;t.previousSibling.previousSibling.style.backgroundColor===e&&i.push((n=t.textContent.trim(),r=JSON.parse(n.slice(n.indexOf("{"),n.lastIndexOf("}")+1)),o=n.slice(n.lastIndexOf("}")+4,n.lastIndexOf('"')),r.date=new Date(o.slice(0,-1)+" "+("a"===o.slice(-1)?"am":"pm")+" "+s),r))}));var u=Date.now();i=i.filter((function(e){return e.date.valueOf()>=u})),a(".queue-wrapper").forEach((function(e){if("http://static.ak.crunchyroll.com/i/coming_soon_beta_wide.jpg"===a(".episode-img img",e)[0].src){var t=a(".series-title",e)[0].textContent,n=function(e,t){var n;return e.some((function(e){if(0===e.name.indexOf(t))return n=e,!0})),n}(i,t);n&&(s=a(".short-desc",e)[0],u=n,l=document.createElement("span"),c=Date.now(),d=u.date.valueOf()-c,f=setInterval((function(){var e=function(e){var t=Math.floor(e/o);e-=t*o;var n=Math.floor(e/r);e-=n*r;var s=Math.floor(e/6e4);e-=6e4*s;var a=Math.floor(e/1e3);return e-=1e3*a,{days:t,hours:n,minutes:s,seconds:a,isDone:function(){return t<=0&&n<=0&&s<=0&&a<=0},toTimeStr:function(){return(this.days>0?this.days+" days ":"")+(this.hours>0?this.hours+" hours ":"")+(this.minutes>0?this.minutes+" minutes ":"")+this.seconds+" seconds"}}}(d);if(e.isDone())return l.innerHTML="<strong>A new episode has been released! Refresh the page to see it.</strong>",clearInterval(f);l.textContent=e.toTimeStr(),d-=Date.now()-c,c=Date.now()}),1e3),s.innerHTML="",s.appendChild(l))}var s,u,l,c,d,f}))},(n=new XMLHttpRequest).open("get","/launchcalendar",!0),n.responseType="document",n.onload=t,n.send()})();
 //# sourceMappingURL=crunchyroll-queue-times.user.js.map

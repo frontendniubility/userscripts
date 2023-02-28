@@ -84,6 +84,7 @@ let wpus = new WebpackUserscript({
 					logger.debug(`Created a new version：${newverstring} on file :${data.chunkName} `)
 					logger.debug("")
 					db.push(versionKeyPath, newsavedvers, true)
+					//db.save()
 					return extend(true, {}, headers, newheader)
 				}
 			} catch (e) {

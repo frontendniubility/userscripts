@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2023.227.5163256
+// @version     2023.228.5144344
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -14,19 +14,5 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/kijiji-middle-click.meta.js
 // ==/UserScript==
 
-(() => {
-    var __webpack_exports__ = {};
-    (function() {
-        "use strict";
-        var allowMiddleClick = function allowMiddleClick(evt) {
-            if (evt.button === 1) evt.stopPropagation();
-        };
-        waitForElems({
-            sel: "a",
-            onmatch: function onmatch(a) {
-                a.onclick = allowMiddleClick;
-            }
-        });
-    })();
-})();
+!function(){"use strict";var t=function(t){1===t.button&&t.stopPropagation()};waitForElems({sel:"a",onmatch:function(n){n.onclick=t}})}();
 //# sourceMappingURL=kijiji-middle-click.user.js.map
