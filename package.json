@@ -178,7 +178,6 @@
 	},
 	"homepage": "https://github.com/niubilityfrontend/userscripts#readme",
 	"volta": {
-		"node": "18.12.1",
-		"pnpm":"7.21.0"
+		"node": "18.14.2"
 	}
 }

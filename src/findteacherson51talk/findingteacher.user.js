@@ -12,6 +12,9 @@
 // @include *51talk.cn/ReserveNew/index*
 // @include *51talk.cn/TeacherNew/*
 // @include *51talk.cn/user/*
+// @include *51suyang.cn/ReserveNew/index*
+// @include *51suyang.cn/TeacherNew/*
+// @include *51suyang.cn/user/*
 // @grant GM_xmlhttpRequest
 // @grant GM_getValue
 // @grant GM_setValue
