@@ -8,7 +8,7 @@ module.exports = function (api) {
 				"@babel/preset-env",
 				{
 					useBuiltIns: "entry",
-				//	corejs: 3,
+					corejs: 3,
 					// caller.target will be the same as the target option from webpack
 					targets: api.caller(caller => caller && caller.target === "node")
 						? {
