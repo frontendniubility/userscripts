@@ -2,7 +2,7 @@
 
 ## 快速开始
 
-![instructions](https://raw.githubusercontent.com/niubilityfrontend/userscripts/master/src/findteacherson51talk/quickstart.png)
+![instructions](https://gitee.com/tsharp/userscripts/tree/master/src/findteacherson51talk/quickstart.png)
 
 ## 功能 What
 

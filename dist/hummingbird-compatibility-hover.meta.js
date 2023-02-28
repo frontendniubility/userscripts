@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Hummingbird Compatibility Hover
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      fuzetsu
 // @description Shows hummingbird user compatibility rating at the bottom right of the screen when a user link is hovered over
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://hummingbird.me/*
 // @match       *://forums.hummingbird.me/*
 // @namespace   http://fuzetsu.com/hch

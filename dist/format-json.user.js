@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://*/*.json
 // @namespace   format-json
 // @grant       GM_setClipboard

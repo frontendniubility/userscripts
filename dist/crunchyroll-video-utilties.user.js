@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @description seek video with hotkeys and set default quality
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       https://static.crunchyroll.com/*/player.html
 // @match       https://www.crunchyroll.com/*
 // @namespace   fuzetsu/csdvqn

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      jimbo
 // @description tampermonkey scripts
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
+// @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/findteacherson51talk
 // @match       *:*/*
 // @match       *127.0.0.1*:*/*

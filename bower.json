@@ -6,7 +6,7 @@
     "Jimbo Tang <happycoder@foxmail.com>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/niubilityfrontend/userscripts",
+  "homepage": "https://gitee.com/tsharp/userscripts",
   "ignore": [
     "**/.*",
     "node_modules",

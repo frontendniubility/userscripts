@@ -208,13 +208,13 @@ async function main() {
 					//submit suggestion
 					.eq(4)
 					.button({ icon: "ui-icon-comment", showLabel: true })
-					.prop("href", "https://github.com/niubilityfrontend/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=")
+					.prop("href", "https://gitee.com/tsharp/userscripts/issues/new?assignees=&labels=&template=feature_request.md&title=")
 					.prop("target", "_blank")
 					.end()
 					//系统帮助
 					.eq(5)
 					.button({ icon: "ui-icon-help", showLabel: true })
-					.prop("href", "https://github.com/niubilityfrontend/userscripts/tree/master/findteacherson51talk")
+					.prop("href", "https://gitee.com/tsharp/userscripts/tree/master/findteacherson51talk")
 					.prop("target", "_blank")
 					.end()
 				$("#buttons1>button")

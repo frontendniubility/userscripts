@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        YouTube History Management
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      fuzetsu
 // @description Select and remove YouTube history items quickly
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://www.youtube.com/*
 // @namespace   http://fuzetsu.com/YHM
 // @grant       none

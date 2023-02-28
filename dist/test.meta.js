@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @description tampermonkey scripts
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://*/*
 // @downloadURL https://gitee.com/tsharp/userscripts/raw/master/dist/test.user.js
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/test.meta.js

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://*/*
 // @namespace   prettier-anything
 // @inject-into content

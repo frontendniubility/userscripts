@@ -3,7 +3,7 @@
 // @version     2022.10.527175723
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
+// @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://github.com/niubilityfrontend/bestteacher
 // @match       *://www.51talk.com/ReserveNew/index*
 // @match       *://www.51talk.com/TeacherNew/*

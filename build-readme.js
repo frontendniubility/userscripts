@@ -45,9 +45,9 @@ const getScripts = () =>
 					return fs.stat(maybeDir).then(handle =>
 						handle.isDirectory()
 							? fs
-									.readdir(maybeDir)
-									.then(files => [files, files.find(file => file.endsWith(".user.es6") || file.endsWith(".user.js"))])
-									.then(([files, file]) => file && scriptData(files, maybeDir, file))
+								.readdir(maybeDir)
+								.then(files => [files, files.find(file => file.endsWith(".user.es6") || file.endsWith(".user.js"))])
+								.then(([files, file]) => file && scriptData(files, maybeDir, file))
 							: void 0,
 					)
 				}),
@@ -65,7 +65,7 @@ const getScripts = () =>
 			),
 		)
 
-const baseUrl = "https://github.com/niubilityfrontend/userscripts"
+const baseUrl = "https://gitee.com/tsharp/userscripts"
 const tableHeader = "|Name|Links||\n|-|:-:|:-:|\n"
 
 const formatScriptLine = script => {
@@ -83,21 +83,22 @@ const buildReadme = () =>
 					.replace(
 						"<SCRIPTS>",
 						tableHeader +
-							scripts
-								.filter(script => script.deprecated !== "true")
-								.map(formatScriptLine)
-								.join("\n"),
+						scripts
+							.filter(script => script.deprecated !== "true")
+							.map(formatScriptLine)
+							.join("\n"),
 					)
 					.replace(
 						"<UNMAINTAINED>",
 						tableHeader +
-							scripts
-								.filter(script => script.deprecated === "true")
-								.map(formatScriptLine)
-								.join("\n"),
+						scripts
+							.filter(script => script.deprecated === "true")
+							.map(formatScriptLine)
+							.join("\n"),
 					),
 			),
 		)
 		.then(readme => fs.writeFile("./README.md", readme))
+		.then(res => console.log('done', res))
 
 buildReadme()

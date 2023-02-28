@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2023.228.5233619
+// @version     2023.301.5000844
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
-// @homepage    https://github.com/niubilityfrontend/userscripts#readme
-// @supportURL  https://github.com/niubilityfrontend/userscripts/issues
+// @homepage    https://gitee.com/tsharp/userscripts#readme
+// @supportURL  https://gitee.com/tsharp/userscripts/issues
 // @match       *://www.kijiji.ca/*
 // @namespace   kijiji-middle-click
 // @grant       none
