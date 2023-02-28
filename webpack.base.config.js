@@ -169,7 +169,7 @@ module.exports = merge(rulesConfig, {
 		// 	},
 		// },
 		// port: 8080,
-		// webSocketServer: "ws",
+		webSocketServer: false,
 	},
 
 	plugins: [

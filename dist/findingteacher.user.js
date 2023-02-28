@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2023.227.5172608
+// @version     2023.227.5181717
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme
@@ -25,16 +25,6 @@
 
 (() => {
     var __webpack_modules__ = {
-        895: () => {
-            Pace.Options = {
-                ajax: false,
-                document: false,
-                eventLag: false,
-                elements: {
-                    selectors: [ "#filterDialog" ]
-                }
-            };
-        },
         980: (module, __webpack_exports__, __webpack_require__) => {
             "use strict";
             __webpack_require__.d(__webpack_exports__, {
@@ -1635,101 +1625,6 @@
                 labels
             };
         }
-        if (settings.isListPage) {
-            $(".item-top-cont").prop("innerHTML", (function(i, val) {
-                return val.replaceAll("<!--", "").replaceAll("-->", "");
-            }));
-            common_submit((function(next) {
-                var totalPages = Number($(".s-t-page:last>a:last").prev().text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autoNextPageCount = getSession("autoNextPageCount", 0);
-                if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
-                    var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
-                    dialog.appendTo("body");
-                    dialog.dialog({
-                        resizable: false,
-                        height: "auto",
-                        width: 400,
-                        modal: false,
-                        buttons: (_buttons = {
-                            停止获取: function 停止获取() {
-                                sessionStorage.removeItem("selectedTimeSlots");
-                                setSession("autoNextPageCount", 0);
-                                $(this).dialog("close");
-                            }
-                        }, _defineProperty(_buttons, "取后".concat((remainPages * .25).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.removeItem("selectedTimeSlots");
-                            setSession("autoNextPageCount", (remainPages * .25).toFixed(0));
-                            $(this).dialog("close");
-                        })), _defineProperty(_buttons, "取后".concat((remainPages * .5).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.removeItem("selectedTimeSlots");
-                            setSession("autoNextPageCount", (remainPages * .5).toFixed(0));
-                            $(this).dialog("close");
-                        })), _defineProperty(_buttons, "取后".concat((remainPages * .75).toFixed(0), "页"), (function 取后页() {
-                            sessionStorage.removeItem("selectedTimeSlots");
-                            setSession("autoNextPageCount", (remainPages * .75).toFixed(0));
-                            $(this).dialog("close");
-                        })), _buttons)
-                    });
-                }
-                next();
-            }));
-            $(".item").each((function(index, el) {
-                common_submit((function(next) {
-                    Pace.track((function() {
-                        var jqEl = $(el), tid = getTId(jqEl.find(".teacher-details-link a").attr("href")), tInfoKey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqEl), tinfo_saved = GM_getValue(tInfoKey);
-                        if (tinfo_saved) {
-                            var now = Date.now();
-                            if (!tinfo_saved.updateTime) {
-                                tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
-                            }
-                            tinfo = $.extend({}, tinfo_saved, tinfo);
-                            if (now - tinfo_saved.updateTime < configExprMilliseconds) {
-                                updateTeacherInfoToUI(jqEl, tinfo);
-                                GM_setValue(tInfoKey, tinfo);
-                                next();
-                                return true;
-                            }
-                        }
-                        var start = Date.now();
-                        $.ajax({
-                            url: "".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/teacherComment?tid=").concat(tid, "&type=bad&has_msg=1"),
-                            type: "GET",
-                            dateType: "html",
-                            success: function success(r) {
-                                var jqr = $(r);
-                                tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
-                                jqr.remove();
-                                updateTeacherInfoToUI(jqEl, tinfo);
-                                GM_setValue(tInfoKey, tinfo);
-                            },
-                            error: function error(data) {
-                                console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data));
-                            }
-                        }).always((function() {
-                            while (Date.now() - start < 600) {
-                                continue;
-                            }
-                            next();
-                        }));
-                    }));
-                }));
-            }));
-            common_submit((function(next) {
-                var autoNextPageCount = getSession("autoNextPageCount", 0);
-                if (autoNextPageCount > 0) {
-                    setSession("autoNextPageCount", autoNextPageCount - 1);
-                    if ($(".s-t-page>.next-page").length == 0) {
-                        setSession("autoNextPageCount", 0);
-                        if (isStopShowBoxAndAutoGetNextTimeTeachers()) return;
-                    } else {
-                        $(".s-t-page .next-page")[0].click();
-                        return false;
-                    }
-                } else {
-                    if (isStopShowBoxAndAutoGetNextTimeTeachers()) return;
-                }
-                next();
-            }));
-        }
         function isStopShowBoxAndAutoGetNextTimeTeachers() {
             var str = sessionStorage.getItem("selectedTimeSlots");
             if (!str) return false;
@@ -1758,6 +1653,103 @@
                 text: lbl ? lbl : val
             }).appendTo(container);
         }
+        function main(loadScript) {
+            if (settings.isListPage) {
+                $(".item-top-cont").prop("innerHTML", (function(i, val) {
+                    return val.replaceAll("<!--", "").replaceAll("-->", "");
+                }));
+                common_submit((function(next) {
+                    var totalPages = Number($(".s-t-page:last>a:last").prev().text()), curPageId = window.parameters().pageID ? window.parameters().pageID : 1, remainPages = totalPages - curPageId, autoNextPageCount = getSession("autoNextPageCount", 0);
+                    if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
+                        var _buttons, dialog = $('<div id="dialog-confirm" title="是否停止自动搜索老师?">\n<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>\n<b>正在根据您的选择自动获取教师信息</b><br><br>\n剩余'.concat(sessionStorage.getItem("selectedTimeSlotsRemain"), "/").concat(sessionStorage.getItem("selectedTimeSlotsTotal"), "个时段，<br><br>\n当前时段约").concat(totalPages * 28, "个教师，获取第").concat(curPageId, "/").concat(totalPages, "页，进度").concat(Math.floor(curPageId / totalPages * 100), "%,<br>\n\n</p>\n</div>"));
+                        dialog.appendTo("body");
+                        dialog.dialog({
+                            resizable: false,
+                            height: "auto",
+                            width: 400,
+                            modal: false,
+                            buttons: (_buttons = {
+                                停止获取: function 停止获取() {
+                                    sessionStorage.removeItem("selectedTimeSlots");
+                                    setSession("autoNextPageCount", 0);
+                                    $(this).dialog("close");
+                                }
+                            }, _defineProperty(_buttons, "取后".concat((remainPages * .25).toFixed(0), "页"), (function 取后页() {
+                                sessionStorage.removeItem("selectedTimeSlots");
+                                setSession("autoNextPageCount", (remainPages * .25).toFixed(0));
+                                $(this).dialog("close");
+                            })), _defineProperty(_buttons, "取后".concat((remainPages * .5).toFixed(0), "页"), (function 取后页() {
+                                sessionStorage.removeItem("selectedTimeSlots");
+                                setSession("autoNextPageCount", (remainPages * .5).toFixed(0));
+                                $(this).dialog("close");
+                            })), _defineProperty(_buttons, "取后".concat((remainPages * .75).toFixed(0), "页"), (function 取后页() {
+                                sessionStorage.removeItem("selectedTimeSlots");
+                                setSession("autoNextPageCount", (remainPages * .75).toFixed(0));
+                                $(this).dialog("close");
+                            })), _buttons)
+                        });
+                    }
+                    next();
+                }));
+                $(".item").each((function(index, el) {
+                    common_submit((function(next) {
+                        Pace.track((function() {
+                            var jqEl = $(el), tid = getTId(jqEl.find(".teacher-details-link a").attr("href")), tInfoKey = "tinfo-" + tid, tinfo = getTeacherInfoFromListPageUI(jqEl), tinfo_saved = GM_getValue(tInfoKey);
+                            if (tinfo_saved) {
+                                var now = Date.now();
+                                if (!tinfo_saved.updateTime) {
+                                    tinfo_saved.updateTime = new Date(1970, 1, 1).getTime();
+                                }
+                                tinfo = $.extend({}, tinfo_saved, tinfo);
+                                if (now - tinfo_saved.updateTime < configExprMilliseconds) {
+                                    updateTeacherInfoToUI(jqEl, tinfo);
+                                    GM_setValue(tInfoKey, tinfo);
+                                    next();
+                                    return true;
+                                }
+                            }
+                            var start = Date.now();
+                            $.ajax({
+                                url: "".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/teacherComment?tid=").concat(tid, "&type=bad&has_msg=1"),
+                                type: "GET",
+                                dateType: "html",
+                                success: function success(r) {
+                                    var jqr = $(r);
+                                    tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
+                                    jqr.remove();
+                                    updateTeacherInfoToUI(jqEl, tinfo);
+                                    GM_setValue(tInfoKey, tinfo);
+                                },
+                                error: function error(data) {
+                                    console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data));
+                                }
+                            }).always((function() {
+                                while (Date.now() - start < 600) {
+                                    continue;
+                                }
+                                next();
+                            }));
+                        }));
+                    }));
+                }));
+                common_submit((function(next) {
+                    var autoNextPageCount = getSession("autoNextPageCount", 0);
+                    if (autoNextPageCount > 0) {
+                        setSession("autoNextPageCount", autoNextPageCount - 1);
+                        if ($(".s-t-page>.next-page").length == 0) {
+                            setSession("autoNextPageCount", 0);
+                            if (isStopShowBoxAndAutoGetNextTimeTeachers()) return;
+                        } else {
+                            $(".s-t-page .next-page")[0].click();
+                            return false;
+                        }
+                    } else {
+                        if (isStopShowBoxAndAutoGetNextTimeTeachers()) return;
+                    }
+                    next();
+                }));
+            }
+        }
         function processTeacherDetailPage(jqr) {
             var tinfo_saved = GM_getValue(getInfoKey(), {});
             tinfo_saved = getTeacherInfoFromDetailPage(tinfo_saved, jqr, {});
@@ -1769,10 +1761,22 @@
                 next();
             }));
         }
-        var pacesetup = __webpack_require__(895);
+        function setUpPace(loadScript) {
+            loadScript("https://gitee.com/tsharp/pace/raw/v1.2.4/pace.min.js").then((function(ok) {
+                Pace.Options = {
+                    ajax: false,
+                    document: false,
+                    eventLag: false,
+                    elements: {
+                        selectors: [ "#filterDialog" ]
+                    }
+                };
+            }));
+        }
+        const pacesetup = setUpPace;
         var code = '<div id="filterDialog" title="Teacher Filter"> <div id="tabs"> <div> <ul> <li><a href="#tabs-1">Search Teachers</a></li> <li><a href="#tabs-2">Sorted Teachers</a></li> </ul> <br/> <div id="filterButtons"> <div id="buttons" style="text-align:center"> <button id="asc" title="当前为降序，点击后按升序排列">升序</button> <button id="desc" title="当前为升序，点击进行降序排列" style="display:none">降序</button> <input id="tInfoExprHours" title="缓存过期时间（小时）"/> <button title="清空缓存，并重新搜索">清除缓存</button> <a>报告BUG</a> <a>帮助</a> </div> <div id="buttons1" style="text-align:center"> <div id="timesMultipleCheck"></div> <button>反选时间段</button> <button id="autogettodaysteachers" title="自动获取上述选择时段的全部教师并缓存">获取选定时段老师</button> </div> </div> </div> <div id="tabs-1"> 当前可选 <span id="tCount"></span> 位,被折叠 <span id="tHideCount"></span> 位。 <br/> 有效经验值 <span id="_tLabelCount"></span> <br/> <div id="labelSlider"></div> 收藏数 <span id="_tfc"></span> <br/> <div id="fcSlider"></div> 好评率 <span id="_thumbUpRate"></span> <br/> <div id="thumbUpRateSlider"></div> 年龄 <span id="_tAge"></span> <br/> <div id="tAgeSlider"></div> </div> <div id="tabs-2"> <table id="teacherTab"> <caption></caption> <th id="vwswslwo"></th> </table> <div id="pager5"></div> </div> </div> </div> ';
         const pluginUITemplate = code;
-        function main() {
+        function findingteacher_user_main() {
             if (settings.isListPage || settings.isDetailPage) {
                 common_submit((function(next) {
                     try {
@@ -2167,11 +2171,15 @@
             }
         }
         (function(loadScript) {
-            var _jqui = loadScript("https://gitee.com/tsharp/jquery.ui/raw/1.12.1/jquery-ui.min.js"), _pace = loadScript("https://gitee.com/tsharp/pace/raw/v1.2.4/pace.min.js"), _scro = loadScript("https://gitee.com/tsharp/jquery-scrollfix/raw/master/src/scrollfix.js"), _grla = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/i18n/grid.locale-cn.js"), _jqgr = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/jquery.jqgrid.min.js");
-            Promise.allSettled([ _jqui, _pace, _scro, _grla, _jqgr ]).then((function(ok) {
+            var _jqui = loadScript("https://gitee.com/tsharp/jquery.ui/raw/1.12.1/jquery-ui.min.js"), _scro = loadScript("https://gitee.com/tsharp/jquery-scrollfix/raw/master/src/scrollfix.js"), _grla = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/i18n/grid.locale-cn.js"), _jqgr = loadScript("https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/jquery.jqgrid.min.js");
+            Promise.allSettled([ _jqui, _scro, _grla, _jqgr ]).then((function(ok) {
+                return pacesetup(loadScript);
+            })).then((function(ok) {
+                return main(loadScript);
+            })).then((function(ok) {
                 dayjs_min_default().extend(relativeTime_default());
                 dayjs_min_default().locale(zh_cn_default());
-                main();
+                findingteacher_user_main();
             }))["catch"]((function(e) {
                 alert("Erron on loading script >>:" + e);
             }));

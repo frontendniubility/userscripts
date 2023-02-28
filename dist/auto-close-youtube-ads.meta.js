@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Auto Close YouTube Ads
-// @version     2023.227.5172608
+// @version     2023.227.5181717
 // @author      fuzetsu
 // @description Close and/or Mute YouTube ads automatically!
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2023.227.5172608
+// @version     2023.227.5181717
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
 // @homepage    https://github.com/niubilityfrontend/userscripts#readme

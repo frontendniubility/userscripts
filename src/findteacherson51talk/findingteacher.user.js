@@ -22,6 +22,15 @@
 
 // @require https://code.jquery.com/jquery-3.6.0.min.js
 
+// loadScript('https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/jquery.jqgrid.min.js')
+// 	.then(d => loadScript('https://gitee.com/tsharp/jquery.ui/raw/1.12.1/jquery-ui.min.js'))
+// 	.then(d => loadScript('https://gitee.com/tsharp/jquery-scrollfix/raw/master/src/scrollfix.js'))
+// 	.then(d => loadScript('https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/i18n/grid.locale-cn.js'))
+// 	.then(d => loadScript('https://gitee.com/tsharp/pace/raw/v1.2.4/pace.min.js'))
+import './../../libs/jquery-ui-1.12.1/jquery-ui.min.js'
+import '../../libs/jqGrid-4.15.5/dist/jquery.jqgrid.min.js'
+import '../../libs/pace-1.2.4/pace'
+import '../../libs/jquery-scrollfix-v3.0.2/src/scrollfix'
 import dayjs from "dayjs"
 import zh_cn from "dayjs/locale/zh-cn"
 import relative from "dayjs/plugin/relativeTime"
@@ -30,14 +39,20 @@ import { configExprMilliseconds, getTId, setSession, settings, submit } from "./
 
 import "./findingteacher.user.css"
 
-import { addCheckbox, executeFilters, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate } from "./listpage"
+import {
+	addCheckbox, executeFilters, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers,
+	maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, listMain
+} from "./listpage.js"
 
 import "./jqueryextend"
 import "./detailpage"
-import "./pacesetup"
+// import setUpPace from "./pacesetup"
 import UiHtmlTemplate from "./pluginUITemplate.html"
 
-function main() {
+async function main() {
+
+	dayjs.extend(relative)
+	dayjs.locale(zh_cn)
 	if (settings.isListPage || settings.isDetailPage) {
 		//构建插件信息
 		submit(function (next) {
@@ -433,43 +448,47 @@ function main() {
 
 ; (function (loadScript) {
 
-	let _jqui = loadScript('https://gitee.com/tsharp/jquery.ui/raw/1.12.1/jquery-ui.min.js')
-	let _pace = loadScript('https://gitee.com/tsharp/pace/raw/v1.2.4/pace.min.js')
-	let _scro = loadScript('https://gitee.com/tsharp/jquery-scrollfix/raw/master/src/scrollfix.js')
-	let _grla = loadScript('https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/i18n/grid.locale-cn.js')
-	let _jqgr = loadScript('https://gitee.com/tsharp/jqGrid/raw/v4.15.5/dist/jquery.jqgrid.min.js')
 
-	Promise.allSettled([_jqui, _pace, _scro, _grla, _jqgr]).then(ok => {
-		dayjs.extend(relative)
-		dayjs.locale(zh_cn)
-		main()
-	}).catch(e => {
-		alert('Erron on loading script >>:' + e)
-	})
+	Promise.resolve()
+
+		//.then(data => setUpPace(loadScript))
+		.then(data => {
+			Pace.Options = {
+				ajax: false, // disabled
+				document: false, // disabled
+				eventLag: false, // disabled
+				elements: {
+					selectors: ["#filterDialog"],
+				},
+			}
+		})
+		.then(data => listMain(loadScript))
+		.then(data => main())
+		.catch(er => console.log('catched errors: ', er))
+	// .catch(e => {
+	// 	alert('Erron on loading script >>:' + e)
+	// })
 
 
 
 
-})((src, async = true, type = "text/javascript") => {
+})((src, cb) => {
 	return new Promise((resolve, reject) => {
 		try {
-			const tag = document.createElement("script")
-			const container = document.head || document.body
+			let docu = unsafeWindow.document || window.document
+			const tag = docu.createElement("script")
+			const container = docu.head || docu.body
 
-			tag.type = type
-			tag.async = async
+			tag.type = "text/javascript"
+			//	tag.async = async
+			tag.crossorigin = "use-credentials"
 			tag.src = src
 
-			tag.addEventListener("load", () => {
-				resolve({ loaded: true, error: false })
-			})
-
-			tag.addEventListener("error", () => {
-				reject({
-					loaded: false,
-					error: true,
-					message: `Failed to load script with src ${src}`,
-				})
+			tag.onload = () => resolve({ loaded: true, error: false })
+			tag.onerror = () => reject({
+				loaded: false,
+				error: true,
+				message: `Failed to load script with src ${src}`,
 			})
 
 			container.appendChild(tag)

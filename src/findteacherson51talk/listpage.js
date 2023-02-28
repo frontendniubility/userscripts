@@ -141,131 +141,6 @@ function getTeacherInfoFromListPageUI(jqEl) {
 		}
 }
 
-if (settings.isListPage) {
-	$(".item-top-cont").prop("innerHTML", function (i, val) {
-		return val.replaceAll("<!--", "").replaceAll("-->", "")
-	})
-	// 自动获取时,显示停止按钮
-	submit(function (next) {
-		let totalPages = Number($(".s-t-page:last>a:last").prev().text()),
-			curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
-			remainPages = totalPages - curPageId
-		let autoNextPageCount = getSession("autoNextPageCount", 0)
-
-		if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
-			let dialog = $(`<div id="dialog-confirm" title="是否停止自动搜索老师?">
-<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
-<b>正在根据您的选择自动获取教师信息</b><br><br>
-剩余${sessionStorage.getItem("selectedTimeSlotsRemain")}/${sessionStorage.getItem("selectedTimeSlotsTotal")}个时段，<br><br>
-当前时段约${totalPages * 28}个教师，获取第${curPageId}/${totalPages}页，进度${Math.floor((curPageId / totalPages) * 100)}%,<br>
-
-</p>
-</div>`)
-			dialog.appendTo("body")
-			dialog.dialog({
-				resizable: false,
-				height: "auto",
-				width: 400,
-				modal: false,
-				buttons: {
-					停止获取: function () {
-						sessionStorage.removeItem("selectedTimeSlots")
-						setSession("autoNextPageCount", 0)
-						$(this).dialog("close")
-					},
-					[`取后${(remainPages * 0.25).toFixed(0)}页`]: function () {
-						sessionStorage.removeItem("selectedTimeSlots")
-						setSession("autoNextPageCount", (remainPages * 0.25).toFixed(0))
-						$(this).dialog("close")
-					},
-					[`取后${(remainPages * 0.5).toFixed(0)}页`]: function () {
-						sessionStorage.removeItem("selectedTimeSlots")
-						setSession("autoNextPageCount", (remainPages * 0.5).toFixed(0))
-						$(this).dialog("close")
-					},
-					[`取后${(remainPages * 0.75).toFixed(0)}页`]: function () {
-						sessionStorage.removeItem("selectedTimeSlots")
-						setSession("autoNextPageCount", (remainPages * 0.75).toFixed(0))
-						$(this).dialog("close")
-					},
-				},
-			})
-		}
-		next()
-	})
-
-	//获取列表中数据
-	$(".item").each(function (index, el) {
-		submit(function (next) {
-			Pace.track(function () {
-				let jqEl = $(el)
-				let tid = getTId(jqEl.find(".teacher-details-link a").attr("href"))
-				let tInfoKey = "tinfo-" + tid
-
-				/** @type {TeacherInfoList|TeacherInfo} */
-				let tinfo = getTeacherInfoFromListPageUI(jqEl)
-
-				/** @type {TeacherInfo} */
-				let tinfo_saved = GM_getValue(tInfoKey)
-				if (tinfo_saved) {
-					let now = Date.now()
-					if (!tinfo_saved.updateTime) {
-						tinfo_saved.updateTime = new Date(1970, 1, 1).getTime()
-					}
-					tinfo = $.extend({}, tinfo_saved, tinfo)
-
-					if (now - tinfo_saved.updateTime < configExprMilliseconds) {
-						updateTeacherInfoToUI(jqEl, tinfo)
-						GM_setValue(tInfoKey, tinfo)
-						next()
-						return true
-					}
-				}
-				// ajax 请求一定要包含在一个函数中
-				let start = Date.now()
-				$.ajax({
-					url: `${window.location.protocol}//${window.location.host}/TeacherNew/teacherComment?tid=${tid}&type=bad&has_msg=1`,
-					type: "GET",
-					dateType: "html",
-					success: function (r) {
-						let jqr = $(r)
-						tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {})
-						jqr.remove()
-						updateTeacherInfoToUI(jqEl, tinfo)
-						GM_setValue(tInfoKey, tinfo)
-					},
-					error: function (data) {
-						console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
-					},
-				}).always(function () {
-					while (Date.now() - start < 600) {
-						continue
-					}
-					next()
-				})
-			})
-		})
-	})
-
-	submit(function (next) {
-		//翻页
-		let autoNextPageCount = getSession("autoNextPageCount", 0)
-		if (autoNextPageCount > 0) {
-			setSession("autoNextPageCount", autoNextPageCount - 1)
-			if ($(".s-t-page>.next-page").length == 0) {
-				setSession("autoNextPageCount", 0)
-				if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
-			} else {
-				$(".s-t-page .next-page")[0].click()
-				return false
-			}
-		} else {
-			if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
-		}
-		next()
-	})
-}
-
 function isStopShowBoxAndAutoGetNextTimeTeachers() {
 	let str = sessionStorage.getItem("selectedTimeSlots")
 	if (!str) return false
@@ -299,4 +174,139 @@ function addCheckbox(val, lbl, group) {
 	}).appendTo(container)
 }
 
-export { addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherInfoToUI }
+
+async function main(loadScript) {
+	if (settings.isListPage) {
+		$(".item-top-cont").prop("innerHTML", function (i, val) {
+			return val.replaceAll("<!--", "").replaceAll("-->", "")
+		})
+		// 自动获取时,显示停止按钮
+		submit(function (next) {
+			let totalPages = Number($(".s-t-page:last>a:last").prev().text()),
+				curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
+				remainPages = totalPages - curPageId
+			let autoNextPageCount = getSession("autoNextPageCount", 0)
+
+			if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
+				let dialog = $(`<div id="dialog-confirm" title="是否停止自动搜索老师?">
+<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+<b>正在根据您的选择自动获取教师信息</b><br><br>
+剩余${sessionStorage.getItem("selectedTimeSlotsRemain")}/${sessionStorage.getItem("selectedTimeSlotsTotal")}个时段，<br><br>
+当前时段约${totalPages * 28}个教师，获取第${curPageId}/${totalPages}页，进度${Math.floor((curPageId / totalPages) * 100)}%,<br>
+
+</p>
+</div>`)
+				dialog.appendTo("body")
+				dialog.dialog({
+					resizable: false,
+					height: "auto",
+					width: 400,
+					modal: false,
+					buttons: {
+						停止获取: function () {
+							sessionStorage.removeItem("selectedTimeSlots")
+							setSession("autoNextPageCount", 0)
+							$(this).dialog("close")
+						},
+						[`取后${(remainPages * 0.25).toFixed(0)}页`]: function () {
+							sessionStorage.removeItem("selectedTimeSlots")
+							setSession("autoNextPageCount", (remainPages * 0.25).toFixed(0))
+							$(this).dialog("close")
+						},
+						[`取后${(remainPages * 0.5).toFixed(0)}页`]: function () {
+							sessionStorage.removeItem("selectedTimeSlots")
+							setSession("autoNextPageCount", (remainPages * 0.5).toFixed(0))
+							$(this).dialog("close")
+						},
+						[`取后${(remainPages * 0.75).toFixed(0)}页`]: function () {
+							sessionStorage.removeItem("selectedTimeSlots")
+							setSession("autoNextPageCount", (remainPages * 0.75).toFixed(0))
+							$(this).dialog("close")
+						},
+					},
+				})
+			}
+			next()
+		})
+
+		//获取列表中数据
+		$(".item").each(function (index, el) {
+			submit(function (next) {
+				Pace.track(function () {
+					let jqEl = $(el)
+					let tid = getTId(jqEl.find(".teacher-details-link a").attr("href"))
+					let tInfoKey = "tinfo-" + tid
+
+					/** @type {TeacherInfoList|TeacherInfo} */
+					let tinfo = getTeacherInfoFromListPageUI(jqEl)
+
+					/** @type {TeacherInfo} */
+					let tinfo_saved = GM_getValue(tInfoKey)
+					if (tinfo_saved) {
+						let now = Date.now()
+						if (!tinfo_saved.updateTime) {
+							tinfo_saved.updateTime = new Date(1970, 1, 1).getTime()
+						}
+						tinfo = $.extend({}, tinfo_saved, tinfo)
+
+						if (now - tinfo_saved.updateTime < configExprMilliseconds) {
+							updateTeacherInfoToUI(jqEl, tinfo)
+							GM_setValue(tInfoKey, tinfo)
+							next()
+							return true
+						}
+					}
+					// ajax 请求一定要包含在一个函数中
+					let start = Date.now()
+					$.ajax({
+						url: `${window.location.protocol}//${window.location.host}/TeacherNew/teacherComment?tid=${tid}&type=bad&has_msg=1`,
+						type: "GET",
+						dateType: "html",
+						success: function (r) {
+							let jqr = $(r)
+							tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {})
+							jqr.remove()
+							updateTeacherInfoToUI(jqEl, tinfo)
+							GM_setValue(tInfoKey, tinfo)
+						},
+						error: function (data) {
+							console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
+						},
+					}).always(function () {
+
+						let wait = (Date.now() - start)
+						if (wait < 600)
+							setTimeout(next, 600 - wait)
+						else
+							next()
+					})
+				})
+			})
+		})
+
+		submit(function (next) {
+			//翻页
+			let autoNextPageCount = getSession("autoNextPageCount", 0)
+			if (autoNextPageCount > 0) {
+				setSession("autoNextPageCount", autoNextPageCount - 1)
+				if ($(".s-t-page>.next-page").length == 0) {
+					setSession("autoNextPageCount", 0)
+					if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
+				} else {
+					$(".s-t-page .next-page")[0].click()
+					return false
+				}
+			} else {
+				if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
+			}
+			next()
+		})
+	}
+
+}
+
+export {
+	addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList,
+	getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherInfoToUI,
+	main as listMain
+}
