@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Auto Close YouTube Ads
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @author      fuzetsu
 // @description Close and/or Mute YouTube ads automatically!
 // @homepage    https://gitee.com/tsharp/userscripts#readme
@@ -18,5 +18,352 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/auto-close-youtube-ads.meta.js
 // ==/UserScript==
 
-(()=>{function e(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=new Array(t);n<t;n++)o[n]=e[n];return o}var t=".videoAdUi,.ytp-ad-player-overlay",n={log:function(){for(var e,t=arguments.length,n=new Array(t),r=0;r<t;r++)n[r]=arguments[r];return(e=console).log.apply(e,["%c".concat(o,":"),"font-weight: bold;color: purple;"].concat(n))},clearTicks:function(e){e.forEach((function(e){return e?"number"==typeof e?clearInterval(e):e.stop():null})),e.length=0},keepTrying:function(e,t){var n=setInterval((function(){return t()&&clearInterval(n)}),e);return n},storeGet:function(e){if("undefined"==typeof GM_getValue){var t=localStorage.getItem(e);return"true"===t||"false"!==t&&t}return GM_getValue(e)},storeSet:function(e,t){return"undefined"==typeof GM_setValue?localStorage.setItem(e,t):GM_setValue(e,t)},storeDel:function(e){return"undefined"==typeof GM_deleteValue?localStorage.removeItem(e):GM_deleteValue(e)},q:function(e,t){return(t||document).querySelector(e)},qq:function(e,t){return Array.from((t||document).querySelectorAll(e))},get:function(e,t){return n.getPath(e,t.split(".").reverse())},getPath:function(e,t){return null==e?null:t.length>0?n.getPath(e[t.pop()],t):e}},o="Auto Close YouTube Ads",r=[],i=!1,a=GM_config([{key:"muteAd",label:"Mute ads?",type:"bool",default:!0},{key:"hideAd",label:"Hide video ads?",type:"bool",default:!1},{key:"secWaitBanner",label:"Banner ad close delay (seconds)",type:"number",default:3,min:0},{key:"secWaitVideo",label:"Video ad skip delay (seconds)",type:"number",default:3,min:0},{key:"minAdLengthForSkip",label:"Dont skip video shorter than this (seconds)",type:"number",default:0,min:0},{key:"muteEvenIfNotSkipping",label:"Mute video even if not skipping",type:"bool",default:!0},{key:"debug",label:"Show extra debug information.",type:"bool",default:!1},{key:"version",type:"hidden",default:1}]),l=a.load();function u(){var e=document.createElement("div");return e.setAttribute("style","border: 1px solid white;border-right: none;background: rgb(0,0,0,0.75);color:white;position: absolute;right: 0;z-index: 1000;top: 10px;padding: 10px;padding-right: 20px;cursor: pointer;pointer-events: all;"),e}function c(e,t,o){var r=u();r.textContent=t,e.appendChild(r),n.log("showing message [".concat(o,"ms]: ").concat(t)),setTimeout((function(){return r.remove()}),o)}a.onsave=function(e){return l=e},function(){for(var e;l.version<2&&e!==l.version;)if(n.log("upgrading config version, current = ",l.version,", target = ",2),e=l.version,1===l.version){var t={muteAd:n.storeGet("MUTE_AD"),hideAd:n.storeGet("HIDE_AD"),secWait:n.storeGet("SEC_WAIT")};null!=t.muteAd&&(l.muteAd=!!t.muteAd),null!=t.hideAd&&(l.hideAd=!!t.hideAd),null==t.secWait||isNaN(t.secWait)||(l.secWaitBanner=l.secWaitVideo=parseInt(t.secWait)),l.version=2,a.save(l),["SEC_WAIT","HIDE_AD","MUTE_AD"].forEach(n.storeDel)}}();var d=function(){return n.q(".ytp-mute-button")},s=function(){return n.q(".ytp-volume-slider-handle")},f=function(e){return"0px"===e.style.left};function p(t){if(!t)return 0;var o,r,i,a,l,u,c=t.querySelector(".videoAdUiAttribution,.ytp-ad-duration-remaining");return c?(o=c.textContent,l=o.split(" ").pop().split(":").map((function(e){return parseInt(e)})),u=2,i=(r=function(e){if(Array.isArray(e))return e}(l)||function(e,t){var n=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=n){var o,r,i,a,l=[],u=!0,c=!1;try{if(i=(n=n.call(e)).next,0===t){if(Object(n)!==n)return;u=!1}else for(;!(u=(o=i.call(n)).done)&&(l.push(o.value),l.length!==t);u=!0);}catch(e){c=!0,r=e}finally{try{if(!u&&null!=n.return&&(a=n.return(),Object(a)!==a))return}finally{if(c)throw r}}return l}}(l,u)||function(t,n){if(t){if("string"==typeof t)return e(t,n);var o=Object.prototype.toString.call(t).slice(8,-1);return"Object"===o&&t.constructor&&(o=t.constructor.name),"Map"===o||"Set"===o?Array.from(t):"Arguments"===o||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(o)?e(t,n):void 0}}(l,u)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}())[0],a=r[1],n.log(o,i,a),60*i+a||0):0}function g(){i=!1,r.push(waitForElems({sel:".videoAdUiSkipButton,.ytp-ad-skip-button",onmatch:function(e){n.log("found skip button"),n.keepTrying(500,(function(){return!e||(null!==e.offsetParent?(setTimeout((function(){if(i)return n.log("not skipping..."),void(i=!1);n.log("clicking skip button"),e.click()}),1e3*l.secWaitVideo),!0):void 0)}))}}),v(".close-padding.contains-svg,a.close-button,.ytp-ad-overlay-close-button",1e3*l.secWaitBanner),waitForElems({sel:t,onmatch:function(e){i=!1;var o=p(e),r=o<l.minAdLengthForSkip,a=function(){return l.debug?"[DEBUG adLength = ".concat(o,", minAdLengthForSkip = ").concat(l.minAdLengthForSkip,"]"):""};if(r&&!l.muteEvenIfNotSkipping)return i=!0,c(e,"Shot AD detected, will not skip or mute. ".concat(a()),12e3);if(l.hideAd&&(e.style.zIndex=10,e.style.background="black"),r||function(e){var t=n.q(".videoAdUiPreSkipButton,.ytp-ad-preview-container",e),o=t&&t.textContent.trim().replace(/\s+/g," ");if(o&&!["will begin","will play"].some((function(e){return o.includes(e)}))){var r="acya-cancel-skip",a=n.q("."+r);a&&a.remove(),(a=u()).className=r,a.textContent=(l.muteAd?"Un-mute & ":"")+"Cancel Auto Skip",a.onclick=function(){n.log("cancel clicked"),i=!0,a.remove();var e=d(),t=s();l.muteAd&&e&&t&&f(t)&&e.click()},e.appendChild(a)}else n.log("skip button area wasn't there for some reason.. couldn't place cancel button.")}(e),l.muteAd){var g=d(),m=s();return m?(g.click(),n.log("Video ad detected, muting audio"),n.keepTrying(250,(function(){if(!n.q(t))return f(m)?(g.click(),n.log("Video ad ended, unmuting audio")):n.log("Video ad ended, audio already unmuted"),!0})),r?(i=!0,c(e,"Short AD detected, will not skip but will mute. ".concat(a()),12e3)):void 0):n.log("unable to determine mute state, skipping mute")}}}))}var m,v=function(e,t,o){return waitForElems({sel:e,onmatch:function(e){n.log("Found ad, closing in",t,"ms"),setTimeout((function(){e.click(),o&&o(e)}),t)}})};n.log("Started"),window.self===window.top?(waitForElems({sel:"#masthead-ad",onmatch:function(e){return e.remove()}}),waitForUrl(/^https:\/\/www\.youtube\.com\/watch\?.*v=.+/,(function(){m&&location.href!==m&&(n.log("Changed video, removing old wait"),n.clearTicks(r)),m=location.href,n.log("Entered video, waiting for ads"),g(),r.push(waitForUrl((function(e){return e!==m}),(function(){m=null,n.clearTicks(r),n.log("Left video, stopped waiting for ads")}),!0))}))):/^https:\/\/www\.youtube\.com\/embed\//.test(location.href)&&(n.log("Found embedded video, waiting for ads"),g()),GM_registerMenuCommand("Auto Close Youtube Ads - Manage Settings",a.setup)})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+// ==UserScript==
+// @name         Auto Close YouTube Ads
+// @namespace    http://fuzetsu.acypa.com
+// @version      1.4.1
+// @description  Close and/or Mute YouTube ads automatically!
+// @author       fuzetsu
+// @match        *://*.youtube.com/*
+// @exclude      *://*.youtube.com/subscribe_embed?*
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_deleteValue
+// @grant        GM_registerMenuCommand
+// @require      https://gitcdn.xyz/repo/fuzetsu/userscripts/b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
+// @require      https://gitcdn.xyz/repo/kufii/My-UserScripts/fa4555701cf5a22eae44f06d9848df6966788fa8/libs/gm_config.js
+// ==/UserScript==
+/**
+ * This section of the code holds the css selectors that point different parts of YouTube's
+ * user interface. If the script ever breaks and you don't want to wait for me to fix it
+ * chances are that it can be fixed by just updating these selectors here.
+ */
+var CSS = {
+    // the button used to skip an ad
+    skipButton: ".videoAdUiSkipButton,.ytp-ad-skip-button",
+    // the area showing the countdown to the skip button showing
+    preSkipButton: ".videoAdUiPreSkipButton,.ytp-ad-preview-container",
+    // little x that closes banner ads
+    closeBannerAd: ".close-padding.contains-svg,a.close-button,.ytp-ad-overlay-close-button",
+    // button that toggle mute on the video
+    muteButton: ".ytp-mute-button",
+    // the slider bar handle that represents the current volume
+    muteIndicator: ".ytp-volume-slider-handle",
+    // container for ad on video
+    adArea: ".videoAdUi,.ytp-ad-player-overlay",
+    // container that shows ad length eg 3:23
+    adLength: ".videoAdUiAttribution,.ytp-ad-duration-remaining",
+    // container for header ad on the home page
+    homeAdContainer: "#masthead-ad"
+  },
+  util = {
+    log: function log() {
+      for (var _console, _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      return (_console = console).log.apply(_console, ["%c".concat(SCRIPT_NAME, ":"), "font-weight: bold;color: purple;"].concat(args));
+    },
+    clearTicks: function clearTicks(ticks) {
+      ticks.forEach(function (tick) {
+        return !tick ? null : typeof tick === "number" ? clearInterval(tick) : tick.stop();
+      });
+      ticks.length = 0;
+    },
+    keepTrying: function keepTrying(wait, action) {
+      var tick = setInterval(function () {
+        return action() && clearInterval(tick);
+      }, wait);
+      return tick;
+    },
+    storeGet: function storeGet(key) {
+      if (typeof GM_getValue === "undefined") {
+        var value = localStorage.getItem(key);
+        return value === "true" ? true : value === "false" ? false : value;
+      }
+      return GM_getValue(key);
+    },
+    storeSet: function storeSet(key, value) {
+      return typeof GM_setValue === "undefined" ? localStorage.setItem(key, value) : GM_setValue(key, value);
+    },
+    storeDel: function storeDel(key) {
+      return typeof GM_deleteValue === "undefined" ? localStorage.removeItem(key) : GM_deleteValue(key);
+    },
+    q: function q(query, context) {
+      return (context || document).querySelector(query);
+    },
+    qq: function qq(query, context) {
+      return Array.from((context || document).querySelectorAll(query));
+    },
+    get: function get(obj, str) {
+      return util.getPath(obj, str.split(".").reverse());
+    },
+    getPath: function getPath(obj, path) {
+      return obj == null ? null : path.length > 0 ? util.getPath(obj[path.pop()], path) : obj;
+    }
+  },
+  SCRIPT_NAME = "Auto Close YouTube Ads",
+  SHORT_AD_MSG_LENGTH = 12e3,
+  TICKS = [];
+var DONT_SKIP = false;
+var config = GM_config([{
+    key: "muteAd",
+    label: "Mute ads?",
+    type: "bool",
+    "default": true
+  }, {
+    key: "hideAd",
+    label: "Hide video ads?",
+    type: "bool",
+    "default": false
+  }, {
+    key: "secWaitBanner",
+    label: "Banner ad close delay (seconds)",
+    type: "number",
+    "default": 3,
+    min: 0
+  }, {
+    key: "secWaitVideo",
+    label: "Video ad skip delay (seconds)",
+    type: "number",
+    "default": 3,
+    min: 0
+  }, {
+    key: "minAdLengthForSkip",
+    label: "Dont skip video shorter than this (seconds)",
+    type: "number",
+    "default": 0,
+    min: 0
+  }, {
+    key: "muteEvenIfNotSkipping",
+    label: "Mute video even if not skipping",
+    type: "bool",
+    "default": true
+  }, {
+    key: "debug",
+    label: "Show extra debug information.",
+    type: "bool",
+    "default": false
+  }, {
+    key: "version",
+    type: "hidden",
+    "default": 1
+  }]),
+  configVersion = 2;
+var conf = config.load();
+config.onsave = function (cfg) {
+  return conf = cfg;
+};
+
+// config upgrade procedure
+function upgradeConfig() {
+  var lastVersion;
+  while (conf.version < configVersion && lastVersion !== conf.version) {
+    util.log("upgrading config version, current = ", conf.version, ", target = ", configVersion);
+    lastVersion = conf.version;
+    switch (conf.version) {
+      case 1:
+        {
+          var oldConf = {
+            muteAd: util.storeGet("MUTE_AD"),
+            hideAd: util.storeGet("HIDE_AD"),
+            secWait: util.storeGet("SEC_WAIT")
+          };
+          if (oldConf.muteAd != null) conf.muteAd = !!oldConf.muteAd;
+          if (oldConf.hideAd != null) conf.hideAd = !!oldConf.hideAd;
+          if (oldConf.secWait != null && !isNaN(oldConf.secWait)) conf.secWaitBanner = conf.secWaitVideo = parseInt(oldConf.secWait);
+          conf.version = 2;
+          config.save(conf);
+          ["SEC_WAIT", "HIDE_AD", "MUTE_AD"].forEach(util.storeDel);
+          break;
+        }
+    }
+  }
+}
+upgradeConfig();
+function createMessageElement() {
+  var elem = document.createElement("div");
+  elem.setAttribute("style", "border: 1px solid white;border-right: none;background: rgb(0,0,0,0.75);color:white;position: absolute;right: 0;z-index: 1000;top: 10px;padding: 10px;padding-right: 20px;cursor: pointer;pointer-events: all;");
+  return elem;
+}
+function showMessage(container, text, ms) {
+  var message = createMessageElement();
+  message.textContent = text;
+  container.appendChild(message);
+  util.log("showing message [".concat(ms, "ms]: ").concat(text));
+  setTimeout(function () {
+    return message.remove();
+  }, ms);
+}
+function setupCancelDiv(ad) {
+  var skipArea = util.q(CSS.preSkipButton, ad),
+    skipText = skipArea && skipArea.textContent.trim().replace(/\s+/g, " ");
+  if (skipText && !["will begin", "will play"].some(function (snip) {
+    return skipText.includes(snip);
+  })) {
+    var cancelClass = "acya-cancel-skip";
+    var cancelDiv = util.q("." + cancelClass);
+    if (cancelDiv) cancelDiv.remove();
+    cancelDiv = createMessageElement();
+    cancelDiv.className = cancelClass;
+    cancelDiv.textContent = (conf.muteAd ? "Un-mute & " : "") + "Cancel Auto Skip";
+    cancelDiv.onclick = function () {
+      util.log("cancel clicked");
+      DONT_SKIP = true;
+      cancelDiv.remove();
+      var muteButton = getMuteButton(),
+        muteIndicator = getMuteIndicator();
+      if (conf.muteAd && muteButton && muteIndicator && isMuted(muteIndicator)) muteButton.click();
+    };
+    ad.appendChild(cancelDiv);
+  } else {
+    util.log("skip button area wasn't there for some reason.. couldn't place cancel button.");
+  }
+}
+function parseTime(str) {
+  var _str$split$pop$split$ = str.split(" ").pop().split(":").map(function (num) {
+      return parseInt(num);
+    }),
+    _str$split$pop$split$2 = _slicedToArray(_str$split$pop$split$, 2),
+    minutes = _str$split$pop$split$2[0],
+    seconds = _str$split$pop$split$2[1];
+  util.log(str, minutes, seconds);
+  return minutes * 60 + seconds || 0;
+}
+var getMuteButton = function getMuteButton() {
+    return util.q(CSS.muteButton);
+  },
+  getMuteIndicator = function getMuteIndicator() {
+    return util.q(CSS.muteIndicator);
+  },
+  isMuted = function isMuted(m) {
+    return m.style.left === "0px";
+  };
+function getAdLength(ad) {
+  if (!ad) return 0;
+  var time = ad.querySelector(CSS.adLength);
+  return time ? parseTime(time.textContent) : 0;
+}
+function waitForAds() {
+  DONT_SKIP = false;
+  TICKS.push(waitForElems({
+    sel: CSS.skipButton,
+    onmatch: function onmatch(btn) {
+      util.log("found skip button");
+      util.keepTrying(500, function () {
+        if (!btn) return true;
+        // if not visible
+        if (btn.offsetParent === null) return;
+        setTimeout(function () {
+          if (DONT_SKIP) {
+            util.log("not skipping...");
+            DONT_SKIP = false;
+            return;
+          }
+          util.log("clicking skip button");
+          btn.click();
+        }, conf.secWaitVideo * 1e3);
+        return true;
+      });
+    }
+  }), waitAndClick(CSS.closeBannerAd, conf.secWaitBanner * 1e3), waitForElems({
+    sel: CSS.adArea,
+    onmatch: function onmatch(ad) {
+      // reset don't skip
+      DONT_SKIP = false;
+      var adLength = getAdLength(ad),
+        isShort = adLength < conf.minAdLengthForSkip,
+        debug = function debug() {
+          return conf.debug ? "[DEBUG adLength = ".concat(adLength, ", minAdLengthForSkip = ").concat(conf.minAdLengthForSkip, "]") : "";
+        };
+      if (isShort && !conf.muteEvenIfNotSkipping) {
+        DONT_SKIP = true;
+        return showMessage(ad, "Shot AD detected, will not skip or mute. ".concat(debug()), SHORT_AD_MSG_LENGTH);
+      }
+      if (conf.hideAd) {
+        ad.style.zIndex = 10;
+        ad.style.background = "black";
+      }
+      // show option to cancel automatic skip
+      if (!isShort) setupCancelDiv(ad);
+      if (!conf.muteAd) return;
+      var muteButton = getMuteButton(),
+        muteIndicator = getMuteIndicator();
+      if (!muteIndicator) return util.log("unable to determine mute state, skipping mute");
+      muteButton.click();
+      util.log("Video ad detected, muting audio");
+      // wait for the ad to disappear before unmuting
+      util.keepTrying(250, function () {
+        if (!util.q(CSS.adArea)) {
+          if (isMuted(muteIndicator)) {
+            muteButton.click();
+            util.log("Video ad ended, unmuting audio");
+          } else {
+            util.log("Video ad ended, audio already unmuted");
+          }
+          return true;
+        }
+      });
+      if (isShort) {
+        DONT_SKIP = true;
+        return showMessage(ad, "Short AD detected, will not skip but will mute. ".concat(debug()), SHORT_AD_MSG_LENGTH);
+      }
+    }
+  }));
+}
+var waitAndClick = function waitAndClick(sel, ms, cb) {
+  return waitForElems({
+    sel: sel,
+    onmatch: function onmatch(btn) {
+      util.log("Found ad, closing in", ms, "ms");
+      setTimeout(function () {
+        btn.click();
+        if (cb) cb(btn);
+      }, ms);
+    }
+  });
+};
+util.log("Started");
+if (window.self === window.top) {
+  var videoUrl;
+  // close home ad whenever encountered
+  waitForElems({
+    sel: CSS.homeAdContainer,
+    onmatch: function onmatch(ad) {
+      return ad.remove();
+    }
+  });
+  // wait for video page
+  waitForUrl(/^https:\/\/www\.youtube\.com\/watch\?.*v=.+/, function () {
+    if (videoUrl && location.href !== videoUrl) {
+      util.log("Changed video, removing old wait");
+      util.clearTicks(TICKS);
+    }
+    videoUrl = location.href;
+    util.log("Entered video, waiting for ads");
+    waitForAds();
+    TICKS.push(waitForUrl(function (url) {
+      return url !== videoUrl;
+    }, function () {
+      videoUrl = null;
+      util.clearTicks(TICKS);
+      util.log("Left video, stopped waiting for ads");
+    }, true));
+  });
+} else {
+  if (/^https:\/\/www\.youtube\.com\/embed\//.test(location.href)) {
+    util.log("Found embedded video, waiting for ads");
+    waitForAds();
+  }
+}
+GM_registerMenuCommand("Auto Close Youtube Ads - Manage Settings", config.setup);
+/******/ })()
+;
 //# sourceMappingURL=auto-close-youtube-ads.user.js.map

@@ -2,7 +2,7 @@
     "src": {
         "auto-close-youtube-ads": {
             "auto-close-youtube-ads.user.js": {
-                "9bd7574469ff0abe16aa726a709ffb84": "2023.301.5132113"
+                "6a24e5a465ba1a68bdd31966896470f6": "2023.915.5232332"
             }
         },
         "bestteacher": {
@@ -112,75 +112,75 @@
         },
         "crunchyroll-queue-times": {
             "crunchyroll-queue-times.user.js": {
-                "343a8dc2ab1b6c8bcc2463864e0d0c53": "2023.301.5132113"
+                "27f3d1b9a4d5208d7a2d5d2b332ac075": "2023.915.5232332"
             }
         },
         "crunchyroll-video-utilities": {
             "crunchyroll-video-utilties.user.js": {
-                "b0f50d0964d52ac0cb389f0568c131e9": "2023.301.5132113"
+                "d1384396074a07e101edf627516fb546": "2023.915.5232332"
             }
         },
         "findteacherson51talk": {
             "findingteacher.user.js": {
-                "50877fe2d9adcadae97fff7bb252d56d": "2023.301.5132113"
+                "d92dadbca4c2fa3ca58d52b1666d65e7": "2023.915.5232332"
             },
             "test.user.js": {
-                "9ebb4ed37644a666ff7d9af367e59b79": "2023.301.5132113"
+                "76bb16b0de3f1addb27d34c0bd92a11d": "2023.915.5232332"
             }
         },
         "format-json": {
             "format-json.user.js": {
-                "ffacb4981b8ed445986c06e07978622a": "2023.301.5132113"
+                "8fae4e3d34174e61018872a0e6bf8d4a": "2023.915.5232332"
             }
         },
         "gfycat-redirect-to-webm": {
             "gfycat-redirect-to-webm.user.js": {
-                "ea693b5bec505fb2863409ffad2ff6e8": "2023.301.5132113"
+                "05a7ab2747e76b48055838a7e1e8a57c": "2023.915.5232332"
             }
         },
         "hangouts-notifier": {
             "hangouts-notifier.user.js": {
-                "0f2c01c61bdb1cf35799837942f5481b": "2023.301.5132113"
+                "650e868541aa31b1c2955ec10ec13bec": "2023.915.5232332"
             }
         },
         "hummingbird-compatibility-hover": {
             "hummingbird-compatibility-hover.user.js": {
-                "c1e130def43bb08a3202a521f360ddef": "2023.301.5132113"
+                "53809c9479a4d4e8cb2640c448c6a5bd": "2023.915.5232332"
             }
         },
         "javascriptSnippets": {
             "URLTest.user.es6": {
-                "aa80c3bb65759d433b0a9b7beac3c12c": "2023.301.5132113"
+                "250385c79a6335aa959589246ae9c348": "2023.915.5232332"
             }
         },
         "kijiji-middle-click": {
             "kijiji-middle-click.user.js": {
-                "f628fe2ee73dde5f5c2f9eb0184c609f": "2023.301.5132113"
+                "b2f92102f6fdee75f124ca16e0f8e879": "2023.915.5232332"
             }
         },
         "kitsu-mal-rating": {
             "kitsu-mal-rating.user.js": {
-                "17901a8c2914969c6a6b7535399389e3": "2023.301.5132113"
+                "48453f5cfa6875ec4f5d76a88f360731": "2023.915.5232332"
             }
         },
         "prettier-anything": {
             "prettier-anything.user.js": {
-                "7c1c0430c92652848f5122d97a967fd7": "2023.301.5132113"
+                "3d233880b36bcf8ea16aaf1bec5cb1dc": "2023.915.5232332"
             }
         },
         "youtube-history-management": {
             "youtube-history-management.user.js": {
-                "46df1f65d1237efcbe785d06f491be62": "2023.301.5132113"
+                "73b89c895cbd19fad213933d5fdb85e4": "2023.915.5232332"
             }
         },
         "youtube-playlist-search": {
             "youtube-playlist-search.user.js": {
-                "1e2977988a3bf7208c782fbfea423b42": "2023.301.5132113"
+                "1fb6367d3feeda22a79d5e18d47bed04": "2023.915.5232332"
             }
         },
         "youtube-playlist-time": {
             "youtube-playlist-time.user.js": {
-                "e14e497526714ed9440d5b9ffe6be88c": "2023.301.5132113"
+                "5db5cc32a6243f485bbe81c634458b25": "2023.915.5232332"
             }
         }
     }

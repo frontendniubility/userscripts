@@ -43,7 +43,7 @@ import { configExprMilliseconds, getTId, setSession, settings, submit } from "./
 import "./findingteacher.user.css"
 
 import {
-	addCheckbox, executeFilters, getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers,
+	addCheckbox, executeFilters, getUiFilters, IsTriggerNextTimeSlotOk,
 	maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, listMain
 } from "./listpage.js"
 
@@ -239,7 +239,7 @@ async function main() {
 						})
 						setSession("selectedTimeSlots", selectedTimeSlots)
 						setSession("selectedTimeSlotsTotal", selectedTimeSlots.length)
-						isStopShowBoxAndAutoGetNextTimeTeachers()
+						IsTriggerNextTimeSlotOk()
 					})
 					.end()
 				//初始化时间选择按钮

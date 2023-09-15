@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hummingbird Compatibility Hover
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @author      fuzetsu
 // @description Shows hummingbird user compatibility rating at the bottom right of the screen when a user link is hovered over
 // @homepage    https://gitee.com/tsharp/userscripts#readme

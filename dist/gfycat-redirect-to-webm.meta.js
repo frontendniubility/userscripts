@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Gfycat Redirect to Webm
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @author      fuzetsu
 // @description Automatically redirects you to the webm source of a gif when you load a gfycat page
 // @homepage    https://gitee.com/tsharp/userscripts#readme

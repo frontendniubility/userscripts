@@ -1,4 +1,5 @@
-import { config } from "./bestteacher_gm_toolbar"
+import { Date } from "core-js"
+import { config, conf } from "./bestteacher_gm_toolbar"
 import { configExprMilliseconds, getBatchNumber, getLabelByItems, getLabelCount, getSession, getTeacherInfoFromDetailPage, getTId, setSession, settings, submit } from "./common"
 import "./jqueryextend"
 
@@ -141,18 +142,26 @@ function getTeacherInfoFromListPageUI(jqEl) {
 		}
 }
 
-function isStopShowBoxAndAutoGetNextTimeTeachers() {
+function IsTriggerNextTimeSlotOk() {
 	let str = sessionStorage.getItem("selectedTimeSlots")
 	if (!str) return false
 	let selectedTimeSlots = JSON.parse(str)
 	let cur = selectedTimeSlots.shift()
 	if (cur) {
-		setSession("autoNextPageCount", 500)
+		setSession("Total_AutoGetNextPage_Count", 500)
 		setSession("selectedTimeSlots", selectedTimeSlots)
 		setSession("selectedTimeSlotsRemain", selectedTimeSlots.length)
 		$('form[name="searchform"]>input[name="selectTime"]').val(cur)
 		$('form[name="searchform"]>input[name="pageID"]').val(1)
-		$(".go-search").trigger("click")
+
+		let wait = (Date.now() - window.__pageStart)
+		console.log(window.__pageStart, wait)
+		if (wait < conf.requestIdle)
+			setTimeout(function () { $(".go-search").trigger("click") }, conf.requestIdle - wait)
+		else
+			$(".go-search").trigger("click")
+
+
 		return true
 	}
 	return false
@@ -182,12 +191,13 @@ async function main(loadScript) {
 		})
 		// 自动获取时,显示停止按钮
 		submit(function (next) {
+			window.__pageStart = Date.now()
 			let totalPages = Number($(".s-t-page:last>a:last").prev().text()),
 				curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
 				remainPages = totalPages - curPageId
-			let autoNextPageCount = getSession("autoNextPageCount", 0)
+			let Total_AutoGetNextPage_Count = getSession("Total_AutoGetNextPage_Count", 0)
 
-			if (autoNextPageCount > 0 && $(".s-t-page>.next-page").length > 0) {
+			if (Total_AutoGetNextPage_Count > 0 && $(".s-t-page>.next-page").length > 0) {
 				let dialog = $(`<div id="dialog-confirm" title="是否停止自动搜索老师?">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
 <b>正在根据您的选择自动获取教师信息</b><br><br>
@@ -205,22 +215,22 @@ async function main(loadScript) {
 					buttons: {
 						停止获取: function () {
 							sessionStorage.removeItem("selectedTimeSlots")
-							setSession("autoNextPageCount", 0)
+							setSession("Total_AutoGetNextPage_Count", 0)
 							$(this).dialog("close")
 						},
 						[`取后${(remainPages * 0.25).toFixed(0)}页`]: function () {
 							sessionStorage.removeItem("selectedTimeSlots")
-							setSession("autoNextPageCount", (remainPages * 0.25).toFixed(0))
+							setSession("Total_AutoGetNextPage_Count", (remainPages * 0.25).toFixed(0))
 							$(this).dialog("close")
 						},
 						[`取后${(remainPages * 0.5).toFixed(0)}页`]: function () {
 							sessionStorage.removeItem("selectedTimeSlots")
-							setSession("autoNextPageCount", (remainPages * 0.5).toFixed(0))
+							setSession("Total_AutoGetNextPage_Count", (remainPages * 0.5).toFixed(0))
 							$(this).dialog("close")
 						},
 						[`取后${(remainPages * 0.75).toFixed(0)}页`]: function () {
 							sessionStorage.removeItem("selectedTimeSlots")
-							setSession("autoNextPageCount", (remainPages * 0.75).toFixed(0))
+							setSession("Total_AutoGetNextPage_Count", (remainPages * 0.75).toFixed(0))
 							$(this).dialog("close")
 						},
 					},
@@ -275,8 +285,8 @@ async function main(loadScript) {
 					}).always(function () {
 
 						let wait = (Date.now() - start)
-						if (wait < 600)
-							setTimeout(next, 600 - wait)
+						if (wait < conf.requestIdle)
+							setTimeout(next, conf.requestIdle - wait)
 						else
 							next()
 					})
@@ -284,20 +294,28 @@ async function main(loadScript) {
 			})
 		})
 
-		submit(function (next) {
-			//翻页
-			let autoNextPageCount = getSession("autoNextPageCount", 0)
-			if (autoNextPageCount > 0) {
-				setSession("autoNextPageCount", autoNextPageCount - 1)
+		submit(function (next) {	
+
+			let Total_AutoGetNextPage_Count = getSession("Total_AutoGetNextPage_Count", 0)
+			if (Total_AutoGetNextPage_Count > 0) {
+				setSession("Total_AutoGetNextPage_Count", Total_AutoGetNextPage_Count - 1)
+
 				if ($(".s-t-page>.next-page").length == 0) {
-					setSession("autoNextPageCount", 0)
-					if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
+					setSession("Total_AutoGetNextPage_Count", 0)
+					IsTriggerNextTimeSlotOk()
 				} else {
-					$(".s-t-page .next-page")[0].click()
-					return false
+					//翻页
+
+					let wait = (Date.now() - window.__pageStart)
+					console.log(window.__pageStart, wait)
+					if (wait < conf.requestIdle)
+						setTimeout(function () { $(".s-t-page .next-page")[0].click() }, conf.requestIdle - wait)
+					else
+						$(".s-t-page .next-page")[0].click()
+
 				}
 			} else {
-				if (isStopShowBoxAndAutoGetNextTimeTeachers()) return
+				IsTriggerNextTimeSlotOk()
 			}
 			next()
 		})
@@ -307,6 +325,6 @@ async function main(loadScript) {
 
 export {
 	addCheckbox, executeFilters, getTeacherInfoFromListPageUI as getTeacherInfoInList,
-	getUiFilters, isStopShowBoxAndAutoGetNextTimeTeachers, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherInfoToUI,
+	getUiFilters, IsTriggerNextTimeSlotOk, maxAge, maxFc, maxLabel, maxRate, minAge, minFc, minLabel, minRate, updateTeacherInfoToUI,
 	main as listMain
 }

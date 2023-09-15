@@ -29,7 +29,12 @@ const config = GM_config([
 		type: "dropdown",
 		values: [5, 10, 30, 50, 120, 500, 3000, 5000, 10080],
 	},
-
+	{
+		key: "requestIdle",
+		label: "请求间隔时间（ms）",
+		default: 1900,
+		type: "number"
+	},
 	{
 		// The key for the setting.
 		key: "calcIndicator",

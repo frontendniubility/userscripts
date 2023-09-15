@@ -18,7 +18,7 @@ let terserPlugin = compiler => {
 		terserOptions: {
 			warnings: false,
 			parse: {},
-			compress: true,
+			compress: false,
 			// compress: {},
 			mangle: false, // Note `mangle.properties` is `false` by default.
 			output: {
@@ -101,7 +101,7 @@ module.exports = merge(rulesConfig, {
 		removeAvailableModules: true,
 		// removeEmptyChunks: true,
 		emitOnErrors: true,
-		minimize: true,
+		minimize: false,
 		minimizer: [
 			"...",
 			compiler => {

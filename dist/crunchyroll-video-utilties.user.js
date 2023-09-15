@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @description seek video with hotkeys and set default quality
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues
@@ -16,5 +16,149 @@
 // @updateURL   https://gitee.com/tsharp/userscripts/raw/master/dist/crunchyroll-video-utilties.meta.js
 // ==/UserScript==
 
-(()=>{var e="~~@~~",t=".qualityMenuItemSelector",n=function(){return unsafeWindow.VILOS_PLAYERJS},o=function(e,t){return Array.from((t||document).querySelectorAll(e))},i=function(e,t){return(t||document).querySelector(e)},r=GM_config([{key:"quality",label:"Quality",type:"dropdown",values:["auto",360,480,720,1080],default:"auto"}]),u=r.load();r.onsave=function(e){u=e,c.setQuality(u.quality)};var l=function(){var e;return(e=console).log.apply(e,arguments),arguments.length<=0?void 0:arguments[0]},a=!1,c={setQuality:function(e){var n="auto"!==e?o(t).slice(2).find((function(t){return e>=parseInt(t.textContent)})):o(t)[2];n&&(n.click(),setTimeout(c.toggleSettings,200,!1))},fillTab:function(){var e=i("#showmedia_video_player");return e?(a=!a)?void Object.assign(e.style,{position:"fixed",zIndex:1e3,top:0,bottom:0,left:0,right:0,width:"100%",height:"100%"}):e.removeAttribute("style"):l("playerbox not found")},nextEp:function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];return i(".collection-carousel-media-link-current").parentElement[e?"previousElementSibling":"nextElementSibling"].querySelector("a").click()},prevEp:function(){return c.nextEp(!0)},skip:function(e){return n().getCurrentTime((function(t){return n().setCurrentTime(t+e)}))},volumeUp:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:10;return n().getVolume((function(t){return n().setVolume(t+e)}))},volumeDown:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:-10;return c.volumeUp(e)},toggleSettings:function(e){var t=i(".settingsMenuButton,#settingsControl");"boolean"==typeof e&&e===l(!!t.offSetParent,"=== isVisible")||t.click()}},s={l:85,b:-85,"}":30,"{":-30,"]":15,"[":-15},d=function(e){return"n"===e?c.nextEp():"p"===e?c.prevEp():"j"===e?c.volumeDown():"k"===e?c.volumeUp():"w"===e?c.fillTab():e in s?c.skip(s[e]):null},f=location.href.includes("static.crunchyroll.com"),m=["INPUT","TEXTAREA","SELECT"];window.addEventListener("keydown",f?function(t){return window.parent.postMessage(e+t.key,"https://www.crunchyroll.com")}:function(e){return m.includes(document.activeElement.nodeName)||d(e.key)}),f?waitForElems({stop:!0,sel:t+".selected",onmatch:function(e){if(e.textContent.toLowerCase().includes(u.quality))return l("configured default already selected");c.setQuality(u.quality)}}):window.addEventListener("message",(function(t){var n=t.data;return n.startsWith(e)&&d(n.slice(e.length))})),GM_registerMenuCommand("Crunchyroll Video Utilities - Config",r.setup)})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+// ==UserScript==
+// @name Crunchyroll Video Utilities
+// @version 1.0.5
+// @namespace fuzetsu/csdvqn
+// @description seek video with hotkeys and set default quality
+// @match https://static.crunchyroll.com/*/player.html
+// @match https://www.crunchyroll.com/*
+// @grant GM_registerMenuCommand
+// @grant GM_getValue
+// @grant GM_setValue
+// @require https://gitcdn.xyz/cdn/fuzetsu/userscripts/b38eabf72c20fa3cf7da84ecd2cefe0d4a2116be/wait-for-elements/wait-for-elements.js
+// @require https://gitcdn.xyz/cdn/kufii/My-UserScripts/fa4555701cf5a22eae44f06d9848df6966788fa8/libs/gm_config.js
+// ==/UserScript==
+var sep = '~~@~~',
+  domain = 'https://www.crunchyroll.com',
+  CSS = {
+    quality: '.qualityMenuItemSelector',
+    settings: '.settingsMenuButton,#settingsControl',
+    playerBox: '#showmedia_video_player'
+  },
+  vilosPlayer = function vilosPlayer() {
+    return unsafeWindow.VILOS_PLAYERJS;
+  },
+  qq = function qq(q, c) {
+    return Array.from((c || document).querySelectorAll(q));
+  },
+  q = function q(_q, c) {
+    return (c || document).querySelector(_q);
+  },
+  config = GM_config([{
+    key: 'quality',
+    label: 'Quality',
+    type: 'dropdown',
+    values: ['auto', 360, 480, 720, 1080],
+    "default": 'auto'
+  }]);
+var cfg = config.load();
+config.onsave = function (newCfg) {
+  cfg = newCfg;
+  player.setQuality(cfg.quality);
+};
+var p = function p() {
+  var _console;
+  return (_console = console).log.apply(_console, arguments), arguments.length <= 0 ? undefined : arguments[0];
+};
+var isFullscreen = false;
+var player = {
+    setQuality: function setQuality(quality) {
+      var btn = quality !== 'auto' ? qq(CSS.quality).slice(2).find(function (item) {
+        return quality >= parseInt(item.textContent);
+      }) : qq(CSS.quality)[2];
+      if (btn) {
+        // this causes the menu to open
+        btn.click();
+        // so close it after a short delay
+        setTimeout(player.toggleSettings, 200, false);
+      }
+    },
+    fillTab: function fillTab() {
+      var playerBox = q(CSS.playerBox);
+      if (!playerBox) return p('playerbox not found');
+      isFullscreen = !isFullscreen;
+      if (!isFullscreen) return playerBox.removeAttribute('style');
+      Object.assign(playerBox.style, {
+        position: 'fixed',
+        zIndex: 1e3,
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        height: '100%'
+      });
+    },
+    nextEp: function nextEp() {
+      var back = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      return q('.collection-carousel-media-link-current').parentElement[back ? 'previousElementSibling' : 'nextElementSibling'].querySelector('a').click();
+    },
+    prevEp: function prevEp() {
+      return player.nextEp(true);
+    },
+    skip: function skip(sec) {
+      return vilosPlayer().getCurrentTime(function (curTime) {
+        return vilosPlayer().setCurrentTime(curTime + sec);
+      });
+    },
+    volumeUp: function volumeUp() {
+      var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+      return vilosPlayer().getVolume(function (curVol) {
+        return vilosPlayer().setVolume(curVol + val);
+      });
+    },
+    volumeDown: function volumeDown() {
+      var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -10;
+      return player.volumeUp(val);
+    },
+    toggleSettings: function toggleSettings(makeVisible) {
+      var btn = q(CSS.settings);
+      if (typeof makeVisible === 'boolean') {
+        var isVisible = p(!!btn.offSetParent, '=== isVisible');
+        if (makeVisible === isVisible) return;
+      }
+      btn.click();
+    }
+  },
+  seekKeys = {
+    l: 85,
+    b: -85,
+    '}': 30,
+    '{': -30,
+    ']': 15,
+    '[': -15
+  },
+  handleKey = function handleKey(key) {
+    return key === 'n' ? player.nextEp() : key === 'p' ? player.prevEp() : key === 'j' ? player.volumeDown() : key === 'k' ? player.volumeUp() : key === 'w' ? player.fillTab() : key in seekKeys ? player.skip(seekKeys[key]) : null;
+  },
+  isPlayerFrame = location.href.includes('static.crunchyroll.com'),
+  pass = ['INPUT', 'TEXTAREA', 'SELECT'];
+window.addEventListener('keydown', isPlayerFrame ? function (e) {
+  return window.parent.postMessage(sep + e.key, domain);
+} : function (e) {
+  return pass.includes(document.activeElement.nodeName) || handleKey(e.key);
+});
+if (isPlayerFrame) {
+  // can only set quality from the player frame since the button is in its dom
+  waitForElems({
+    stop: true,
+    sel: CSS.quality + '.selected',
+    onmatch: function onmatch(elem) {
+      if (elem.textContent.toLowerCase().includes(cfg.quality)) return p('configured default already selected');
+      player.setQuality(cfg.quality);
+    }
+  });
+} else {
+  // handle forwarded keyboard from player frame
+  window.addEventListener('message', function (_ref) {
+    var data = _ref.data;
+    return data.startsWith(sep) && handleKey(data.slice(sep.length));
+  });
+}
+GM_registerMenuCommand('Crunchyroll Video Utilities - Config', config.setup);
+/******/ })()
+;
 //# sourceMappingURL=crunchyroll-video-utilties.user.js.map

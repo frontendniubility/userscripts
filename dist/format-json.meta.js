@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Format JSON
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @author      fuzetsu
 // @description Automatically prettify JSON responses
 // @homepage    https://gitee.com/tsharp/userscripts#readme

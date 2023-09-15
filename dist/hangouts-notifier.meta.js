@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hangouts Notifier
-// @version     2023.301.5132113
+// @version     2023.915.5232332
 // @author      fuzetsu
 // @description Show desktop notifications for the Hangouts web app
 // @homepage    https://gitee.com/tsharp/userscripts#readme
