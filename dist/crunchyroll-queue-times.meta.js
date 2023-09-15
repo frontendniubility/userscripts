@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Queue Real Times
-// @version     2023.915.5232332
+// @version     2023.916.5015523
 // @description Display countdown until next episode in the Crunchyroll Queue page
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues

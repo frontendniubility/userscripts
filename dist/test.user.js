@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        userscripts
-// @version     2023.915.5232332
+// @version     2023.916.5015523
 // @description tampermonkey scripts
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues

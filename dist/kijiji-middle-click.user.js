@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Kijiji Middle Click
-// @version     2023.915.5232332
+// @version     2023.916.5015523
 // @author      fuzetsu
 // @description make link middle clicking work on kijiji
 // @homepage    https://gitee.com/tsharp/userscripts#readme

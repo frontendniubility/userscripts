@@ -154,12 +154,7 @@ function IsTriggerNextTimeSlotOk() {
 		$('form[name="searchform"]>input[name="selectTime"]').val(cur)
 		$('form[name="searchform"]>input[name="pageID"]').val(1)
 
-		let wait = (Date.now() - window.__pageStart)
-		console.log(window.__pageStart, wait)
-		if (wait < conf.requestIdle)
-			setTimeout(function () { $(".go-search").trigger("click") }, conf.requestIdle - wait)
-		else
-			$(".go-search").trigger("click")
+		safeRequest(function () { $(".go-search").trigger("click") })
 
 
 		return true
@@ -183,6 +178,14 @@ function addCheckbox(val, lbl, group) {
 	}).appendTo(container)
 }
 
+function safeRequest(fn) {
+	let wait = (Date.now() - window.__lastRequest ?? Date.now())
+	window.__lastRequest = Date.now()
+	if (wait < conf.requestIdle)
+		setTimeout(fn, conf.requestIdle - wait)
+	else
+		fn()
+}
 
 async function main(loadScript) {
 	if (settings.isListPage) {
@@ -191,7 +194,6 @@ async function main(loadScript) {
 		})
 		// 自动获取时,显示停止按钮
 		submit(function (next) {
-			window.__pageStart = Date.now()
 			let totalPages = Number($(".s-t-page:last>a:last").prev().text()),
 				curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
 				remainPages = totalPages - curPageId
@@ -267,34 +269,30 @@ async function main(loadScript) {
 						}
 					}
 					// ajax 请求一定要包含在一个函数中
-					let start = Date.now()
-					$.ajax({
-						url: `${window.location.protocol}//${window.location.host}/TeacherNew/teacherComment?tid=${tid}&type=bad&has_msg=1`,
-						type: "GET",
-						dateType: "html",
-						success: function (r) {
-							let jqr = $(r)
-							tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {})
-							jqr.remove()
-							updateTeacherInfoToUI(jqEl, tinfo)
-							GM_setValue(tInfoKey, tinfo)
-						},
-						error: function (data) {
-							console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
-						},
-					}).always(function () {
-
-						let wait = (Date.now() - start)
-						if (wait < conf.requestIdle)
-							setTimeout(next, conf.requestIdle - wait)
-						else
+					safeRequest(function () {
+						$.ajax({
+							url: `${window.location.protocol}//${window.location.host}/TeacherNew/teacherComment?tid=${tid}&type=bad&has_msg=1`,
+							type: "GET",
+							dateType: "html",
+							success: function (r) {
+								let jqr = $(r)
+								tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {})
+								jqr.remove()
+								updateTeacherInfoToUI(jqEl, tinfo)
+								GM_setValue(tInfoKey, tinfo)
+							},
+							error: function (data) {
+								console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data))
+							},
+						}).always(function () {
 							next()
-					})
+						})
+					})				
 				})
 			})
 		})
 
-		submit(function (next) {	
+		submit(function (next) {
 
 			let Total_AutoGetNextPage_Count = getSession("Total_AutoGetNextPage_Count", 0)
 			if (Total_AutoGetNextPage_Count > 0) {
@@ -306,12 +304,7 @@ async function main(loadScript) {
 				} else {
 					//翻页
 
-					let wait = (Date.now() - window.__pageStart)
-					console.log(window.__pageStart, wait)
-					if (wait < conf.requestIdle)
-						setTimeout(function () { $(".s-t-page .next-page")[0].click() }, conf.requestIdle - wait)
-					else
-						$(".s-t-page .next-page")[0].click()
+					safeRequest(function () { $(".s-t-page .next-page")[0].click() })
 
 				}
 			} else {

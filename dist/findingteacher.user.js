@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Best Teacher(JQuery)
-// @version     2023.915.5232332
+// @version     2023.916.5015523
 // @author      jimbo
 // @description 谁是最好的老师？-排序显示，经验值计算|自定义经验值公式|好评率|显示年龄|列表显示所有教师
 // @homepage    https://gitee.com/tsharp/userscripts#readme
@@ -29155,11 +29155,9 @@ function IsTriggerNextTimeSlotOk() {
     setSession("selectedTimeSlotsRemain", selectedTimeSlots.length);
     $('form[name="searchform"]>input[name="selectTime"]').val(cur);
     $('form[name="searchform"]>input[name="pageID"]').val(1);
-    var wait = core_js.Date.now() - window.__pageStart;
-    console.log(window.__pageStart, wait);
-    if (wait < conf.requestIdle) setTimeout(function () {
+    safeRequest(function () {
       $(".go-search").trigger("click");
-    }, conf.requestIdle - wait);else $(".go-search").trigger("click");
+    });
     return true;
   }
   return false;
@@ -29179,6 +29177,12 @@ function addCheckbox(val, lbl, group) {
     text: lbl ? lbl : val
   }).appendTo(container);
 }
+function safeRequest(fn) {
+  var _ref,
+    wait = (_ref = core_js.Date.now() - window.__lastRequest) !== null && _ref !== void 0 ? _ref : core_js.Date.now();
+  window.__lastRequest = core_js.Date.now();
+  if (wait < conf.requestIdle) setTimeout(fn, conf.requestIdle - wait);else fn();
+}
 function main(_x2) {
   return _main.apply(this, arguments);
 }
@@ -29193,7 +29197,6 @@ function _main() {
             });
             // 自动获取时,显示停止按钮
             common_submit(function (next) {
-              window.__pageStart = core_js.Date.now();
               var totalPages = Number($(".s-t-page:last>a:last").prev().text()),
                 curPageId = window.parameters().pageID ? window.parameters().pageID : 1,
                 remainPages = totalPages - curPageId,
@@ -29254,24 +29257,24 @@ function _main() {
                     }
                   }
                   // ajax 请求一定要包含在一个函数中
-                  var start = core_js.Date.now();
-                  $.ajax({
-                    url: "".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/teacherComment?tid=").concat(tid, "&type=bad&has_msg=1"),
-                    type: "GET",
-                    dateType: "html",
-                    success: function success(r) {
-                      var jqr = $(r);
-                      tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
-                      jqr.remove();
-                      updateTeacherInfoToUI(jqEl, tinfo);
-                      GM_setValue(tInfoKey, tinfo);
-                    },
-                    error: function error(data) {
-                      console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data));
-                    }
-                  }).always(function () {
-                    var wait = core_js.Date.now() - start;
-                    if (wait < conf.requestIdle) setTimeout(next, conf.requestIdle - wait);else next();
+                  safeRequest(function () {
+                    $.ajax({
+                      url: "".concat(window.location.protocol, "//").concat(window.location.host, "/TeacherNew/teacherComment?tid=").concat(tid, "&type=bad&has_msg=1"),
+                      type: "GET",
+                      dateType: "html",
+                      success: function success(r) {
+                        var jqr = $(r);
+                        tinfo = getTeacherInfoFromDetailPage(tinfo, jqr, {});
+                        jqr.remove();
+                        updateTeacherInfoToUI(jqEl, tinfo);
+                        GM_setValue(tInfoKey, tinfo);
+                      },
+                      error: function error(data) {
+                        console.debug("xhr error when getting teacher " + JSON.stringify(jqEl) + ",error msg:" + JSON.stringify(data));
+                      }
+                    }).always(function () {
+                      next();
+                    });
                   });
                 });
               });
@@ -29286,11 +29289,9 @@ function _main() {
                 } else {
                   //翻页
 
-                  var wait = core_js.Date.now() - window.__pageStart;
-                  console.log(window.__pageStart, wait);
-                  if (wait < conf.requestIdle) setTimeout(function () {
+                  safeRequest(function () {
                     $(".s-t-page .next-page")[0].click();
-                  }, conf.requestIdle - wait);else $(".s-t-page .next-page")[0].click();
+                  });
                 }
               } else {
                 IsTriggerNextTimeSlotOk();
