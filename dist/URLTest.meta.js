@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        URLTest
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @author      jimbo
 // @description tampermonkey scripts
 // @homepage    https://gitee.com/tsharp/userscripts#readme

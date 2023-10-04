@@ -136,10 +136,15 @@ export function getLabelCount(jqLabelElement) {
 export function getLabelByItems(jqLabelSpanList) {
 	return jqLabelSpanList
 		.map(function (i, v) {
-			var r = /([\u4e00-\u9fa5]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML)
+			var r = /([\u4e00-\u9fa5 \w]+)\s*\(\s*(\d+)\)/gi.exec(v.innerHTML)
+			if (r && r.length >= 3)
+				return {
+					key: r[1],
+					value: r[2],
+				}
 			return {
-				key: r[1],
-				value: r[2],
+				key: 'Unkown',
+				value: 0
 			}
 		})
 		.get()

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Video Utilities
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @description seek video with hotkeys and set default quality
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues
@@ -53,7 +53,7 @@ var sep = '~~@~~',
     type: 'dropdown',
     values: ['auto', 360, 480, 720, 1080],
     "default": 'auto'
-  }]);
+  }]); // use publicly exposed Player.js object to control video player
 var cfg = config.load();
 config.onsave = function (newCfg) {
   cfg = newCfg;
@@ -136,6 +136,10 @@ var player = {
   },
   isPlayerFrame = location.href.includes('static.crunchyroll.com'),
   pass = ['INPUT', 'TEXTAREA', 'SELECT'];
+/**
+ * Keyboard events from within the player frame dont bubble up to main page where the player.js
+ * object and the video links live, so use postMessage to send the keypresses there
+ **/
 window.addEventListener('keydown', isPlayerFrame ? function (e) {
   return window.parent.postMessage(sep + e.key, domain);
 } : function (e) {

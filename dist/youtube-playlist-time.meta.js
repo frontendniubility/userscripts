@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Time
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @description Shows the total time it would take to watch all the videos in a YouTube playlist
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues

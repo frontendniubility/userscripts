@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Auto Close YouTube Ads
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @author      fuzetsu
 // @description Close and/or Mute YouTube ads automatically!
 // @homepage    https://gitee.com/tsharp/userscripts#readme

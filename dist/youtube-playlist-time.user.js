@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube Playlist Time
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @description Shows the total time it would take to watch all the videos in a YouTube playlist
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues
@@ -117,7 +117,9 @@ var SCRIPT_NAME = 'YouTube Playlist Time',
     }, 0);
     setTime(totalSeconds);
   },
-  events = [['mousemove', util.throttle(calcTotalTime.bind(null, false), 500)]];
+  events = [['mousemove', util.throttle(calcTotalTime.bind(null, false), 500)]]; // converts a timestring to seconds
+// pads an integer with zeroes
+// calculates the total amount of time necessary to watch all the videos in the playlist and outputs the result
 util.log('Started, waiting for playlist');
 waitForUrl(/^https:\/\/www\.youtube\.com\/playlist\?list=.+/, function () {
   var playlistUrl = location.href,

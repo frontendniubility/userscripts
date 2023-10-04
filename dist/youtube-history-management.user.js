@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        YouTube History Management
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @author      fuzetsu
 // @description Select and remove YouTube history items quickly
 // @homepage    https://gitee.com/tsharp/userscripts#readme

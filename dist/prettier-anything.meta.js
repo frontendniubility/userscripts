@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Prettier Anything
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @author      fuzetsu
 // @description Apply prettier formatting to any text input
 // @homepage    https://gitee.com/tsharp/userscripts#readme

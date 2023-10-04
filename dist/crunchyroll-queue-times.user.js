@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Crunchyroll Queue Real Times
-// @version     2023.916.5015523
+// @version     2023.1005.5024000
 // @description Display countdown until next episode in the Crunchyroll Queue page
 // @homepage    https://gitee.com/tsharp/userscripts#readme
 // @supportURL  https://gitee.com/tsharp/userscripts/issues
@@ -145,7 +145,7 @@ var PREMIUM = 'rgb(255, 251, 223)',
       });
     });
   },
-  user_premium = storeGet('CQRT_user_premium');
+  user_premium = storeGet('CQRT_user_premium'); // inserts a countdown to the release
 if (user_premium === undefined) {
   user_premium = true;
 }
